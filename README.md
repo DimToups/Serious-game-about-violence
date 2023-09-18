@@ -1,7 +1,9 @@
 # T3 - MAJ23-T3-B
 
-## TODO
-### Graphic Engine
+## Graphic Engine
+### TODO
 - Button behavior
 - Text display
 - Sprite animation
+### To fix
+- Nothing
