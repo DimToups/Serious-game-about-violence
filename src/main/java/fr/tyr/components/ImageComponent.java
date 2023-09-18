@@ -1,80 +1,72 @@
 package fr.tyr.components;
 
+import fr.tyr.images.Images;
 import fr.tyr.tools.Vector2D;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Objects;
 
 public class ImageComponent extends GameComponent {
 
+    private final Images imageType;
     private BufferedImage image;
 
-    public ImageComponent(String path){
-        this(new Vector2D(0, 0), path);
+    public ImageComponent(Images image){
+        this(new Vector2D(0, 0), image);
     }
 
-    public ImageComponent(Vector2D position, String path) {
+    public ImageComponent(Vector2D position, Images image) {
         super(position);
-        try {
-            InputStream inputStream = getClass().getResourceAsStream("/" + path);
-            if (Objects.isNull(inputStream))
-                throw new RuntimeException("Image not found: " + path);
-            this.image = ImageIO.read(inputStream);
-            this.setSize(new Vector2D(this.image.getWidth(), this.image.getHeight()));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        this.imageType = image;
+        this.image = image.getCopy();
+        setSize(new Vector2D(this.image.getWidth(), this.image.getHeight()));
     }
 
-    public ImageComponent(Vector2D position, String path, int width, int height){
+    public ImageComponent(Vector2D position, Images image, int width, int height){
         super(position);
-        try {
-            InputStream inputStream = getClass().getResourceAsStream("/" + path);
-            if (Objects.isNull(inputStream))
-                throw new RuntimeException("Image not found: " + path);
-            this.image = ImageIO.read(inputStream);
-            this.resize(width, height);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        this.imageType = image;
+        this.image = image.getCopy();
+        resize(width, height);
     }
 
     public void resize(int width, int height){
-        Image tmp = this.image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        BufferedImage imageCopy = imageType.getCopy();
+        Image tmp = imageCopy.getScaledInstance(width, height, Image.SCALE_SMOOTH);
         BufferedImage newImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = newImage.createGraphics();
         g2d.drawImage(tmp, 0, 0, null);
         g2d.dispose();
-        this.image = newImage;
-        this.setSize(new Vector2D(width, height));
+        image = newImage;
+        setSize(new Vector2D(width, height));
     }
 
     private void crop(int x, int y, int width, int height) {
-        this.image = this.image.getSubimage(x, y, width, height);
+        image = image.getSubimage(x, y, width, height);
+        setSize(new Vector2D(width, height));
     }
 
     @Override
     public void render(Graphics g) {
-        g.drawImage(image, (int) this.getPosition().x, (int) this.getPosition().y, null);
+        g.drawImage(image, (int) getPosition().x, (int) getPosition().y, null);
     }
 
     @Override
     public void onClick() {
-        this.moveTo(new Vector2D(200, 50), 2);
+        if(isHovered())
+            moveTo(new Vector2D(205, 55), .1f);
+        else
+            moveTo(new Vector2D(200, 50), .1f);
     }
 
     @Override
     public void onHover() {
-//        System.out.println("Hover on component");
+        resize(60, 60);
+        getPosition().subtract(new Vector2D(5, 5));
     }
 
     @Override
     public void onHoverLost() {
-//        System.out.println("Lost hover on component");
+        resize(50, 50);
+        getPosition().add(new Vector2D(5, 5));
     }
-
 }
