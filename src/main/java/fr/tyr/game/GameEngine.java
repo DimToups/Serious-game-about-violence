@@ -2,6 +2,7 @@ package fr.tyr.game;
 
 import fr.tyr.components.GameComponent;
 import fr.tyr.components.ImageComponent;
+import fr.tyr.images.Images;
 import fr.tyr.tools.Vector2D;
 
 import java.util.ArrayList;
@@ -22,7 +23,14 @@ public class GameEngine {
     }
 
     private void initScene(){
-        this.components.add(new ImageComponent(new Vector2D(100, 100), "swords.png", 50, 50));
+        this.componentsLock.lock();
+        try{
+            this.components.add(new ImageComponent(new Vector2D(100, 100), Images.SWORDS, 50, 50));
+        }catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+            this.componentsLock.unlock();
+        }
     }
 
     public boolean isDevMode() {
