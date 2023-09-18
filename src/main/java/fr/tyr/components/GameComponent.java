@@ -17,7 +17,7 @@ public abstract class GameComponent {
     private boolean isHovered = false;
 
     public GameComponent(){
-        this.position = new Vector2D(0, 0);
+        position = new Vector2D(0, 0);
     }
 
     public GameComponent(Vector2D position){
@@ -25,25 +25,30 @@ public abstract class GameComponent {
     }
 
     public void moveTo(Vector2D target){
-        this.target = target;
-        this.duration = 0;
+        moveTo(target, 0);
     }
 
     public void moveTo(Vector2D target, float duration){
-        this.basePosition = new Vector2D(position);
-        this.target = Vector2D.subtract(target, this.position);
+        this.target = target;
         this.duration = duration;
+        System.out.println(target);
     }
 
     public void move(int tps){
-        if(Objects.isNull(this.target))
+        if(Objects.isNull(target))
             return;
-        this.position.add(this.target.getDivided(tps * duration));
-        if(this.position.distance(this.basePosition.getAdded(target)) <= new Vector2D(0, 0).distance(this.target.getDivided(tps * duration))){
-            this.position = this.basePosition.getAdded(target);
-            this.basePosition = null;
-            this.target = null;
+        Vector2D distance = Vector2D.subtract(target, position);
+        Vector2D speed = distance.getDivided(tps * duration);
+        position.add(speed);
+        if(position.distance(target) <= 1){
+            position = target;
+            target = null;
+            System.out.println(position);
+            System.out.println("Done");
+        }else{
+            System.out.println(position);
         }
+        duration -= 1f / tps;
     }
 
     public Vector2D getPosition() {
