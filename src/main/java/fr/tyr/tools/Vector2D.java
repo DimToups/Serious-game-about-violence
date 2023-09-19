@@ -1,5 +1,7 @@
 package fr.tyr.tools;
 
+import org.jetbrains.annotations.NotNull;
+
 @SuppressWarnings({"unused", "MethodDoesntCallSuperMethod", "SuspiciousNameCombination"})
 public class Vector2D {
 
@@ -7,12 +9,10 @@ public class Vector2D {
     public double y;
 
     public Vector2D() { }
-
     public Vector2D(double x, double y) {
         this.x = x;
         this.y = y;
     }
-
     public Vector2D(Vector2D v) {
         set(v);
     }
@@ -21,7 +21,6 @@ public class Vector2D {
         this.x = x;
         this.y = y;
     }
-
     public void set(Vector2D v) {
         this.x = v.x;
         this.y = v.y;
@@ -49,7 +48,6 @@ public class Vector2D {
         vy -= y;
         return (vx * vx + vy * vy);
     }
-
     public double distanceSq(Vector2D v) {
         double vx = v.x - this.x;
         double vy = v.y - this.y;
@@ -61,7 +59,6 @@ public class Vector2D {
         vy -= y;
         return Math.sqrt(vx * vx + vy * vy);
     }
-
     public double distance(Vector2D v) {
         double vx = v.x - this.x;
         double vy = v.y - this.y;
@@ -77,10 +74,12 @@ public class Vector2D {
         x /= magnitude;
         y /= magnitude;
     }
-
     public Vector2D getNormalized() {
         double magnitude = getLength();
         return new Vector2D(x / magnitude, y / magnitude);
+    }
+    public static Vector2D normalize(Vector2D v) {
+        return v.getNormalized();
     }
 
     public static Vector2D toCartesian(double magnitude, double angle) {
@@ -91,21 +90,17 @@ public class Vector2D {
         this.x += v.x;
         this.y += v.y;
     }
-
     public void add(double vx, double vy) {
         this.x += vx;
         this.y += vy;
     }
-
     public Vector2D getAdded(Vector2D v) {
         return new Vector2D(this.x + v.x, this.y + v.y);
     }
-
     public Vector2D getAdded(double vx, double vy) {
         return new Vector2D(this.x + vx, this.y + vy);
     }
-
-    public static Vector2D add(Vector2D v1, Vector2D v2) {
+    public static Vector2D add(@NotNull final Vector2D v1, @NotNull final Vector2D v2) {
         return new Vector2D(v1.x + v2.x, v1.y + v2.y);
     }
 
@@ -113,41 +108,54 @@ public class Vector2D {
         this.x -= v.x;
         this.y -= v.y;
     }
-
     public void subtract(double vx, double vy) {
         this.x -= vx;
         this.y -= vy;
     }
-
+    public Vector2D getSubtracted(Vector2D v) {
+        return new Vector2D(this.x - v.x, this.y - v.y);
+    }
+    public Vector2D getSubtracted(double vx, double vy) {
+        return new Vector2D(this.x - vx, this.y - vy);
+    }
     public static Vector2D subtract(Vector2D v1, Vector2D v2) {
         return new Vector2D(v1.x - v2.x, v1.y - v2.y);
     }
 
-    public Vector2D getSubtracted(Vector2D v) {
-        return new Vector2D(this.x - v.x, this.y - v.y);
+    public void multiply(Vector2D v) {
+        x *= v.x;
+        y *= v.y;
     }
-
-    public Vector2D multiply(double scalar) {
+    public void multiply(double scalar) {
         x *= scalar;
         y *= scalar;
-        return this;
     }
-
+    public Vector2D getMultiplied(Vector2D v) {
+        return new Vector2D(x * v.x, y * v.y);
+    }
+    public Vector2D getMultiplied(double scalar){
+        return new Vector2D(x * scalar, y * scalar);
+    }
     public static Vector2D multiply(Vector2D v, double scalar) {
         return new Vector2D(v.x * scalar, v.y * scalar);
     }
 
-    public Vector2D getMultiplied(double scalar) {
-        return new Vector2D(x * scalar, y * scalar);
+    public void divide(Vector2D v) {
+        x /= v.x;
+        y /= v.y;
     }
-
     public void divide(double scalar) {
         x /= scalar;
         y /= scalar;
     }
-
+    public Vector2D getDivided(Vector2D v) {
+        return new Vector2D(x / v.x, y / v.y);
+    }
     public Vector2D getDivided(double scalar) {
         return new Vector2D(x / scalar, y / scalar);
+    }
+    public static Vector2D divide(Vector2D v, double scalar) {
+        return new Vector2D(v.x / scalar, v.y / scalar);
     }
 
     public Vector2D getPerp() {
@@ -157,11 +165,9 @@ public class Vector2D {
     public double dot(Vector2D v) {
         return (this.x * v.x + this.y * v.y);
     }
-
     public double dot(double vx, double vy) {
         return (this.x * vx + this.y * vy);
     }
-
     public static double dot(Vector2D v1, Vector2D v2) {
         return v1.x * v2.x + v1.y * v2.y;
     }
@@ -169,11 +175,9 @@ public class Vector2D {
     public double cross(Vector2D v) {
         return (this.x * v.y - this.y * v.x);
     }
-
     public double cross(double vx, double vy) {
         return (this.x * vy - this.y * vx);
     }
-
     public static double cross(Vector2D v1, Vector2D v2) {
         return (v1.x * v2.y - v1.y * v2.x);
     }
@@ -181,23 +185,18 @@ public class Vector2D {
     public double project(Vector2D v) {
         return (this.dot(v) / this.getLength());
     }
-
     public double project(double vx, double vy) {
         return (this.dot(vx, vy) / this.getLength());
     }
-
     public static double project(Vector2D v1, Vector2D v2) {
         return (dot(v1, v2) / v1.getLength());
     }
-
     public Vector2D getProjectedVector(Vector2D v) {
         return this.getNormalized().getMultiplied(this.dot(v) / this.getLength());
     }
-
     public Vector2D getProjectedVector(double vx, double vy) {
         return this.getNormalized().getMultiplied(this.dot(vx, vy) / this.getLength());
     }
-
     public static Vector2D getProjectedVector(Vector2D v1, Vector2D v2) {
         return v1.getNormalized().getMultiplied(Vector2D.dot(v1, v2) / v1.getLength());
     }
@@ -209,7 +208,6 @@ public class Vector2D {
         y = x * sin + y * cos;
         x = rx;
     }
-
     public Vector2D getRotatedBy(double angle) {
         double cos = Math.cos(angle);
         double sin = Math.sin(angle);
@@ -219,7 +217,6 @@ public class Vector2D {
     public void rotateTo(double angle) {
         set(toCartesian(getLength(), angle));
     }
-
     public Vector2D getRotatedTo(double angle) {
         return toCartesian(getLength(), angle);
     }
@@ -228,7 +225,6 @@ public class Vector2D {
         x = -x;
         y = -y;
     }
-
     public Vector2D getReversed() {
         return new Vector2D(-x, -y);
     }
@@ -236,7 +232,6 @@ public class Vector2D {
     public boolean isBetween(Vector2D v1, Vector2D v2) {
         return isBetween(this, v1, v2);
     }
-
     public static boolean isBetween(Vector2D target, Vector2D v1, Vector2D v2) {
         double minX = Math.min(v1.x, v2.x);
         double maxX = Math.max(v1.x, v2.x);
@@ -249,7 +244,6 @@ public class Vector2D {
     public Vector2D clone() {
         return new Vector2D(x, y);
     }
-
     @Override
     public boolean equals(Object obj) {
         if (obj == this) return true;
@@ -257,7 +251,6 @@ public class Vector2D {
             return (x == v.x) && (y == v.y);
         return false;
     }
-
     @Override
     public int hashCode() {
         int result = 17;
@@ -267,7 +260,6 @@ public class Vector2D {
         result = 31 * result + (int) (yBits ^ (yBits >>> 32));
         return result;
     }
-
     @Override
     public String toString() {
         return "Vector2D[" + x + ", " + y + "]";
