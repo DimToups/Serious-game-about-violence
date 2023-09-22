@@ -1,13 +1,13 @@
 package fr.tyr.game;
 
-import fr.tyr.components.GameComponent;
+import fr.tyr.Main;
+import fr.tyr.components.classic.GameComponent;
 import fr.tyr.tools.Runner;
 import fr.tyr.tools.Vector2D;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -21,24 +21,44 @@ public class GraphicEngine extends JPanel {
     private final Runner fpsRunner;
     private final Runner tpsRunner;
 
+    private final Timer resizeTimer;
+
     public GraphicEngine(GameEngine gameEngine){
         this.gameEngine = gameEngine;
         setBackground(Color.BLACK);
         // Init components
         // Runner setup
-        fpsRunner = new Runner(() -> {
+        Main.getLogger().info("Initializing runners...");
+        fpsRunner = new Runner("fps_runner", () -> {
             paintImmediately(getBounds());
         }, 60, false);
-        tpsRunner = new Runner(this::tick, 60, false);
+        tpsRunner = new Runner("tps_runner", this::tick, 60, false);
         fpsRunner.start();
         tpsRunner.start();
+        Main.getLogger().info("Runners initialized.");
         // Click listener
+        Main.getLogger().info("Initializing click listener...");
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 onClick(e);
             }
         });
+        Main.getLogger().info("Click listener initialized.");
+
+        resizeTimer = new Timer(200, e -> resize());
+        resizeTimer.setRepeats(false);
+        resizeTimer.setCoalesce(true);
+        this.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                if(resizeTimer.isRunning())
+                    resizeTimer.restart();
+                else
+                    resizeTimer.start();
+            }
+        });
+
         // Sound playing
 //        Sounds.DING.setVolume(.5f);
 //        Sounds.DING.play();
@@ -46,11 +66,23 @@ public class GraphicEngine extends JPanel {
 //        Sounds.BACKGROUND.playBackground();
     }
 
+    private void resize(){
+        this.gameEngine.getComponentsLock().lock();
+        try{
+            this.gameEngine.getComponents().forEach(component -> component.onResize(new Vector2D(getWidth(), getHeight())));
+        }catch (Exception e){
+            Main.getLogger().severe(e.getMessage());
+        }finally {
+            this.gameEngine.getComponentsLock().unlock();
+        }
+    }
+
     private void onClick(MouseEvent event){
-        List<GameComponent> localComponents = getReversedComponentsList();
+        Main.getLogger().info("Click detected at (%d, %d)".formatted(event.getX(), event.getY()));
+        List<GameComponent<?>> localComponents = getReversedComponentsList();
         Collections.reverse(localComponents);
         Vector2D mouseVector = new Vector2D(event.getX(), event.getY());
-        for(GameComponent component : localComponents){
+        for(GameComponent<?> component : localComponents){
             Vector2D componentPosition = component.getPosition();
             Vector2D componentSize = component.getSize();
             boolean isMouseBetween = mouseVector.isBetween(componentPosition, Vector2D.add(componentPosition, componentSize));
@@ -62,43 +94,49 @@ public class GraphicEngine extends JPanel {
     }
 
     private void tick(){
-        List<GameComponent> localComponents = getReversedComponentsList();
+        List<GameComponent<?>> localComponents = getReversedComponentsList();
         Collections.reverse(localComponents);
-        for(GameComponent component : localComponents)
-            component.move(tpsRunner.getAps());
+        // Trigger movements
+        localComponents.forEach(component -> component.move(tpsRunner.getAps()));
+        // Trigger hover
         Point mouseLocation = getMousePosition();
         if(Objects.nonNull(mouseLocation)){
             Vector2D mouseVector = new Vector2D(mouseLocation.x, mouseLocation.y);
             boolean hoverFound = false;
-            for(GameComponent component : localComponents)
+            for(GameComponent<?> component : localComponents)
                 hoverFound = triggerHover(mouseVector, component, hoverFound);
         }
+        // Tick all components
+        for(GameComponent<?> component : localComponents)
+            component.tick(tpsRunner.getAps());
     }
 
-    private List<GameComponent> getReversedComponentsList(){
-        List<GameComponent> localComponents = new ArrayList<>();
+    private List<GameComponent<?>> getReversedComponentsList(){
+        List<GameComponent<?>> localComponents = new ArrayList<>();
         gameEngine.getComponentsLock().lock();
         try{
             localComponents.addAll(gameEngine.getComponents());
         }catch (Exception e){
-            e.printStackTrace();
+            Main.getLogger().severe(e.getMessage());
         }finally {
             gameEngine.getComponentsLock().unlock();
         }
         return localComponents;
     }
 
-    private boolean triggerHover(Vector2D mouseVector, GameComponent component, boolean hoverFound) {
+    private boolean triggerHover(Vector2D mouseVector, GameComponent<?> component, boolean hoverFound) {
         Vector2D componentPosition = component.getPosition();
         Vector2D componentSize = component.getSize();
         boolean isMouseBetween = mouseVector.isBetween(componentPosition, Vector2D.add(componentPosition, componentSize));
         if(hoverFound || !isMouseBetween) {
             if(component.isHovered()) {
+                Main.getLogger().info("Hover lost on %s".formatted(component.getClass().getSimpleName()));
                 component.setIsHovered(false);
                 component.onHoverLost();
             }
         }else {
             if(!component.isHovered()) {
+                Main.getLogger().info("Hover detected on %s".formatted(component.getClass().getSimpleName()));
                 component.setIsHovered(true);
                 component.onHover();
             }
@@ -115,10 +153,10 @@ public class GraphicEngine extends JPanel {
         g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
         drawComponents(g);
         Point mouseLocation = getMousePosition();
-        if(Objects.nonNull(mouseLocation)){
-            g.setColor(Color.WHITE);
-            g.fillOval(mouseLocation.x - 20, mouseLocation.y - 20, 40, 40);
-        }
+//        if(Objects.nonNull(mouseLocation)){
+//            g.setColor(Color.WHITE);
+//            g.fillOval(mouseLocation.x - 20, mouseLocation.y - 20, 40, 40);
+//        }
         g.setColor(Color.WHITE);
         g.setFont(font);
         if(gameEngine.isDevMode()){
@@ -133,17 +171,9 @@ public class GraphicEngine extends JPanel {
         try{
             gameEngine.getComponents().forEach(component -> component.render(g));
         }catch (Exception e){
-            e.printStackTrace();
+            Main.getLogger().severe(e.getMessage());
         }finally {
             gameEngine.getComponentsLock().unlock();
         }
-    }
-
-    public void onFocusLost() {
-        fpsRunner.setAps(10);
-    }
-
-    public void onFocusGained() {
-        fpsRunner.setAps(60);
     }
 }
