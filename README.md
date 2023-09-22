@@ -2,8 +2,7 @@
 
 ## Graphic Engine
 ### TODO
-- Button behavior
-- Text display
-- Sprite animation
+- Images performances improving
+- Global refactoring and documentation
 ### To fix
 - Nothing
