@@ -1,13 +1,18 @@
 package fr.tyr.images;
 
+import fr.tyr.Main;
+
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.awt.image.ColorModel;
+import java.awt.image.WritableRaster;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Objects;
 
 public enum Images {
-    SWORDS("swords.png");
+    SWORDS("swords.png"),
+    BACKGROUND("background.jpg");
 
     private final String path;
     private BufferedImage image;
@@ -23,14 +28,21 @@ public enum Images {
                 throw new RuntimeException("Image not found: " + path);
             image = ImageIO.read(inputStream);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            Main.getLogger().severe(e.getMessage());
         }
     }
 
-    public BufferedImage getCopy(){
-        if(Objects.isNull(image))
+    public BufferedImage getCopy() {
+        if (Objects.isNull(image))
             loadImage();
-        return new BufferedImage(image.getColorModel(), image.copyData(null), image.isAlphaPremultiplied(), null);
+        return deepCopy(image);
+    }
+
+    private static BufferedImage deepCopy(BufferedImage bi) {
+        ColorModel cm = bi.getColorModel();
+        boolean isAlphaPremultiplied = cm.isAlphaPremultiplied();
+        WritableRaster raster = bi.copyData(null);
+        return new BufferedImage(cm, raster, isAlphaPremultiplied, null);
     }
 
 
