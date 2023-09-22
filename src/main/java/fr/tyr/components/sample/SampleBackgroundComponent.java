@@ -32,6 +32,6 @@ public class SampleBackgroundComponent extends ImageComponent {
 
     @Override
     public void onResize(Vector2D size) {
-        resize(size);
+        resize(size, true);
     }
 }

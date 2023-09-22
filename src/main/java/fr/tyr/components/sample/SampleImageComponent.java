@@ -6,7 +6,7 @@ import fr.tyr.tools.Vector2D;
 
 public class SampleImageComponent extends ImageComponent {
     public SampleImageComponent(Vector2D position, Vector2D size) {
-        super(Images.SWORDS, position, size);
+        super(Images.SWORDS, position, size, false);
     }
 
     @Override
@@ -24,13 +24,13 @@ public class SampleImageComponent extends ImageComponent {
 
     @Override
     public void onHover() {
-        resize(new Vector2D(60, 60));
+        resize(new Vector2D(60, 60), false);
         getPosition().subtract(new Vector2D(5, 5));
     }
 
     @Override
     public void onHoverLost() {
-        resize(new Vector2D(50, 50));
+        resize(new Vector2D(50, 50), false);
         getPosition().add(new Vector2D(5, 5));
     }
 
