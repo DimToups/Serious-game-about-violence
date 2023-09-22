@@ -1,6 +1,7 @@
 package fr.tyr.tools;
 
 import com.google.common.collect.EvictingQueue;
+import fr.tyr.Main;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Range;
 
@@ -10,6 +11,7 @@ import java.util.concurrent.locks.ReentrantLock;
 @SuppressWarnings("unused")
 public class Runner extends Thread{
 
+    private final String name;
     private final Runnable action;
     private double aps;
     private final boolean stability;
@@ -24,8 +26,8 @@ public class Runner extends Thread{
      * Create a new Runner
      * @param action The action to run
      */
-    public Runner(@NotNull final Runnable action){
-        this(action, 60, true);
+    public Runner(@NotNull final String name, @NotNull final Runnable action){
+        this(name, action, 60, true);
     }
 
     /**
@@ -34,15 +36,17 @@ public class Runner extends Thread{
      * @param aps The number of actions per second
      * @param stabilized If the runner should be stable
      */
-    public Runner(@NotNull final Runnable action, @Range(from = 0, to=10000) final int aps, final boolean stabilized){
+    public Runner(@NotNull final String name, @NotNull final Runnable action, @Range(from = 0, to=10000) final int aps, final boolean stabilized){
+        this.name = name;
         this.action = action;
         this.aps = 1D / aps;
         this.stability = stabilized;
-        this.apsQueue = EvictingQueue.create(aps / 2);
+        this.apsQueue = EvictingQueue.create(aps);
     }
 
     @Override
     public void run() {
+        Main.getLogger().info("Runner " + this.name + " started");
         this.running = true;
         long nextAction = (long) (System.nanoTime() + this.aps * 1_000_000_000L);
         long start = System.nanoTime();
@@ -56,7 +60,7 @@ public class Runner extends Thread{
                     try{
                         this.action.run();
                     }catch (Exception e){
-                        e.printStackTrace();
+                        Main.getLogger().severe(e.getMessage());
                     }
                     this.passedActions++;
                     long end = System.nanoTime();
@@ -64,7 +68,7 @@ public class Runner extends Thread{
                     try {
                         this.apsQueue.add(end - start);
                     }catch(Exception e){
-                        e.printStackTrace();
+                        Main.getLogger().severe(e.getMessage());
                     }finally {
                         this.queueLock.unlock();
                     }
@@ -77,7 +81,7 @@ public class Runner extends Thread{
         try {
             this.apsQueue.clear();
         }catch(Exception e){
-            e.printStackTrace();
+            Main.getLogger().severe(e.getMessage());
         }finally {
             this.queueLock.unlock();
         }
@@ -95,7 +99,7 @@ public class Runner extends Thread{
         try {
             this.apsQueue = EvictingQueue.create(aps);
         }catch(Exception e){
-            e.printStackTrace();
+            Main.getLogger().severe(e.getMessage());
         }finally {
             this.queueLock.unlock();
         }
@@ -122,7 +126,7 @@ public class Runner extends Thread{
             for (long element : this.apsQueue)
                 sum += element;
         }catch(Exception e){
-            e.printStackTrace();
+            Main.getLogger().severe(e.getMessage());
         }finally {
             this.queueLock.unlock();
         }
