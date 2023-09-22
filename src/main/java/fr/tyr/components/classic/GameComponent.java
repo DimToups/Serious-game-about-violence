@@ -1,37 +1,42 @@
-package fr.tyr.components;
+package fr.tyr.components.classic;
 
+import fr.tyr.Main;
 import fr.tyr.tools.Vector2D;
 
 import java.awt.*;
 import java.util.Objects;
 
-public abstract class GameComponent {
+public abstract class GameComponent<T> {
 
+    private T frame;
     private Vector2D position;
     private Vector2D size;
 
+    // Movement part
     private Vector2D target;
-    private Vector2D basePosition;
     private float duration;
 
+    // Behavior part
     private boolean isHovered = false;
 
-    public GameComponent(){
-        position = new Vector2D(0, 0);
+    public GameComponent(T frame){
+        this(frame, new Vector2D(0, 0));
     }
 
-    public GameComponent(Vector2D position){
+    public GameComponent(T frame, Vector2D position){
+        this(frame, position, new Vector2D(0, 0));
+    }
+
+    public GameComponent(T frame, Vector2D position, Vector2D size){
+        Main.getLogger().info("Initializing component %s at %s with size %s".formatted(Objects.isNull(frame) ? "unknown" : frame.getClass(), position, size));
+        this.frame = frame;
         this.position = position;
-    }
-
-    public void moveTo(Vector2D target){
-        moveTo(target, 0);
+        this.size = size;
     }
 
     public void moveTo(Vector2D target, float duration){
         this.target = target;
         this.duration = duration;
-        System.out.println(target);
     }
 
     public void move(int tps){
@@ -43,14 +48,13 @@ public abstract class GameComponent {
         if(position.distance(target) <= 1){
             position = target;
             target = null;
-            System.out.println(position);
-            System.out.println("Done");
-        }else{
-            System.out.println(position);
         }
         duration -= 1f / tps;
     }
 
+    public T getFrame() {
+        return frame;
+    }
     public Vector2D getPosition() {
         return position;
     }
@@ -61,6 +65,9 @@ public abstract class GameComponent {
         return isHovered;
     }
 
+    public void setFrame(T frame) {
+        this.frame = frame;
+    }
     protected void setSize(Vector2D size) {
         this.size = size;
     }
@@ -69,7 +76,9 @@ public abstract class GameComponent {
     }
 
     abstract public void render(Graphics g);
+    abstract public void tick(int aps);
     abstract public void onClick();
     abstract public void onHover();
     abstract public void onHoverLost();
+    abstract public void onResize(Vector2D size);
 }
