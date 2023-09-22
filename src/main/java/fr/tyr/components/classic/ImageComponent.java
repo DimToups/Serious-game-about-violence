@@ -1,5 +1,6 @@
 package fr.tyr.components.classic;
 
+import fr.tyr.Main;
 import fr.tyr.images.Images;
 import fr.tyr.tools.Vector2D;
 
@@ -20,43 +21,20 @@ public abstract class ImageComponent extends GameComponent<BufferedImage> {
         setSize(new Vector2D(getFrame().getWidth(), getFrame().getHeight()));
     }
 
-    public ImageComponent(Images image, Vector2D position, Vector2D size){
+    public ImageComponent(Images image, Vector2D position, Vector2D size, boolean center){
         super(image.getCopy(), position);
         this.imageType = image;
-        resize(size);
+        resize(size, center);
     }
 
-    public void resize(Vector2D size) {
+    public void resize(Vector2D size, boolean center) {
         Thread.ofVirtual().start(() -> {
-            setFrame(resizeImage(size));
+            long start = System.currentTimeMillis();
+            Main.getLogger().info("%s image resized from %s to %s ".formatted(imageType.name(), getSize(), size));
+            setFrame(imageType.getCopy(size, center));
             setSize(size);
+            Main.getLogger().info("%s image resized (%dms)".formatted(imageType.name(), System.currentTimeMillis() - start));
         });
-    }
-
-    private BufferedImage resizeImage(Vector2D size){
-        BufferedImage imageCopy = imageType.getCopy();
-        double originalWidth = imageCopy.getWidth();
-        double originalHeight = imageCopy.getHeight();
-
-        double scaleX = size.x / originalWidth;
-        double scaleY = size.y / originalHeight;
-
-        double scaleFactor = Math.max(scaleX, scaleY);
-        int newWidth = (int) (originalWidth * scaleFactor);
-        int newHeight = (int) (originalHeight * scaleFactor);
-
-        Image tmp = imageCopy.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
-        BufferedImage newImage = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g2d = newImage.createGraphics();
-
-        // Center the image
-        int xOffset = (int) ((size.x - newWidth) / 2);
-        int yOffset = (int) ((size.y - newHeight) / 2);
-
-        g2d.drawImage(tmp, xOffset, yOffset, null);
-        g2d.dispose();
-
-        return newImage;
     }
 
 
