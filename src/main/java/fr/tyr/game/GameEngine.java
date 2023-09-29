@@ -8,6 +8,7 @@ import fr.tyr.tools.Vector2D;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.function.Consumer;
 
 public class GameEngine {
 
@@ -26,28 +27,28 @@ public class GameEngine {
 
     private void initScene(){
         Main.getLogger().info("Initializing scene...");
+        safeListOperation(componentList -> {
+            componentList.add(new SampleBackgroundComponent());
+            componentList.add(new SampleImageComponent(new Vector2D(100, 100), new Vector2D(50, 50)));
+            componentList.add(new SampleTextComponent(new Vector2D(200, 200)));
+            componentList.add(new SampleAnimatedImageComponent(new Vector2D(300, 300)));
+            componentList.add(new SampleAnimatedTextComponent(new Vector2D(400, 400)));
+        });
+        Main.getLogger().info("Scene initialized.");
+    }
+
+    public void safeListOperation(Consumer<List<GameComponent<?>>> operation){
         this.componentsLock.lock();
         try{
-            this.components.add(new SampleBackgroundComponent());
-            this.components.add(new SampleImageComponent(new Vector2D(100, 100), new Vector2D(50, 50)));
-            this.components.add(new SampleTextComponent(new Vector2D(200, 200)));
-            this.components.add(new SampleAnimatedImageComponent(new Vector2D(300, 300)));
-            this.components.add(new SampleAnimatedTextComponent(new Vector2D(400, 400)));
-        }catch (Exception e) {
+            operation.accept(this.components);
+        }catch (Exception e){
             Main.getLogger().severe(e.getMessage());
         }finally {
             this.componentsLock.unlock();
         }
-        Main.getLogger().info("Scene initialized.");
     }
 
     public boolean isDevMode() {
         return devMode;
-    }
-    public ReentrantLock getComponentsLock() {
-        return componentsLock;
-    }
-    public List<GameComponent<?>> getComponents() {
-        return components;
     }
 }
