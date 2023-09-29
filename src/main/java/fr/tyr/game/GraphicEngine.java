@@ -2,6 +2,7 @@ package fr.tyr.game;
 
 import fr.tyr.Main;
 import fr.tyr.components.classic.GameComponent;
+import fr.tyr.game.enums.MouseButtons;
 import fr.tyr.tools.Runner;
 import fr.tyr.tools.Vector2D;
 
@@ -45,7 +46,7 @@ public class GraphicEngine extends JPanel {
             }
         });
         Main.getLogger().info("Click listener initialized.");
-
+        // Resize listener and timer
         resizeTimer = new Timer(200, e -> resize());
         resizeTimer.setRepeats(false);
         resizeTimer.setCoalesce(true);
@@ -58,36 +59,24 @@ public class GraphicEngine extends JPanel {
                     resizeTimer.start();
             }
         });
-
-        // Sound playing
-//        Sounds.DING.setVolume(.5f);
-//        Sounds.DING.play();
-//        Sounds.BACKGROUND.setVolume(.02f);
-//        Sounds.BACKGROUND.playBackground();
     }
 
     private void resize(){
-        this.gameEngine.getComponentsLock().lock();
-        try{
-            this.gameEngine.getComponents().forEach(component -> component.onResize(new Vector2D(getWidth(), getHeight())));
-        }catch (Exception e){
-            Main.getLogger().severe(e.getMessage());
-        }finally {
-            this.gameEngine.getComponentsLock().unlock();
-        }
+        Vector2D newSize = new Vector2D(getWidth(), getHeight());
+        Main.getLogger().info("Window resized to %s".formatted(newSize));
+        gameEngine.safeListOperation(components -> components.forEach(component -> component.onWindowResized(newSize)));
     }
 
-    private void onClick(MouseEvent event){
-        Main.getLogger().info("Click detected at (%d, %d)".formatted(event.getX(), event.getY()));
+    private void onClick(MouseEvent e){
         List<GameComponent<?>> localComponents = getReversedComponentsList();
-        Collections.reverse(localComponents);
-        Vector2D mouseVector = new Vector2D(event.getX(), event.getY());
+        Vector2D mouseVector = new Vector2D(e.getX(), e.getY());
+        Main.getLogger().info("Click detected at %s with %s button".formatted(mouseVector, MouseButtons.from(e.getButton())));
         for(GameComponent<?> component : localComponents){
             Vector2D componentPosition = component.getPosition();
             Vector2D componentSize = component.getSize();
             boolean isMouseBetween = mouseVector.isBetween(componentPosition, Vector2D.add(componentPosition, componentSize));
             if(isMouseBetween){
-                component.onClick();
+                component.onClick(MouseButtons.from(e.getButton()));
                 return;
             }
         }
@@ -95,7 +84,6 @@ public class GraphicEngine extends JPanel {
 
     private void tick(){
         List<GameComponent<?>> localComponents = getReversedComponentsList();
-        Collections.reverse(localComponents);
         // Trigger movements
         localComponents.forEach(component -> component.move(tpsRunner.getAps()));
         // Trigger hover
@@ -113,14 +101,8 @@ public class GraphicEngine extends JPanel {
 
     private List<GameComponent<?>> getReversedComponentsList(){
         List<GameComponent<?>> localComponents = new ArrayList<>();
-        gameEngine.getComponentsLock().lock();
-        try{
-            localComponents.addAll(gameEngine.getComponents());
-        }catch (Exception e){
-            Main.getLogger().severe(e.getMessage());
-        }finally {
-            gameEngine.getComponentsLock().unlock();
-        }
+        gameEngine.safeListOperation(localComponents::addAll);
+        Collections.reverse(localComponents);
         return localComponents;
     }
 
@@ -152,11 +134,6 @@ public class GraphicEngine extends JPanel {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
         drawComponents(g);
-        Point mouseLocation = getMousePosition();
-//        if(Objects.nonNull(mouseLocation)){
-//            g.setColor(Color.WHITE);
-//            g.fillOval(mouseLocation.x - 20, mouseLocation.y - 20, 40, 40);
-//        }
         g.setColor(Color.WHITE);
         g.setFont(font);
         if(gameEngine.isDevMode()){
@@ -167,13 +144,6 @@ public class GraphicEngine extends JPanel {
     }
 
     private void drawComponents(Graphics g){
-        gameEngine.getComponentsLock().lock();
-        try{
-            gameEngine.getComponents().forEach(component -> component.render(g));
-        }catch (Exception e){
-            Main.getLogger().severe(e.getMessage());
-        }finally {
-            gameEngine.getComponentsLock().unlock();
-        }
+        gameEngine.safeListOperation(components -> components.forEach(component -> component.render(g)));
     }
 }
