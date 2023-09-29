@@ -240,6 +240,28 @@ public class Vector2D {
         return target.x >= minX && target.x <= maxX && target.y >= minY && target.y <= maxY;
     }
 
+    public void toPositive() {
+        x = Math.abs(x);
+        y = Math.abs(y);
+    }
+    public Vector2D getToPositive() {
+        return new Vector2D(Math.abs(x), Math.abs(y));
+    }
+    public static Vector2D toPositive(Vector2D v) {
+        return new Vector2D(Math.abs(v.x), Math.abs(v.y));
+    }
+
+    public void toNegative() {
+        x = -Math.abs(x);
+        y = -Math.abs(y);
+    }
+    public Vector2D getToNegative() {
+        return new Vector2D(-Math.abs(x), -Math.abs(y));
+    }
+    public static Vector2D toNegative(Vector2D v) {
+        return new Vector2D(-Math.abs(v.x), -Math.abs(v.y));
+    }
+
     @Override
     public Vector2D clone() {
         return new Vector2D(x, y);
