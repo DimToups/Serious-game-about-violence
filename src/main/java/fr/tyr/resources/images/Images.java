@@ -1,4 +1,4 @@
-package fr.tyr.images;
+package fr.tyr.resources.images;
 
 import fr.tyr.Main;
 import fr.tyr.tools.Vector2D;
@@ -14,6 +14,7 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.logging.Level;
 
 public enum Images {
     SWORDS("swords.png", true),
@@ -33,19 +34,19 @@ public enum Images {
 
     private void loadImage(){
         long start = System.currentTimeMillis();
-        Main.getLogger().info("Loading image: " + path);
+        Main.getLogger().info("Loading image: %s".formatted(path));
         try {
-            InputStream inputStream = getClass().getResourceAsStream("/" + path);
+            InputStream inputStream = getClass().getResourceAsStream("/%s".formatted(path));
             if (Objects.isNull(inputStream))
-                throw new RuntimeException("Image not found: " + path);
+                throw new RuntimeException("Image not found: %s".formatted(path));
             image = ImageIO.read(inputStream);
             if(Objects.isNull(image))
-                throw new RuntimeException("Image not found: " + path);
+                throw new RuntimeException("Image not found: %s".formatted(path));
             if(sizeCache)
                 sizeCacheMap.put(new Vector2D(image.getWidth(), image.getHeight()), image);
-            Main.getLogger().info("Image loaded: " + path + " (" + (System.currentTimeMillis() - start) + "ms)");
+            Main.getLogger().info("Image loaded %s (%d ms)".formatted(path, System.currentTimeMillis() - start));
         } catch (IOException e) {
-            Main.getLogger().severe(e.getMessage());
+            Main.getLogger().log(Level.SEVERE, e.getMessage(), e);
         }
     }
 
@@ -77,26 +78,21 @@ public enum Images {
     public static BufferedImage resize(BufferedImage image, Vector2D size, boolean center) {
         int targetWidth = (int) size.x;
         int targetHeight = (int) size.y;
-
-        // Calcule le ratio de redimensionnement
+        // Compute resize ratio
         double widthRatio = (double) targetWidth / image.getWidth();
         double heightRatio = (double) targetHeight / image.getHeight();
         double scaleFactor = Math.max(widthRatio, heightRatio);
-
-        // Redimensionne l'image en conservant le ratio
+        // Resize image with ratio
         BufferedImage resizedImage = Scalr.resize(image, Scalr.Method.QUALITY, Scalr.Mode.AUTOMATIC, (int) (image.getWidth() * scaleFactor), (int) (image.getHeight() * scaleFactor), Scalr.OP_ANTIALIAS);
-
         if (center) {
-            // Calcule les décalages pour centrer l'image dans la nouvelle taille
+            // Compute offsets to center the image
             int xOffset = (targetWidth - resizedImage.getWidth()) / 2;
             int yOffset = (targetHeight - resizedImage.getHeight()) / 2;
-
-            // Crée une nouvelle image centrée
+            // Create the new image
             BufferedImage centeredImage = new BufferedImage(targetWidth, targetHeight, BufferedImage.TYPE_INT_ARGB);
             Graphics2D g2d = centeredImage.createGraphics();
             g2d.drawImage(resizedImage, xOffset, yOffset, null);
             g2d.dispose();
-
             return centeredImage;
         } else {
             return resizedImage;

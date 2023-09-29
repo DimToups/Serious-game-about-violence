@@ -1,11 +1,14 @@
-package fr.tyr.sounds;
+package fr.tyr.resources.sounds;
 
+import fr.tyr.Main;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Range;
 
 import javax.sound.sampled.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
+import java.util.logging.Level;
 
 @SuppressWarnings("unused")
 public enum Sounds {
@@ -29,7 +32,7 @@ public enum Sounds {
             clip = AudioSystem.getClip();
             clip.open(audioInputStream);
         } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
-            throw new RuntimeException(e);
+            Main.getLogger().log(Level.SEVERE, e.getMessage(), e);
         }
     }
 

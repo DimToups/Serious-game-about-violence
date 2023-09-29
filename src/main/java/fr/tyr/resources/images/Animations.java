@@ -1,4 +1,6 @@
-package fr.tyr.images;
+package fr.tyr.resources.images;
+
+import fr.tyr.Main;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -7,6 +9,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.logging.Level;
 
 public enum Animations {
     BAR("animation/Frame %d.png", 10);
@@ -30,7 +33,7 @@ public enum Animations {
                 images.add(ImageIO.read(inputStream));
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            Main.getLogger().log(Level.SEVERE, e.getMessage(), e);
         }
     }
 
