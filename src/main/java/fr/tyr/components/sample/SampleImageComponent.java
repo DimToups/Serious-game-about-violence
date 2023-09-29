@@ -1,7 +1,8 @@
 package fr.tyr.components.sample;
 
 import fr.tyr.components.classic.ImageComponent;
-import fr.tyr.images.Images;
+import fr.tyr.game.enums.MouseButtons;
+import fr.tyr.resources.images.Images;
 import fr.tyr.tools.Vector2D;
 
 public class SampleImageComponent extends ImageComponent {
@@ -15,27 +16,22 @@ public class SampleImageComponent extends ImageComponent {
     }
 
     @Override
-    public void onClick() {
-        if(isHovered())
-            moveTo(new Vector2D(200, 50), .1f);
-        else
-            moveTo(new Vector2D(205, 55), .1f);
+    public void onClick(MouseButtons button) {
+        moveTo(new Vector2D(500, 100), .5f);
     }
 
     @Override
     public void onHover() {
-        resize(new Vector2D(60, 60), false);
-        getPosition().subtract(new Vector2D(5, 5));
+        resize(new Vector2D(100, 100), false, true);
     }
 
     @Override
     public void onHoverLost() {
-        resize(new Vector2D(50, 50), false);
-        getPosition().add(new Vector2D(5, 5));
+        resize(new Vector2D(50, 50), false, true);
     }
 
     @Override
-    public void onResize(Vector2D size) {
+    public void onWindowResized(Vector2D size) {
 
     }
 }

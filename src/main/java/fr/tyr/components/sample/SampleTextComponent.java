@@ -1,6 +1,7 @@
 package fr.tyr.components.sample;
 
 import fr.tyr.components.classic.TextComponent;
+import fr.tyr.game.enums.MouseButtons;
 import fr.tyr.tools.Vector2D;
 
 import java.awt.*;
@@ -16,7 +17,7 @@ public class SampleTextComponent extends TextComponent {
     }
 
     @Override
-    public void onClick() {
+    public void onClick(MouseButtons button) {
 
     }
 
@@ -31,7 +32,7 @@ public class SampleTextComponent extends TextComponent {
     }
 
     @Override
-    public void onResize(Vector2D size) {
+    public void onWindowResized(Vector2D size) {
 
     }
 }

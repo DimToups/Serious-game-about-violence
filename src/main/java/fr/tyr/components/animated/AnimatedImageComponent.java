@@ -1,6 +1,6 @@
 package fr.tyr.components.animated;
 
-import fr.tyr.images.Animations;
+import fr.tyr.resources.images.Animations;
 import fr.tyr.tools.Vector2D;
 
 import java.awt.*;

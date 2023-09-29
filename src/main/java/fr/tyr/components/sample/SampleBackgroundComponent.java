@@ -1,7 +1,8 @@
 package fr.tyr.components.sample;
 
 import fr.tyr.components.classic.ImageComponent;
-import fr.tyr.images.Images;
+import fr.tyr.game.enums.MouseButtons;
+import fr.tyr.resources.images.Images;
 import fr.tyr.tools.Vector2D;
 
 public class SampleBackgroundComponent extends ImageComponent {
@@ -16,7 +17,7 @@ public class SampleBackgroundComponent extends ImageComponent {
     }
 
     @Override
-    public void onClick() {
+    public void onClick(MouseButtons button) {
 
     }
 
@@ -31,7 +32,7 @@ public class SampleBackgroundComponent extends ImageComponent {
     }
 
     @Override
-    public void onResize(Vector2D size) {
+    public void onWindowResized(Vector2D size) {
         resize(size, true);
     }
 }

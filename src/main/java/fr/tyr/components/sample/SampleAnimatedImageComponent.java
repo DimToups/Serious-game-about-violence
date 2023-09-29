@@ -1,7 +1,8 @@
 package fr.tyr.components.sample;
 
 import fr.tyr.components.animated.AnimatedImageComponent;
-import fr.tyr.images.Animations;
+import fr.tyr.game.enums.MouseButtons;
+import fr.tyr.resources.images.Animations;
 import fr.tyr.tools.Vector2D;
 
 public class SampleAnimatedImageComponent extends AnimatedImageComponent {
@@ -11,7 +12,7 @@ public class SampleAnimatedImageComponent extends AnimatedImageComponent {
     }
 
     @Override
-    public void onClick() {
+    public void onClick(MouseButtons button) {
 
     }
 
@@ -26,7 +27,7 @@ public class SampleAnimatedImageComponent extends AnimatedImageComponent {
     }
 
     @Override
-    public void onResize(Vector2D size) {
+    public void onWindowResized(Vector2D size) {
 
     }
 }

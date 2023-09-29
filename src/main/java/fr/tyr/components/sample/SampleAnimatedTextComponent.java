@@ -1,6 +1,7 @@
 package fr.tyr.components.sample;
 
 import fr.tyr.components.animated.AnimatedTextComponent;
+import fr.tyr.game.enums.MouseButtons;
 import fr.tyr.tools.Vector2D;
 import org.jetbrains.annotations.NotNull;
 
@@ -14,7 +15,7 @@ public class SampleAnimatedTextComponent extends AnimatedTextComponent {
     }
 
     @Override
-    public void onClick() {
+    public void onClick(MouseButtons button) {
 
     }
 
@@ -29,7 +30,7 @@ public class SampleAnimatedTextComponent extends AnimatedTextComponent {
     }
 
     @Override
-    public void onResize(Vector2D size) {
+    public void onWindowResized(Vector2D size) {
 
     }
 }

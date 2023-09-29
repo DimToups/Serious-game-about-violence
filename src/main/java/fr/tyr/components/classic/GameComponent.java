@@ -1,6 +1,7 @@
 package fr.tyr.components.classic;
 
 import fr.tyr.Main;
+import fr.tyr.game.enums.MouseButtons;
 import fr.tyr.tools.Vector2D;
 
 import java.awt.*;
@@ -74,11 +75,20 @@ public abstract class GameComponent<T> {
     public void setIsHovered(boolean isHovered) {
         this.isHovered = isHovered;
     }
+    public boolean isMoving(){
+        return Objects.nonNull(target);
+    }
+    public float getRemainingDuration(){
+        return duration;
+    }
+    public Vector2D getTarget() {
+        return target;
+    }
 
     abstract public void render(Graphics g);
     abstract public void tick(int aps);
-    abstract public void onClick();
+    abstract public void onClick(MouseButtons button);
     abstract public void onHover();
     abstract public void onHoverLost();
-    abstract public void onResize(Vector2D size);
+    abstract public void onWindowResized(Vector2D size);
 }
