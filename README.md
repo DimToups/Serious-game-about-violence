@@ -2,7 +2,7 @@
 
 ## Graphic Engine
 ### TODO
-- Images performances improving
+- Text animations
 - Global refactoring and documentation
 ### To fix
 - Nothing
