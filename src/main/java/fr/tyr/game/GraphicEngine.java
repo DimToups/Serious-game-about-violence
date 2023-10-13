@@ -30,9 +30,7 @@ public class GraphicEngine extends JPanel {
         // Init components
         // Runner setup
         Main.getLogger().info("Initializing runners...");
-        fpsRunner = new Runner("fps_runner", () -> {
-            paintImmediately(getBounds());
-        }, 60, false);
+        fpsRunner = new Runner("fps_runner", () -> paintImmediately(getBounds()), 60, false);
         tpsRunner = new Runner("tps_runner", this::tick, 60, false);
         fpsRunner.start();
         tpsRunner.start();
@@ -50,7 +48,7 @@ public class GraphicEngine extends JPanel {
         resizeTimer = new Timer(200, e -> resize());
         resizeTimer.setRepeats(false);
         resizeTimer.setCoalesce(true);
-        this.addComponentListener(new ComponentAdapter() {
+        addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
                 if(resizeTimer.isRunning())
@@ -84,19 +82,27 @@ public class GraphicEngine extends JPanel {
 
     private void tick(){
         List<GameComponent<?>> localComponents = getReversedComponentsList();
-        // Trigger movements
-        localComponents.forEach(component -> component.move(tpsRunner.getAps()));
-        // Trigger hover
-        Point mouseLocation = getMousePosition();
-        if(Objects.nonNull(mouseLocation)){
-            Vector2D mouseVector = new Vector2D(mouseLocation.x, mouseLocation.y);
-            boolean hoverFound = false;
-            for(GameComponent<?> component : localComponents)
-                hoverFound = triggerHover(mouseVector, component, hoverFound);
+        Thread movingThread = new Thread(() -> localComponents.forEach(component -> component.move(tpsRunner.getAps())));
+        Thread hoverThread = new Thread(() -> {
+            Point mouseLocation = getMousePosition();
+            if (Objects.nonNull(mouseLocation)) {
+                Vector2D mouseVector = new Vector2D(mouseLocation.x, mouseLocation.y);
+                boolean hoverFound = false;
+                for (GameComponent<?> component : localComponents)
+                    hoverFound = triggerHover(mouseVector, component, hoverFound);
+            }
+        });
+        Thread tickingThread = new Thread(() -> localComponents.forEach(component -> component.tick(tpsRunner.getAps())));
+        movingThread.start();
+        hoverThread.start();
+        tickingThread.start();
+        try {
+            movingThread.join();
+            hoverThread.join();
+            tickingThread.join();
+        } catch (InterruptedException e) {
+            Main.getLogger().warning("Tick interrupted");
         }
-        // Tick all components
-        for(GameComponent<?> component : localComponents)
-            component.tick(tpsRunner.getAps());
     }
 
     private List<GameComponent<?>> getReversedComponentsList(){
