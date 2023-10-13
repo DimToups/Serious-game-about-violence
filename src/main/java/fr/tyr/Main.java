@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 public class Main {
 
     private static Logger logger;
+    private static GameEngine gameEngine;
 
     public static void main(String[] args) {
         boolean devMode = false;
@@ -22,7 +23,7 @@ public class Main {
             devMode = args[0].equals("--dev");
         setupLogger(devMode);
         logger.info("Creating game engine");
-        GameEngine gameEngine = new GameEngine(devMode);
+        gameEngine = new GameEngine(devMode);
         logger.info("Creating graphic engine");
         GraphicEngine graphicEngine = new GraphicEngine(gameEngine);
         logger.info("Creating game window");
@@ -52,5 +53,9 @@ public class Main {
 
     public static Logger getLogger() {
         return logger;
+    }
+
+    public static GameEngine getGameEngine() {
+        return gameEngine;
     }
 }
