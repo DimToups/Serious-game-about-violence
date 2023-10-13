@@ -1,46 +1,35 @@
 package fr.tyr.components.classic;
 
+import fr.tyr.components.texts.Text;
+import fr.tyr.components.texts.TextPart;
 import fr.tyr.tools.Vector2D;
 
 import java.awt.*;
+import java.util.Objects;
 
-public abstract class TextComponent extends GameComponent<String>{
+public abstract class TextComponent extends GameComponent<Text>{
 
-    private Font font;
-    private Color color;
-
-    public TextComponent(String frame, Font font, Color color) {
+    public TextComponent(Text frame) {
         super(frame);
-        this.font = font;
-        this.color = color;
-        setSize(new Vector2D(getFrame().length() * font.getSize() / 1.5D, -font.getSize()));
     }
 
-    public TextComponent(String frame, Vector2D position, Font font, Color color) {
+    public TextComponent(Text frame, Vector2D position) {
         super(frame, position);
-        this.font = font;
-        this.color = color;
-        setSize(new Vector2D(getFrame().length() * font.getSize() / 1.5D, -font.getSize()));
     }
 
     @Override
     public void render(Graphics g) {
-        g.setColor(color);
-        g.setFont(font);
-        g.drawString(getFrame(), (int) getPosition().x, (int) getPosition().y);
-    }
-
-    public Font getFont() {
-        return font;
-    }
-    public void setFont(Font font) {
-        this.font = font;
-    }
-
-    public Color getColor() {
-        return color;
-    }
-    public void setColor(Color color) {
-        this.color = color;
+        int x = (int) getPosition().x;
+        int maxY = 0;
+        if(Objects.nonNull(getFrame()))
+            for(TextPart part : getFrame().getParts()){
+                g.setColor(part.getColor());
+                g.setFont(part.getFont());
+                g.drawString(part.getText(), x, (int) getPosition().y);
+                x += g.getFontMetrics().stringWidth(part.getText());
+                if(g.getFontMetrics().getHeight() > maxY)
+                    maxY = g.getFontMetrics().getHeight();
+            }
+        setSize(new Vector2D(x - (int) getPosition().x, -maxY));
     }
 }

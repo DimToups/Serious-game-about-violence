@@ -1,14 +1,20 @@
 package fr.tyr.components.sample;
 
 import fr.tyr.components.classic.TextComponent;
+import fr.tyr.components.sample.texts.SampleText;
+import fr.tyr.components.texts.Text;
+import fr.tyr.components.texts.TextPart;
 import fr.tyr.game.enums.MouseButtons;
 import fr.tyr.tools.Vector2D;
 
 import java.awt.*;
 
 public class SampleTextComponent extends TextComponent {
+
+
+
     public SampleTextComponent(Vector2D position) {
-        super("Hello World!", position, new Font("Roboto", Font.PLAIN, 18), Color.WHITE);
+        super(new SampleText(), position);
     }
 
     @Override
@@ -23,12 +29,12 @@ public class SampleTextComponent extends TextComponent {
 
     @Override
     public void onHover() {
-        setFont(new Font("Roboto", Font.PLAIN, 24));
+        getFrame().getParts().get(1).setFont(new Font("Roboto", Font.PLAIN, 20));
     }
 
     @Override
     public void onHoverLost() {
-        setFont(new Font("Roboto", Font.PLAIN, 18));
+        getFrame().getParts().get(1).setFont(new Font("Roboto", Font.PLAIN, 16));
     }
 
     @Override

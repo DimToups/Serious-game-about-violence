@@ -1,38 +1,36 @@
 package fr.tyr.components.animated;
 
+import fr.tyr.components.texts.AnimatedText;
+import fr.tyr.components.texts.Text;
+import fr.tyr.components.texts.TextPart;
 import fr.tyr.tools.Vector2D;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
 import java.util.List;
 
-public abstract class AnimatedTextComponent extends AnimatedComponent<String> {
+public abstract class AnimatedTextComponent extends AnimatedComponent<Text> {
 
-    private final Font font;
-    private final Color color;
-
-    public AnimatedTextComponent(@NotNull Vector2D position, @NotNull List<String> frames, float timePerFrame, Font font, Color color) {
-        super(position, frames, timePerFrame);
-        this.font = font;
-        this.color = color;
+    public AnimatedTextComponent(@NotNull Vector2D position, AnimatedText text, float timePerFrame) {
+        super(position, text.getFrames(), timePerFrame);
     }
 
-    public AnimatedTextComponent(@NotNull Vector2D position, @NotNull List<String> frames, @NotNull List<Float> durationList, Font font, Color color) {
-        super(position, frames, durationList);
-        this.font = font;
-        this.color = color;
-    }
-
-    @Override
-    public void nextFrame() {
-        super.nextFrame();
-        setSize(new Vector2D(getCurrentFrame().length() * font.getSize() / 1.5D, -font.getSize()));
+    public AnimatedTextComponent(@NotNull Vector2D position, AnimatedText text, @NotNull List<Float> durationList) {
+        super(position, text.getFrames(), durationList);
     }
 
     @Override
     public void render(Graphics g) {
-        g.setFont(font);
-        g.setColor(color);
-        g.drawString(getCurrentFrame(), (int) getPosition().x, (int) getPosition().y);
+        int x = (int) getPosition().x;
+        int maxY = 0;
+        for(TextPart part : getCurrentFrame().getParts()){
+            g.setColor(part.getColor());
+            g.setFont(part.getFont());
+            g.drawString(part.getText(), x, (int) getPosition().y);
+            x += g.getFontMetrics().stringWidth(part.getText());
+            if(g.getFontMetrics().getHeight() > maxY)
+                maxY = g.getFontMetrics().getHeight();
+        }
+        setSize(new Vector2D(x - (int) getPosition().x, -maxY));
     }
 }
