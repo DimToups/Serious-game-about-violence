@@ -1,6 +1,7 @@
 package fr.tyr.components.sample;
 
 import fr.tyr.components.animated.AnimatedTextComponent;
+import fr.tyr.components.sample.texts.SampleAnimatedText;
 import fr.tyr.game.enums.MouseButtons;
 import fr.tyr.tools.Vector2D;
 import org.jetbrains.annotations.NotNull;
@@ -11,7 +12,7 @@ import java.util.List;
 public class SampleAnimatedTextComponent extends AnimatedTextComponent {
 
     public SampleAnimatedTextComponent(@NotNull Vector2D position) {
-        super(position, List.of("", "H", "He", "Hel", "Hell", "Hello", "Hell", "Hel", "He", "H"), .1f, new Font("Roboto", Font.PLAIN, 18), Color.WHITE);
+        super(position, new SampleAnimatedText(), .1f);
     }
 
     @Override
