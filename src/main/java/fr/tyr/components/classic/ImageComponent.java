@@ -20,7 +20,8 @@ public abstract class ImageComponent extends GameComponent<BufferedImage> {
     public ImageComponent(Images image, Vector2D position) {
         super(image.getCopy(), position);
         this.imageType = image;
-        setSize(new Vector2D(getFrame().getWidth(), getFrame().getHeight()));
+        if(Objects.nonNull(getFrame()))
+            setSize(new Vector2D(getFrame().getWidth(), getFrame().getHeight()));
     }
 
     public ImageComponent(Images image, Vector2D position, Vector2D size, boolean center){

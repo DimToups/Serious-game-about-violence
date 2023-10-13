@@ -3,6 +3,7 @@ package fr.tyr.components.classic;
 import fr.tyr.Main;
 import fr.tyr.game.enums.MouseButtons;
 import fr.tyr.tools.Vector2D;
+import org.jetbrains.annotations.Nullable;
 
 import java.awt.*;
 import java.util.Objects;
@@ -53,6 +54,7 @@ public abstract class GameComponent<T> {
         duration -= 1f / tps;
     }
 
+    @Nullable
     public T getFrame() {
         return frame;
     }
