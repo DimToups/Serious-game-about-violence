@@ -6,7 +6,7 @@
 
     <groupId>fr.tyr</groupId>
     <artifactId>T3-Tyr</artifactId>
-    <version>0.0.1-alpha</version>
+    <version>1.0.0-beta</version>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
