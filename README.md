@@ -2,7 +2,7 @@
 
 ## Graphic Engine
 ### TODO
-- Text animations
-- Global refactoring and documentation
+- Image component cropping
+- Text animation builder
 ### To fix
 - Nothing
