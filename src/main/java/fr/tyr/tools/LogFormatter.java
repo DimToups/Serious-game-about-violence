@@ -9,6 +9,11 @@ public class LogFormatter extends Formatter {
 
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
+    /**
+     * Format the log record to a string
+     * @param record the log record to be formatted.
+     * @return The formatted log record
+     */
     @Override
     public String format(LogRecord record) {
         String time = dateFormat.format(new Date(record.getMillis()));
@@ -21,6 +26,6 @@ public class LogFormatter extends Formatter {
             case "SEVERE" -> "\u001B[0;31m";
             default -> "\u001B[0;37m";
         };
-        return "%s[%s] [%s/%s]: %s\n".formatted(color, time, className, level, message);
+        return "%s[%s] [%s/%s]: %s\u001B[0m\n".formatted(color, time, className, level, message);
     }
 }

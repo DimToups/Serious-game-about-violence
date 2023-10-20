@@ -18,12 +18,20 @@ public enum Animations {
     private final int frameCount;
     private List<BufferedImage> images;
 
+    /**
+     * Create an animation
+     * @param path The path to the images
+     * @param frameCount The number of images
+     */
     Animations(String path, int frameCount){
         this.path = path;
         this.frameCount = frameCount;
     }
 
-    private void loadImage(){
+    /**
+     * Load the images from the resources folder
+     */
+    private void loadImages(){
         images = new ArrayList<>();
         try {
             for(int i = 0; i < frameCount; i++){
@@ -37,9 +45,13 @@ public enum Animations {
         }
     }
 
+    /**
+     * Return a copy of the images
+     * @return A copy of the images
+     */
     public List<BufferedImage> getCopy() {
         if (Objects.isNull(images))
-            loadImage();
+            loadImages();
         List<BufferedImage> localImages = new ArrayList<>();
         for(BufferedImage image : images)
             localImages.add(new BufferedImage(image.getColorModel(), image.copyData(null), image.isAlphaPremultiplied(), null));

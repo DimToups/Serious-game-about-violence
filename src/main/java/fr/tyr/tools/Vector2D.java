@@ -2,6 +2,9 @@ package fr.tyr.tools;
 
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * A class to represent a 2D vector and do some operations on it
+ */
 @SuppressWarnings({"unused", "MethodDoesntCallSuperMethod", "SuspiciousNameCombination"})
 public class Vector2D {
 

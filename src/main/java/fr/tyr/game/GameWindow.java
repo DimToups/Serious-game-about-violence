@@ -4,12 +4,15 @@ import javax.swing.*;
 
 public class GameWindow extends JFrame {
 
-    public GameWindow(GraphicEngine graphicEngine){
+    /**
+     * Create the game window
+     */
+    public GameWindow(){
         super("T3 - Tyr");
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(1280, 720);
-        this.setLocationRelativeTo(null);
-        this.setVisible(true);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(1280, 720);
+        setLocationRelativeTo(null);
+        setResizable(false);
+        setVisible(true);
     }
-
 }

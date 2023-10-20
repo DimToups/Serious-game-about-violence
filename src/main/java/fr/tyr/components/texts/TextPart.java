@@ -8,6 +8,12 @@ public class TextPart {
     private Color color;
     private Font font;
 
+    /**
+     * Create a text part with the given text, color and font
+     * @param text The text
+     * @param color The color
+     * @param font The font
+     */
     public TextPart(String text, Color color, Font font){
         this.text = text;
         this.color = color;

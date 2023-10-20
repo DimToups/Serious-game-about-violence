@@ -44,6 +44,9 @@ public class Runner extends Thread{
         this.apsQueue = EvictingQueue.create(aps);
     }
 
+    /**
+     * The main loop of the runner
+     */
     @Override
     public void run() {
         Main.getLogger().info("Runner " + this.name + " started");
@@ -87,6 +90,28 @@ public class Runner extends Thread{
         }
     }
 
+    /**
+     * Compute the average of the queue
+     * @return The average of the queue
+     */
+    private double computeAverage() {
+        long sum = 0;
+        int count = this.apsQueue.size();
+        this.queueLock.lock();
+        try{
+            for (long element : this.apsQueue)
+                sum += element;
+        }catch(Exception e){
+            Main.getLogger().severe(e.getMessage());
+        }finally {
+            this.queueLock.unlock();
+        }
+        if (count > 0)
+            return (double) sum / count;
+        else
+            return -1_000_000_000;
+    }
+
     public void setPaused(boolean paused) {
         this.paused = paused;
     }
@@ -116,23 +141,5 @@ public class Runner extends Thread{
     }
     public int getAps() {
         return (int) (1D / this.aps);
-    }
-
-    private double computeAverage() {
-        long sum = 0;
-        int count = this.apsQueue.size();
-        this.queueLock.lock();
-        try{
-            for (long element : this.apsQueue)
-                sum += element;
-        }catch(Exception e){
-            Main.getLogger().severe(e.getMessage());
-        }finally {
-            this.queueLock.unlock();
-        }
-        if (count > 0)
-            return (double) sum / count;
-        else
-            return -1_000_000_000;
     }
 }

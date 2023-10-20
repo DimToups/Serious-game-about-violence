@@ -8,7 +8,10 @@ import fr.tyr.tools.Vector2D;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -24,6 +27,10 @@ public class GraphicEngine extends JPanel {
 
     private final Timer resizeTimer;
 
+    /**
+     * Create a new graphic engine
+     * @param gameEngine The game engine
+     */
     public GraphicEngine(GameEngine gameEngine){
         this.gameEngine = gameEngine;
         setBackground(Color.BLACK);
@@ -59,12 +66,19 @@ public class GraphicEngine extends JPanel {
         });
     }
 
+    /**
+     * Call the resize event on all components
+     */
     private void resize(){
         Vector2D newSize = new Vector2D(getWidth(), getHeight());
         Main.getLogger().info("Window resized to %s".formatted(newSize));
         gameEngine.safeListOperation(components -> components.forEach(component -> component.onWindowResized(newSize)));
     }
 
+    /**
+     * Call the click event on the component that is clicked
+     * @param e The mouse event
+     */
     private void onClick(MouseEvent e){
         List<GameComponent<?>> localComponents = getReversedComponentsList();
         Vector2D mouseVector = new Vector2D(e.getX(), e.getY());
@@ -80,6 +94,9 @@ public class GraphicEngine extends JPanel {
         }
     }
 
+    /**
+     * Call the tick event on all components every ticks (60 times per second)
+     */
     private void tick(){
         List<GameComponent<?>> localComponents = getReversedComponentsList();
         Thread movingThread = new Thread(() -> localComponents.forEach(component -> component.move(tpsRunner.getAps())));
@@ -105,6 +122,10 @@ public class GraphicEngine extends JPanel {
         }
     }
 
+    /**
+     * Get the list of components in reverse order
+     * @return The list of components in reverse order
+     */
     private List<GameComponent<?>> getReversedComponentsList(){
         List<GameComponent<?>> localComponents = new ArrayList<>();
         gameEngine.safeListOperation(localComponents::addAll);
@@ -112,6 +133,13 @@ public class GraphicEngine extends JPanel {
         return localComponents;
     }
 
+    /**
+     * Trigger the hover event on the component if the mouse is on it
+     * @param mouseVector The mouse location as a 2d vector
+     * @param component The component
+     * @param hoverFound If a component is hovered
+     * @return If a component is hovered
+     */
     private boolean triggerHover(Vector2D mouseVector, GameComponent<?> component, boolean hoverFound) {
         Vector2D componentPosition = component.getPosition();
         Vector2D componentSize = component.getSize();
@@ -133,6 +161,10 @@ public class GraphicEngine extends JPanel {
         return hoverFound;
     }
 
+    /**
+     * Paint the components on the screen
+     * @param g The graphics object
+     */
     @Override
     protected void paintComponent(Graphics g) {
         long start = System.nanoTime();
@@ -149,6 +181,10 @@ public class GraphicEngine extends JPanel {
         }
     }
 
+    /**
+     * Draw all components
+     * @param g The graphics object
+     */
     private void drawComponents(Graphics g){
         gameEngine.safeListOperation(components -> components.forEach(component -> component.render(g)));
     }

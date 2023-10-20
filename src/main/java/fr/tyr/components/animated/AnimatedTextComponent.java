@@ -11,10 +11,22 @@ import java.util.List;
 
 public abstract class AnimatedTextComponent extends AnimatedComponent<Text> {
 
+    /**
+     * Create a new animated text component
+     * @param position The position of the text
+     * @param text The text to display
+     * @param timePerFrame The time to display each frame
+     */
     public AnimatedTextComponent(@NotNull Vector2D position, AnimatedText text, float timePerFrame) {
         super(position, text.getFrames(), timePerFrame);
     }
 
+    /**
+     * Create a new animated text component
+     * @param position The position of the text
+     * @param text The text to display
+     * @param durationList The list of duration for each frame
+     */
     public AnimatedTextComponent(@NotNull Vector2D position, AnimatedText text, @NotNull List<Float> durationList) {
         super(position, text.getFrames(), durationList);
     }

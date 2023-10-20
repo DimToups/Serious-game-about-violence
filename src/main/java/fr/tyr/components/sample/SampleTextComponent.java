@@ -2,8 +2,6 @@ package fr.tyr.components.sample;
 
 import fr.tyr.components.classic.TextComponent;
 import fr.tyr.components.sample.texts.SampleText;
-import fr.tyr.components.texts.Text;
-import fr.tyr.components.texts.TextPart;
 import fr.tyr.game.enums.MouseButtons;
 import fr.tyr.tools.Vector2D;
 

@@ -8,47 +8,49 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class ComposedComponent extends GameComponent<GameComponent<?>> {
+public abstract class ComposedComponent extends GameComponent<List<GameComponent<?>>> {
 
-    private final List<GameComponent<?>> components;
-
+    /**
+     * Create a composed component
+     * @param position The position of the component
+     * @param components The components to add to the composed component
+     */
     public ComposedComponent(Vector2D position, GameComponent<?>... components) {
-        super(null, position);
-        this.components = new ArrayList<>(List.of(components));
+        super(new ArrayList<>(List.of(components)), position);
     }
 
     @Override
     public void move(int tps){
-        components.forEach(component -> component.move(tps));
+        getFrame().forEach(component -> component.move(tps));
     }
 
     @Override
     public void render(Graphics g) {
-        components.forEach(component -> component.render(g));
+        getFrame().forEach(component -> component.render(g));
     }
 
     @Override
     public void tick(int aps) {
-        components.forEach(component -> component.tick(aps));
+        getFrame().forEach(component -> component.tick(aps));
     }
 
     @Override
     public void onClick(MouseButtons button) {
-        components.forEach(component -> component.onClick(button));
+        getFrame().forEach(component -> component.onClick(button));
     }
 
     @Override
     public void onHover() {
-        components.forEach(GameComponent::onHover);
+        getFrame().forEach(GameComponent::onHover);
     }
 
     @Override
     public void onHoverLost() {
-        components.forEach(GameComponent::onHoverLost);
+        getFrame().forEach(GameComponent::onHoverLost);
     }
 
     @Override
     public void onWindowResized(Vector2D size) {
-        components.forEach(component -> component.onWindowResized(size));
+        getFrame().forEach(component -> component.onWindowResized(size));
     }
 }

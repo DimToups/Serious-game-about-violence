@@ -17,14 +17,21 @@ public class GameEngine {
     private final ReentrantLock componentsLock = new ReentrantLock();
     private final List<GameComponent<?>> components;
 
+    /**
+     * Create a new game engine
+     * @param devMode If true, the game engine will be in dev mode
+     */
     public GameEngine(boolean devMode){
         Main.getLogger().info("Initializing game engine...");
         this.devMode = devMode;
-        this.components = new ArrayList<>();
-        this.initScene();
+        components = new ArrayList<>();
+        initScene();
         Main.getLogger().info("Game engine initialized.");
     }
 
+    /**
+     * Initialize the scene with the components
+     */
     private void initScene(){
         Main.getLogger().info("Initializing scene...");
         safeListOperation(componentList -> {
@@ -37,14 +44,19 @@ public class GameEngine {
         Main.getLogger().info("Scene initialized.");
     }
 
+    /**
+     * Add a component to the game engine
+     * Protect the list against concurrent modification
+     * @param operation The operation to execute on the list
+     */
     public void safeListOperation(Consumer<List<GameComponent<?>>> operation){
-        this.componentsLock.lock();
+        componentsLock.lock();
         try{
-            operation.accept(this.components);
+            operation.accept(components);
         }catch (Exception e){
             Main.getLogger().severe(e.getMessage());
         }finally {
-            this.componentsLock.unlock();
+            componentsLock.unlock();
         }
     }
 

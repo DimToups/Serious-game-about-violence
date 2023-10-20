@@ -25,6 +25,11 @@ public enum Images {
     private BufferedImage image;
     private Map<Vector2D, BufferedImage> sizeCacheMap;
 
+    /**
+     * Create an image
+     * @param path Path to the image
+     * @param sizeCache If true, the image will be resized and cached
+     */
     Images(String path, boolean sizeCache){
         this.path = path;
         this.sizeCache = sizeCache;
@@ -32,6 +37,9 @@ public enum Images {
             this.sizeCacheMap = new HashMap<>();
     }
 
+    /**
+     * Load the image
+     */
     private void loadImage(){
         long start = System.currentTimeMillis();
         Main.getLogger().info("Loading image: %s".formatted(path));
@@ -50,12 +58,22 @@ public enum Images {
         }
     }
 
+    /**
+     * Get a copy of the image
+     * @return A copy of the image
+     */
     public BufferedImage getCopy() {
         if (Objects.isNull(image))
             loadImage();
         return deepCopy(image);
     }
 
+    /**
+     * Get a copy of the image resized
+     * @param size Size of the image
+     * @param center If true, the image will be centered
+     * @return A copy of the image resized
+     */
     public BufferedImage getCopy(Vector2D size, boolean center){
         if (Objects.isNull(image))
             loadImage();
@@ -68,6 +86,11 @@ public enum Images {
         return resized;
     }
 
+    /**
+     * Get a copy of the image resized
+     * @param bi Image to resize
+     * @return A copy of the image resized
+     */
     private static BufferedImage deepCopy(BufferedImage bi) {
         ColorModel cm = bi.getColorModel();
         boolean isAlphaPremultiplied = cm.isAlphaPremultiplied();
@@ -75,6 +98,13 @@ public enum Images {
         return new BufferedImage(cm, raster, isAlphaPremultiplied, null);
     }
 
+    /**
+     * Resize an image
+     * @param image Image to resize
+     * @param size Size of the image
+     * @param center If true, the image will be centered
+     * @return The resized image
+     */
     public static BufferedImage resize(BufferedImage image, Vector2D size, boolean center) {
         int targetWidth = (int) size.x;
         int targetHeight = (int) size.y;

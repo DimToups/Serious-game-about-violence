@@ -6,9 +6,6 @@ import fr.tyr.game.enums.MouseButtons;
 import fr.tyr.tools.Vector2D;
 import org.jetbrains.annotations.NotNull;
 
-import java.awt.*;
-import java.util.List;
-
 public class SampleAnimatedTextComponent extends AnimatedTextComponent {
 
     public SampleAnimatedTextComponent(@NotNull Vector2D position) {

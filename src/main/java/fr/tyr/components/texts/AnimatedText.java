@@ -7,6 +7,10 @@ public class AnimatedText {
 
     private final List<Text> frames;
 
+    /**
+     * Create an animated text
+     * @param frames The frames of the animation
+     */
     public AnimatedText(Text... frames) {
         this.frames = new ArrayList<>(List.of(frames));
     }
@@ -15,6 +19,10 @@ public class AnimatedText {
         return frames;
     }
 
+    /**
+     * Add a frame to the animation
+     * @param frame The frame to add
+     */
     public void addFrame(Text frame) {
         frames.add(frame);
     }

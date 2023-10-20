@@ -7,30 +7,42 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Collections;
 import java.util.List;
 
-public abstract class AnimatedComponent<T> extends GameComponent<T> {
+public abstract class AnimatedComponent<T> extends GameComponent<List<T>> {
 
     private int currentFrame;
-    private final List<T> frames;
     private final List<Float> durationList;
     private float remainingTime;
     private boolean isRunning = true;
 
+    /**
+     * Create an animated component
+     * @param position The position of the component
+     * @param frames The frames of the component
+     * @param timePerFrame The time in seconds between each frame
+     */
     public AnimatedComponent(@NotNull final Vector2D position, @NotNull final List<T> frames, final float timePerFrame){
-        super(null, position);
-        this.frames = frames;
+        super(frames, position);
         this.durationList = Collections.nCopies(frames.size(), timePerFrame);
     }
 
+    /**
+     * Create an animated component
+     * @param position The position of the component
+     * @param frames The frames of the component
+     * @param durationList The duration of each frame
+     */
     public AnimatedComponent(@NotNull final Vector2D position, @NotNull final List<T> frames, @NotNull final List<Float> durationList){
-        super(null, position);
+        super(frames, position);
         if(frames.size() != durationList.size())
             throw new IllegalArgumentException("Frames and durationList must have the same size");
-        this.frames = frames;
         this.durationList = durationList;
     }
 
+    /**
+     * Go to the next frame
+     */
     public void nextFrame(){
-        currentFrame = ++currentFrame % frames.size();
+        currentFrame = ++currentFrame % getFrame().size();
     }
 
     @Override
@@ -46,7 +58,7 @@ public abstract class AnimatedComponent<T> extends GameComponent<T> {
     }
 
     public T getCurrentFrame(){
-        return frames.get(currentFrame);
+        return getFrame().get(currentFrame);
     }
     public boolean isRunning() {
         return isRunning;

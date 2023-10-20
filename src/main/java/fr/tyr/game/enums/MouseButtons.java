@@ -15,6 +15,11 @@ public enum MouseButtons {
         return value;
     }
 
+    /**
+     * Get the enum from the integer value
+     * @param value The value of the enum
+     * @return The enum
+     */
     public static MouseButtons from(int value){
         return switch (value) {
             case 1 -> LEFT;

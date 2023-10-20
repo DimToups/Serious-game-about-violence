@@ -2,7 +2,6 @@ package fr.tyr.resources.sounds;
 
 import fr.tyr.Main;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Range;
 
 import javax.sound.sampled.*;
 import java.io.IOException;
@@ -23,6 +22,9 @@ public enum Sounds {
         this.path = path;
     }
 
+    /**
+     * Load the sound from the path
+     */
     private void loadSound(){
         try {
             URL audioUrl = getClass().getResource("/" + this.path);
@@ -36,23 +38,36 @@ public enum Sounds {
         }
     }
 
+    /**
+     * Play the sound
+     */
     public void play(){
         if(Objects.isNull(clip))
             loadSound();
         clip.start();
     }
 
+    /**
+     * Play the sound in loop
+     */
     public void playBackground(){
         if(Objects.isNull(clip))
             loadSound();
         clip.loop(Clip.LOOP_CONTINUOUSLY);
     }
 
+    /**
+     * Stop the sound
+     */
     public void stop(){
         if(Objects.nonNull(clip))
             clip.stop();
     }
 
+    /**
+     * Set the volume of the sound
+     * @param volume the volume between 0 and 1
+     */
     public void setVolume(float volume){
         if(Objects.isNull(clip))
             loadSound();
@@ -62,6 +77,9 @@ public enum Sounds {
         gainControl.setValue(20f * (float) Math.log10(volume));
     }
 
+    /**
+     * Restart the sound
+     */
     public void restart(){
         if(Objects.isNull(clip))
             loadSound();

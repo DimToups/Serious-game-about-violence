@@ -9,10 +9,19 @@ import java.util.Objects;
 
 public abstract class TextComponent extends GameComponent<Text>{
 
+    /**
+     * Create a new TextComponent
+     * @param frame The frame of the component
+     */
     public TextComponent(Text frame) {
         super(frame);
     }
 
+    /**
+     * Create a new TextComponent
+     * @param frame The frame of the component
+     * @param position The position of the component
+     */
     public TextComponent(Text frame, Vector2D position) {
         super(frame, position);
     }
