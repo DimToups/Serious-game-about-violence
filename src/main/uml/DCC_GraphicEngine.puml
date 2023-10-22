@@ -7,29 +7,86 @@ hide empty members
 package components{
     package animated{
         abstract class AnimatedComponent <<abstract>> extends components.classic.GameComponent{
-
+            - currentFrame : Integer
+            - durationList : Float[]
+            - ramainingTime : Float
+            - isRunning : Boolean
+            + AnimatedComponent(position : Vector2D, frames : T[], timePerFrame : Float)
+            + AnimatedComponent(position : Vector2D, frames : T[], timePerFrame : Float[])
+            + nextFrame()
+            + tick(aps : Integer)
+            + getCurrentFrame() : T
+            + isRunning() : Boolean
+            + pause()
+            + resume()
         }
         abstract class AnimatedImageComponent <<abstract>> extends AnimatedComponent{
-
+            + AnimatedImageComponent(position : Vector2D, secondsPerImage : Float, animation : Animations)
+            + nextFrame()
+            + render()
         }
         abstract class AnimatedTextComponent <<abstract>> extends AnimatedComponent{
-
+            + AnimatedTextComponent(position : Vector2D, text : AnimatedText, timePerFrame : Float)
+            + AnimatedTextComponent(positon : Vector2D, text : AnimatedText, durationList : Float[])
+            + render (g : Graphic)
         }
     }
     package classic{
         abstract class GameComponent <<abstract>>{
-
+            - frame : T
+            - position : Vector2D
+            - size : Vector2D
+            - target : Vector2D
+            - duration : Float
+            + isHovered : Boolean
+            + GameComponent(frame : T)
+            + GameComponent(frame : T, position : Vector2D)
+            + GameComponent(frame : T, position : Vector2D, size : Vector2D)
+            + moveTo(target : Vector2D, duraction : Float)
+            + move(tps : Integer)
+            + getFrame() : T
+            + getPosition() : Vector2D
+            + getSize() : Vector2D
+            + isHovered() : Boolean
+            + setFrame(frame : T)
+            + setSize(size : Vector2D)
+            + setIsHovered(isHovered : Boolean)
+            + isMoving(): Boolean
+            + getRemainingDuration() : Float
+            + getTraget() : Vector2D
+            + render(g : Graphic) {abstract}
+            + tick(aps : Integer) {abstract}
+            + onClick(buttonMouseButtons) {abstract}
+            + onHover() {abstract}
+            + onHoverLost() {abstract}
+            + onWindowResized(size : Vector2D)
         }
         abstract class ImageComponent <<abstract>> extends GameComponent{
-
+            - imageType : Images
+            + ImageComponent(image : Images)
+            + ImageComponent(image : Images, position : Vector2D)
+            + ImageComponent(image : Images, position : Vector2D, size : Vector2D, center : Boolean)
+            + resize(size : Vector2D, centerImage : Boolean)
+            + resize(size : Vector2D, centerImage : Boolean, centerComponent : Boolean)
+            + crop(x : Integer, y : Integer, width : Integer, height : Integer)
+            + render(g : Graphic)
         }
         abstract class TextComponent <<abstract>> extends GameComponent{
-
+            + TextComponent(frame : T)
+            + TextComponent(frame : T, position : Vector2D)
+            + render(g : Graphic)
         }
     }
     package mixed{
-        abstract class ComposedComponent <<abstract>> extends GameComponent{
-
+        abstract class ComposedComponent <<abstract>> extends components.classic.GameComponent{
+            + ComposedComponent(position : Vector2D, components : GameComponent[])
+            + move(tps : Integer)
+            + render(g : Graphic)
+            + tick(aps : Integer)
+            + onClick(button : MouseButtons)
+            + onHover()
+            + onHoverLost()
+            + onWindowResized(size : Vector2D)
         }
     }
     package sample{
@@ -37,30 +94,70 @@ package components{
 
         }
         abstract class SampleAnimatedImageComponent <<abstract>> extends components.animated.AnimatedImageComponent{
-
+            + SampleAnimatedImageComponent(position : Vector2D)
+            + onClick(button : MouseButtons)
+            + onHover()
+            + onHoverLost()
+            + onWindowResized(size : vector2D)
         }
         abstract class SampleAnimatedTextComponent <<abstract>> extends components.animated.AnimatedTextComponent{
-
+            + SampleAnimatedTextComponent(position : Vector2D)
+            + onClick(button : MouseButtons)
+            + onHover()
+            + onHoverLost()
+            + onWindowResized(size : vector2D)
         }
         abstract class SampleBackgroundComponent <<abstract>> extends components.classic.ImageComponent{
-
+            + SampleBackgroundComponent()
+            + tick(aps : Integer)
+            + onClick(button : MouseButtons)
+            + onHoer()
+            + onHover()
+            + onHoverLost()
+            + onWindowResized(size Vector2D)
         }
         abstract class SampleImageComponent <<abstract>> extends components.classic.ImageComponent{
-
+            + SampleImageComponent(position : Vector2D, size : Vector2D)
+            + tick(aps : Integer)
+            + onClick(button : MouseButtons)
+            + onHoer()
+            + onHover()
+            + onHoverLost()
+            + onWindowResized(size Vector2D)
         }
         abstract class SampleTextComponent <<abstract>> extends components.classic.TextComponent{
-
+            + SampleImageComponent(position : Vector2D)
+            + tick(aps : Integer)
+            + onClick(button : MouseButtons)
+            + onHoer()
+            + onHover()
+            + onHoverLost()
+            + onWindowResized(size Vector2D)
         }
     }
     package texts{
         class AnimatedText {
-
+            - frames : Text[]
+            + AnimatedText(frames : Text[])
+            + getFrames() : Text[]
+            + addFrame(frame : Text)
         }
         class Text{
-
+            - parts : TextPart[]
+            + Text(parts : TextPart[])
+            + addPart(part : TextPart)
+            + getParts() : TextPart[]
         }
         class TextPart{
-
+            - text : String
+            - color : Color
+            - font : Font
+            + Textpart(text : String, color : Color, font : Font)
+            + getText() : String
+            + setText(text : String)
+            + setColor(color : Color)
+            + getFont() : Font
+            + setFont(font : Font)
         }
     }
 }
@@ -68,48 +165,187 @@ package components{
 package game{
     package enums{
         enum MouseButtons <<enum>>{
-
+            LEFT
+            MIDDLE
+            RIGHT
+            - value : Integer
+            MouseButtons(value : Integer)
+            + getValue() : Integer
+            + from(value : Integer) : MouseButtons {static}
         }
     }
     class GameEngine{
-
+        - devMode : Boolean
+        - componentsLock : ReentrantLock
+        - components : GameComponent[]
+        + GameEngine(devMode : Boolean)
+        - intScene()
+        + safeListOperation(operation : GameComponent[])
+        + isDevMode() : Boolean
     }
-    class GameWindow extends JFrame{
-
+    class GameWindow{
+        + GameWindow()
     }
-    class GraphicEngine extends JPanel{
-
+    class GraphicEngine{
+        + font : Font {static}
+        - gameEngine : GameEngine
+        - fpsRunner : Runner
+        - resizeTimer : Timer
+        + GraphicEngine(gameEngine : GameEngine)
+        - resize()
+        - onClick(e : MouseEvent)
+        - tick()
+        - getReversedComponentsList() : GameComponent[]
+        - triggerHover(mouseVector : Vector2D, component : GameComponent, hoverFound : Boolean) : Boolean
+        # paintComponent(g : Graphic)
+        - drawComponents(g : Graphic)
     }
 }
 
 package ressources{
     package images{
         enum Animations <<enum>>{
-
+            - path : String
+            - frameCount : Integer
+            - images : BufferedImages[]
+            Animations(path : String, frameCount : Integer)
+            - loadImages()
+            + getCopy() : BufferedImage[]
         }
         enum Images <<enum>>{
-
+            - path : String
+            - sizeCache : Boolean
+            - image : BufferedImage
+            - sizeCachemap : Vector2D[], BufferedImage[]
+            Images(path : String, sizeCache : Boolean)
+            - loadImages()
+            + getCopy() : BufferedImage
+            + getCopy(size : Vector2D, center : Boolean) : BufferedImage
+            - deepCopy(bi : BufferedImage) : BufferedImage {static}
+            + resize(image : BufferedImage, size : Vector2D, center : Boolean) : BufferedImage {static}
         }
     }
     package sounds{
          enum Sounds <<enum>>{
-
+            - path : String
+            - clip : Clip
+            - lineListener : LineListener
+            Sound(path : String)
+            - loadSound()
+            + play()
+            + playBackground()
+            + stop()
+            + setVolume(volume : Float)
+            + restart()
          }
     }
 }
 
 package tools{
-    class LogFormatter extends Formatter{
-
+    class LogFormatter{
+        - dateFormat : SimpleDateFormat
+        + format(record : LogRecord) : String
     }
-    class Runner extends Thread{
-
+    class Runner{
+        - name : String
+        - action : Runnable
+        - aps : Double
+        - stability : boolean
+        - running : Boolean
+        - paused : Boolean
+        - passedActions : Integer
+        - apsQueue : Long[]
+        - queueLock : ReentrantLock
+        + Runner(name : String, action : Runnable)
+        + Runner(name : String, action : Runnable, aps : Integer, stabilized : Boolean)
+        + run()
+        - computerAverage() : Double
+        + setPaused(paused : Boolean)
+        + stopRunner()
+        + setAps(aps : Integer)
+        + isRunning() : Boolean
+        + getPassedActions() : Integer
+        + getCurrentAps() : Integer
+        + getAps() : Integer
     }
     class STimer{
-
+        - timers : Long[], Long[] {static}
+        - lastId : Long {static}
+        + start() : Long {static}
+        + stop(id : Long) : Long {static}
     }
     class Vector2D{
-
+        + x : Double
+        + y : Double
+        + Vector2D()
+        + Vector2D(x : Double, y : Double)
+        + Vector2D(v : Vector2D)
+        + set(x : Double, y : Double)
+        + set(v : Vector2D)
+        + setZero()
+        + getComponents() : Double[]
+        + getLength() : Double
+        + getLengthSq() : Double
+        + distanceSq(vx : Double, vy : Double) : Double
+        + distanceSq(v : Vector2D) : Double
+        + distance(vx : Double, vy : Double) : Double
+        + distance(v : vector2D) : Double
+        + getAngle()  : Double
+        + normalize()
+        + getNormalized() : Vector2D
+        + normalize(v : Vector2D) : Vector2D {static}
+        + toCartesian(magnitude : Double, angle : Double) {static}
+        + add(v : Vector2D)
+        + add(vx : Double, vy : Double)
+        + getAdded(v : Vector2D) : Vector2D
+        + getAdded(vx : Double, vy : Double) : Vector2D
+        + add(v1 : Vector2D, v2 : Vector2D) : Vector2D {static}
+        + substract(v : Vector2D)
+        + substract(vx : Double, vy : Double)
+        + getSubstracted(v : Vector2D) : Vector2D
+        + getSubstracted(vx : Double, vy : Double) : Vector2D
+        + substract(v1 : Vector2D, v2 : Vector2D) : Vector2D {static}
+        + multiply(v : Vector2D)
+        + multiply(scalar : vector2D)
+        + getMultiplied(v : Vector2D) : Vector2D
+        + getMultiplied(vx : Double, vy : Double) : Vector2D
+        + multiply(v1 : Vector2D, v2 : Vector2D) : Vector2D {static}
+        + divide(v : Vector2D)
+        + divide(scalar : vector2D)
+        + getDivided(v : Vector2D) : Vector2D
+        + getDivided(vx : Double, vy : Double) : Vector2D
+        + divide(v1 : Vector2D, v2 : Vector2D) : Vector2D {static}
+        + getperp() : vector2D
+        + dot(v : Vector2D) : Double
+        + dot(vx : Double, vy : Double) : Double
+        + dot(v1 : Vector2D, v2 : Vector2D) : Double {static}
+        + cross(v : Vector2D) : Double
+        + cross(vx : Double, vy : Double) : Double
+        + cross(v1 : Vector2D, v2 : Vector2D) : Double {static}
+        + project(v : Vector2D) : Double
+        + project(vx : Double, vy : Double) : Double
+        + project(v1 : Vector2D, v2 : Vector2D) : Double {static}
+        + getProjectedVector(v : Vector2D) : Vector2D
+        + getProjectedVector(vx : Double, vy : Double) : Vector2D
+        + getProjectedVector(v1 : Vector2D, v2 : Vector2D) : Vector2D {static}
+        + rotateBy(angle : Double)
+        + getRotatedBy(angle : Double) : vector2D
+        + rotateTo(angle : Double)
+        + getRotatedTo(angle : Double) : vector2D
+        + reverse()
+        + getReversed() : Vector2D
+        + isBetween(v1 : Vector2D, v2 : Vector2D) : Boolean
+        + isBetween(target : Vector2D, v1 : Vector2D, v2 : Vector2D) : Boolean {static}
+        + toPositive()
+        + getToPositive() : vector2D
+        + toPositive(v : vector2D) : Vector2D {static}
+        + toNegative()
+        + getToNegative() : vector2D
+        + toNegative(v : vector2D) : Vector2D {static}
+        + clone() : Vector2D
+        + equals(obj : Object) : Boolean
+        + hashCode() : Integer
+        + toString() : String
     }
 }
 
