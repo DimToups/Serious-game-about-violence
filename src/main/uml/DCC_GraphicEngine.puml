@@ -1,0 +1,120 @@
+@startuml
+skinparam style strictuml
+skinparam classAttributeIconSize 0
+hide enum methods
+hide empty members
+
+package components{
+    package animated{
+        abstract class AnimatedComponent <<abstract>> extends components.classic.GameComponent{
+
+        }
+        abstract class AnimatedImageComponent <<abstract>> extends AnimatedComponent{
+
+        }
+        abstract class AnimatedTextComponent <<abstract>> extends AnimatedComponent{
+
+        }
+    }
+    package classic{
+        abstract class GameComponent <<abstract>>{
+
+        }
+        abstract class ImageComponent <<abstract>> extends GameComponent{
+
+        }
+        abstract class TextComponent <<abstract>> extends GameComponent{
+
+        }
+    }
+    package mixed{
+        abstract class ComposedComponent <<abstract>> extends GameComponent{
+
+        }
+    }
+    package sample{
+        package texts{
+
+        }
+        abstract class SampleAnimatedImageComponent <<abstract>> extends components.animated.AnimatedImageComponent{
+
+        }
+        abstract class SampleAnimatedTextComponent <<abstract>> extends components.animated.AnimatedTextComponent{
+
+        }
+        abstract class SampleBackgroundComponent <<abstract>> extends components.classic.ImageComponent{
+
+        }
+        abstract class SampleImageComponent <<abstract>> extends components.classic.ImageComponent{
+
+        }
+        abstract class SampleTextComponent <<abstract>> extends components.classic.TextComponent{
+
+        }
+    }
+    package texts{
+        class AnimatedText {
+
+        }
+        class Text{
+
+        }
+        class TextPart{
+
+        }
+    }
+}
+
+package game{
+    package enums{
+        enum MouseButtons <<enum>>{
+
+        }
+    }
+    class GameEngine{
+
+    }
+    class GameWindow extends JFrame{
+
+    }
+    class GraphicEngine extends JPanel{
+
+    }
+}
+
+package ressources{
+    package images{
+        enum Animations <<enum>>{
+
+        }
+        enum Images <<enum>>{
+
+        }
+    }
+    package sounds{
+         enum Sounds <<enum>>{
+
+         }
+    }
+}
+
+package tools{
+    class LogFormatter extends Formatter{
+
+    }
+    class Runner extends Thread{
+
+    }
+    class STimer{
+
+    }
+    class Vector2D{
+
+    }
+}
+
+class Main{
+
+}
+
+@enduml
