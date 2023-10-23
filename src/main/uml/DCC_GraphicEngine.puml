@@ -11,8 +11,8 @@ package components{
             - durationList : Float[]
             - ramainingTime : Float
             - isRunning : Boolean
-            + AnimatedComponent(position : Vector2D, frames : T[], timePerFrame : Float)
-            + AnimatedComponent(position : Vector2D, frames : T[], timePerFrame : Float[])
+            + <<create>> AnimatedComponent(position : Vector2D, frames : T[], timePerFrame : Float)
+            + <<create>> AnimatedComponent(position : Vector2D, frames : T[], timePerFrame : Float[])
             + nextFrame()
             + tick(aps : Integer)
             + getCurrentFrame() : T
@@ -21,27 +21,24 @@ package components{
             + resume()
         }
         abstract class AnimatedImageComponent <<abstract>> extends AnimatedComponent{
-            + AnimatedImageComponent(position : Vector2D, secondsPerImage : Float, animation : Animations)
+            + <<create>> AnimatedImageComponent(position : Vector2D, secondsPerImage : Float, animation : Animations)
             + nextFrame()
             + render()
         }
         abstract class AnimatedTextComponent <<abstract>> extends AnimatedComponent{
-            + AnimatedTextComponent(position : Vector2D, text : AnimatedText, timePerFrame : Float)
-            + AnimatedTextComponent(positon : Vector2D, text : AnimatedText, durationList : Float[])
+            + <<create>> AnimatedTextComponent(position : Vector2D, text : AnimatedText, timePerFrame : Float)
+            + <<create>> AnimatedTextComponent(positon : Vector2D, text : AnimatedText, durationList : Float[])
             + render (g : Graphic)
         }
     }
     package classic{
         abstract class GameComponent <<abstract>>{
             - frame : T
-            - position : Vector2D
-            - size : Vector2D
-            - target : Vector2D
             - duration : Float
             + isHovered : Boolean
-            + GameComponent(frame : T)
-            + GameComponent(frame : T, position : Vector2D)
-            + GameComponent(frame : T, position : Vector2D, size : Vector2D)
+            + <<create>> GameComponent(frame : T)
+            + <<create>> GameComponent(frame : T, position : Vector2D)
+            + <<create>> GameComponent(frame : T, position : Vector2D, size : Vector2D)
             + moveTo(target : Vector2D, duraction : Float)
             + move(tps : Integer)
             + getFrame() : T
@@ -62,24 +59,23 @@ package components{
             + onWindowResized(size : Vector2D)
         }
         abstract class ImageComponent <<abstract>> extends GameComponent{
-            - imageType : Images
-            + ImageComponent(image : Images)
-            + ImageComponent(image : Images, position : Vector2D)
-            + ImageComponent(image : Images, position : Vector2D, size : Vector2D, center : Boolean)
+            + <<create>> ImageComponent(image : Images)
+            + <<create>> ImageComponent(image : Images, position : Vector2D)
+            + <<create>> ImageComponent(image : Images, position : Vector2D, size : Vector2D, center : Boolean)
             + resize(size : Vector2D, centerImage : Boolean)
             + resize(size : Vector2D, centerImage : Boolean, centerComponent : Boolean)
             + crop(x : Integer, y : Integer, width : Integer, height : Integer)
             + render(g : Graphic)
         }
         abstract class TextComponent <<abstract>> extends GameComponent{
-            + TextComponent(frame : T)
-            + TextComponent(frame : T, position : Vector2D)
+            + <<create>> TextComponent(frame : T)
+            + <<create>> TextComponent(frame : T, position : Vector2D)
             + render(g : Graphic)
         }
     }
     package mixed{
         abstract class ComposedComponent <<abstract>> extends components.classic.GameComponent{
-            + ComposedComponent(position : Vector2D, components : GameComponent[])
+            + <<create>> ComposedComponent(position : Vector2D, components : GameComponent[])
             + move(tps : Integer)
             + render(g : Graphic)
             + tick(aps : Integer)
@@ -94,21 +90,21 @@ package components{
 
         }
         abstract class SampleAnimatedImageComponent <<abstract>> extends components.animated.AnimatedImageComponent{
-            + SampleAnimatedImageComponent(position : Vector2D)
+            + <<create>> SampleAnimatedImageComponent(position : Vector2D)
             + onClick(button : MouseButtons)
             + onHover()
             + onHoverLost()
             + onWindowResized(size : vector2D)
         }
         abstract class SampleAnimatedTextComponent <<abstract>> extends components.animated.AnimatedTextComponent{
-            + SampleAnimatedTextComponent(position : Vector2D)
+            + <<create>> SampleAnimatedTextComponent(position : Vector2D)
             + onClick(button : MouseButtons)
             + onHover()
             + onHoverLost()
             + onWindowResized(size : vector2D)
         }
         abstract class SampleBackgroundComponent <<abstract>> extends components.classic.ImageComponent{
-            + SampleBackgroundComponent()
+            + <<create>> SampleBackgroundComponent()
             + tick(aps : Integer)
             + onClick(button : MouseButtons)
             + onHoer()
@@ -117,7 +113,7 @@ package components{
             + onWindowResized(size Vector2D)
         }
         abstract class SampleImageComponent <<abstract>> extends components.classic.ImageComponent{
-            + SampleImageComponent(position : Vector2D, size : Vector2D)
+            + <<create>> SampleImageComponent(position : Vector2D, size : Vector2D)
             + tick(aps : Integer)
             + onClick(button : MouseButtons)
             + onHoer()
@@ -126,7 +122,7 @@ package components{
             + onWindowResized(size Vector2D)
         }
         abstract class SampleTextComponent <<abstract>> extends components.classic.TextComponent{
-            + SampleImageComponent(position : Vector2D)
+            + <<create>> SampleTextComponent(position : Vector2D)
             + tick(aps : Integer)
             + onClick(button : MouseButtons)
             + onHoer()
@@ -137,14 +133,12 @@ package components{
     }
     package texts{
         class AnimatedText {
-            - frames : Text[]
-            + AnimatedText(frames : Text[])
+            + <<create>> AnimatedText(frames : Text[])
             + getFrames() : Text[]
             + addFrame(frame : Text)
         }
         class Text{
-            - parts : TextPart[]
-            + Text(parts : TextPart[])
+            + <<create>> Text(parts : TextPart[])
             + addPart(part : TextPart)
             + getParts() : TextPart[]
         }
@@ -152,7 +146,7 @@ package components{
             - text : String
             - color : Color
             - font : Font
-            + Textpart(text : String, color : Color, font : Font)
+            + <<create>> Textpart(text : String, color : Color, font : Font)
             + getText() : String
             + setText(text : String)
             + setColor(color : Color)
@@ -169,7 +163,7 @@ package game{
             MIDDLE
             RIGHT
             - value : Integer
-            MouseButtons(value : Integer)
+            <<create>> MouseButtons(value : Integer)
             + getValue() : Integer
             + from(value : Integer) : MouseButtons {static}
         }
@@ -177,21 +171,18 @@ package game{
     class GameEngine{
         - devMode : Boolean
         - componentsLock : ReentrantLock
-        - components : GameComponent[]
-        + GameEngine(devMode : Boolean)
+        + <<create>> GameEngine(devMode : Boolean)
         - intScene()
         + safeListOperation(operation : GameComponent[])
         + isDevMode() : Boolean
     }
     class GameWindow{
-        + GameWindow()
+        + <<create>> GameWindow()
     }
     class GraphicEngine{
         + font : Font {static}
-        - gameEngine : GameEngine
-        - fpsRunner : Runner
         - resizeTimer : Timer
-        + GraphicEngine(gameEngine : GameEngine)
+        + <<create>> GraphicEngine(gameEngine : GameEngine)
         - resize()
         - onClick(e : MouseEvent)
         - tick()
@@ -208,7 +199,7 @@ package ressources{
             - path : String
             - frameCount : Integer
             - images : BufferedImages[]
-            Animations(path : String, frameCount : Integer)
+            <<create>> Animations(path : String, frameCount : Integer)
             - loadImages()
             + getCopy() : BufferedImage[]
         }
@@ -217,7 +208,7 @@ package ressources{
             - sizeCache : Boolean
             - image : BufferedImage
             - sizeCachemap : Vector2D[], BufferedImage[]
-            Images(path : String, sizeCache : Boolean)
+            <<create>> Images(path : String, sizeCache : Boolean)
             - loadImages()
             + getCopy() : BufferedImage
             + getCopy(size : Vector2D, center : Boolean) : BufferedImage
@@ -230,7 +221,7 @@ package ressources{
             - path : String
             - clip : Clip
             - lineListener : LineListener
-            Sound(path : String)
+            <<create>> Sound(path : String)
             - loadSound()
             + play()
             + playBackground()
@@ -256,8 +247,8 @@ package tools{
         - passedActions : Integer
         - apsQueue : Long[]
         - queueLock : ReentrantLock
-        + Runner(name : String, action : Runnable)
-        + Runner(name : String, action : Runnable, aps : Integer, stabilized : Boolean)
+        + <<create>> Runner(name : String, action : Runnable)
+        + <<create>> Runner(name : String, action : Runnable, aps : Integer, stabilized : Boolean)
         + run()
         - computerAverage() : Double
         + setPaused(paused : Boolean)
@@ -277,9 +268,9 @@ package tools{
     class Vector2D{
         + x : Double
         + y : Double
-        + Vector2D()
-        + Vector2D(x : Double, y : Double)
-        + Vector2D(v : Vector2D)
+        + <<create>> Vector2D()
+        + <<create>> Vector2D(x : Double, y : Double)
+        + <<create>> Vector2D(v : Vector2D)
         + set(x : Double, y : Double)
         + set(v : Vector2D)
         + setZero()
@@ -350,7 +341,11 @@ package tools{
 }
 
 class Main{
-
+    - logger : Logger {static}
+    + main(args : String[]) {static}
+    - setupLogger(devMode : Boolean) {static}
+    + getLogger() : Logger {static}
+    + getGameEngine() : GameEngine {static}
 }
 
 'Utilisations de la class Vector2D
@@ -385,6 +380,6 @@ game.GameEngine "1" o-> "*\n- components" components.classic.GameComponent
 game.GraphicEngine "1" o-> "1\n- gameEngine" tools.Runner
 game.GraphicEngine "1" o-> "1\n- fpsRunner" tools.Runner
 
-
+Main "1" *-> "1\n- gameEngine" game.GameEngine
 
 @enduml
