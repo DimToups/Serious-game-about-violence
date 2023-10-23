@@ -8,9 +8,6 @@ import fr.tyr.tools.Vector2D;
 import java.awt.*;
 
 public class SampleTextComponent extends TextComponent {
-
-
-
     public SampleTextComponent(Vector2D position) {
         super(new SampleText(), position);
     }

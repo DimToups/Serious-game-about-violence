@@ -353,4 +353,38 @@ class Main{
 
 }
 
+'Utilisations de la class Vector2D
+tools.Vector2D <.. components.animated.AnimatedComponent : <<uses>>
+tools.Vector2D <.. components.animated.AnimatedImageComponent : <<uses>> 'utile ?
+tools.Vector2D <.. components.animated.AnimatedTextComponent : <<uses>> 'utile ?
+tools.Vector2D <.. components.classic.TextComponent : <<uses>> 'utile ? (son parent, GameComponent a un attribut Vector2D)
+tools.Vector2D <.. components.classic.ImageComponent : <<uses>> 'utile ? (son parent, GameComponent a un attribut Vector2D)
+tools.Vector2D <.. components.mixed.ComposedComponent : <<uses>> 'utile ? (son parent, GameComponent a un attribut Vector2D)
+tools.Vector2D <.. components.sample.SampleAnimatedImageComponent : <<uses>> 'utile ? (son parent, AnimatedImageComponent utilises lui aussi la classe Vector2D)
+tools.Vector2D <.. components.sample.SampleAnimatedTextComponent : <<uses>> 'utile ? (son parent, AnimatedTextComponent utilises lui aussi la classe Vector2D)
+tools.Vector2D <.. components.sample.SampleImageComponent : <<uses>> 'utile ? (son parent, ImageComponent utilises lui aussi la classe Vector2D)
+tools.Vector2D <.. components.sample.SampleTextComponent : <<uses>> 'utile ? (son parent, TextComponent utilises lui aussi la classe Vector2D)
+tools.Vector2D <.. ressources.images.Images : <<uses>>
+
+
+components.classic.GameComponent "1" o-> "1\n- position" tools.Vector2D
+components.classic.GameComponent "1" o-> "1\n- size" tools.Vector2D
+components.classic.GameComponent "1" o-> "1\n- target" tools.Vector2D
+components.classic.GameComponent ..> game.enums.MouseButtons : <<uses>>
+
+components.classic.ImageComponent "1" o-> "1\n imageType" ressources.images.Images
+
+components.classic.TextComponent .> components.texts.Text : <<uses>>
+
+components.texts.AnimatedText "1" o-> "*\n- frames" Text
+
+components.texts.Text "1" o-> "*\n- parts" TextPart
+
+game.GameEngine "1" o-> "*\n- components" components.classic.GameComponent
+
+game.GraphicEngine "1" o-> "1\n- gameEngine" tools.Runner
+game.GraphicEngine "1" o-> "1\n- fpsRunner" tools.Runner
+
+
+
 @enduml
