@@ -1,16 +1,15 @@
 @startuml
-skinparam style strictuml
 skinparam classAttributeIconSize 0
-hide enum methods
-hide empty members
 
 package components{
     package animated{
         abstract class AnimatedComponent <<abstract>> extends components.classic.GameComponent{
+            ..Fields..
             - currentFrame : Integer
             - durationList : Float[]
             - ramainingTime : Float
             - isRunning : Boolean
+            ..Methods..
             + <<create>> AnimatedComponent(position : Vector2D, frames : T[], timePerFrame : Float)
             + <<create>> AnimatedComponent(position : Vector2D, frames : T[], timePerFrame : Float[])
             + nextFrame()
@@ -21,11 +20,13 @@ package components{
             + resume()
         }
         abstract class AnimatedImageComponent <<abstract>> extends AnimatedComponent{
+            ..Methods..
             + <<create>> AnimatedImageComponent(position : Vector2D, secondsPerImage : Float, animation : Animations)
             + nextFrame()
             + render()
         }
         abstract class AnimatedTextComponent <<abstract>> extends AnimatedComponent{
+            ..Methods..
             + <<create>> AnimatedTextComponent(position : Vector2D, text : AnimatedText, timePerFrame : Float)
             + <<create>> AnimatedTextComponent(positon : Vector2D, text : AnimatedText, durationList : Float[])
             + render (g : Graphic)
@@ -33,9 +34,11 @@ package components{
     }
     package classic{
         abstract class GameComponent <<abstract>>{
+            ..Fields..
             - frame : T
             - duration : Float
             + isHovered : Boolean
+            ..Methods..
             + <<create>> GameComponent(frame : T)
             + <<create>> GameComponent(frame : T, position : Vector2D)
             + <<create>> GameComponent(frame : T, position : Vector2D, size : Vector2D)
@@ -59,6 +62,7 @@ package components{
             + onWindowResized(size : Vector2D)
         }
         abstract class ImageComponent <<abstract>> extends GameComponent{
+            ..Methods..
             + <<create>> ImageComponent(image : Images)
             + <<create>> ImageComponent(image : Images, position : Vector2D)
             + <<create>> ImageComponent(image : Images, position : Vector2D, size : Vector2D, center : Boolean)
@@ -68,6 +72,7 @@ package components{
             + render(g : Graphic)
         }
         abstract class TextComponent <<abstract>> extends GameComponent{
+            ..Methods..
             + <<create>> TextComponent(frame : T)
             + <<create>> TextComponent(frame : T, position : Vector2D)
             + render(g : Graphic)
@@ -75,6 +80,7 @@ package components{
     }
     package mixed{
         abstract class ComposedComponent <<abstract>> extends components.classic.GameComponent{
+            ..Methods..
             + <<create>> ComposedComponent(position : Vector2D, components : GameComponent[])
             + move(tps : Integer)
             + render(g : Graphic)
@@ -90,6 +96,7 @@ package components{
 
         }
         abstract class SampleAnimatedImageComponent <<abstract>> extends components.animated.AnimatedImageComponent{
+            ..Methods..
             + <<create>> SampleAnimatedImageComponent(position : Vector2D)
             + onClick(button : MouseButtons)
             + onHover()
@@ -97,6 +104,7 @@ package components{
             + onWindowResized(size : vector2D)
         }
         abstract class SampleAnimatedTextComponent <<abstract>> extends components.animated.AnimatedTextComponent{
+            ..Methods..
             + <<create>> SampleAnimatedTextComponent(position : Vector2D)
             + onClick(button : MouseButtons)
             + onHover()
@@ -104,6 +112,7 @@ package components{
             + onWindowResized(size : vector2D)
         }
         abstract class SampleBackgroundComponent <<abstract>> extends components.classic.ImageComponent{
+            ..Methods..
             + <<create>> SampleBackgroundComponent()
             + tick(aps : Integer)
             + onClick(button : MouseButtons)
@@ -113,6 +122,7 @@ package components{
             + onWindowResized(size Vector2D)
         }
         abstract class SampleImageComponent <<abstract>> extends components.classic.ImageComponent{
+            ..Methods..
             + <<create>> SampleImageComponent(position : Vector2D, size : Vector2D)
             + tick(aps : Integer)
             + onClick(button : MouseButtons)
@@ -122,6 +132,7 @@ package components{
             + onWindowResized(size Vector2D)
         }
         abstract class SampleTextComponent <<abstract>> extends components.classic.TextComponent{
+            ..Methods..
             + <<create>> SampleTextComponent(position : Vector2D)
             + tick(aps : Integer)
             + onClick(button : MouseButtons)
@@ -133,16 +144,19 @@ package components{
     }
     package texts{
         class AnimatedText {
+            ..Methods..
             + <<create>> AnimatedText(frames : Text[])
             + getFrames() : Text[]
             + addFrame(frame : Text)
         }
         class Text{
+            ..Methods..
             + <<create>> Text(parts : TextPart[])
             + addPart(part : TextPart)
             + getParts() : TextPart[]
         }
         class TextPart{
+            ..Methods..
             - text : String
             - color : Color
             - font : Font
@@ -159,29 +173,36 @@ package components{
 package game{
     package enums{
         enum MouseButtons <<enum>>{
+            ..Fields..
             LEFT
             MIDDLE
             RIGHT
             - value : Integer
+            ..Methods..
             <<create>> MouseButtons(value : Integer)
             + getValue() : Integer
             + from(value : Integer) : MouseButtons {static}
         }
     }
     class GameEngine{
+        ..Fields..
         - devMode : Boolean
         - componentsLock : ReentrantLock
+        ..Methods..
         + <<create>> GameEngine(devMode : Boolean)
         - intScene()
         + safeListOperation(operation : GameComponent[])
         + isDevMode() : Boolean
     }
     class GameWindow{
+        ..Methods..
         + <<create>> GameWindow()
     }
     class GraphicEngine{
+        ..Fields..
         + font : Font {static}
         - resizeTimer : Timer
+        ..Methods..
         + <<create>> GraphicEngine(gameEngine : GameEngine)
         - resize()
         - onClick(e : MouseEvent)
@@ -196,18 +217,22 @@ package game{
 package ressources{
     package images{
         enum Animations <<enum>>{
+            ..Fields
             - path : String
             - frameCount : Integer
             - images : BufferedImages[]
+            ..Methods..
             <<create>> Animations(path : String, frameCount : Integer)
             - loadImages()
             + getCopy() : BufferedImage[]
         }
         enum Images <<enum>>{
+            ..Fields
             - path : String
             - sizeCache : Boolean
             - image : BufferedImage
             - sizeCachemap : Vector2D[], BufferedImage[]
+            ..Methods..
             <<create>> Images(path : String, sizeCache : Boolean)
             - loadImages()
             + getCopy() : BufferedImage
@@ -218,9 +243,11 @@ package ressources{
     }
     package sounds{
          enum Sounds <<enum>>{
+            ..Fields..
             - path : String
             - clip : Clip
             - lineListener : LineListener
+            ..Methods..
             <<create>> Sound(path : String)
             - loadSound()
             + play()
@@ -234,10 +261,13 @@ package ressources{
 
 package tools{
     class LogFormatter{
+        ..Fields
         - dateFormat : SimpleDateFormat
+        ..Methods..
         + format(record : LogRecord) : String
     }
     class Runner{
+        ..Fields
         - name : String
         - action : Runnable
         - aps : Double
@@ -247,6 +277,7 @@ package tools{
         - passedActions : Integer
         - apsQueue : Long[]
         - queueLock : ReentrantLock
+        ..Methods..
         + <<create>> Runner(name : String, action : Runnable)
         + <<create>> Runner(name : String, action : Runnable, aps : Integer, stabilized : Boolean)
         + run()
@@ -260,64 +291,44 @@ package tools{
         + getAps() : Integer
     }
     class STimer{
+        ..Fields
         - timers : Long[], Long[] {static}
         - lastId : Long {static}
+        ..Methods..
         + start() : Long {static}
         + stop(id : Long) : Long {static}
     }
     class Vector2D{
+        ..Fields..
         + x : Double
         + y : Double
+        ..Methods..
         + <<create>> Vector2D()
         + <<create>> Vector2D(x : Double, y : Double)
         + <<create>> Vector2D(v : Vector2D)
-        + set(x : Double, y : Double)
         + set(v : Vector2D)
         + setZero()
         + getComponents() : Double[]
         + getLength() : Double
         + getLengthSq() : Double
-        + distanceSq(vx : Double, vy : Double) : Double
         + distanceSq(v : Vector2D) : Double
-        + distance(vx : Double, vy : Double) : Double
         + distance(v : vector2D) : Double
         + getAngle()  : Double
-        + normalize()
         + getNormalized() : Vector2D
         + normalize(v : Vector2D) : Vector2D {static}
         + toCartesian(magnitude : Double, angle : Double) {static}
-        + add(v : Vector2D)
-        + add(vx : Double, vy : Double)
         + getAdded(v : Vector2D) : Vector2D
-        + getAdded(vx : Double, vy : Double) : Vector2D
         + add(v1 : Vector2D, v2 : Vector2D) : Vector2D {static}
-        + substract(v : Vector2D)
-        + substract(vx : Double, vy : Double)
         + getSubstracted(v : Vector2D) : Vector2D
-        + getSubstracted(vx : Double, vy : Double) : Vector2D
         + substract(v1 : Vector2D, v2 : Vector2D) : Vector2D {static}
-        + multiply(v : Vector2D)
-        + multiply(scalar : vector2D)
         + getMultiplied(v : Vector2D) : Vector2D
-        + getMultiplied(vx : Double, vy : Double) : Vector2D
         + multiply(v1 : Vector2D, v2 : Vector2D) : Vector2D {static}
-        + divide(v : Vector2D)
-        + divide(scalar : vector2D)
         + getDivided(v : Vector2D) : Vector2D
-        + getDivided(vx : Double, vy : Double) : Vector2D
         + divide(v1 : Vector2D, v2 : Vector2D) : Vector2D {static}
         + getperp() : vector2D
-        + dot(v : Vector2D) : Double
-        + dot(vx : Double, vy : Double) : Double
         + dot(v1 : Vector2D, v2 : Vector2D) : Double {static}
-        + cross(v : Vector2D) : Double
-        + cross(vx : Double, vy : Double) : Double
         + cross(v1 : Vector2D, v2 : Vector2D) : Double {static}
-        + project(v : Vector2D) : Double
-        + project(vx : Double, vy : Double) : Double
         + project(v1 : Vector2D, v2 : Vector2D) : Double {static}
-        + getProjectedVector(v : Vector2D) : Vector2D
-        + getProjectedVector(vx : Double, vy : Double) : Vector2D
         + getProjectedVector(v1 : Vector2D, v2 : Vector2D) : Vector2D {static}
         + rotateBy(angle : Double)
         + getRotatedBy(angle : Double) : vector2D
@@ -325,12 +336,9 @@ package tools{
         + getRotatedTo(angle : Double) : vector2D
         + reverse()
         + getReversed() : Vector2D
-        + isBetween(v1 : Vector2D, v2 : Vector2D) : Boolean
         + isBetween(target : Vector2D, v1 : Vector2D, v2 : Vector2D) : Boolean {static}
-        + toPositive()
         + getToPositive() : vector2D
         + toPositive(v : vector2D) : Vector2D {static}
-        + toNegative()
         + getToNegative() : vector2D
         + toNegative(v : vector2D) : Vector2D {static}
         + clone() : Vector2D
@@ -341,7 +349,9 @@ package tools{
 }
 
 class Main{
+    ..Fields..
     - logger : Logger {static}
+    ..Methods..
     + main(args : String[]) {static}
     - setupLogger(devMode : Boolean) {static}
     + getLogger() : Logger {static}
@@ -350,15 +360,12 @@ class Main{
 
 'Utilisations de la class Vector2D
 tools.Vector2D <.. components.animated.AnimatedComponent : <<uses>>
-tools.Vector2D <.. components.animated.AnimatedImageComponent : <<uses>> 'utile ?
-tools.Vector2D <.. components.animated.AnimatedTextComponent : <<uses>> 'utile ?
-tools.Vector2D <.. components.classic.TextComponent : <<uses>> 'utile ? (son parent, GameComponent a un attribut Vector2D)
-tools.Vector2D <.. components.classic.ImageComponent : <<uses>> 'utile ? (son parent, GameComponent a un attribut Vector2D)
-tools.Vector2D <.. components.mixed.ComposedComponent : <<uses>> 'utile ? (son parent, GameComponent a un attribut Vector2D)
-tools.Vector2D <.. components.sample.SampleAnimatedImageComponent : <<uses>> 'utile ? (son parent, AnimatedImageComponent utilises lui aussi la classe Vector2D)
-tools.Vector2D <.. components.sample.SampleAnimatedTextComponent : <<uses>> 'utile ? (son parent, AnimatedTextComponent utilises lui aussi la classe Vector2D)
-tools.Vector2D <.. components.sample.SampleImageComponent : <<uses>> 'utile ? (son parent, ImageComponent utilises lui aussi la classe Vector2D)
-tools.Vector2D <.. components.sample.SampleTextComponent : <<uses>> 'utile ? (son parent, TextComponent utilises lui aussi la classe Vector2D)
+tools.Vector2D <.. components.animated.AnimatedImageComponent : <<uses>>
+tools.Vector2D <.. components.animated.AnimatedTextComponent : <<uses>>
+tools.Vector2D <.. components.classic.ImageComponent : <<uses>>
+tools.Vector2D <.. components.mixed.ComposedComponent : <<uses>>
+tools.Vector2D <.. components.sample.SampleImageComponent : <<uses>>
+tools.Vector2D <.. components.sample.SampleTextComponent : <<uses>>
 tools.Vector2D <.. ressources.images.Images : <<uses>>
 
 
@@ -375,11 +382,11 @@ components.texts.AnimatedText "1" o-> "*\n- frames" Text
 
 components.texts.Text "1" o-> "*\n- parts" TextPart
 
-game.GameEngine "1" o-> "*\n- components" components.classic.GameComponent
+game.GameEngine "1" o--> "*\n- components" components.classic.GameComponent
 
-game.GraphicEngine "1" o-> "1\n- gameEngine" tools.Runner
-game.GraphicEngine "1" o-> "1\n- fpsRunner" tools.Runner
+game.GraphicEngine "1" o--> "1\n- gameEngine" tools.Runner
+game.GraphicEngine "1" o--> "1\n- fpsRunner" tools.Runner
 
-Main "1" *-> "1\n- gameEngine" game.GameEngine
+Main "1" *--> "1\n- gameEngine" game.GameEngine
 
 @enduml
