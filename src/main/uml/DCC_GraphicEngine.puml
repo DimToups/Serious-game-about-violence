@@ -208,8 +208,7 @@ package components{
                 + <<create>> IdentityManager()
                 + generateMaleFirstName() : FirstName {static}
                 + generateFemaleFirstName() : FirstName {static}
-                + generateMaleLastName() : LastName {static}
-                + generateFemaleLastName() : LastName {static}
+                + generateLastName() : LastName {static}
                 + generateAge() : Integer {static}
             }
             enum FirstName{
@@ -220,15 +219,15 @@ package components{
                 <<create>> FirstName(firstname : String, gender : Boolean)
                 + getFirstName() : String
                 + getGender() : Boolean
+                + getAllMaleFirstNames() : FirstName[]
+                + getAllFemaleFirstNames() : FirstName[]
             }
             enum LastName{
                 ..Fields..
                 - lastName : String
-                - gender : Boolean
                 ..Methods..
-                <<create>> LastName(lastname : String, gender : Boolean)
+                <<create>> LastName(lastname : String)
                 + getLastName() : String
-                + getGender() : Boolean
             }
         }
 
