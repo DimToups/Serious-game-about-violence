@@ -13,6 +13,12 @@ public abstract class Character extends ComposedComponent{
     private Eyes eyes;
     private Shirt shirt;
     private Images special;
+
+    /**
+     * Create a Character
+     * @param position The position of the component
+     * @param components The components to add to the composed component
+     */
     public Character(Vector2D position, GameComponent<?>... components) {
         super(position, components);
 

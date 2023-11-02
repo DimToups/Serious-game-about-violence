@@ -9,6 +9,10 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class MaleStyleManager extends StyleManager{
+    /**
+     * Create a MaleStyleManager
+     * @return
+     */
     @Override
     public Hair generateHair() {
         File dir = new File("./src/main/resources/assets/character/hairs/male");
@@ -32,6 +36,11 @@ public class MaleStyleManager extends StyleManager{
             return null;
         }
     }
+
+    /**
+     * Create a random male Eye
+     * @return
+     */
     @Override
     public Eyes generateEyes() {
         File dir = new File("./src/main/resources/assets/character/eyes/male");
@@ -55,6 +64,11 @@ public class MaleStyleManager extends StyleManager{
             return null;
         }
     }
+
+    /**
+     * Create a random beard
+     * @return
+     */
     public static Beard generateBeard(){
         File dir = new File("./src/main/resources/assets/character/beards/");
         File[] files = dir.listFiles();

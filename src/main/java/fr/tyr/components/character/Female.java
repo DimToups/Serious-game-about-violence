@@ -5,8 +5,7 @@ import fr.tyr.tools.Vector2D;
 
 public class Female extends Character{
     /**
-     * Create a Character
-     *
+     * Create a Female Character
      * @param position   The position of the component
      * @param components The components to add to the composed component
      */

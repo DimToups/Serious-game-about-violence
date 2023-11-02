@@ -9,8 +9,7 @@ import fr.tyr.tools.Vector2D;
 public class Male extends Character{
     private Beard beard;
     /**
-     * Create a Character
-     *
+     * Create a Male Character
      * @param position   The position of the component
      * @param components The components to add to the composed component
      */

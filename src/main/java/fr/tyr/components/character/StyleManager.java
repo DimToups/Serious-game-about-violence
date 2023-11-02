@@ -10,9 +10,17 @@ import java.util.Arrays;
 import java.util.Random;
 
 public abstract class StyleManager {
+    /**
+     * Create a StyleManager
+     */
     public StyleManager(){
 
     }
+
+    /**
+     * Create a random skin
+     * @return
+     */
     public static Skin generateSkin(){
         File dir = new File("./src/main/resources/assets/character/skins/");
         File[] files = dir.listFiles();
@@ -37,8 +45,23 @@ public abstract class StyleManager {
             return null;
         }
     }
+
+    /**
+     * Create a random Hair
+     * @return
+     */
     public abstract Hair generateHair();
+
+    /**
+     * Create a random Eye
+     * @return
+     */
     public abstract Eyes generateEyes();
+
+    /**
+     * Create a random Shirt
+     * @return
+     */
     public static Shirt generateShirt(){
         File dir = new File("./src/main/resources/assets/character/shirts/");
         File[] files = dir.listFiles();
@@ -63,6 +86,11 @@ public abstract class StyleManager {
             return null;
         }
     }
+
+    /**
+     * Create a random Special character component (may be removed)
+     * @return
+     */
     public static ImageComponent generateSpecial(){
         return null;
     }
