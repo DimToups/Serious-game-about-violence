@@ -202,6 +202,36 @@ package components{
             }
         }
 
+        package identity{
+            class IdentityManager{
+                ..Methods..
+                + <<create>> IdentityManager()
+                + generateMaleFirstName() : FirstName {static}
+                + generateFemaleFirstName() : FirstName {static}
+                + generateMaleLastName() : LastName {static}
+                + generateFemaleLastName() : LastName {static}
+                + generateAge() : Integer {static}
+            }
+            enum FirstName{
+                ..Fields..
+                - firstName : String
+                - gender : Boolean
+                ..Methods..
+                <<create>> FirstName(firstname : String, gender : Boolean)
+                + getFirstName() : String
+                + getGender() : Boolean
+            }
+            enum LastName{
+                ..Fields..
+                - lastName : String
+                - gender : Boolean
+                ..Methods..
+                <<create>> LastName(lastname : String, gender : Boolean)
+                + getLastName() : String
+                + getGender() : Boolean
+            }
+        }
+
         class CharacterFactory{
             ..Methods..
             + <<create>> CharacterFactory
@@ -479,5 +509,9 @@ components.character.style.Eyes <.. components.character.StyleManager : <<uses>>
 components.character.style.Hair <.. components.character.StyleManager : <<uses>>
 components.character.style.Shirt <.. components.character.StyleManager : <<uses>>
 components.character.style.Beard <.. components.character.MaleStyleManager : <<uses>>
+
+components.character.Character ..> components.character.identity.IdentityManager : <<uses>>
+components.character.identity.IdentityManager ..> components.character.identity.FirstName : <<uses>>
+components.character.identity.IdentityManager ..> components.character.identity.LastName : <<uses>>
 
 @enduml
