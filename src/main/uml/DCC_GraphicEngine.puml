@@ -168,6 +168,86 @@ package components{
             + setFont(font : Font)
         }
     }
+    package character{
+        package style{
+            class Beard extends components.classic.ImageComponent{
+                ..Methods..
+                + <<create>> Beard(image : Images)
+                + <<create>> Beard(image : Images, position : Vector2D)
+                + <<create>> Beard(image : Images, position : Vector2D, size : Vecto2D, center : Boolean)
+            }
+            class Eyes extends components.classic.ImageComponent{
+                ..Methods..
+                + <<create>> Eyes(image : Images)
+                + <<create>> Eyes(image : Images, position : Vector2D)
+                + <<create>> Eyes(image : Images, position : Vector2D, size : Vecto2D, center : Boolean)
+            }
+            class Hair extends components.classic.ImageComponent{
+                ..Methods..
+                + <<create>> Hair(image : Images)
+                + <<create>> Hair(image : Images, position : Vector2D)
+                + <<create>> Hair(image : Images, position : Vector2D, size : Vecto2D, center : Boolean)
+            }
+            class Shirt extends components.classic.ImageComponent{
+                ..Methods..
+                + <<create>> Shirt(image : Images)
+                + <<create>> Shirt(image : Images, position : Vector2D)
+                + <<create>> Shirt(image : Images, position : Vector2D, size : Vecto2D, center : Boolean)
+            }
+            class Skin extends components.classic.ImageComponent{
+                ..Methods..
+                + <<create>> Skin(image : Images)
+                + <<create>> Skin(image : Images, position : Vector2D)
+                + <<create>> Skin(image : Images, position : Vector2D, size : Vecto2D, center : Boolean)
+            }
+        }
+
+        class CharacterFactory{
+            ..Methods..
+            + <<create>> CharacterFactory
+            + generateMale() : Male
+            + generateMale(components : Images[]) : Male
+            + generateFemale() : Female
+            + generateFemale(components : Images[]) : Female
+        }
+        abstract class Character extends components.mixed.ComposedComponent{
+            ..Fields..
+            - skin : Skin
+            - hair : Hair
+            - eyes : Eyes
+            - shirt : Shirt
+            ..Methods..
+            + <<create>> Character(position : Vector2D, components : GameComponent[])
+        }
+        class Male extends Character{
+            ..Fields..
+            - beard : ImageComponent
+            ..Methods..
+            + <<create>> Male(position : Vector2D, components : GameComponent[])
+        }
+        class Female extends Character{
+            ..Methods..
+            + <<create>> Female(position : Vector2D, components : GameComponent[])
+        }
+        abstract class StyleManager{
+            ..Methods..
+            + generateSkin() : Skin {static}
+            + generateHair() : Hair {abstract}
+            + generateEyes() : Eyes {abstract}
+            + generateShirt() : Shirt {static}
+        }
+        class FemaleStyleManager extends StyleManager{
+            ..Methods..
+            + generateHair() : Hair
+            + generateEyes() : Eyes
+        }
+        class MaleStyleManager extends StyleManager{
+            ..Methods..
+            + generateHair() : Hair
+            + generateEyes() : Eyes
+            + generateBeard() : Beard
+        }
+    }
 }
 
 package game{
@@ -217,7 +297,7 @@ package game{
 package ressources{
     package images{
         enum Animations <<enum>>{
-            ..Fields
+            ..Fields..
             - path : String
             - frameCount : Integer
             - images : BufferedImages[]
@@ -227,7 +307,7 @@ package ressources{
             + getCopy() : BufferedImage[]
         }
         enum Images <<enum>>{
-            ..Fields
+            ..Fields..
             - path : String
             - sizeCache : Boolean
             - image : BufferedImage
@@ -261,13 +341,13 @@ package ressources{
 
 package tools{
     class LogFormatter{
-        ..Fields
+        ..Fields..
         - dateFormat : SimpleDateFormat
         ..Methods..
         + format(record : LogRecord) : String
     }
     class Runner{
-        ..Fields
+        ..Fields..
         - name : String
         - action : Runnable
         - aps : Double
@@ -291,7 +371,7 @@ package tools{
         + getAps() : Integer
     }
     class STimer{
-        ..Fields
+        ..Fields..
         - timers : Long[], Long[] {static}
         - lastId : Long {static}
         ..Methods..
@@ -388,5 +468,16 @@ game.GraphicEngine "1" o--> "1\n- gameEngine" tools.Runner
 game.GraphicEngine "1" o--> "1\n- fpsRunner" tools.Runner
 
 Main "1" *--> "1\n- gameEngine" game.GameEngine
+
+components.character.CharacterFactory .> components.character.Male : <<uses>>
+components.character.CharacterFactory .> components.character.Female : <<uses>>
+components.character.CharacterFactory ..> components.character.MaleStyleManager : <<uses>>
+components.character.CharacterFactory ..> components.character.FemaleStyleManager : <<uses>>
+
+components.character.style.Skin <.. components.character.StyleManager : <<uses>>
+components.character.style.Eyes <.. components.character.StyleManager : <<uses>>
+components.character.style.Hair <.. components.character.StyleManager : <<uses>>
+components.character.style.Shirt <.. components.character.StyleManager : <<uses>>
+components.character.style.Beard <.. components.character.MaleStyleManager : <<uses>>
 
 @enduml

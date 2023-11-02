@@ -18,8 +18,11 @@ import java.util.logging.Level;
 
 public enum Images {
     SWORDS("swords.png", true),
-    BACKGROUND("background.jpg", false);
-
+    BACKGROUND("background.jpg", false),
+    SKIN_WHITE("assets/character/skins/white.png", false),
+    SHIRT_RED("assets/character/shirts/red.png", false),
+    EYES_MALE_BLUE("assets/character/eyes/male/blue.png", false),
+    HAIR_MALE_DISHEVELLED("assets/character/hairs/male/dishevelled.png", false);
     private final String path;
     private final boolean sizeCache;
     private BufferedImage image;
