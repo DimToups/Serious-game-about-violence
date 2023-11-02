@@ -103,4 +103,7 @@ public abstract class ImageComponent extends GameComponent<BufferedImage> {
     public void render(Graphics g) {
         g.drawImage(getFrame(), (int) getPosition().x, (int) getPosition().y, null);
     }
+    public Images getImage(){
+        return this.imageType;
+    }
 }

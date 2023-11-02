@@ -1,6 +1,7 @@
 package fr.tyr.game;
 
 import fr.tyr.Main;
+import fr.tyr.components.character.CharacterFactory;
 import fr.tyr.components.classic.GameComponent;
 import fr.tyr.components.sample.*;
 import fr.tyr.tools.Vector2D;
@@ -43,6 +44,7 @@ public class GameEngine {
 
             //Add of characters
             //componentList.add(new CharacterFactory().generateMale(new Vector2D(100, 100)));
+            //componentList.add(new CharacterFactory().generateFemale(new Vector2D(100, 100)));
         });
         Main.getLogger().info("Scene initialized.");
     }
