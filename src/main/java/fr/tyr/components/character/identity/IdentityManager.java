@@ -35,4 +35,12 @@ public class IdentityManager {
         Random rand = new Random();
         return LastName.valueOf(Arrays.stream(LastName.values()).toList().get(rand.nextInt(0, LastName.values().length)).name());
     }
+
+    /**
+     * Generate a random adult age
+     * @return
+     */
+    public static int generateAge(){
+        return new Random().nextInt(18, 70);
+    }
 }
