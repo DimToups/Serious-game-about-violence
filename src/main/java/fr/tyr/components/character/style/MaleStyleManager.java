@@ -1,7 +1,6 @@
-package fr.tyr.components.character;
+package fr.tyr.components.character.style;
 
 import fr.tyr.Main;
-import fr.tyr.components.character.style.*;
 import fr.tyr.resources.images.Images;
 
 import java.io.File;

@@ -1,5 +1,6 @@
 package fr.tyr.components.character;
 
+import fr.tyr.components.character.style.MaleStyleManager;
 import fr.tyr.resources.images.Images;
 import fr.tyr.tools.Vector2D;
 

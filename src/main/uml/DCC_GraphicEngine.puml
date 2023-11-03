@@ -200,6 +200,24 @@ package components{
                 + <<create>> Skin(image : Images, position : Vector2D)
                 + <<create>> Skin(image : Images, position : Vector2D, size : Vecto2D, center : Boolean)
             }
+            abstract class StyleManager{
+                ..Methods..
+                + generateSkin() : Skin {static}
+                + generateHair() : Hair {abstract}
+                + generateEyes() : Eyes {abstract}
+                + generateShirt() : Shirt {static}
+            }
+            class FemaleStyleManager extends StyleManager{
+                ..Methods..
+                + generateHair() : Hair
+                + generateEyes() : Eyes
+            }
+            class MaleStyleManager extends StyleManager{
+                ..Methods..
+                + generateHair() : Hair
+                + generateEyes() : Eyes
+                + generateBeard() : Beard
+            }
         }
 
         package identity{
@@ -257,24 +275,6 @@ package components{
         class Female extends Character{
             ..Methods..
             + <<create>> Female(position : Vector2D, components : GameComponent[])
-        }
-        abstract class StyleManager{
-            ..Methods..
-            + generateSkin() : Skin {static}
-            + generateHair() : Hair {abstract}
-            + generateEyes() : Eyes {abstract}
-            + generateShirt() : Shirt {static}
-        }
-        class FemaleStyleManager extends StyleManager{
-            ..Methods..
-            + generateHair() : Hair
-            + generateEyes() : Eyes
-        }
-        class MaleStyleManager extends StyleManager{
-            ..Methods..
-            + generateHair() : Hair
-            + generateEyes() : Eyes
-            + generateBeard() : Beard
         }
     }
 }
@@ -500,14 +500,14 @@ Main "1" *--> "1\n- gameEngine" game.GameEngine
 
 components.character.CharacterFactory .> components.character.Male : <<uses>>
 components.character.CharacterFactory .> components.character.Female : <<uses>>
-components.character.CharacterFactory ..> components.character.MaleStyleManager : <<uses>>
-components.character.CharacterFactory ..> components.character.FemaleStyleManager : <<uses>>
+components.character.CharacterFactory ..> components.character.style.MaleStyleManager : <<uses>>
+components.character.CharacterFactory ..> components.character.style.FemaleStyleManager : <<uses>>
 
-components.character.style.Skin <.. components.character.StyleManager : <<uses>>
-components.character.style.Eyes <.. components.character.StyleManager : <<uses>>
-components.character.style.Hair <.. components.character.StyleManager : <<uses>>
-components.character.style.Shirt <.. components.character.StyleManager : <<uses>>
-components.character.style.Beard <.. components.character.MaleStyleManager : <<uses>>
+components.character.style.Skin <.. components.character.style.StyleManager : <<uses>>
+components.character.style.Eyes <.. components.character.style.StyleManager : <<uses>>
+components.character.style.Hair <.. components.character.style.StyleManager : <<uses>>
+components.character.style.Shirt <.. components.character.style.StyleManager : <<uses>>
+components.character.style.Beard <.. components.character.style.MaleStyleManager : <<uses>>
 
 components.character.Character ..> components.character.identity.IdentityManager : <<uses>>
 components.character.identity.IdentityManager ..> components.character.identity.FirstName : <<uses>>
