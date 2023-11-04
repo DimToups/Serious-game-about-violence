@@ -233,19 +233,27 @@ package components{
                 ..Fields..
                 - firstName : String
                 - gender : Boolean
+                - origin : Origin
                 ..Methods..
-                <<create>> FirstName(firstname : String, gender : Boolean)
+                <<create>> FirstName(firstname : String, gender : Boolean, origin : Origin)
                 + getFirstName() : String
                 + getGender() : Boolean
+                + getOrigin() : Origin
                 + getAllMaleFirstNames() : FirstName[]
+                + getAllMaleFirstNames(firstNames : FirstName[]) : FirstName[]
                 + getAllFemaleFirstNames() : FirstName[]
+                + getAllFemaleFirstNames(firstNames : FirstName[]) : FirstName[]
             }
             enum LastName{
-                ..Fields..
-                - lastName : String
+                - origin : Origin
                 ..Methods..
-                <<create>> LastName(lastname : String)
-                + getLastName() : String
+                + getOrigin() : Origin
+                + getAllOriginLastNames(origin : Origin) : LastName[]
+                + cleanName() : String
+            }
+            enum Origins{
+                ..Methods..
+                + cleanName() : String
             }
         }
 
@@ -512,5 +520,7 @@ components.character.style.Beard <.. components.character.style.MaleStyleManager
 components.character.Character ..> components.character.identity.IdentityManager : <<uses>>
 components.character.identity.IdentityManager ..> components.character.identity.FirstName : <<uses>>
 components.character.identity.IdentityManager ..> components.character.identity.LastName : <<uses>>
+components.character.identity.LastName ..> components.character.identity.Origins : <<uses>>
+components.character.identity.FirstName ..> components.character.identity.Origins : <<uses>>
 
 @enduml

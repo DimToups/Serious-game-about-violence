@@ -4,86 +4,88 @@ import java.util.ArrayList;
 
 public enum FirstName {
     //Prénoms masculins
-    LEO("Léo", true),
-    GABRIEL("Gabriel", true),
-    RAPHAEL("Raphaël", true),
-    ARTHUR("Arthur", true),
-    LOUIS("Louis", true),
-    JULES("Jules", true),
-    HUGO("Hugo", true),
-    LUCAS("Lucas", true),
-    NOAH("Noah", true),
-    GABIN("Gabin", true),
-    PAUL("Paul", true),
-    NATHAN("Nathan", true),
-    ANTOINE("Antoine", true),
-    SIMON("Simon", true),
-    TOM("Tom", true),
-    ANATOLE("Anatole", true),
-    DIMITRI("Dimitri", true),
-    LEON("Léon", true),
-    VICTOR("Victor", true),
-    MATHIS("Mathis", true),
-    IBRAHIM("Ibrahim", true),
-    LIAM("Liam", true),
-    LENNY("Lenny", true),
-    PABLO("Pablo", true),
-    JOSEPH("Joseph", true),
-    BASILE("Basile", true),
-    LOGAN("Logan", true),
-    AYOUB("Ayoub", true),
-    WASSIM("Wassim", true),
-    ALAIN("Alain", true),
-    CHARLES("Charles", true),
-    ARNAUD("Arnaud", true),
-    DAMIEN("Damien", true),
-    GUILLAUME("Guillaume", true),
-    KENZO("Kenzo", true),
-    MOHAMMED("Mohammed ", true),
-    ERIC("Eric", true),
+    LEO("Léo", true, Origin.FRENCH),
+    GABRIEL("Gabriel", true, Origin.FRENCH),
+    RAPHAEL("Raphaël", true, Origin.FRENCH),
+    ARTHUR("Arthur", true, Origin.FRENCH),
+    LOUIS("Louis", true, Origin.FRENCH),
+    JULES("Jules", true, Origin.FRENCH),
+    HUGO("Hugo", true, Origin.FRENCH),
+    LUCAS("Lucas", true, Origin.FRENCH),
+    NOAH("Noah", true, Origin.FRENCH),
+    GABIN("Gabin", true, Origin.FRENCH),
+    PAUL("Paul", true, Origin.FRENCH),
+    NATHAN("Nathan", true, Origin.FRENCH),
+    ANTOINE("Antoine", true, Origin.FRENCH),
+    SIMON("Simon", true, Origin.FRENCH),
+    TOM("Tom", true, Origin.FRENCH),
+    ANATOLE("Anatole", true, Origin.FRENCH),
+    DIMITRI("Dimitri", true, Origin.RUSSIAN),
+    LEON("Léon", true, Origin.FRENCH),
+    VICTOR("Victor", true, Origin.FRENCH),
+    MATHIS("Mathis", true, Origin.FRENCH),
+    IBRAHIM("Ibrahim", true, Origin.ARABIC),
+    LIAM("Liam", true, Origin.FRENCH),
+    LENNY("Lenny", true, Origin.AMERICAN),
+    PABLO("Pablo", true, Origin.SPANISH),
+    JOSEPH("Joseph", true, Origin.AMERICAN),
+    BASILE("Basile", true, Origin.FRENCH),
+    LOGAN("Logan", true, Origin.AMERICAN),
+    AYOUB("Ayoub", true, Origin.ARABIC),
+    WASSIM("Wassim", true, Origin.ARABIC),
+    ALAIN("Alain", true, Origin.FRENCH),
+    CHARLES("Charles", true, Origin.FRENCH),
+    ARNAUD("Arnaud", true, Origin.FRENCH),
+    DAMIEN("Damien", true, Origin.FRENCH),
+    GUILLAUME("Guillaume", true, Origin.FRENCH),
+    KENZO("Kenzo", true, Origin.ARABIC),
+    MOHAMMED("Mohammed ", true, Origin.ARABIC),
+    ERIC("Eric", true, Origin.FRENCH),
     //Prénoms féminins
-    JADE("Jade", false),
-    LOUISE("Louise", false),
-    EMMA("Emma", false),
-    ALICE("Alice", false),
-    CHLOE("Chloé", false),
-    LEA("Léa", false),
-    ANNA("Anna", false),
-    INES("Inès", false),
-    JULIETTE("Juliette", false),
-    ZOE("Zoé", false),
-    EVA("Éva", false),
-    ROMANE("Romane", false),
-    CAMILLE("Romane", false),
-    OLIVIA("Olivia", false),
-    ALYX("Alyx", false),
-    CHARLOTTE("Charlotte", false),
-    LYNA("Lyna", false),
-    ROXANE("Roxane", false),
-    MAYA("Maya", false),
-    CONSTANCE("Constance", false),
-    GWENHAEL("Gwenhael", false),
-    SARAH("Sarah", false),
-    YASMINE("Yasmine", false),
-    KHADIJA("Khadija", false),
-    OLGA("Olga", false),
-    NATACHA("Natacha", false),
-    SASHA("Sasha", false),
-    APRIL("April", false);
+    JADE("Jade", false, Origin.FRENCH),
+    LOUISE("Louise", false, Origin.FRENCH),
+    EMMA("Emma", false, Origin.FRENCH),
+    ALICE("Alice", false, Origin.FRENCH),
+    CHLOE("Chloé", false, Origin.FRENCH),
+    LEA("Léa", false, Origin.FRENCH),
+    ANNA("Anna", false, Origin.FRENCH),
+    INES("Inès", false, Origin.FRENCH),
+    JULIETTE("Juliette", false, Origin.FRENCH),
+    ZOE("Zoé", false, Origin.FRENCH),
+    EVA("Éva", false, Origin.FRENCH),
+    ROMANE("Romane", false, Origin.FRENCH),
+    CAMILLE("Romane", false, Origin.FRENCH),
+    OLIVIA("Olivia", false, Origin.FRENCH),
+    ALYX("Alyx", false, Origin.AMERICAN),
+    CHARLOTTE("Charlotte", false, Origin.FRENCH),
+    LYNA("Lyna", false, Origin.FRENCH),
+    ROXANE("Roxane", false, Origin.FRENCH),
+    MAYA("Maya", false, Origin.FRENCH),
+    CONSTANCE("Constance", false, Origin.FRENCH),
+    GWENHAEL("Gwenhael", false, Origin.FRENCH),
+    SARAH("Sarah", false, Origin.ARABIC),
+    YASMINE("Yasmine", false, Origin.ARABIC),
+    KHADIJA("Khadija", false, Origin.ARABIC),
+    OLGA("Olga", false, Origin.RUSSIAN),
+    NATACHA("Natacha", false, Origin.RUSSIAN),
+    SASHA("Sasha", false, Origin.RUSSIAN),
+    APRIL("April", false, Origin.AMERICAN);
     private final String firstName;
     /**
      * true for male, false for female
      */
     private final boolean gender;
+    private final Origin origin;
 
     /**
-     * Create an FirstName enum
+     * Create a FirstName enum
      * @param firstName The firstName
      * @param gender The gender (true for male, false for female)
      */
-    FirstName(String firstName, boolean gender){
+    FirstName(String firstName, boolean gender, Origin origin){
         this.firstName = firstName;
         this.gender = gender;
+        this.origin = origin;
     }
 
     /**
@@ -103,6 +105,14 @@ public enum FirstName {
     }
 
     /**
+     * Send the Origin of the FirstName
+     * @return
+     */
+    public Origin getOrigin() {
+        return this.origin;
+    }
+
+    /**
      * Send all the instanciated male firstnames
      * @return
      */
@@ -117,11 +127,39 @@ public enum FirstName {
 
     /**
      * Send all the instanciated male firstnames
+     * @param firstNames An array of firstname
+     * @return All of the male firstnames of the parameter firstNames
+     */
+    public static ArrayList<FirstName> getAllMaleFirstNames(ArrayList<FirstName> firstNames){
+        ArrayList<FirstName> amfn = new ArrayList<>();
+        for(FirstName fn : firstNames){
+            if(fn.getGender())
+                amfn.add(fn);
+        }
+        return amfn;
+    }
+
+    /**
+     * Send all the instanciated male firstnames
      * @return
      */
     public static ArrayList<FirstName> getAllFemaleFirstNames(){
         ArrayList<FirstName> affn = new ArrayList<>();
         for(FirstName fn : FirstName.values()){
+            if(!fn.getGender())
+                affn.add(fn);
+        }
+        return affn;
+    }
+
+    /**
+     * Send all the instanciated male firstnames
+     * @param firstNames An array of firstname
+     * @return All of the female firstnames of the parameter firstNames
+     */
+    public static ArrayList<FirstName> getAllFemaleFirstNames(ArrayList<FirstName> firstNames){
+        ArrayList<FirstName> affn = new ArrayList<>();
+        for(FirstName fn : firstNames){
             if(!fn.getGender())
                 affn.add(fn);
         }

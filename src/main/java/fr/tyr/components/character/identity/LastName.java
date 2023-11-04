@@ -1,48 +1,82 @@
 package fr.tyr.components.character.identity;
 
+import java.util.ArrayList;
+
 public enum LastName {
-    MARTIN("Marthin"),
-    PETIT("Petit"),
-    GIRAUD("Giraud"),
-    MEYER("Meyer"),
-    MULLER("Muller"),
-    SCHMITT("Schmitt"),
-    SCHNEIDER("Schneider"),
-    JUNG("Jung"),
-    ROTH("Roth"),
-    PETER("Peter"),
-    HEINRICH("Heinrich"),
-    KUHN("Kuhn"),
-    OTT("Ott"),
-    HARTMANN("HARTMANN"),
-    LANG("Lang"),
-    FISCHER("Fischer"),
-    AZIZ("Aziz"),
-    AL_BAKIR("Al Bakir"),
-    FAROUK("Farouk"),
-    SMITH("Smith"),
-    BROWN("Brown"),
-    LOPEZ("Lopez"),
-    MARTINEZ("Martinez"),
-    LIN("Lin"),
-    ZHANG("Zhang"),
-    WU("Wu"),
-    CHEN("Chen");
-    private final String lastName;
+    MARTIN(Origin.FRENCH),
+    PETIT(Origin.FRENCH),
+    GIRAUD(Origin.FRENCH),
+    MEYER(Origin.GERMAN),
+    MULLER(Origin.GERMAN),
+    SCHMITT(Origin.GERMAN),
+    SCHNEIDER(Origin.GERMAN),
+    JUNG(Origin.GERMAN),
+    ROTH(Origin.GERMAN),
+    PETER(Origin.GERMAN),
+    HEINRICH(Origin.GERMAN),
+    KUHN(Origin.GERMAN),
+    OTT(Origin.GERMAN),
+    HARTMANN(Origin.GERMAN),
+    LANG(Origin.GERMAN),
+    FISCHER(Origin.GERMAN),
+    AZIZ(Origin.ARABIC),
+    AL_BAKIR(Origin.ARABIC),
+    FAROUK(Origin.ARABIC),
+    SMITH(Origin.AMERICAN),
+    BROWN(Origin.AMERICAN),
+    LOPEZ(Origin.AMERICAN),
+    MARTINEZ(Origin.AMERICAN),
+    LIN(Origin.ASIAN),
+    ZHANG(Origin.ASIAN),
+    WU(Origin.ASIAN),
+    CHEN(Origin.ASIAN);
+    private final Origin origin;
 
     /**
      * Create a LastName enum
-     * @param lastName The lastname
+     * @param origin The lastname's origin
      */
-    LastName(String lastName){
-        this.lastName = lastName;
+    LastName(Origin origin){
+        this.origin = origin;
     }
 
     /**
-     * Send the lastname
-     * @return
+     * Send the lastname's origin
+     * @return The lastname's origin
      */
-    public String getLastName(){
-        return this.lastName;
+    public Origin getOrigin(){
+        return this.origin;
+    }
+
+    /**
+     * Send back all of the lastnames corresponding to the specified origin
+     * @param origin An specified origin
+     * @return The remaining LastNames
+     */
+    public ArrayList<LastName> getAllOriginLastNames(Origin origin){
+        ArrayList<LastName> lastNames = new ArrayList<>();
+        for(LastName ln : LastName.values()) {
+            if (ln.getOrigin() == origin)
+                lastNames.add(ln);
+        }
+
+        return lastNames;
+    }
+
+    /**
+     * Convert the LastName into an clean String
+     * @return The converted LastName
+     */
+    public String cleanName(){
+        String name = this.name().toLowerCase();
+
+        name = name.substring(0,0).toUpperCase() + name.substring(1, name.length());
+
+        for(int i = 0 ; i < name.length(); i++){
+            if(name.charAt(i) == '_')
+                name = name.substring(0, i-1) + " " + name.substring(0, i+1).toUpperCase() + name.substring(0, i+2);
+        }
+
+        return name;
     }
 }
