@@ -273,12 +273,19 @@ package components{
             - shirt : Shirt
             ..Methods..
             + <<create>> Character(position : Vector2D, components : GameComponent[])
+            + getFirstName() : FirstName
+            + getLastName() : LastName
+            + getSkin() : Skin
+            + getHair() : Hair
+            + getEyes() : Eyes
+            + getShirt() : Shirt
         }
         class Male extends Character{
             ..Fields..
             - beard : ImageComponent
             ..Methods..
             + <<create>> Male(position : Vector2D, components : GameComponent[])
+            + getBeard() : Beard
         }
         class Female extends Character{
             ..Methods..

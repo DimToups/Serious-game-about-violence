@@ -23,7 +23,14 @@ public class Male extends Character{
      */
     public Male(Vector2D position, Skin skin, Hair hair, Eyes eyes, Beard beard, Shirt shirt, FirstName firstName, LastName lastName) {
         super(position, skin, hair, eyes, shirt, firstName, lastName);
-        System.out.println();
         this.beard = beard;
+    }
+
+    /**
+     * Send the Character's Beard
+     * @return The Character's Beard
+     */
+    public Beard getBeard() {
+        return beard;
     }
 }

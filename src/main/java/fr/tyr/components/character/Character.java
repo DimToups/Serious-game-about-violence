@@ -42,4 +42,52 @@ public abstract class Character extends ComposedComponent{
         this.firstName = firstName;
         this.lastName = lastName;
     }
+
+    /**
+     * Send the Character's FirstName
+     * @return The Character's FirstName
+     */
+    public FirstName getFirstName(){
+        return this.firstName;
+    }
+
+    /**
+     * Send the Character's LastName
+     * @return The Character's LastName
+     */
+    public LastName getLastName() {
+        return this.lastName;
+    }
+
+    /**
+     * Send the Character's Skin
+     * @return The Character's Skin
+     */
+    public Skin getSkin() {
+        return this.skin;
+    }
+
+    /**
+     * Send the Character's Hair
+     * @return The Character's Hair
+     */
+    public Hair getHair() {
+        return this.hair;
+    }
+
+    /**
+     * Send the Character's Eyes
+     * @return The Character's Eyes
+     */
+    public Eyes getEyes() {
+        return this.eyes;
+    }
+
+    /**
+     * Send the Character's Shirt
+     * @return The Character's Shirt
+     */
+    public Shirt getShirt() {
+        return this.shirt;
+    }
 }
