@@ -1,5 +1,7 @@
 package fr.tyr.components.character;
 
+import fr.tyr.components.character.identity.IdentityManager;
+import fr.tyr.components.character.style.FemaleStyleManager;
 import fr.tyr.components.character.style.MaleStyleManager;
 import fr.tyr.resources.images.Images;
 import fr.tyr.tools.Vector2D;
@@ -18,7 +20,7 @@ public class CharacterFactory {
     public Male generateMale(Vector2D position){
         MaleStyleManager msf = new MaleStyleManager();
 
-        return new Male(position, msf.generateSkin(), msf.generateHair(), msf.generateEyes(), msf.generateShirt());
+        return new Male(position, msf.generateSkin(), msf.generateHair(), msf.generateEyes(), msf.generateBeard(), msf.generateShirt(), IdentityManager.generateMaleFirstName(), IdentityManager.generateLastName());
     }
 
     /**
@@ -29,7 +31,7 @@ public class CharacterFactory {
      */
     public Male generateMale(Vector2D position, Images... components){
         //Traiter les images passées
-        return new Male(position);
+        return null;
     }
 
     /**
@@ -38,9 +40,9 @@ public class CharacterFactory {
      * @return
      */
     public Female generateFemale(Vector2D position){
-        //Générer des assets aléatoires
+        FemaleStyleManager fsm = new FemaleStyleManager();
 
-        return new Female(position /* + les composants générés*/);
+        return new Female(position, fsm.generateSkin(), fsm.generateHair(), fsm.generateEyes(), fsm.generateShirt(), IdentityManager.generateFemaleFirstName(), IdentityManager.generateLastName());
     }
 
     /**
@@ -52,6 +54,6 @@ public class CharacterFactory {
     public Female generateFemale(Vector2D position, Images... components){
         //Traiter les images passées
 
-        return new Female(position /* + les composants traités*/);
+        return null;
     }
 }

@@ -517,10 +517,13 @@ components.character.style.Hair <.. components.character.style.StyleManager : <<
 components.character.style.Shirt <.. components.character.style.StyleManager : <<uses>>
 components.character.style.Beard <.. components.character.style.MaleStyleManager : <<uses>>
 
-components.character.Character ..> components.character.identity.IdentityManager : <<uses>>
 components.character.identity.IdentityManager ..> components.character.identity.FirstName : <<uses>>
 components.character.identity.IdentityManager ..> components.character.identity.LastName : <<uses>>
 components.character.identity.LastName ..> components.character.identity.Origins : <<uses>>
 components.character.identity.FirstName ..> components.character.identity.Origins : <<uses>>
+
+components.character.Character "1" o---> "1\n- firstname" components.character.identity.FirstName
+components.character.Character "1" o---> "1\n- lastname" components.character.identity.LastName
+components.character.CharacterFactory ..> components.character.identity.IdentityManager : <<uses>>
 
 @enduml

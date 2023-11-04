@@ -1,5 +1,7 @@
 package fr.tyr.components.character;
 
+import fr.tyr.components.character.identity.FirstName;
+import fr.tyr.components.character.identity.LastName;
 import fr.tyr.components.character.style.*;
 import fr.tyr.components.classic.GameComponent;
 import fr.tyr.components.classic.ImageComponent;
@@ -8,30 +10,36 @@ import fr.tyr.resources.images.Images;
 import fr.tyr.tools.Vector2D;
 
 public abstract class Character extends ComposedComponent{
-    private Skin skin;
-    private Hair hair;
-    private Eyes eyes;
-    private Shirt shirt;
+    //Identity fields
+    private final FirstName firstName;
+    private final LastName lastName;
+
+    //Style fields
+    private final Skin skin;
+    private final Hair hair;
+    private final Eyes eyes;
+    private final Shirt shirt;
     private Images special;
 
     /**
      * Create a Character
      * @param position The position of the component
-     * @param components The components to add to the composed component
+     * @param skin The character's skin
+     * @param hair The character's hair
+     * @param eyes The character's eyes
+     * @param shirt The character's shirt
      */
-    public Character(Vector2D position, GameComponent<?>... components) {
-        super(position, components);
+    public Character(Vector2D position, Skin skin, Hair hair, Eyes eyes, Shirt shirt, FirstName firstName, LastName lastName) {
+        super(position, skin, hair, eyes, shirt);
 
         //Attribution of the character's chosen skin in it's fields
-        for(GameComponent gc : components){
-            if (gc.getClass() == Skin.class)
-                this.skin = (Skin)gc;
-            else if (gc.getClass() == Hair.class)
-                this.hair = (Hair)gc;
-            else if (gc.getClass() == Eyes.class)
-                this.eyes = (Eyes)gc;
-            else if (gc.getClass() == Shirt.class)
-                this.shirt = (Shirt)gc;
-        }
+        this.skin = skin;
+        this.hair = hair;
+        this.eyes = eyes;
+        this.shirt = shirt;
+
+        //Attribution of the character's identity
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 }
