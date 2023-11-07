@@ -6,12 +6,14 @@ import fr.tyr.resources.images.Images;
 import fr.tyr.tools.Vector2D;
 
 public class Beard extends ImageComponent {
+    BeardEnum beard;
     /**
      * Create a Beard
      * @param image The image of the beard
      */
-    public Beard(Images image) {
-        super(image);
+    public Beard(BeardEnum beard) {
+        super(beard.getImage());
+        this.beard = beard;
     }
 
     /**
@@ -19,8 +21,9 @@ public class Beard extends ImageComponent {
      * @param image The image of the beard
      * @param position The component position
      */
-    public Beard(Images image, Vector2D position) {
-        super(image, position);
+    public Beard(BeardEnum beard, Vector2D position) {
+        super(beard.getImage(), position);
+        this.beard = beard;
     }
 
     /**
@@ -30,8 +33,9 @@ public class Beard extends ImageComponent {
      * @param size The component size
      * @param center Is the image centered
      */
-    public Beard(Images image, Vector2D position, Vector2D size, boolean center) {
-        super(image, position, size, center);
+    public Beard(BeardEnum beard, Vector2D position, Vector2D size, boolean center) {
+        super(beard.getImage(), position, size, center);
+        this.beard = beard;
     }
 
     /**
@@ -75,5 +79,14 @@ public class Beard extends ImageComponent {
     @Override
     public void onWindowResized(Vector2D size) {
 
+    }
+    public Images getImage() {
+        return this.beard.getImage();
+    }
+    public HairColor getColor(){
+        return this.beard.getColor();
+    }
+    public String getBeardName(){
+        return this.beard.getName();
     }
 }

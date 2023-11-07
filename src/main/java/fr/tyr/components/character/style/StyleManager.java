@@ -18,33 +18,66 @@ public abstract class StyleManager {
     public StyleManager(){
 
     }
+    public static HairColor generateHairColor(int age){
+        //
+        Random rand = new Random();
+
+        //
+        if(age < 55){
+            //Décision entre une pilosité naturelle ou non
+            if(rand.nextInt(0,30) != 0){
+                //Choix d'une couleur naturelle
+                switch (rand.nextInt(0,5)){
+                    case 0 : return HairColor.BLACK;
+                    case 1 : return HairColor.DARK_BROWN;
+                    case 2 : return HairColor.BROWN;
+                    case 3 : return HairColor.BLOND;
+                    case 4 : return HairColor.GINGER;
+                }
+                return HairColor.BLACK;
+            }
+            else{
+                //Choix d'une couleur non naturelle
+                if(rand.nextInt(0,2) == 0)
+                    return HairColor.PINK;
+                else
+                    return HairColor.BLUE;
+            }
+        }
+        else{
+            //Choix d'une couleur naturelle ou blanche
+            if(rand.nextInt(0,10) == 0){
+                //Choix d'une couleur naturelle
+                switch (rand.nextInt(0,4)){
+                    case 0 : return HairColor.BLACK;
+                    case 1 : return HairColor.DARK_BROWN;
+                    case 2 : return HairColor.BROWN;
+                    case 3 : return HairColor.BLOND;
+                    case 4 : return HairColor.GINGER;
+                }
+                return HairColor.BLACK;
+            }
+            else
+                return HairColor.WHITE;
+        }
+    }
 
     /**
      * Create a random skin
      * @return
      */
     public static Skin generateSkin(Origin origin){
-        File dir = new File("./src/main/resources/assets/character/skins/");
-        File[] files = dir.listFiles();
-
-        if(Objects.isNull(files))
-            return null;
-
         Random rand = new Random();
-        int i = rand.nextInt(0, files.length);
 
         try {//Conversion de la chaîne de caractère choisie et retour de l'image correspondante
-            if (Arrays.stream(files).toList().get(i).getName().contains("."))
-                return new Skin(Images.valueOf("SKIN_" + Arrays.stream(files).toList().get(i).getName().toUpperCase().substring(0, Arrays.stream(files).toList().get(i).getName().toUpperCase().indexOf("."))));
-            else
-                return new Skin(Images.valueOf("SKIN_" + Arrays.stream(files).toList().get(i).getName().toUpperCase()));
+            return new Skin(SkinEnum.valueOf(SkinEnum.getAllOriginAssets(origin).get(rand.nextInt(0, SkinEnum.getAllOriginAssets(origin).size())).name()));
         }
         catch (Exception e){
             //Passage de l'information
             Main.getLogger().info(e.getMessage());
 
             //Retour d'une peau de base
-            return null;
+            return new Skin(SkinEnum.WHITE);
         }
     }
 
@@ -52,7 +85,7 @@ public abstract class StyleManager {
      * Create a random Hair
      * @return
      */
-    public abstract Hair generateHair();
+    public abstract Hair generateHair(HairColor color);
 
     /**
      * Create a random Eye
@@ -65,27 +98,18 @@ public abstract class StyleManager {
      * @return
      */
     public static Shirt generateShirt(){
-        File dir = new File("./src/main/resources/assets/character/shirts/");
-        File[] files = dir.listFiles();
-
-        if(files == null)
-            return null;
-
         Random rand = new Random();
-        int i = rand.nextInt(0, files.length);
 
-        try {//Conversion de la chaîne de caractère choisie et retour de l'image correspondante
-            if (Arrays.stream(files).toList().get(i).getName().contains("."))
-                return new Shirt(Images.valueOf("SHIRT_" + Arrays.stream(files).toList().get(i).getName().toUpperCase().substring(0, Arrays.stream(files).toList().get(i).getName().toUpperCase().indexOf("."))));
-            else
-                return new Shirt(Images.valueOf("SHIRT_" + Arrays.stream(files).toList().get(i).getName().toUpperCase()));
+        try {
+            //Conversion de la chaîne de caractère choisie et retour de l'image correspondante
+            return new Shirt(ShirtEnum.valueOf(Arrays.stream(ShirtEnum.values()).toList().get(rand.nextInt(0, ShirtEnum.values().length)).name()));
         }
         catch (Exception e){
             //Passage de l'information
             Main.getLogger().info(e.getMessage());
 
-            //Retour d'une peau de base
-            return null;
+            //Retour d'une haut de base
+            return new Shirt(ShirtEnum.RED);
         }
     }
 

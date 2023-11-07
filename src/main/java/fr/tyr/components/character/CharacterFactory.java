@@ -4,7 +4,9 @@ import fr.tyr.Main;
 import fr.tyr.components.character.identity.IdentityManager;
 import fr.tyr.components.character.identity.Origin;
 import fr.tyr.components.character.style.FemaleStyleManager;
+import fr.tyr.components.character.style.HairColor;
 import fr.tyr.components.character.style.MaleStyleManager;
+import fr.tyr.components.character.style.StyleManager;
 import fr.tyr.resources.images.Images;
 import fr.tyr.tools.Vector2D;
 
@@ -23,9 +25,12 @@ public class CharacterFactory {
         Main.getLogger().info("Generating a male character...");
         MaleStyleManager msf = new MaleStyleManager();
 
+        //Generation of the character's identity
         Origin origin = IdentityManager.generateOrigin();
+        int age = IdentityManager.generateAge();
+        HairColor hairColor = StyleManager.generateHairColor(age);
 
-        return new Male(position, msf.generateSkin(origin), msf.generateHair(), msf.generateEyes(origin), msf.generateBeard(), msf.generateShirt(), IdentityManager.generateMaleFirstName(origin), IdentityManager.generateLastName(origin), IdentityManager.generateAge());
+        return new Male(position, msf.generateSkin(origin), msf.generateHair(hairColor), msf.generateEyes(origin), msf.generateBeard(hairColor), msf.generateShirt(), IdentityManager.generateMaleFirstName(origin), IdentityManager.generateLastName(origin), age);
     }
 
     /**
@@ -50,8 +55,10 @@ public class CharacterFactory {
         FemaleStyleManager fsm = new FemaleStyleManager();
 
         Origin origin = IdentityManager.generateOrigin();
+        int age = IdentityManager.generateAge();
+        HairColor hairColor = StyleManager.generateHairColor(age);
 
-        return new Female(position, fsm.generateSkin(origin), fsm.generateHair(), fsm.generateEyes(origin), fsm.generateShirt(), IdentityManager.generateFemaleFirstName(origin), IdentityManager.generateLastName(origin), IdentityManager.generateAge());
+        return new Female(position, fsm.generateSkin(origin), fsm.generateHair(hairColor), fsm.generateEyes(origin), fsm.generateShirt(), IdentityManager.generateFemaleFirstName(origin), IdentityManager.generateLastName(origin), age);
     }
 
     /**

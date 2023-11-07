@@ -43,7 +43,7 @@ public class GameEngine {
             componentList.add(new SampleAnimatedTextComponent(new Vector2D(400, 400)));
 
             //Add of characters
-            componentList.add(new CharacterFactory().generateMale(new Vector2D(100, 100)));
+            //componentList.add(new CharacterFactory().generateMale(new Vector2D(100, 100)));
             //componentList.add(new CharacterFactory().generateFemale(new Vector2D(100, 100)));
         });
         Main.getLogger().info("Scene initialized.");

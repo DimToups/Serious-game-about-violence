@@ -14,26 +14,19 @@ public class MaleStyleManager extends StyleManager{
      * @return
      */
     @Override
-    public Hair generateHair() {
-        File dir = new File("./src/main/resources/assets/character/hairs/male");
-        File[] files = dir.listFiles();
-
+    public Hair generateHair(HairColor color) {
         try {
             Random rand = new Random();
-            int i = rand.nextInt(0, files.length);
 
             //Conversion de la chaîne de caractère choisie et retour de l'image correspondante
-            if (Arrays.stream(files).toList().get(i).getName().contains("."))
-                return new Hair(Images.valueOf("HAIR_MALE_" + Arrays.stream(files).toList().get(i).getName().toUpperCase().substring(0, Arrays.stream(files).toList().get(i).getName().toUpperCase().indexOf("."))));
-            else
-                return new Hair(Images.valueOf("HAIR_MALE_" + Arrays.stream(files).toList().get(i).getName().toUpperCase()));
+            return new Hair(HairEnum.valueOf(HairEnum.getAllColoredAssets(color ,HairEnum.getAllGenderAssets(true)).get(rand.nextInt(0, HairEnum.getAllColoredAssets(color ,HairEnum.getAllGenderAssets(true)).size())).name()));
         }
         catch (Exception e){
             //Passage de l'information
             Main.getLogger().info(e.getMessage());
 
-            //Retour d'une peau de base
-            return null;
+            //Retour d'une coupe de base
+            return new Hair(HairEnum.MALE_BLACK_DISHEVELLED);
         }
     }
 
@@ -43,25 +36,18 @@ public class MaleStyleManager extends StyleManager{
      */
     @Override
     public Eyes generateEyes(Origin origin) {
-        File dir = new File("./src/main/resources/assets/character/eyes/male");
-        File[] files = dir.listFiles();
-
         try {
             Random rand = new Random();
-            int i = rand.nextInt(0, files.length);
 
             //Conversion de la chaîne de caractère choisie et retour de l'image correspondante
-            if (Arrays.stream(files).toList().get(i).getName().contains("."))
-                return new Eyes(Images.valueOf("EYES_MALE_" + Arrays.stream(files).toList().get(i).getName().toUpperCase().substring(0, Arrays.stream(files).toList().get(i).getName().toUpperCase().indexOf("."))));
-            else
-                return new Eyes(Images.valueOf("EYES_MALE_" + Arrays.stream(files).toList().get(i).getName().toUpperCase()));
+            return new Eyes(EyesEnum.valueOf(EyesEnum.getAllGenderAssets(true, EyesEnum.getAllOriginAssets(origin)).get(rand.nextInt(0, EyesEnum.getAllGenderAssets(true, EyesEnum.getAllOriginAssets(origin)).size())).name()));
         }
         catch (Exception e){
             //Passage de l'information
             Main.getLogger().info(e.getMessage());
 
-            //Retour d'une peau de base
-            return null;
+            //Retour de yeux de base
+            return new Eyes(EyesEnum.WHITE_MALE_BLUE);
         }
     }
 
@@ -69,26 +55,19 @@ public class MaleStyleManager extends StyleManager{
      * Create a random beard
      * @return
      */
-    public static Beard generateBeard(){
-        File dir = new File("./src/main/resources/assets/character/beards/");
-        File[] files = dir.listFiles();
-
+    public static Beard generateBeard(HairColor color){
         try {
             Random rand = new Random();
-            int i = rand.nextInt(0, files.length);
 
             //Conversion de la chaîne de caractère choisie et retour de l'image correspondante
-            if (Arrays.stream(files).toList().get(i).getName().contains("."))
-                return new Beard(Images.valueOf("BEARD_" + Arrays.stream(files).toList().get(i).getName().toUpperCase().substring(0, Arrays.stream(files).toList().get(i).getName().toUpperCase().indexOf("."))));
-            else
-                return new Beard(Images.valueOf("BEARD_" + Arrays.stream(files).toList().get(i).getName().toUpperCase()));
+            return new Beard(BeardEnum.valueOf(BeardEnum.getAllColoredAssets(color).get(rand.nextInt(0, BeardEnum.getAllColoredAssets(color).size())).name()));
         }
         catch (Exception e){
             //Passage de l'information
             Main.getLogger().info(e.getMessage());
 
-            //Retour d'une peau de base
-            return null;
+            //Retour d'une barbe de base
+            return new Beard(BeardEnum.NONE);
         }
     }
 }

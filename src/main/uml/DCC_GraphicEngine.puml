@@ -194,14 +194,19 @@ package components{
                 + <<create>> Beard(beard : BeardEnum)
                 + <<create>> Beard(beard : BeardEnum, position : Vector2D)
                 + <<create>> Beard(beard : BeardEnum, position : Vector2D, size : Vecto2D, center : Boolean)
+                ..Methods..
+                + getImages() : Images
+                + getColor() : HairColor
+                + getBeardName() : String
             }
             enum BeardEnum{
                 ..Fields..
                 - name : String
-                - color : HairColor
                 - image : Images
                 ..Methods..
-                + getAllColoredAssets(color : HairColor) : Beard[]
+                <<create>> BeardEnum(name : String, color : HairColor, image : Images)
+                + getAllColoredAssets(color : HairColor) : BeardEnum[]
+                + getAllColoredAssets(color : HairColor, beards : BeardEnum[]) : BeardEnum[]
                 + getName() : String
                 + getColor() : HairColor
                 + getImages() : Images
@@ -211,46 +216,72 @@ package components{
                 + <<create>> Eyes(eyes : EyesEnum)
                 + <<create>> Eyes(eyes : EyesEnum, position : Vector2D)
                 + <<create>> Eyes(eyes : EyesEnum, position : Vector2D, size : Vecto2D, center : Boolean)
+                ..Methods..
+                + getName() : String
+                + getColor() : HairColor
+                + getImages() : Images
+                + getGender() : Boolean
+                + getOrigin() : Origin
             }
             enum EyesEnum{
                 ..Fields..
                 - name : String
-                - color : EyeColor
                 - image : Images
+                - origin : Origin
                 ..Methods..
-                + getAllColoredAssets(color : EyeColor) : Eyes[]
+                <<create>> EyesEnum(name : String, color : EyeColor, image : Images)
+                + getAllColoredAssets(color : EyeColor) : EyesEnum[]
+                + getAllColoredAssets(color : EyeColor, eyes : EyesEnum[]) : EyesEnum[]
+                + getAllGenderAssets(gender : Boolean) : EyesEnum[]
+                + getAllGenderAssets(gender : Boolean, eyes : EyesEnum[]) : EyesEnum[]
+                + getAllOriginAssets(origin : Origin) : EyesEnum[]
+                + getAllOriginAssets(origin : Origin, eyes : EyesEnum[]) : EyesEnum[]
                 + getName() : String
                 + getColor() : EyeColor
                 + getImages() : Images
+                + getGender() : Boolean
+                + getOrigin() : Origin
             }
             class Hair extends components.classic.ImageComponent{
                 ..Methods..
                 + <<create>> Hair(hair : HairEnum)
                 + <<create>> Hair(hair : HairEnum, position : Vector2D)
                 + <<create>> Hair(hair : HairEnum, position : Vector2D, size : Vecto2D, center : Boolean)
+                + getName() : String
+                + getColor() : HairColor
+                + getImages() : Images
+                + getGender() : Boolean
             }
             enum HairEnum{
                 ..Fields..
                 - name : String
-                - color : HairColor
                 - image : Images
+                - gender : Boolean
                 ..Methods..
-                + getAllColoredAssets(color : HairColor) : Hair[]
+                <<create>> HairEnum(name : String, color : HairColor, image : Images)
+                + getAllColoredAssets(color : HairColor) : HairEnum[]
+                + getAllColoredAssets(color : HairColor, hairs : HairEnum[]) : HairEnum[]
+                + getAllGenderAssets(gender : Boolean) : HairEnum[]
+                + getAllGenderAssets(gender : Boolean, hairs : HairEnum[]) : HairEnum[]
                 + getName() : String
                 + getColor() : HairColor
                 + getImages() : Images
+                + getGender() : Boolean
             }
             class Shirt extends components.classic.ImageComponent{
                 ..Methods..
                 + <<create>> Shirt(shirt : ShirtEnum)
                 + <<create>> Shirt(shirt : ShirtEnum, position : Vector2D)
                 + <<create>> Shirt(shirt : ShirtEnum, position : Vector2D, size : Vecto2D, center : Boolean)
+                + getName() : String
+                + getImages() : Images
             }
             enum ShirtEnum{
                 ..Fields..
                 - name : String
                 - image : Images
                 ..Methods..
+                <<create>> ShirtEnum(name : String, image : Images)
                 + getName() : String
                 + getImage() : Images
             }
@@ -259,17 +290,27 @@ package components{
                 + <<create>> Skin(skin : SkinEnum)
                 + <<create>> Skin(skin : SkinEnum, position : Vector2D)
                 + <<create>> Skin(skin : SkinEnum, position : Vector2D, size : Vector2D, center : Boolean)
+                + getName() : String
+                + getImage() : Images
+                + getOrigin() : Origin
             }
             enum SkinEnum{
                 ..Fields..
                 - name : String
                 - image : Images
+                - origin : Origin
                 ..Methods..
+                <<create>> SkinEnum(name : String, image : Images)
+                + getAllOriginAssets(origin : Origin) : SkinEnum[]
+                + getAllOriginAssets(origin : Origin, skins : SkinEnum[]) : SkinEnum[]
                 + getName() : String
                 + getImage() : Images
+                + getOrigin() : Origin
             }
             abstract class StyleManager{
                 ..Methods..
+                + <<create>> StyleManager()
+                + generateHairColor(age : Integer) : HairColor {static}
                 + generateSkin(origin : Origin) : Skin {static}
                 + generateHair() : Hair {abstract}
                 + generateEyes(origin : Origin) : Eyes {abstract}
@@ -277,14 +318,14 @@ package components{
             }
             class FemaleStyleManager extends StyleManager{
                 ..Methods..
-                + generateHair() : Hair
+                + generateHair(color : HairColor) : Hair
                 + generateEyes(origin : Origin) : Eyes
             }
             class MaleStyleManager extends StyleManager{
                 ..Methods..
-                + generateHair() : Hair
+                + generateHair(color : HairColor) : Hair
                 + generateEyes(origin : Origin) : Eyes
-                + generateBeard() : Beard
+                + generateBeard(color : HairColor) : Beard
             }
         }
 
@@ -330,21 +371,19 @@ package components{
         class CharacterFactory{
             ..Methods..
             + <<create>> CharacterFactory
-            + generateMale() : Male
-            + generateMale(components : Images[]) : Male
-            + generateFemale() : Female
-            + generateFemale(components : Images[]) : Female
+            + generateMale(position : Vector2D) : Male
+            + generateMale(position : Vector2D, components : Images[]) : Male
+            + generateFemale(position : Vector2D) : Female
+            + generateFemale(position : Vector2D, components : Images[]) : Female
         }
         abstract class Character extends components.mixed.ComposedComponent{
             ..Fields..
-            - skin : Skin
-            - hair : Hair
-            - eyes : Eyes
-            - shirt : Shirt
+            - age : Integer
             ..Methods..
-            + <<create>> Character(position : Vector2D, components : GameComponent[])
+            + <<create>> Character(position : Vector2D, skin : Skin, hair : Hair, eyes : Eyes, shirt : Shirt, firstName : FirstName, lastName : LastName, age : Integer)
             + getFirstName() : FirstName
             + getLastName() : LastName
+            + getHairColor() : HairColor
             + getSkin() : Skin
             + getHair() : Hair
             + getEyes() : Eyes
@@ -609,6 +648,11 @@ components.character.identity.IdentityManager ..> components.character.identity.
 components.character.identity.LastName ..> components.character.identity.Origins : <<uses>>
 components.character.identity.FirstName ..> components.character.identity.Origins : <<uses>>
 
+components.character.Character "1" o---> "1\n- hair" components.character.style.Hair
+components.character.Character "1" o---> "1\n- eyes" components.character.style.Eyes
+components.character.Character "1" o---> "1\n- skin" components.character.style.Skin
+components.character.Character "1" o---> "1\n- shirt" components.character.style.Shirt
+components.character.Male "1" o---> "1\n- beard" components.character.style.Beard
 components.character.Character "1" o---> "1\n- firstname" components.character.identity.FirstName
 components.character.Character "1" o---> "1\n- lastname" components.character.identity.LastName
 components.character.CharacterFactory ..> components.character.identity.IdentityManager : <<uses>>

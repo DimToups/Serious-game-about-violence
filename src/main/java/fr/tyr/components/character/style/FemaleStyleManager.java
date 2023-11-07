@@ -14,26 +14,18 @@ public class FemaleStyleManager extends StyleManager{
      * @return
      */
     @Override
-    public Hair generateHair() {
-        File dir = new File("./src/main/resources/assets/character/hairs/");
-        File[] files = dir.listFiles();
-
+    public Hair generateHair(HairColor color) {
         try {
             Random rand = new Random();
-            int i = rand.nextInt(0, files.length);
 
-            //Conversion de la chaîne de caractère choisie et retour de l'image correspondante
-            if (Arrays.stream(files).toList().get(i).getName().contains("."))
-                return new Hair(Images.valueOf("HAIRS_FEMALE" + Arrays.stream(files).toList().get(i).getName().toUpperCase().substring(0, Arrays.stream(files).toList().get(i).getName().toUpperCase().indexOf("."))));
-            else
-                return new Hair(Images.valueOf("HAIRS_FEMALE" + Arrays.stream(files).toList().get(i).getName().toUpperCase()));
+            return new Hair(HairEnum.valueOf(HairEnum.getAllGenderAssets(true, HairEnum.getAllColoredAssets(color)).get(rand.nextInt(0, HairEnum.getAllGenderAssets(true, HairEnum.getAllColoredAssets(color)).size())).name()));
         }
         catch (Exception e){
             //Passage de l'information
             Main.getLogger().info(e.getMessage());
 
-            //Retour d'une peau de base
-            return null;
+            //Retour d'une coupe de base
+            return new Hair(HairEnum.MALE_BLACK_DISHEVELLED);
         }
     }
 
@@ -43,25 +35,17 @@ public class FemaleStyleManager extends StyleManager{
      */
     @Override
     public Eyes generateEyes(Origin origin) {
-        File dir = new File("./src/main/resources/assets/character/eyes/");
-        File[] files = dir.listFiles();
-
         try {
             Random rand = new Random();
-            int i = rand.nextInt(0, files.length);
 
-            //Conversion de la chaîne de caractère choisie et retour de l'image correspondante
-            if (Arrays.stream(files).toList().get(i).getName().contains("."))
-                return new Eyes(Images.valueOf("EYES_FEMALE" + Arrays.stream(files).toList().get(i).getName().toUpperCase().substring(0, Arrays.stream(files).toList().get(i).getName().toUpperCase().indexOf("."))));
-            else
-                return new Eyes(Images.valueOf("EYES_FEMALE" + Arrays.stream(files).toList().get(i).getName().toUpperCase()));
+            return new Eyes(EyesEnum.valueOf(Arrays.stream(EyesEnum.values()).toList().get(rand.nextInt(0, EyesEnum.values().length)).name()));
         }
         catch (Exception e){
             //Passage de l'information
             Main.getLogger().info(e.getMessage());
 
-            //Retour d'une peau de base
-            return null;
+            //Retour de yeux de base
+            return new Eyes(EyesEnum.WHITE_MALE_BLUE);
         }
     }
 }

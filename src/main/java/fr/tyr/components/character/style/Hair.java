@@ -6,12 +6,22 @@ import fr.tyr.resources.images.Images;
 import fr.tyr.tools.Vector2D;
 
 public class Hair extends ImageComponent {
+    HairEnum hair;
     /**
      * Create a Hair
      * @param image
      */
-    public Hair(Images image) {
-        super(image);
+    public Hair(HairEnum hair) {
+        super(hair.getImage());
+        this.hair = hair;
+    }
+    public Hair(HairEnum hair, Vector2D position) {
+        super(hair.getImage(), position);
+        this.hair = hair;
+    }
+    public Hair(HairEnum hair, Vector2D position, Vector2D size, boolean center) {
+        super(hair.getImage(), position, size, center);
+        this.hair = hair;
     }
 
     /**
@@ -55,5 +65,17 @@ public class Hair extends ImageComponent {
     @Override
     public void onWindowResized(Vector2D size) {
 
+    }
+    public String getName(){
+        return hair.getName();
+    }
+    public HairColor getColor(){
+        return hair.getColor();
+    }
+    public Images getImage(){
+        return hair.getImage();
+    }
+    public boolean getGender(){
+        return hair.getGender();
     }
 }

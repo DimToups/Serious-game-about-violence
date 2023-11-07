@@ -41,9 +41,6 @@ public abstract class Character extends ComposedComponent{
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
-
-        System.out.println("Je suis " + this.firstName.getFirstName() + " " + this.lastName.cleanName() + ".");
-        System.out.println("J'ai " + this.age + " ans.");
     }
 
     /**
@@ -60,6 +57,14 @@ public abstract class Character extends ComposedComponent{
      */
     public LastName getLastName() {
         return this.lastName;
+    }
+
+    /**
+     * Send the Character's HairColor
+     * @return The Character's HairColor
+     */
+    public HairColor getHairColor(){
+        return this.hair.getColor();
     }
 
     /**

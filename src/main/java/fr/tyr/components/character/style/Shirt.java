@@ -6,12 +6,14 @@ import fr.tyr.resources.images.Images;
 import fr.tyr.tools.Vector2D;
 
 public class Shirt extends ImageComponent {
+    ShirtEnum shirt;
     /**
      * Create a Shirt
      * @param image
      */
-    public Shirt(Images image) {
-        super(image);
+    public Shirt(ShirtEnum shirt) {
+        super(shirt.getImage());
+        this.shirt = shirt;
     }
 
     /**
@@ -19,8 +21,9 @@ public class Shirt extends ImageComponent {
      * @param image The image of the Shirt
      * @param position The component position
      */
-    public Shirt(Images image, Vector2D position) {
-        super(image, position);
+    public Shirt(ShirtEnum shirt, Vector2D position) {
+        super(shirt.getImage(), position);
+        this.shirt = shirt;
     }
 
     /**
@@ -30,8 +33,9 @@ public class Shirt extends ImageComponent {
      * @param size THe component size
      * @param center Is the image centered
      */
-    public Shirt(Images image, Vector2D position, Vector2D size, boolean center) {
-        super(image, position, size, center);
+    public Shirt(ShirtEnum shirt, Vector2D position, Vector2D size, boolean center) {
+        super(shirt.getImage(), position, size, center);
+        this.shirt = shirt;
     }
 
     /**
@@ -75,5 +79,11 @@ public class Shirt extends ImageComponent {
     @Override
     public void onWindowResized(Vector2D size) {
 
+    }
+    public String getName(){
+        return shirt.getName();
+    }
+    public Images getImage() {
+        return shirt.getImage();
     }
 }
