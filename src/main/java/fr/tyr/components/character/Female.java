@@ -3,7 +3,6 @@ package fr.tyr.components.character;
 import fr.tyr.components.character.identity.FirstName;
 import fr.tyr.components.character.identity.LastName;
 import fr.tyr.components.character.style.*;
-import fr.tyr.components.classic.ImageComponent;
 import fr.tyr.tools.Vector2D;
 
 public class Female extends Character{
@@ -17,7 +16,7 @@ public class Female extends Character{
      * @param firstName The character's firstname
      * @param lastName The character's lastname
      */
-    public Female(Vector2D position, Skin skin, Hair hair, Eyes eyes, Shirt shirt, FirstName firstName, LastName lastName) {
-        super(position, skin, hair, eyes, shirt, firstName, lastName);
+    public Female(Vector2D position, Skin skin, Hair hair, Eyes eyes, Shirt shirt, FirstName firstName, LastName lastName, int age) {
+        super(position, skin, hair, eyes, shirt, firstName, lastName, age);
     }
 }

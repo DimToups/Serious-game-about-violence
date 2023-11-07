@@ -1,6 +1,7 @@
 package fr.tyr.components.character.style;
 
 import fr.tyr.Main;
+import fr.tyr.components.character.identity.Origin;
 import fr.tyr.resources.images.Images;
 
 import java.io.File;
@@ -41,7 +42,7 @@ public class FemaleStyleManager extends StyleManager{
      * @return
      */
     @Override
-    public Eyes generateEyes() {
+    public Eyes generateEyes(Origin origin) {
         File dir = new File("./src/main/resources/assets/character/eyes/");
         File[] files = dir.listFiles();
 

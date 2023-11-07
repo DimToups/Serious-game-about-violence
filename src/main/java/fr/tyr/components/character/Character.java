@@ -3,8 +3,6 @@ package fr.tyr.components.character;
 import fr.tyr.components.character.identity.FirstName;
 import fr.tyr.components.character.identity.LastName;
 import fr.tyr.components.character.style.*;
-import fr.tyr.components.classic.GameComponent;
-import fr.tyr.components.classic.ImageComponent;
 import fr.tyr.components.mixed.ComposedComponent;
 import fr.tyr.resources.images.Images;
 import fr.tyr.tools.Vector2D;
@@ -13,6 +11,7 @@ public abstract class Character extends ComposedComponent{
     //Identity fields
     private final FirstName firstName;
     private final LastName lastName;
+    private final int age;
 
     //Style fields
     private final Skin skin;
@@ -29,7 +28,7 @@ public abstract class Character extends ComposedComponent{
      * @param eyes The character's eyes
      * @param shirt The character's shirt
      */
-    public Character(Vector2D position, Skin skin, Hair hair, Eyes eyes, Shirt shirt, FirstName firstName, LastName lastName) {
+    public Character(Vector2D position, Skin skin, Hair hair, Eyes eyes, Shirt shirt, FirstName firstName, LastName lastName, int age) {
         super(position, skin, hair, eyes, shirt);
 
         //Attribution of the character's chosen skin in it's fields
@@ -41,6 +40,10 @@ public abstract class Character extends ComposedComponent{
         //Attribution of the character's identity
         this.firstName = firstName;
         this.lastName = lastName;
+        this.age = age;
+
+        System.out.println("Je suis " + this.firstName.getFirstName() + " " + this.lastName.cleanName() + ".");
+        System.out.println("J'ai " + this.age + " ans.");
     }
 
     /**

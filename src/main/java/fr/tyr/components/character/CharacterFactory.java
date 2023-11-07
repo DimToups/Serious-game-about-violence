@@ -2,6 +2,7 @@ package fr.tyr.components.character;
 
 import fr.tyr.Main;
 import fr.tyr.components.character.identity.IdentityManager;
+import fr.tyr.components.character.identity.Origin;
 import fr.tyr.components.character.style.FemaleStyleManager;
 import fr.tyr.components.character.style.MaleStyleManager;
 import fr.tyr.resources.images.Images;
@@ -22,7 +23,9 @@ public class CharacterFactory {
         Main.getLogger().info("Generating a male character...");
         MaleStyleManager msf = new MaleStyleManager();
 
-        return new Male(position, msf.generateSkin(), msf.generateHair(), msf.generateEyes(), msf.generateBeard(), msf.generateShirt(), IdentityManager.generateMaleFirstName(), IdentityManager.generateLastName());
+        Origin origin = IdentityManager.generateOrigin();
+
+        return new Male(position, msf.generateSkin(origin), msf.generateHair(), msf.generateEyes(origin), msf.generateBeard(), msf.generateShirt(), IdentityManager.generateMaleFirstName(origin), IdentityManager.generateLastName(origin), IdentityManager.generateAge());
     }
 
     /**
@@ -46,7 +49,9 @@ public class CharacterFactory {
         Main.getLogger().info("Generating a female character...");
         FemaleStyleManager fsm = new FemaleStyleManager();
 
-        return new Female(position, fsm.generateSkin(), fsm.generateHair(), fsm.generateEyes(), fsm.generateShirt(), IdentityManager.generateFemaleFirstName(), IdentityManager.generateLastName());
+        Origin origin = IdentityManager.generateOrigin();
+
+        return new Female(position, fsm.generateSkin(origin), fsm.generateHair(), fsm.generateEyes(origin), fsm.generateShirt(), IdentityManager.generateFemaleFirstName(origin), IdentityManager.generateLastName(origin), IdentityManager.generateAge());
     }
 
     /**

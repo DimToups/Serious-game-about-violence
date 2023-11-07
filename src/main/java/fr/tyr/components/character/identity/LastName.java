@@ -29,7 +29,19 @@ public enum LastName {
     LIN(Origin.ASIAN),
     ZHANG(Origin.ASIAN),
     WU(Origin.ASIAN),
-    CHEN(Origin.ASIAN);
+    CHEN(Origin.ASIAN),
+    BELINSKI(Origin.RUSSIAN),
+    ANDREEV(Origin.RUSSIAN),
+    BOLKONSKI(Origin.RUSSIAN),
+    OZEROVA(Origin.RUSSIAN),
+    ZALESSKAIA(Origin.RUSSIAN),
+    IGNATIEV(Origin.RUSSIAN),
+    KILOSOVSKAIA(Origin.RUSSIAN),
+    ROUMIANTSEV(Origin.RUSSIAN),
+    GACIA(Origin.SPANISH),
+    PAZ(Origin.SPANISH),
+    HERNANDEZ(Origin.SPANISH),
+    CARRERA(Origin.SPANISH);
     private final Origin origin;
 
     /**
@@ -53,7 +65,7 @@ public enum LastName {
      * @param origin An specified origin
      * @return The remaining LastNames
      */
-    public ArrayList<LastName> getAllOriginLastNames(Origin origin){
+    public static ArrayList<LastName> getAllOriginLastNames(Origin origin){
         ArrayList<LastName> lastNames = new ArrayList<>();
         for(LastName ln : LastName.values()) {
             if (ln.getOrigin() == origin)

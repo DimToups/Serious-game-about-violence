@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public enum FirstName {
     //Prénoms masculins
     LEO("Léo", true, Origin.FRENCH),
+    LUDWIG("Ludwig", true, Origin.GERMAN),
     GABRIEL("Gabriel", true, Origin.FRENCH),
     RAPHAEL("Raphaël", true, Origin.FRENCH),
     ARTHUR("Arthur", true, Origin.FRENCH),
@@ -69,7 +70,9 @@ public enum FirstName {
     OLGA("Olga", false, Origin.RUSSIAN),
     NATACHA("Natacha", false, Origin.RUSSIAN),
     SASHA("Sasha", false, Origin.RUSSIAN),
-    APRIL("April", false, Origin.AMERICAN);
+    APRIL("April", false, Origin.AMERICAN),
+    JING("JING", true, Origin.ASIAN),
+    ZI_HAN("Zi Han", true, Origin.ASIAN);
     private final String firstName;
     /**
      * true for male, false for female
@@ -112,6 +115,21 @@ public enum FirstName {
         return this.origin;
     }
 
+    /**
+     * Send all the corresponding FirstName depending on the specified Origin
+     * @param origin The character's origin
+     * @return An array of FirstNames with all the corresponding origins
+     */
+    public static ArrayList<FirstName> getAllOriginFirstNames(Origin origin){
+        ArrayList<FirstName> firstNames = new ArrayList<>();
+
+        for(FirstName fn : FirstName.values()){
+            if(fn.getOrigin() == origin)
+                firstNames.add(fn);
+        }
+
+        return firstNames;
+    }
     /**
      * Send all the instanciated male firstnames
      * @return

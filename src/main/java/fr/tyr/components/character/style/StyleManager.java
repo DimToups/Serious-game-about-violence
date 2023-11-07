@@ -1,12 +1,14 @@
 package fr.tyr.components.character.style;
 
 import fr.tyr.Main;
+import fr.tyr.components.character.identity.Origin;
 import fr.tyr.components.character.style.*;
 import fr.tyr.components.classic.ImageComponent;
 import fr.tyr.resources.images.Images;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Random;
 
 public abstract class StyleManager {
@@ -21,11 +23,11 @@ public abstract class StyleManager {
      * Create a random skin
      * @return
      */
-    public static Skin generateSkin(){
+    public static Skin generateSkin(Origin origin){
         File dir = new File("./src/main/resources/assets/character/skins/");
         File[] files = dir.listFiles();
 
-        if(files == null)
+        if(Objects.isNull(files))
             return null;
 
         Random rand = new Random();
@@ -56,7 +58,7 @@ public abstract class StyleManager {
      * Create a random Eye
      * @return
      */
-    public abstract Eyes generateEyes();
+    public abstract Eyes generateEyes(Origin origin);
 
     /**
      * Create a random Shirt

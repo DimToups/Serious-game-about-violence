@@ -9,31 +9,35 @@ public class IdentityManager {
      */
     public IdentityManager(){}
 
+    public static Origin generateOrigin(){
+        Random rand = new Random();
+        return Origin.valueOf(Arrays.stream(Origin.values()).toList().get(rand.nextInt(0, Arrays.stream(Origin.values()).toList().size())).name());
+    }
     /**
      * Create a random male firstname
      * @return
      */
-    public static FirstName generateMaleFirstName(){
+    public static FirstName generateMaleFirstName(Origin origin){
         Random rand = new Random();
-        return FirstName.valueOf(FirstName.getAllMaleFirstNames().get(rand.nextInt(0, FirstName.getAllMaleFirstNames().size())).name());
+        return FirstName.valueOf(FirstName.getAllMaleFirstNames(FirstName.getAllOriginFirstNames(origin)).get(rand.nextInt(0, FirstName.getAllMaleFirstNames(FirstName.getAllOriginFirstNames(origin)).size())).name());
     }
 
     /**
      * Create a random female firstname
      * @return
      */
-    public static FirstName generateFemaleFirstName(){
+    public static FirstName generateFemaleFirstName(Origin origin){
         Random rand = new Random();
-        return FirstName.valueOf(FirstName.getAllFemaleFirstNames().get(rand.nextInt(0, FirstName.getAllFemaleFirstNames().size())).name());
+        return FirstName.valueOf(FirstName.getAllFemaleFirstNames(FirstName.getAllOriginFirstNames(origin)).get(rand.nextInt(0, FirstName.getAllFemaleFirstNames(FirstName.getAllOriginFirstNames(origin)).size())).name());
     }
 
     /**
      * Create a random lastname
      * @return
      */
-    public static LastName generateLastName(){
+    public static LastName generateLastName(Origin origin){
         Random rand = new Random();
-        return LastName.valueOf(Arrays.stream(LastName.values()).toList().get(rand.nextInt(0, LastName.values().length)).name());
+        return LastName.valueOf(LastName.getAllOriginLastNames(origin).get(rand.nextInt(0, LastName.getAllOriginLastNames(origin).size())).name());
     }
 
     /**
