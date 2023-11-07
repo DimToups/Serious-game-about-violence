@@ -170,35 +170,103 @@ package components{
     }
     package character{
         package style{
+            enum HairColor{
+                ..Fields..
+                BLACK
+                DARK_BROWN
+                BROWN
+                BLOND
+                GINGER
+                WHITE
+                BLUE
+                PINK
+            }
+            enum EyeColor{
+                ..Fields..
+                BLUE
+                LIGHT_BLUE
+                BROWN
+                GREEN
+                YELLOW
+            }
             class Beard extends components.classic.ImageComponent{
                 ..Methods..
-                + <<create>> Beard(image : Images)
-                + <<create>> Beard(image : Images, position : Vector2D)
-                + <<create>> Beard(image : Images, position : Vector2D, size : Vecto2D, center : Boolean)
+                + <<create>> Beard(beard : BeardEnum)
+                + <<create>> Beard(beard : BeardEnum, position : Vector2D)
+                + <<create>> Beard(beard : BeardEnum, position : Vector2D, size : Vecto2D, center : Boolean)
+            }
+            enum BeardEnum{
+                ..Fields..
+                - name : String
+                - color : HairColor
+                - image : Images
+                ..Methods..
+                + getAllColoredAssets(color : HairColor) : Beard[]
+                + getName() : String
+                + getColor() : HairColor
+                + getImages() : Images
             }
             class Eyes extends components.classic.ImageComponent{
                 ..Methods..
-                + <<create>> Eyes(image : Images)
-                + <<create>> Eyes(image : Images, position : Vector2D)
-                + <<create>> Eyes(image : Images, position : Vector2D, size : Vecto2D, center : Boolean)
+                + <<create>> Eyes(eyes : EyesEnum)
+                + <<create>> Eyes(eyes : EyesEnum, position : Vector2D)
+                + <<create>> Eyes(eyes : EyesEnum, position : Vector2D, size : Vecto2D, center : Boolean)
+            }
+            enum EyesEnum{
+                ..Fields..
+                - name : String
+                - color : EyeColor
+                - image : Images
+                ..Methods..
+                + getAllColoredAssets(color : EyeColor) : Eyes[]
+                + getName() : String
+                + getColor() : EyeColor
+                + getImages() : Images
             }
             class Hair extends components.classic.ImageComponent{
                 ..Methods..
-                + <<create>> Hair(image : Images)
-                + <<create>> Hair(image : Images, position : Vector2D)
-                + <<create>> Hair(image : Images, position : Vector2D, size : Vecto2D, center : Boolean)
+                + <<create>> Hair(hair : HairEnum)
+                + <<create>> Hair(hair : HairEnum, position : Vector2D)
+                + <<create>> Hair(hair : HairEnum, position : Vector2D, size : Vecto2D, center : Boolean)
+            }
+            enum HairEnum{
+                ..Fields..
+                - name : String
+                - color : HairColor
+                - image : Images
+                ..Methods..
+                + getAllColoredAssets(color : HairColor) : Hair[]
+                + getName() : String
+                + getColor() : HairColor
+                + getImages() : Images
             }
             class Shirt extends components.classic.ImageComponent{
                 ..Methods..
-                + <<create>> Shirt(image : Images)
-                + <<create>> Shirt(image : Images, position : Vector2D)
-                + <<create>> Shirt(image : Images, position : Vector2D, size : Vecto2D, center : Boolean)
+                + <<create>> Shirt(shirt : ShirtEnum)
+                + <<create>> Shirt(shirt : ShirtEnum, position : Vector2D)
+                + <<create>> Shirt(shirt : ShirtEnum, position : Vector2D, size : Vecto2D, center : Boolean)
+            }
+            enum ShirtEnum{
+                ..Fields..
+                - name : String
+                - image : Images
+                ..Methods..
+                + getName() : String
+                + getImage() : Images
             }
             class Skin extends components.classic.ImageComponent{
                 ..Methods..
-                + <<create>> Skin(image : Images)
-                + <<create>> Skin(image : Images, position : Vector2D)
-                + <<create>> Skin(image : Images, position : Vector2D, size : Vecto2D, center : Boolean)
+                + <<create>> Skin(skin : SkinEnum)
+                + <<create>> Skin(skin : SkinEnum, position : Vector2D)
+                + <<create>> Skin(skin : SkinEnum, position : Vector2D, size : Vector2D, center : Boolean)
+            }
+            enum SkinEnum{
+                ..Fields..
+                - name : String
+                - image : Images
+                ..Methods..
+                + getName() : String
+                + getImage() : Images
             }
             abstract class StyleManager{
                 ..Methods..
@@ -525,6 +593,16 @@ components.character.style.Eyes <.. components.character.style.StyleManager : <<
 components.character.style.Hair <.. components.character.style.StyleManager : <<uses>>
 components.character.style.Shirt <.. components.character.style.StyleManager : <<uses>>
 components.character.style.Beard <.. components.character.style.MaleStyleManager : <<uses>>
+
+components.character.style.HairEnum "1" o--> "1\n- color" components.character.style.HairColor
+components.character.style.BeardEnum "1" o--> "1\n- color" components.character.style.HairColor
+components.character.style.EyesEnum "1" o--> "1\n- color" components.character.style.EyeColor
+
+components.character.style.Skin "1" o--> "1\n- skin" components.character.style.SkinEnum
+components.character.style.Eyes "1" o--> "1\n- eyes" components.character.style.EyesEnum
+components.character.style.Hair "1" o--> "1\n- hair" components.character.style.HairEnum
+components.character.style.Shirt "1" o--> "1\n- shirt" components.character.style.ShirtEnum
+components.character.style.Beard "1" o--> "1\n- beard" components.character.style.BeardEnum
 
 components.character.identity.IdentityManager ..> components.character.identity.FirstName : <<uses>>
 components.character.identity.IdentityManager ..> components.character.identity.LastName : <<uses>>
