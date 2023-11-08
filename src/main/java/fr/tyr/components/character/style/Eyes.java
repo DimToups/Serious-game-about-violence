@@ -10,7 +10,7 @@ public class Eyes extends ImageComponent {
     EyesEnum eyes;
     /**
      * Create Eyes
-     * @param image The image of a single eye
+     * @param eyes An instance of a EyesEnum
      */
     public Eyes(EyesEnum eyes) {
         super(eyes.getImage());
@@ -19,7 +19,7 @@ public class Eyes extends ImageComponent {
 
     /**
      * Create Eyes
-     * @param image The image of a single eye
+     * @param eyes An instance of a EyesEnum
      * @param position The component position
      */
     public Eyes(EyesEnum eyes, Vector2D position) {
@@ -29,7 +29,7 @@ public class Eyes extends ImageComponent {
 
     /**
      * Create Eyes
-     * @param image The image of a single eye
+     * @param eyes An instance of a EyesEnum
      * @param position The component position
      * @param size The component size
      * @param center Is the image centered
@@ -81,18 +81,38 @@ public class Eyes extends ImageComponent {
     public void onWindowResized(Vector2D size) {
 
     }
+
+    /**
+     * Send the Eyes name
+     * @return The Eyes name
+     */
     public String getName(){
         return eyes.getName();
     }
+
+    /**
+     * Send the Eyes color
+     * @return The Eyes color
+     */
     public EyeColor getColor(){
         return eyes.getColor();
     }
     public Images getImage(){
         return eyes.getImage();
     }
+
+    /**
+     * Send the Eyes gender
+     * @return The Eyes gender
+     */
     public boolean getGender(){
         return eyes.getGender();
     }
+
+    /**
+     * Send the Eyes origin
+     * @return The Eyes origin
+     */
     public Origin getOrigin(){
         return eyes.getOrigin();
     }

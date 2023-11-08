@@ -8,9 +8,10 @@ import fr.tyr.tools.Vector2D;
 
 public class Skin extends ImageComponent {
     SkinEnum skin;
+
     /**
      * Create a Skin
-     * @param image The image of the Skin
+     * @param skin The Skin's SkinEnum instance
      */
     public Skin(SkinEnum skin) {
         super(skin.getImage());
@@ -19,7 +20,7 @@ public class Skin extends ImageComponent {
 
     /**
      * Create a Skin
-     * @param image The image of the Skin
+     * @param skin The Skin's SkinEnum instance
      * @param position The component position
      */
     public Skin(SkinEnum skin, Vector2D position) {
@@ -29,7 +30,7 @@ public class Skin extends ImageComponent {
 
     /**
      * Create a Skin
-     * @param image The image of the Skin
+     * @param skin The Skin's SkinEnum instance
      * @param position The component position
      * @param size The component size
      * @param center Is the image centered
@@ -81,12 +82,27 @@ public class Skin extends ImageComponent {
     public void onWindowResized(Vector2D size) {
 
     }
+
+    /**
+     * Send the Skin's name
+     * @return The Skin's name
+     */
     public String getName(){
         return skin.getName();
     }
+
+    /**
+     * Send the Skin's corresponding Images instance
+     * @return The Skin's Images
+     */
     public Images getImage() {
         return skin.getImage();
     }
+
+    /**
+     * Send the Skin's Origin
+     * @return The Skin's Origin
+     */
     public Origin getOrigin(){
         return skin.getOrigin();
     }

@@ -27,6 +27,9 @@ public abstract class Character extends ComposedComponent{
      * @param hair The character's hair
      * @param eyes The character's eyes
      * @param shirt The character's shirt
+     * @param firstName The character's firstname
+     * @param lastName The character's lastname
+     * @param age The character's age
      */
     public Character(Vector2D position, Skin skin, Hair hair, Eyes eyes, Shirt shirt, FirstName firstName, LastName lastName, int age) {
         super(position, skin, hair, eyes, shirt);

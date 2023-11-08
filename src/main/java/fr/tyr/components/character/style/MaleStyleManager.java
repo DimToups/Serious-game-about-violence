@@ -2,16 +2,14 @@ package fr.tyr.components.character.style;
 
 import fr.tyr.Main;
 import fr.tyr.components.character.identity.Origin;
-import fr.tyr.resources.images.Images;
 
-import java.io.File;
-import java.util.Arrays;
 import java.util.Random;
 
 public class MaleStyleManager extends StyleManager{
     /**
-     * Create a MaleStyleManager
-     * @return
+     * Generate a random Hair instance
+     * @param color The character's HairColor
+     * @return a Hair instance
      */
     @Override
     public Hair generateHair(HairColor color) {
@@ -32,7 +30,8 @@ public class MaleStyleManager extends StyleManager{
 
     /**
      * Create a random male Eye
-     * @return
+     * @param origin The character's Origin
+     * @return A male Eye
      */
     @Override
     public Eyes generateEyes(Origin origin) {
@@ -53,7 +52,8 @@ public class MaleStyleManager extends StyleManager{
 
     /**
      * Create a random beard
-     * @return
+     * @param color The character's HairColor
+     * @return A Beard
      */
     public static Beard generateBeard(HairColor color){
         try {

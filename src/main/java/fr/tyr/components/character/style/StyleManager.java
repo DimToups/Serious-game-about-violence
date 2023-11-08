@@ -2,13 +2,9 @@ package fr.tyr.components.character.style;
 
 import fr.tyr.Main;
 import fr.tyr.components.character.identity.Origin;
-import fr.tyr.components.character.style.*;
 import fr.tyr.components.classic.ImageComponent;
-import fr.tyr.resources.images.Images;
 
-import java.io.File;
 import java.util.Arrays;
-import java.util.Objects;
 import java.util.Random;
 
 public abstract class StyleManager {
@@ -18,6 +14,12 @@ public abstract class StyleManager {
     public StyleManager(){
 
     }
+
+    /**
+     * Generate a HairColor for a character depending on its age
+     * @param age The character's age
+     * @return A corresponding HairColor instance
+     */
     public static HairColor generateHairColor(int age){
         //
         Random rand = new Random();
@@ -64,12 +66,13 @@ public abstract class StyleManager {
 
     /**
      * Create a random skin
-     * @return
+     * @param origin The character's Origin
+     * @return A SkinEnum
      */
     public static Skin generateSkin(Origin origin){
         Random rand = new Random();
 
-        try {//Conversion de la chaîne de caractère choisie et retour de l'image correspondante
+        try {
             return new Skin(SkinEnum.valueOf(SkinEnum.getAllOriginAssets(origin).get(rand.nextInt(0, SkinEnum.getAllOriginAssets(origin).size())).name()));
         }
         catch (Exception e){
@@ -83,19 +86,21 @@ public abstract class StyleManager {
 
     /**
      * Create a random Hair
-     * @return
+     * @param color The character's HairColor
+     * @return A Hair instance
      */
     public abstract Hair generateHair(HairColor color);
 
     /**
-     * Create a random Eye
-     * @return
+     * Create random Eyes
+     * @param origin The character's Origin
+     * @return An Eyes instance
      */
     public abstract Eyes generateEyes(Origin origin);
 
     /**
      * Create a random Shirt
-     * @return
+     * @return A Shirt instance
      */
     public static Shirt generateShirt(){
         Random rand = new Random();
@@ -114,8 +119,8 @@ public abstract class StyleManager {
     }
 
     /**
-     * Create a random Special character component (may be removed)
-     * @return
+     * Create a random Special character component (maybe removed)
+     * @return A Special component
      */
     public static ImageComponent generateSpecial(){
         return null;

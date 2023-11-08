@@ -9,7 +9,7 @@ public class Shirt extends ImageComponent {
     ShirtEnum shirt;
     /**
      * Create a Shirt
-     * @param image
+     * @param shirt The Shirt's ShirtEnum instance
      */
     public Shirt(ShirtEnum shirt) {
         super(shirt.getImage());
@@ -18,7 +18,7 @@ public class Shirt extends ImageComponent {
 
     /**
      * Create a Shirt
-     * @param image The image of the Shirt
+     * @param shirt The Shirt's ShirtEnum instance
      * @param position The component position
      */
     public Shirt(ShirtEnum shirt, Vector2D position) {
@@ -28,9 +28,9 @@ public class Shirt extends ImageComponent {
 
     /**
      * Create a Shirt
-     * @param image The image of the Shirt
+     * @param shirt The Shirt's ShirtEnum instance
      * @param position The component position
-     * @param size THe component size
+     * @param size The component size
      * @param center Is the image centered
      */
     public Shirt(ShirtEnum shirt, Vector2D position, Vector2D size, boolean center) {
@@ -80,9 +80,19 @@ public class Shirt extends ImageComponent {
     public void onWindowResized(Vector2D size) {
 
     }
+
+    /**
+     * Send the Shirt's name
+     * @return The Shirt's name
+     */
     public String getName(){
         return shirt.getName();
     }
+
+    /**
+     * Send the Shirt's corresponding Images instance
+     * @return the Shirt's Images
+     */
     public Images getImage() {
         return shirt.getImage();
     }
