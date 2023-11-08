@@ -19,7 +19,7 @@ import java.util.logging.Level;
 public enum Images {
     SWORDS("swords.png", true),
     BACKGROUND("background.jpg", false),
-    NONE("assets/character/beards/none.png", false),
+    NONE("assets/none.png", false),
     SKIN_WHITE("assets/character/skins/white.png", false),
     SHIRT_RED("assets/character/shirts/red.png", false),
     EYES_MALE_BLUE("assets/character/eyes/male/blue.png", false),
