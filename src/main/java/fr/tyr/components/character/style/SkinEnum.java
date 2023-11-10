@@ -2,25 +2,30 @@ package fr.tyr.components.character.style;
 
 import fr.tyr.components.character.identity.Origin;
 import fr.tyr.resources.images.Images;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public enum SkinEnum {
-    WHITE("white", Images.SKIN_WHITE, Origin.FRENCH);
+    WHITE("white", Images.SKIN_WHITE, Origin.FRENCH, Origin.RUSSIAN, Origin.GERMAN, Origin.SPANISH),
+    BLACK("black", Images.SKIN_WHITE, Origin.AFRICAN, Origin.ARABIC, Origin.AMERICAN),
+    ASIAN("asian", Images.SKIN_WHITE, Origin.ASIAN, Origin.RUSSIAN),
+    TANNED("tanned", Images.SKIN_WHITE, Origin.ARABIC, Origin.SPANISH);
     private final String name;
     private final Images image;
-    private final Origin origin;
+    private final ArrayList<Origin> origins = new ArrayList<>();
 
     /**
      * Create an instance of SkinEnum
      * @param name The SkinEnum's name
      * @param image The SkinEnum's corresponding Images instance
-     * @param origin The SkinEnum's Origin
+     * @param origin All the possible SkinEnum's Origins
      */
-    SkinEnum(String name, Images image, Origin origin){
+    SkinEnum(String name, Images image, @NotNull Origin... origin){
         this.name = name;
         this.image = image;
-        this.origin = origin;
+        this.origins.addAll(Arrays.asList(origin));
     }
 
     /**
@@ -43,8 +48,8 @@ public enum SkinEnum {
      * Send the SkinEnum's Origin
      * @return The SkinEnum's Origin
      */
-    public Origin getOrigin() {
-        return origin;
+    public ArrayList<Origin> getOrigin() {
+        return origins;
     }
 
     /**
@@ -56,8 +61,10 @@ public enum SkinEnum {
         ArrayList<SkinEnum> assets = new ArrayList<>();
 
         for(SkinEnum skin : SkinEnum.values()){
-            if(skin.origin == origin)
-                assets.add(skin);
+            for(Origin o : skin.origins) {
+                if (o == origin)
+                    assets.add(skin);
+            }
         }
 
         return assets;
@@ -73,8 +80,10 @@ public enum SkinEnum {
         ArrayList<SkinEnum> assets = new ArrayList<>();
 
         for(SkinEnum e : skin){
-            if(e.origin == origin)
-                assets.add(e);
+            for(Origin o : e.origins) {
+                if (o == origin)
+                    assets.add(e);
+            }
         }
 
         return assets;

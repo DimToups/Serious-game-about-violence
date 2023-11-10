@@ -7,7 +7,8 @@ public enum Origin {
     SPANISH,
     ASIAN,
     AMERICAN,
-    RUSSIAN;
+    RUSSIAN,
+    AFRICAN;
 
     /**
      * Convert the Origin into an clean String

@@ -19,9 +19,9 @@ public class CharacterFactory {
     /**
      * Create a random Male Character
      * @param position The position of the component
-     * @return
+     * @return A male character
      */
-    public Male generateMale(Vector2D position){
+    public static Male generateMale(Vector2D position){
         Main.getLogger().info("Generating a male character...");
         MaleStyleManager msf = new MaleStyleManager();
 
@@ -30,16 +30,16 @@ public class CharacterFactory {
         int age = IdentityManager.generateAge();
         HairColor hairColor = StyleManager.generateHairColor(age);
 
-        return new Male(position, msf.generateSkin(origin), msf.generateHair(hairColor), msf.generateEyes(origin), msf.generateBeard(hairColor), msf.generateShirt(), IdentityManager.generateMaleFirstName(origin), IdentityManager.generateLastName(origin), age);
+        return new Male(position, MaleStyleManager.generateSkin(origin), msf.generateHair(hairColor), msf.generateEyes(origin), MaleStyleManager.generateBeard(hairColor), MaleStyleManager.generateShirt(), IdentityManager.generateMaleFirstName(origin), IdentityManager.generateLastName(origin), age);
     }
 
     /**
      * Create a predetermined Male Character
      * @param position The position of the component
      * @param components The components to add to the composed component
-     * @return
+     * @return A male character
      */
-    public Male generateMale(Vector2D position, Images... components){
+    public static Male generateMale(Vector2D position, Images... components){
         Main.getLogger().info("Generating a male character...");
         //Traiter les images passées
         return null;
@@ -48,9 +48,9 @@ public class CharacterFactory {
     /**
      * Create a random Female Character
      * @param position The component position
-     * @return
+     * @return A female character
      */
-    public Female generateFemale(Vector2D position){
+    public static Female generateFemale(Vector2D position){
         Main.getLogger().info("Generating a female character...");
         FemaleStyleManager fsm = new FemaleStyleManager();
 
@@ -58,16 +58,16 @@ public class CharacterFactory {
         int age = IdentityManager.generateAge();
         HairColor hairColor = StyleManager.generateHairColor(age);
 
-        return new Female(position, fsm.generateSkin(origin), fsm.generateHair(hairColor), fsm.generateEyes(origin), fsm.generateShirt(), IdentityManager.generateFemaleFirstName(origin), IdentityManager.generateLastName(origin), age);
+        return new Female(position, FemaleStyleManager.generateSkin(origin), fsm.generateHair(hairColor), fsm.generateEyes(origin), FemaleStyleManager.generateShirt(), IdentityManager.generateFemaleFirstName(origin), IdentityManager.generateLastName(origin), age);
     }
 
     /**
      * Create a predetermined Female Character
      * @param position The component position
      * @param components The components to add to the composed component
-     * @return
+     * @return A female character
      */
-    public Female generateFemale(Vector2D position, Images... components){
+    public static Female generateFemale(Vector2D position, Images... components){
         Main.getLogger().info("Generating a female character...");
         //Traiter les images passées
 

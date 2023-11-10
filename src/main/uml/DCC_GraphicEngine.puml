@@ -371,10 +371,10 @@ package components{
         class CharacterFactory{
             ..Methods..
             + <<create>> CharacterFactory
-            + generateMale(position : Vector2D) : Male
-            + generateMale(position : Vector2D, components : Images[]) : Male
-            + generateFemale(position : Vector2D) : Female
-            + generateFemale(position : Vector2D, components : Images[]) : Female
+            + generateMale(position : Vector2D) : Male {static}
+            + generateMale(position : Vector2D, components : Images[]) : Male {static}
+            + generateFemale(position : Vector2D) : Female {static}
+            + generateFemale(position : Vector2D, components : Images[]) : Female {static}
         }
         abstract class Character extends components.mixed.ComposedComponent{
             ..Fields..
