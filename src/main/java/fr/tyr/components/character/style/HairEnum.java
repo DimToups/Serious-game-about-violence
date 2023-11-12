@@ -30,7 +30,7 @@ public enum HairEnum {
      * @param name The name of the haircut
      * @param color The HairEnum's hairColor
      * @param image The HairEnum's corresponding Images instance
-     * @param gender THe HairEnum's prefered gender (true for male, false for female)
+     * @param gender THe HairEnum's preferred gender (true for male, false for female)
      */
     HairEnum(String name, HairColor color, Images image, boolean gender){
         this.name = name;

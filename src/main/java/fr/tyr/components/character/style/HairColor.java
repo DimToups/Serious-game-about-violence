@@ -8,5 +8,5 @@ public enum HairColor {
     GINGER,
     WHITE,
     BLUE,
-    PINK;
+    PINK
 }

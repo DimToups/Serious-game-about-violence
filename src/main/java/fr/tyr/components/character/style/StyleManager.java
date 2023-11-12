@@ -31,7 +31,6 @@ public abstract class StyleManager {
             if(rand.nextInt(0,30) != 0){
                 //Choix d'une couleur naturelle
                 return switch (rand.nextInt(0, 5)) {
-                    case 0 -> HairColor.BLACK;
                     case 1 -> HairColor.DARK_BROWN;
                     case 2 -> HairColor.BROWN;
                     case 3 -> HairColor.BLOND;
@@ -52,7 +51,6 @@ public abstract class StyleManager {
             if(rand.nextInt(0,10) == 0){
                 //Choix d'une couleur naturelle
                 return switch (rand.nextInt(0, 4)) {
-                    case 0 -> HairColor.BLACK;
                     case 1 -> HairColor.DARK_BROWN;
                     case 2 -> HairColor.BROWN;
                     case 3 -> HairColor.BLOND;

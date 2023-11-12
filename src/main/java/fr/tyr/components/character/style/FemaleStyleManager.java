@@ -31,7 +31,7 @@ public class FemaleStyleManager extends StyleManager{
 
     /**
      * Create a random female Eye
-     * @param origin The caracter's origin
+     * @param origin The character's origin
      * @return A random female Eye
      */
     @Override

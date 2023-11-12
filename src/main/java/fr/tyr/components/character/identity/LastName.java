@@ -82,7 +82,7 @@ public enum LastName {
     public String cleanName(){
         String name = this.name().toLowerCase();
 
-        name = name.substring(0,1).toUpperCase() + name.substring(1, name.length());
+        name = name.substring(0,1).toUpperCase() + name.substring(1);
 
         for(int i = 0 ; i < name.length(); i++){
             if(name.charAt(i) == '_')

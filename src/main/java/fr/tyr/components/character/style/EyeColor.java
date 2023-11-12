@@ -5,5 +5,5 @@ public enum EyeColor {
     LIGHT_BLUE,
     BROWN,
     GREEN,
-    YELLOW;
+    YELLOW
 }

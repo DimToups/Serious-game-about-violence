@@ -34,7 +34,7 @@ public abstract class Character extends ComposedComponent{
     public Character(Vector2D position, Skin skin, Hair hair, Eyes eyes, Shirt shirt, FirstName firstName, LastName lastName, int age) {
         super(position, skin, hair, eyes, shirt);
 
-        //Attribution of the character's chosen skin in it's fields
+        //Attribution of the character's chosen skin in its fields
         this.skin = skin;
         this.hair = hair;
         this.eyes = eyes;

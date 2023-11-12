@@ -15,7 +15,7 @@ public class IdentityManager {
     }
     /**
      * Create a random male firstname
-     * @return
+     * @return A male firstname
      */
     public static FirstName generateMaleFirstName(Origin origin){
         Random rand = new Random();
@@ -24,7 +24,7 @@ public class IdentityManager {
 
     /**
      * Create a random female firstname
-     * @return
+     * @return A female firstname
      */
     public static FirstName generateFemaleFirstName(Origin origin){
         Random rand = new Random();
@@ -33,7 +33,7 @@ public class IdentityManager {
 
     /**
      * Create a random lastname
-     * @return
+     * @return A lastname
      */
     public static LastName generateLastName(Origin origin){
         Random rand = new Random();
@@ -42,7 +42,7 @@ public class IdentityManager {
 
     /**
      * Generate a random adult age
-     * @return
+     * @return An adult age
      */
     public static int generateAge(){
         return new Random().nextInt(18, 70);

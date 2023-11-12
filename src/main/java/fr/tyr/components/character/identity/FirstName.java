@@ -93,7 +93,7 @@ public enum FirstName {
 
     /**
      * Send the firstname
-     * @return
+     * @return The firstname
      */
     public String getFirstName(){
         return this.firstName;
@@ -101,7 +101,7 @@ public enum FirstName {
 
     /**
      * Send the gender
-     * @return
+     * @return The gender
      */
     public boolean getGender() {
         return gender;
@@ -109,7 +109,7 @@ public enum FirstName {
 
     /**
      * Send the Origin of the FirstName
-     * @return
+     * @return The Origin of the FirstName
      */
     public Origin getOrigin() {
         return this.origin;
@@ -132,7 +132,7 @@ public enum FirstName {
     }
     /**
      * Send all the instanciated male firstnames
-     * @return
+     * @return All the instanciated male firstnames
      */
     public static ArrayList<FirstName> getAllMaleFirstNames(){
         ArrayList<FirstName> amfn = new ArrayList<>();
@@ -158,8 +158,8 @@ public enum FirstName {
     }
 
     /**
-     * Send all the instanciated male firstnames
-     * @return
+     * Send all the instanciated female firstnames
+     * @return All the instanciated female firstnames
      */
     public static ArrayList<FirstName> getAllFemaleFirstNames(){
         ArrayList<FirstName> affn = new ArrayList<>();
@@ -171,7 +171,7 @@ public enum FirstName {
     }
 
     /**
-     * Send all the instanciated male firstnames
+     * Send all the instanciated female firstnames
      * @param firstNames An array of firstname
      * @return All of the female firstnames of the parameter firstNames
      */
