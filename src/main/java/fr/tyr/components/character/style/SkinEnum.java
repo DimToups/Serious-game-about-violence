@@ -9,9 +9,9 @@ import java.util.Arrays;
 
 public enum SkinEnum {
     WHITE("white", Images.SKIN_WHITE, Origin.FRENCH, Origin.RUSSIAN, Origin.GERMAN, Origin.SPANISH),
-    BLACK("black", Images.SKIN_WHITE, Origin.AFRICAN, Origin.ARABIC, Origin.AMERICAN),
-    ASIAN("asian", Images.SKIN_WHITE, Origin.ASIAN, Origin.RUSSIAN),
-    TANNED("tanned", Images.SKIN_WHITE, Origin.ARABIC, Origin.SPANISH);
+    BLACK("black", Images.SKIN_BLACK, Origin.AFRICAN, Origin.ARABIC, Origin.AMERICAN),
+    ASIAN("asian", Images.SKIN_ASIAN, Origin.ASIAN, Origin.RUSSIAN),
+    TANNED("tanned", Images.SKIN_TANNED, Origin.ARABIC, Origin.SPANISH);
     private final String name;
     private final Images image;
     private final ArrayList<Origin> origins = new ArrayList<>();

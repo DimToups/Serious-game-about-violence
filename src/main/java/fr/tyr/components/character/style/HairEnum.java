@@ -5,7 +5,21 @@ import fr.tyr.resources.images.Images;
 import java.util.ArrayList;
 
 public enum HairEnum {
-    MALE_BLACK_DISHEVELLED("male white dishevelled", HairColor.BLACK, Images.HAIR_MALE_DISHEVELLED, true);
+    //without gender
+    NONE("none", HairColor.BLACK, Images.NONE, true),
+
+    //female
+
+    //male
+    BLACK_DISHEVELLED("male black dishevelled", HairColor.BLACK, Images.HAIR_MALE_DISHEVELLED, true),
+    BOWL_BLACK("male white dishevelled", HairColor.BLACK, Images.HAIR_BOWL_BLACK, true),
+    BOWL_DARK_BROWN("male white dishevelled", HairColor.DARK_BROWN, Images.HAIR_BOWL_DARK_BROWN, true),
+    BOWL_BROWN("male white dishevelled", HairColor.BROWN, Images.HAIR_BOWL_BROWN, true),
+    BOWL_BLOND("male white dishevelled", HairColor.BLOND, Images.HAIR_BOWL_BLOND, true),
+    BOWL_WHITE("male white dishevelled", HairColor.WHITE, Images.HAIR_BOWL_WHITE, true),
+    BOWL_GINGER("male white dishevelled", HairColor.GINGER, Images.HAIR_BOWL_GINGER, true),
+    BOWL_BLUE("male white dishevelled", HairColor.BLUE, Images.HAIR_BOWL_BLUE, true),
+    BOWL_PINK("male white dishevelled", HairColor.PINK, Images.HAIR_BOWL_PINK, true);
     private final String name;
     private final HairColor color;
     private final Images image;

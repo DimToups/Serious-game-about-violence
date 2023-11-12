@@ -5,7 +5,15 @@ import fr.tyr.resources.images.Images;
 import java.util.ArrayList;
 
 public enum BeardEnum {
-    NONE("none", HairColor.BLACK, Images.NONE);
+    NONE("none", HairColor.BLACK, Images.NONE),
+    SHORT_BLACK("short black", HairColor.BLACK, Images.BEARD_SHORT_BLACK),
+    SHORT_DARK_BROWN("short dark brown", HairColor.DARK_BROWN, Images.BEARD_SHORT_DARK_BROWN),
+    SHORT_BROWN("short brown", HairColor.BROWN, Images.BEARD_SHORT_BROWN),
+    SHORT_BLOND("short blond", HairColor.BLOND, Images.BEARD_SHORT_BLOND),
+    SHORT_WHITE("short white", HairColor.WHITE, Images.BEARD_SHORT_WHITE),
+    SHORT_GINGER("short ginger", HairColor.GINGER, Images.BEARD_SHORT_GINGER),
+    SHORT_BLUE("short blue", HairColor.BLUE, Images.BEARD_SHORT_BLUE),
+    SHORT_PINK("short pink", HairColor.PINK, Images.BEARD_SHORT_PINK);
     private final String name;
     private final HairColor color;
     private final Images image;

@@ -20,10 +20,37 @@ public enum Images {
     SWORDS("swords.png", true),
     BACKGROUND("background.jpg", false),
     NONE("assets/none.png", false),
+    //Skins
     SKIN_WHITE("assets/character/skins/white.png", false),
+    SKIN_BLACK("assets/character/skins/black.png", false),
+    SKIN_ASIAN("assets/character/skins/asian.png", false),
+    SKIN_TANNED("assets/character/skins/tanned.png", false),
+    //Shirts
     SHIRT_RED("assets/character/shirts/red.png", false),
+    SHIRT_PURPLE("assets/character/shirts/purple.png", false),
+    SHIRT_LIGHT_BLUE("assets/character/shirts/light_blue.png", false),
+    SHIRT_GREEN("assets/character/shirts/green.png", false),
+    //Eyes
     EYES_MALE_BLUE("assets/character/eyes/male/blue.png", false),
-    HAIR_MALE_DISHEVELLED("assets/character/hairs/male/dishevelled.png", false);
+    //Hairs
+    HAIR_MALE_DISHEVELLED("assets/character/hairs/male/dishevelled.png", false),
+    HAIR_BOWL_BLACK("assets/character/hairs/male/bowl_black.png", false),
+    HAIR_BOWL_DARK_BROWN("assets/character/hairs/male/bowl_dark_brown.png", false),
+    HAIR_BOWL_BROWN("assets/character/hairs/male/bowl_brown.png", false),
+    HAIR_BOWL_BLOND("assets/character/hairs/male/bowl_blond.png", false),
+    HAIR_BOWL_WHITE("assets/character/hairs/male/bowl_white.png", false),
+    HAIR_BOWL_GINGER("assets/character/hairs/male/bowl_ginger.png", false),
+    HAIR_BOWL_BLUE("assets/character/hairs/male/bowl_blue.png", false),
+    HAIR_BOWL_PINK("assets/character/hairs/male/bowl_pink.png", false),
+    //Beards
+    BEARD_SHORT_BLACK("assets/character/beards/short_black.png", false),
+    BEARD_SHORT_DARK_BROWN("assets/character/beards/short_dark_brown.png", false),
+    BEARD_SHORT_BROWN("assets/character/beards/short_brown.png", false),
+    BEARD_SHORT_BLOND("assets/character/beards/short_blond.png", false),
+    BEARD_SHORT_WHITE("assets/character/beards/short_white.png", false),
+    BEARD_SHORT_GINGER("assets/character/beards/short_ginger.png", false),
+    BEARD_SHORT_BLUE("assets/character/beards/short_blue.png", false),
+    BEARD_SHORT_PINK("assets/character/beards/short_pink.png", false);
     private final String path;
     private final boolean sizeCache;
     private BufferedImage image;

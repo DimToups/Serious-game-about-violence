@@ -3,7 +3,10 @@ package fr.tyr.components.character.style;
 import fr.tyr.resources.images.Images;
 
 public enum ShirtEnum {
-    RED("red", Images.SHIRT_RED);
+    RED("red", Images.SHIRT_RED),
+    PURPLE("purple", Images.SHIRT_PURPLE),
+    LIGHT_BLUE("light blue", Images.SHIRT_LIGHT_BLUE),
+    GREEN("green", Images.SHIRT_GREEN);
     private final String name;
     private final Images image;
 

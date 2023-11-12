@@ -24,7 +24,7 @@ public class MaleStyleManager extends StyleManager{
             Main.getLogger().info(e.getMessage());
 
             //Retour d'une coupe de base
-            return new Hair(HairEnum.MALE_BLACK_DISHEVELLED);
+            return new Hair(HairEnum.BLACK_DISHEVELLED);
         }
     }
 
