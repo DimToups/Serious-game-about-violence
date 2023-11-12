@@ -1,8 +1,10 @@
 package fr.tyr.components.character.style;
 
+import fr.tyr.Main;
 import fr.tyr.resources.images.Images;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
 
 public enum BeardEnum {
     NONE("none", HairColor.BLACK, Images.NONE),
@@ -85,5 +87,19 @@ public enum BeardEnum {
      */
     public Images getImage() {
         return image;
+    }
+
+    /**
+     * Return the corresponding BeardEnum depending on the Images param
+     * @param image The Images to focus the search on
+     * @return A BeardEnum corresponding to the Images param
+     */
+    public static BeardEnum getBeardEnum(Images image){
+        for(BeardEnum beard : BeardEnum.values()){
+            if(image.toString().contains(beard.toString()))
+                return beard;
+        }
+        Main.getLogger().log(Level.SEVERE, "No beard has been associated with \"" + image.name() + "\"");
+        return null;
     }
 }

@@ -31,11 +31,11 @@ public enum Images {
     SHIRT_LIGHT_BLUE("assets/character/shirts/light_blue.png", false),
     SHIRT_GREEN("assets/character/shirts/green.png", false),
     //Eyes
-    EYES_MALE_BLUE("assets/character/eyes/male/blue.png", false),
-    EYES_MALE_LIGHT_BLUE("assets/character/eyes/male/light_blue.png", false),
-    EYES_MALE_BROWN("assets/character/eyes/male/brown.png", false),
-    EYES_MALE_GREEN("assets/character/eyes/male/green.png", false),
-    EYES_MALE_YELLOW("assets/character/eyes/male/yellow.png", false),
+    EYES_NORMAL_MALE_BLUE("assets/character/eyes/male/blue.png", false),
+    EYES_NORMAL_MALE_LIGHT_BLUE("assets/character/eyes/male/light_blue.png", false),
+    EYES_NORMAL_MALE_BROWN("assets/character/eyes/male/brown.png", false),
+    EYES_NORMAL_MALE_GREEN("assets/character/eyes/male/green.png", false),
+    EYES_NORMAL_MALE_YELLOW("assets/character/eyes/male/yellow.png", false),
     //Hairs
     HAIR_MALE_DISHEVELLED("assets/character/hairs/male/dishevelled.png", false),
     HAIR_BOWL_BLACK("assets/character/hairs/male/bowl_black.png", false),
@@ -162,5 +162,13 @@ public enum Images {
         } else {
             return resizedImage;
         }
+    }
+
+    /**
+     * Send the Images path
+     * @return The Images path
+     */
+    public String getPath(){
+        return this.path;
     }
 }

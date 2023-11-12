@@ -1,11 +1,13 @@
 package fr.tyr.components.character.style;
 
+import fr.tyr.Main;
 import fr.tyr.components.character.identity.Origin;
 import fr.tyr.resources.images.Images;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.logging.Level;
 
 public enum SkinEnum {
     WHITE("white", Images.SKIN_WHITE, Origin.FRENCH, Origin.RUSSIAN, Origin.GERMAN, Origin.SPANISH),
@@ -87,5 +89,19 @@ public enum SkinEnum {
         }
 
         return assets;
+    }
+
+    /**
+     * Return the corresponding Skin depending on the Images param
+     * @param image The Images to focus the search on
+     * @return A SkinEnum corresponding to the Images param
+     */
+    public static SkinEnum getSkinEnum(Images image){
+        for(SkinEnum skin : SkinEnum.values()){
+            if(image.toString().contains(skin.toString()))
+                return skin;
+        }
+        Main.getLogger().log(Level.SEVERE, "No skin has been associated with \"" + image.name() + "\"");
+        return null;
     }
 }

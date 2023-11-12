@@ -1,6 +1,9 @@
 package fr.tyr.components.character.style;
 
+import fr.tyr.Main;
 import fr.tyr.resources.images.Images;
+
+import java.util.logging.Level;
 
 public enum ShirtEnum {
     RED("red", Images.SHIRT_RED),
@@ -34,5 +37,19 @@ public enum ShirtEnum {
      */
     public Images getImage() {
         return image;
+    }
+
+    /**
+     * Return the corresponding Shirt depending on the Images param
+     * @param image The Images to focus the search on
+     * @return A ShirtEnum corresponding to the Images param
+     */
+    public static ShirtEnum getShirtEnum(Images image){
+        for(ShirtEnum shirt : ShirtEnum.values()){
+            if(image.toString().contains(shirt.toString()))
+                return shirt;
+        }
+        Main.getLogger().log(Level.SEVERE, "No shirt has been associated with \"" + image.name() + "\"");
+        return null;
     }
 }

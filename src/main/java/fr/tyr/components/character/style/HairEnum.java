@@ -1,8 +1,10 @@
 package fr.tyr.components.character.style;
 
+import fr.tyr.Main;
 import fr.tyr.resources.images.Images;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
 
 public enum HairEnum {
     //without gender
@@ -135,5 +137,19 @@ public enum HairEnum {
      */
     public boolean getGender(){
         return gender;
+    }
+
+    /**
+     * Return the corresponding HairEnum depending on the Images param
+     * @param image The Images to focus the search on
+     * @return A HairEnum corresponding to the Images param
+     */
+    public static HairEnum getHairEnum(Images image){
+        for(HairEnum hair : HairEnum.values()){
+            if(image.toString().contains(hair.toString()))
+                return hair;
+        }
+        Main.getLogger().log(Level.SEVERE, "No hair has been associated with \"" + image.name() + "\"");
+        return null;
     }
 }

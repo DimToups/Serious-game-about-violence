@@ -1,18 +1,20 @@
 package fr.tyr.components.character.style;
 
+import fr.tyr.Main;
 import fr.tyr.components.character.identity.Origin;
 import fr.tyr.resources.images.Images;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
 
 public enum EyesEnum {
-    NORMAL_MALE_BLUE("Blue", EyeColor.BLUE, Images.EYES_MALE_BLUE, true, EyesEnum.getCommonEyesOrigins()),
-    NORMAL_MALE_LIGHT_BLUE("Light blue", EyeColor.LIGHT_BLUE, Images.EYES_MALE_LIGHT_BLUE, true, EyesEnum.getCommonEyesOrigins()),
-    NORMAL_MALE_BROWN("brown", EyeColor.BROWN, Images.EYES_MALE_BROWN, true, EyesEnum.getCommonEyesOrigins()),
-    NORMAL_MALE_GREEN("green", EyeColor.GREEN, Images.EYES_MALE_GREEN, true, EyesEnum.getCommonEyesOrigins()),
-    NORMAL_MALE_YELLOW("yellow", EyeColor.YELLOW, Images.EYES_MALE_YELLOW, true, EyesEnum.getCommonEyesOrigins());
+    NORMAL_MALE_BLUE("Blue", EyeColor.BLUE, Images.EYES_NORMAL_MALE_BLUE, true, EyesEnum.getCommonEyesOrigins()),
+    NORMAL_MALE_LIGHT_BLUE("Light blue", EyeColor.LIGHT_BLUE, Images.EYES_NORMAL_MALE_LIGHT_BLUE, true, EyesEnum.getCommonEyesOrigins()),
+    NORMAL_MALE_BROWN("brown", EyeColor.BROWN, Images.EYES_NORMAL_MALE_BROWN, true, EyesEnum.getCommonEyesOrigins()),
+    NORMAL_MALE_GREEN("green", EyeColor.GREEN, Images.EYES_NORMAL_MALE_GREEN, true, EyesEnum.getCommonEyesOrigins()),
+    NORMAL_MALE_YELLOW("yellow", EyeColor.YELLOW, Images.EYES_NORMAL_MALE_YELLOW, true, EyesEnum.getCommonEyesOrigins());
     private final String name;
     private final EyeColor color;
     private final Images image;
@@ -192,5 +194,18 @@ public enum EyesEnum {
      */
     public static List<Origin> getAsianEyesOrigins(){
         return new ArrayList<>(Arrays.asList(Origin.RUSSIAN, Origin.ASIAN));
+    }
+    /**
+     * Return the corresponding EyesEnum depending on the Images param
+     * @param image The Images to focus the search on
+     * @return A EyesEnum corresponding to the Images param
+     */
+    public static EyesEnum getEyesEnum(Images image){
+        for(EyesEnum eyes : EyesEnum.values()){
+            if(image.toString().contains(eyes.toString()))
+                return eyes;
+        }
+        Main.getLogger().log(Level.SEVERE, "No eyes has been associated with \"" + image.name() + "\"");
+        return null;
     }
 }

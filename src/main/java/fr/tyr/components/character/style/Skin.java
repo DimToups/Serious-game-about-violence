@@ -1,9 +1,12 @@
 package fr.tyr.components.character.style;
 
+import fr.tyr.components.character.identity.Origin;
 import fr.tyr.components.classic.ImageComponent;
 import fr.tyr.game.enums.MouseButtons;
 import fr.tyr.resources.images.Images;
 import fr.tyr.tools.Vector2D;
+
+import java.util.ArrayList;
 
 public class Skin extends ImageComponent {
     SkinEnum skin;
@@ -96,5 +99,13 @@ public class Skin extends ImageComponent {
      */
     public Images getImage() {
         return skin.getImage();
+    }
+
+    /**
+     * Send all the possible origins of the skin
+     * @return All the possible origins of the skin
+     */
+    public ArrayList<Origin> getOrigins(){
+        return this.skin.getOrigin();
     }
 }
