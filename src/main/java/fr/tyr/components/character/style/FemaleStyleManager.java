@@ -16,7 +16,7 @@ public class FemaleStyleManager extends StyleManager{
     public Hair generateHair(HairColor color) {
         Random rand = new Random();
         try {
-            ArrayList<HairEnum> validAssets = HairEnum.getAllGenderAssets(true, HairEnum.getAllColoredAssets(color));
+            ArrayList<HairEnum> validAssets = HairEnum.getAllGenderAssets(false, HairEnum.getAllColoredAssets(color));
 
             return new Hair(HairEnum.valueOf(validAssets.get(rand.nextInt(0, validAssets.size())).name()));
         }
@@ -47,7 +47,7 @@ public class FemaleStyleManager extends StyleManager{
             Main.getLogger().info(e.getMessage());
 
             //Retour de yeux de base
-            return new Eyes(EyesEnum.NORMAL_MALE_BLUE);
+            return new Eyes(EyesEnum.COMMON_MALE_BLUE);
         }
     }
 }

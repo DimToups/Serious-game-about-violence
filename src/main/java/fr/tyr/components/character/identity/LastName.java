@@ -3,9 +3,17 @@ package fr.tyr.components.character.identity;
 import java.util.ArrayList;
 
 public enum LastName {
+
+    //
+    //FRENCH
+    //
     MARTIN(Origin.FRENCH),
     PETIT(Origin.FRENCH),
     GIRAUD(Origin.FRENCH),
+
+    //
+    //GERMAN
+    //
     MEYER(Origin.GERMAN),
     MULLER(Origin.GERMAN),
     SCHMITT(Origin.GERMAN),
@@ -19,17 +27,41 @@ public enum LastName {
     HARTMANN(Origin.GERMAN),
     LANG(Origin.GERMAN),
     FISCHER(Origin.GERMAN),
+
+    //
+    //ARABIC
+    //
     AZIZ(Origin.ARABIC),
     AL_BAKIR(Origin.ARABIC),
     FAROUK(Origin.ARABIC),
-    SMITH(Origin.AMERICAN),
-    BROWN(Origin.AMERICAN),
-    LOPEZ(Origin.AMERICAN),
-    MARTINEZ(Origin.AMERICAN),
+
+    //
+    //SPANISH
+    //
+    GACIA(Origin.SPANISH),
+    PAZ(Origin.SPANISH),
+    HERNANDEZ(Origin.SPANISH),
+    CARRERA(Origin.SPANISH),
+
+    //
+    //ASIAN
+    //
     LIN(Origin.ASIAN),
     ZHANG(Origin.ASIAN),
     WU(Origin.ASIAN),
     CHEN(Origin.ASIAN),
+
+    //
+    //AMERICAN
+    //
+    SMITH(Origin.AMERICAN),
+    BROWN(Origin.AMERICAN),
+    LOPEZ(Origin.AMERICAN),
+    MARTINEZ(Origin.AMERICAN),
+
+    //
+    //RUSSIAN
+    //
     BELINSKI(Origin.RUSSIAN),
     ANDREEV(Origin.RUSSIAN),
     BOLKONSKI(Origin.RUSSIAN),
@@ -38,10 +70,20 @@ public enum LastName {
     IGNATIEV(Origin.RUSSIAN),
     KILOSOVSKAIA(Origin.RUSSIAN),
     ROUMIANTSEV(Origin.RUSSIAN),
-    GACIA(Origin.SPANISH),
-    PAZ(Origin.SPANISH),
-    HERNANDEZ(Origin.SPANISH),
-    CARRERA(Origin.SPANISH);
+
+    //
+    //AFRICAN
+    //
+    ABARA(Origin.AFRICAN),
+    ABIMBOLA(Origin.AFRICAN),
+    ADEBISI(Origin.AFRICAN),
+    ADEKUNLE(Origin.AFRICAN),
+    KANUMBA(Origin.AFRICAN),
+    KEITA(Origin.AFRICAN),
+    KIMATHI(Origin.AFRICAN),
+    GBEHO(Origin.AFRICAN),
+
+    ;
     private final Origin origin;
 
     /**

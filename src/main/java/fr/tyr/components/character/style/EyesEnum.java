@@ -10,11 +10,18 @@ import java.util.List;
 import java.util.logging.Level;
 
 public enum EyesEnum {
-    NORMAL_MALE_BLUE("Blue", EyeColor.BLUE, Images.EYES_NORMAL_MALE_BLUE, true, EyesEnum.getCommonEyesOrigins()),
-    NORMAL_MALE_LIGHT_BLUE("Light blue", EyeColor.LIGHT_BLUE, Images.EYES_NORMAL_MALE_LIGHT_BLUE, true, EyesEnum.getCommonEyesOrigins()),
-    NORMAL_MALE_BROWN("brown", EyeColor.BROWN, Images.EYES_NORMAL_MALE_BROWN, true, EyesEnum.getCommonEyesOrigins()),
-    NORMAL_MALE_GREEN("green", EyeColor.GREEN, Images.EYES_NORMAL_MALE_GREEN, true, EyesEnum.getCommonEyesOrigins()),
-    NORMAL_MALE_YELLOW("yellow", EyeColor.YELLOW, Images.EYES_NORMAL_MALE_YELLOW, true, EyesEnum.getCommonEyesOrigins());
+    //Male
+    COMMON_MALE_BLUE("Blue", EyeColor.BLUE, Images.EYES_COMMON_MALE_BLUE, true, EyesEnum.getCommonEyesOrigins()),
+    COMMON_MALE_LIGHT_BLUE("Light blue", EyeColor.LIGHT_BLUE, Images.EYES_COMMON_MALE_LIGHT_BLUE, true, EyesEnum.getCommonEyesOrigins()),
+    COMMON_MALE_BROWN("brown", EyeColor.BROWN, Images.EYES_COMMON_MALE_BROWN, true, EyesEnum.getCommonEyesOrigins()),
+    COMMON_MALE_GREEN("green", EyeColor.GREEN, Images.EYES_COMMON_MALE_GREEN, true, EyesEnum.getCommonEyesOrigins()),
+    COMMON_MALE_YELLOW("yellow", EyeColor.YELLOW, Images.EYES_COMMON_MALE_YELLOW, true, EyesEnum.getCommonEyesOrigins()),
+    //Female
+    COMMON_FEMALE_DOUBLE_BRUSH_BLUE("female blue double brush blue", EyeColor.BLUE, Images.EYES_COMMON_FEMALE_DOUBLE_BRUSH_BLUE, false, EyesEnum.getCommonEyesOrigins()),
+    COMMON_FEMALE_DOUBLE_BRUSH_LIGHT_BLUE("female blue double brush light blue", EyeColor.LIGHT_BLUE, Images.EYES_COMMON_FEMALE_DOUBLE_BRUSH_LIGHT_BLUE, false, EyesEnum.getCommonEyesOrigins()),
+    COMMON_FEMALE_DOUBLE_BRUSH_BROWN("female blue double brush brown", EyeColor.BROWN, Images.EYES_COMMON_FEMALE_DOUBLE_BRUSH_BROWN, false, EyesEnum.getCommonEyesOrigins()),
+    COMMON_FEMALE_DOUBLE_BRUSH_GREEN("female blue double brush green", EyeColor.GREEN, Images.EYES_COMMON_FEMALE_DOUBLE_BRUSH_GREEN, false, EyesEnum.getCommonEyesOrigins()),
+    COMMON_FEMALE_DOUBLE_BRUSH_YELLOW("female blue double brush yellow", EyeColor.YELLOW, Images.EYES_COMMON_FEMALE_DOUBLE_BRUSH_YELLOW, false, EyesEnum.getCommonEyesOrigins());
     private final String name;
     private final EyeColor color;
     private final Images image;

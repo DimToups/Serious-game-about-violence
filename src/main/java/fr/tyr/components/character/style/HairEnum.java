@@ -11,7 +11,14 @@ public enum HairEnum {
     NONE("none", HairColor.BLACK, Images.NONE, true),
 
     //female
-
+    MID_LENGHT_BLACK("female black mid-lenght", HairColor.BLACK, Images.HAIR_MID_LENGTH_BLACK, false),
+    MID_LENGHT_DARK_BROWN("female dark brown mid-lenght", HairColor.DARK_BROWN, Images.HAIR_MID_LENGTH_DARK_BROWN, false),
+    MID_LENGHT_BROWN("female brown mid-lenght", HairColor.BROWN, Images.HAIR_MID_LENGTH_BROWN, false),
+    MID_LENGHT_BLOND("female blond mid-lenght", HairColor.BLOND, Images.HAIR_MID_LENGTH_BLOND, false),
+    MID_LENGHT_WHITE("female white mid-lenght", HairColor.WHITE, Images.HAIR_MID_LENGTH_WHITE, false),
+    MID_LENGHT_GINGER("female ginger mid-lenght", HairColor.GINGER, Images.HAIR_MID_LENGTH_GINGER, false),
+    MID_LENGHT_BLUE("female blue mid-lenght", HairColor.BLUE, Images.HAIR_MID_LENGTH_BLUE, false),
+    MID_LENGHT_PINK("female pink mid-lenght", HairColor.PINK, Images.HAIR_MID_LENGTH_PINK, false),
     //male
     BLACK_DISHEVELLED("male black dishevelled", HairColor.BLACK, Images.HAIR_MALE_DISHEVELLED, true),
     BOWL_BLACK("male white dishevelled", HairColor.BLACK, Images.HAIR_BOWL_BLACK, true),

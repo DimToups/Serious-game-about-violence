@@ -3,9 +3,15 @@ package fr.tyr.components.character.identity;
 import java.util.ArrayList;
 
 public enum FirstName {
-    //Prénoms masculins
+
+    //                          //
+    //           MALE           //
+    //                          //
+
+    //
+    //FRENCH
+    //
     LEO("Léo", true, Origin.FRENCH),
-    LUDWIG("Ludwig", true, Origin.GERMAN),
     GABRIEL("Gabriel", true, Origin.FRENCH),
     RAPHAEL("Raphaël", true, Origin.FRENCH),
     ARTHUR("Arthur", true, Origin.FRENCH),
@@ -21,28 +27,87 @@ public enum FirstName {
     SIMON("Simon", true, Origin.FRENCH),
     TOM("Tom", true, Origin.FRENCH),
     ANATOLE("Anatole", true, Origin.FRENCH),
-    DIMITRI("Dimitri", true, Origin.RUSSIAN),
     LEON("Léon", true, Origin.FRENCH),
     VICTOR("Victor", true, Origin.FRENCH),
     MATHIS("Mathis", true, Origin.FRENCH),
-    IBRAHIM("Ibrahim", true, Origin.ARABIC),
     LIAM("Liam", true, Origin.FRENCH),
-    LENNY("Lenny", true, Origin.AMERICAN),
-    PABLO("Pablo", true, Origin.SPANISH),
-    JOSEPH("Joseph", true, Origin.AMERICAN),
     BASILE("Basile", true, Origin.FRENCH),
-    LOGAN("Logan", true, Origin.AMERICAN),
-    AYOUB("Ayoub", true, Origin.ARABIC),
-    WASSIM("Wassim", true, Origin.ARABIC),
     ALAIN("Alain", true, Origin.FRENCH),
     CHARLES("Charles", true, Origin.FRENCH),
     ARNAUD("Arnaud", true, Origin.FRENCH),
     DAMIEN("Damien", true, Origin.FRENCH),
     GUILLAUME("Guillaume", true, Origin.FRENCH),
+    ERIC("Eric", true, Origin.FRENCH),
+
+    //
+    //GERMAN
+    //
+    LUDWIG("Ludwig", true, Origin.GERMAN),
+    LEO_DE("Leo", true, Origin.GERMAN),
+    FINN("Finn", true, Origin.GERMAN),
+    FELIX("Felix", true, Origin.GERMAN),
+    HENRY("Henry", true, Origin.GERMAN),
+    SIEGBERT("Siegbert", true, Origin.GERMAN),
+    CARL("Carl", true, Origin.GERMAN),
+    FRANK("Frank", true, Origin.GERMAN),
+    HANSEL("Hänsel", true, Origin.GERMAN),
+
+    //
+    //ARABIC
+    //
+    IBRAHIM("Ibrahim", true, Origin.ARABIC),
+    AYOUB("Ayoub", true, Origin.ARABIC),
+    WASSIM("Wassim", true, Origin.ARABIC),
     KENZO("Kenzo", true, Origin.ARABIC),
     MOHAMMED("Mohammed ", true, Origin.ARABIC),
-    ERIC("Eric", true, Origin.FRENCH),
-    //Prénoms féminins
+
+    //
+    //SPANISH
+    //
+    PABLO("Pablo", true, Origin.SPANISH),
+    JOSE("José", true, Origin.SPANISH),
+    CARLOS("Carlos", true, Origin.SPANISH),
+    JUAN("Juan", true, Origin.SPANISH),
+    PEDRO("Pedro", true, Origin.SPANISH),
+    MATIAS("Matias", true, Origin.SPANISH),
+    DIEGO("Diego", true, Origin.SPANISH),
+    ALEJANDRO("Diego", true, Origin.SPANISH),
+    DONATO("Donato", true, Origin.SPANISH),
+
+    //
+    //ASIAN
+    //
+    AKI("Aki", true, Origin.ASIAN),
+
+    //
+    //AMERICAN
+    //
+    LENNY("Lenny", true, Origin.AMERICAN),
+    LOGAN("Logan", true, Origin.AMERICAN),
+    JOSEPH("Joseph", true, Origin.AMERICAN),
+
+    //
+    //RUSSIAN
+    //
+    DIMITRI("Dimitri", true, Origin.RUSSIAN),
+
+    //
+    //AFRICAN
+    //
+    AADAN("Aadan", true, Origin.AFRICAN),
+    ABIDEMI("Abidemi", true, Origin.AFRICAN),
+    AMARI("Amari", true, Origin.AFRICAN),
+    FARAJI("Faraji", true, Origin.AFRICAN),
+    FEMI("Femi", true, Origin.AFRICAN),
+
+
+    //                          //
+    //          FEMALE          //
+    //                          //
+
+    //
+    //FRENCH
+    //
     JADE("Jade", false, Origin.FRENCH),
     LOUISE("Louise", false, Origin.FRENCH),
     EMMA("Emma", false, Origin.FRENCH),
@@ -57,22 +122,71 @@ public enum FirstName {
     ROMANE("Romane", false, Origin.FRENCH),
     CAMILLE("Romane", false, Origin.FRENCH),
     OLIVIA("Olivia", false, Origin.FRENCH),
-    ALYX("Alyx", false, Origin.AMERICAN),
     CHARLOTTE("Charlotte", false, Origin.FRENCH),
     LYNA("Lyna", false, Origin.FRENCH),
     ROXANE("Roxane", false, Origin.FRENCH),
     MAYA("Maya", false, Origin.FRENCH),
     CONSTANCE("Constance", false, Origin.FRENCH),
     GWENHAEL("Gwenhael", false, Origin.FRENCH),
+
+    //
+    //GERMAN
+    //
+    ALMA("Alma", false, Origin.GERMAN),
+    HANNA("Hanna", false, Origin.GERMAN),
+    IRMA("Irma", false, Origin.GERMAN),
+    JOHANNA("Johanna", false, Origin.GERMAN),
+    LUISA("Luisa", false, Origin.GERMAN),
+    MATHILDA("Mathilda", false, Origin.GERMAN),
+
+    //
+    //ARABIC
+    //
     SARAH("Sarah", false, Origin.ARABIC),
     YASMINE("Yasmine", false, Origin.ARABIC),
     KHADIJA("Khadija", false, Origin.ARABIC),
+
+    //
+    //SPANISH
+    //
+    SOFIA("Sofia", false, Origin.SPANISH),
+    ISABELLA("Isabella", false, Origin.SPANISH),
+    CAMILA("Camila", false, Origin.SPANISH),
+    MARIANA("Mariana", false, Origin.SPANISH),
+    SARA("Sara", false, Origin.SPANISH),
+    AURELIA("Aurelia", false, Origin.SPANISH),
+    ANTONIA("Antonia", false, Origin.SPANISH),
+    CARMEN("Carmen", false, Origin.SPANISH),
+    LUCIA("Lucía", false, Origin.SPANISH),
+
+    //
+    //ASIAN
+    //
+    JING("JING", false, Origin.ASIAN),
+    ZI_HAN("Zi Han", false, Origin.ASIAN),
+
+    //
+    //AMERICAN
+    //
+    APRIL("April", false, Origin.AMERICAN),
+    ALYX("Alyx", false, Origin.AMERICAN),
+
+    //
+    //RUSSIAN
+    //
     OLGA("Olga", false, Origin.RUSSIAN),
     NATACHA("Natacha", false, Origin.RUSSIAN),
     SASHA("Sasha", false, Origin.RUSSIAN),
-    APRIL("April", false, Origin.AMERICAN),
-    JING("JING", true, Origin.ASIAN),
-    ZI_HAN("Zi Han", true, Origin.ASIAN);
+
+    //
+    //AFRICAN
+    //
+    ABEBA("Abeba", false, Origin.AFRICAN),
+    ADA("Ada", false, Origin.AFRICAN),
+    AMARA("Amara", false, Origin.AFRICAN),
+    HIBO("Hibo", false, Origin.AFRICAN),
+    IMANI("Imani", false, Origin.AFRICAN),
+    ;
     private final String firstName;
     /**
      * true for male, false for female
