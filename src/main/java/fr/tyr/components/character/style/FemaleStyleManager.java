@@ -3,7 +3,7 @@ package fr.tyr.components.character.style;
 import fr.tyr.Main;
 import fr.tyr.components.character.identity.Origin;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class FemaleStyleManager extends StyleManager{
@@ -14,10 +14,11 @@ public class FemaleStyleManager extends StyleManager{
      */
     @Override
     public Hair generateHair(HairColor color) {
+        Random rand = new Random();
         try {
-            Random rand = new Random();
+            ArrayList<HairEnum> validAssets = HairEnum.getAllGenderAssets(true, HairEnum.getAllColoredAssets(color));
 
-            return new Hair(HairEnum.valueOf(HairEnum.getAllGenderAssets(true, HairEnum.getAllColoredAssets(color)).get(rand.nextInt(0, HairEnum.getAllGenderAssets(true, HairEnum.getAllColoredAssets(color)).size())).name()));
+            return new Hair(HairEnum.valueOf(validAssets.get(rand.nextInt(0, validAssets.size())).name()));
         }
         catch (Exception e){
             //Passage de l'information
@@ -35,10 +36,11 @@ public class FemaleStyleManager extends StyleManager{
      */
     @Override
     public Eyes generateEyes(Origin origin) {
+        Random rand = new Random();
         try {
-            Random rand = new Random();
+            ArrayList<EyesEnum> validAssets = EyesEnum.getAllGenderAssets(false, EyesEnum.getAllOriginAssets(origin));
 
-            return new Eyes(EyesEnum.valueOf(Arrays.stream(EyesEnum.values()).toList().get(rand.nextInt(0, EyesEnum.values().length)).name()));
+            return new Eyes(EyesEnum.valueOf(validAssets.get(rand.nextInt(0, validAssets.size())).name()));
         }
         catch (Exception e){
             //Passage de l'information

@@ -3,6 +3,7 @@ package fr.tyr.components.character.style;
 import fr.tyr.Main;
 import fr.tyr.components.character.identity.Origin;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class MaleStyleManager extends StyleManager{
@@ -13,11 +14,11 @@ public class MaleStyleManager extends StyleManager{
      */
     @Override
     public Hair generateHair(HairColor color) {
+        Random rand = new Random();
         try {
-            Random rand = new Random();
+            ArrayList<HairEnum> validAssets = HairEnum.getAllColoredAssets(color ,HairEnum.getAllGenderAssets(true));
 
-            //Conversion de la chaîne de caractère choisie et retour de l'image correspondante
-            return new Hair(HairEnum.valueOf(HairEnum.getAllColoredAssets(color ,HairEnum.getAllGenderAssets(true)).get(rand.nextInt(0, HairEnum.getAllColoredAssets(color ,HairEnum.getAllGenderAssets(true)).size())).name()));
+            return new Hair(HairEnum.valueOf(validAssets.get(rand.nextInt(0, validAssets.size())).name()));
         }
         catch (Exception e){
             //Passage de l'information
@@ -35,11 +36,11 @@ public class MaleStyleManager extends StyleManager{
      */
     @Override
     public Eyes generateEyes(Origin origin) {
+        Random rand = new Random();
         try {
-            Random rand = new Random();
+            ArrayList<EyesEnum> validAssets = EyesEnum.getAllGenderAssets(true, EyesEnum.getAllOriginAssets(origin));
 
-            //Conversion de la chaîne de caractère choisie et retour de l'image correspondante
-            return new Eyes(EyesEnum.valueOf(EyesEnum.getAllGenderAssets(true, EyesEnum.getAllOriginAssets(origin)).get(rand.nextInt(0, EyesEnum.getAllGenderAssets(true, EyesEnum.getAllOriginAssets(origin)).size())).name()));
+            return new Eyes(EyesEnum.valueOf(validAssets.get(rand.nextInt(0, validAssets.size())).name()));
         }
         catch (Exception e){
             //Passage de l'information
@@ -56,11 +57,11 @@ public class MaleStyleManager extends StyleManager{
      * @return A Beard
      */
     public static Beard generateBeard(HairColor color){
+        Random rand = new Random();
         try {
-            Random rand = new Random();
+            ArrayList<BeardEnum> validAssets = BeardEnum.getAllColoredAssets(color);
 
-            //Conversion de la chaîne de caractère choisie et retour de l'image correspondante
-            return new Beard(BeardEnum.valueOf(BeardEnum.getAllColoredAssets(color).get(rand.nextInt(0, BeardEnum.getAllColoredAssets(color).size())).name()));
+            return new Beard(BeardEnum.valueOf(validAssets.get(rand.nextInt(0, validAssets.size())).name()));
         }
         catch (Exception e){
             //Passage de l'information

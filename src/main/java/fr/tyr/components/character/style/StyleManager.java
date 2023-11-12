@@ -4,6 +4,7 @@ import fr.tyr.Main;
 import fr.tyr.components.character.identity.Origin;
 import fr.tyr.components.classic.ImageComponent;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -29,14 +30,14 @@ public abstract class StyleManager {
             //Décision entre une pilosité naturelle ou non
             if(rand.nextInt(0,30) != 0){
                 //Choix d'une couleur naturelle
-                switch (rand.nextInt(0,5)){
-                    case 0 : return HairColor.BLACK;
-                    case 1 : return HairColor.DARK_BROWN;
-                    case 2 : return HairColor.BROWN;
-                    case 3 : return HairColor.BLOND;
-                    case 4 : return HairColor.GINGER;
-                }
-                return HairColor.BLACK;
+                return switch (rand.nextInt(0, 5)) {
+                    case 0 -> HairColor.BLACK;
+                    case 1 -> HairColor.DARK_BROWN;
+                    case 2 -> HairColor.BROWN;
+                    case 3 -> HairColor.BLOND;
+                    case 4 -> HairColor.GINGER;
+                    default -> HairColor.BLACK;
+                };
             }
             else{
                 //Choix d'une couleur non naturelle
@@ -50,14 +51,14 @@ public abstract class StyleManager {
             //Choix d'une couleur naturelle ou blanche
             if(rand.nextInt(0,10) == 0){
                 //Choix d'une couleur naturelle
-                switch (rand.nextInt(0,4)){
-                    case 0 : return HairColor.BLACK;
-                    case 1 : return HairColor.DARK_BROWN;
-                    case 2 : return HairColor.BROWN;
-                    case 3 : return HairColor.BLOND;
-                    case 4 : return HairColor.GINGER;
-                }
-                return HairColor.BLACK;
+                return switch (rand.nextInt(0, 4)) {
+                    case 0 -> HairColor.BLACK;
+                    case 1 -> HairColor.DARK_BROWN;
+                    case 2 -> HairColor.BROWN;
+                    case 3 -> HairColor.BLOND;
+                    case 4 -> HairColor.GINGER;
+                    default -> HairColor.BLACK;
+                };
             }
             else
                 return HairColor.WHITE;
@@ -73,7 +74,9 @@ public abstract class StyleManager {
         Random rand = new Random();
 
         try {
-            return new Skin(SkinEnum.valueOf(SkinEnum.getAllOriginAssets(origin).get(rand.nextInt(0, SkinEnum.getAllOriginAssets(origin).size())).name()));
+            ArrayList<SkinEnum> validAssets = SkinEnum.getAllOriginAssets(origin);
+
+            return new Skin(SkinEnum.valueOf(validAssets.get(rand.nextInt(0, validAssets.size())).name()));
         }
         catch (Exception e){
             //Passage de l'information
@@ -106,7 +109,6 @@ public abstract class StyleManager {
         Random rand = new Random();
 
         try {
-            //Conversion de la chaîne de caractère choisie et retour de l'image correspondante
             return new Shirt(ShirtEnum.valueOf(Arrays.stream(ShirtEnum.values()).toList().get(rand.nextInt(0, ShirtEnum.values().length)).name()));
         }
         catch (Exception e){
