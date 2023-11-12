@@ -32,6 +32,10 @@ public enum Images {
     SHIRT_GREEN("assets/character/shirts/green.png", false),
     //Eyes
     EYES_MALE_BLUE("assets/character/eyes/male/blue.png", false),
+    EYES_MALE_LIGHT_BLUE("assets/character/eyes/male/light_blue.png", false),
+    EYES_MALE_BROWN("assets/character/eyes/male/brown.png", false),
+    EYES_MALE_GREEN("assets/character/eyes/male/green.png", false),
+    EYES_MALE_YELLOW("assets/character/eyes/male/yellow.png", false),
     //Hairs
     HAIR_MALE_DISHEVELLED("assets/character/hairs/male/dishevelled.png", false),
     HAIR_BOWL_BLACK("assets/character/hairs/male/bowl_black.png", false),

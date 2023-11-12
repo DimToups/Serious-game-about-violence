@@ -47,7 +47,7 @@ public class MaleStyleManager extends StyleManager{
             Main.getLogger().info(e.getMessage());
 
             //Retour de yeux de base
-            return new Eyes(EyesEnum.WHITE_MALE_BLUE);
+            return new Eyes(EyesEnum.NORMAL_MALE_BLUE);
         }
     }
 

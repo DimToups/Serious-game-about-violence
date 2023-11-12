@@ -6,6 +6,8 @@ import fr.tyr.game.enums.MouseButtons;
 import fr.tyr.resources.images.Images;
 import fr.tyr.tools.Vector2D;
 
+import java.util.ArrayList;
+
 public class Eyes extends ImageComponent {
     EyesEnum eyes;
     /**
@@ -113,7 +115,7 @@ public class Eyes extends ImageComponent {
      * Send the Eyes origin
      * @return The Eyes origin
      */
-    public Origin getOrigin(){
-        return eyes.getOrigin();
+    public ArrayList<Origin> getOrigins(){
+        return eyes.getOrigins();
     }
 }
