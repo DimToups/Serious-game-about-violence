@@ -1,0 +1,671 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+package components{
+    package animated{
+        abstract class AnimatedComponent <<abstract>> extends components.classic.GameComponent{
+            ..Fields..
+            - currentFrame : Integer
+            - durationList : Float[]
+            - ramainingTime : Float
+            - isRunning : Boolean
+            ..Methods..
+            + <<create>> AnimatedComponent(position : Vector2D, frames : T[], timePerFrame : Float)
+            + <<create>> AnimatedComponent(position : Vector2D, frames : T[], timePerFrame : Float[])
+            + nextFrame()
+            + tick(aps : Integer)
+            + getCurrentFrame() : T
+            + isRunning() : Boolean
+            + pause()
+            + resume()
+        }
+        abstract class AnimatedImageComponent <<abstract>> extends AnimatedComponent{
+            ..Methods..
+            + <<create>> AnimatedImageComponent(position : Vector2D, secondsPerImage : Float, animation : Animations)
+            + nextFrame()
+            + render()
+        }
+        abstract class AnimatedTextComponent <<abstract>> extends AnimatedComponent{
+            ..Methods..
+            + <<create>> AnimatedTextComponent(position : Vector2D, text : AnimatedText, timePerFrame : Float)
+            + <<create>> AnimatedTextComponent(positon : Vector2D, text : AnimatedText, durationList : Float[])
+            + render (g : Graphic)
+        }
+    }
+    package classic{
+        abstract class GameComponent <<abstract>>{
+            ..Fields..
+            - frame : T
+            - duration : Float
+            + isHovered : Boolean
+            ..Methods..
+            + <<create>> GameComponent(frame : T)
+            + <<create>> GameComponent(frame : T, position : Vector2D)
+            + <<create>> GameComponent(frame : T, position : Vector2D, size : Vector2D)
+            + moveTo(target : Vector2D, duraction : Float)
+            + move(tps : Integer)
+            + getFrame() : T
+            + getPosition() : Vector2D
+            + getSize() : Vector2D
+            + isHovered() : Boolean
+            + setFrame(frame : T)
+            + setSize(size : Vector2D)
+            + setIsHovered(isHovered : Boolean)
+            + isMoving(): Boolean
+            + getRemainingDuration() : Float
+            + getTraget() : Vector2D
+            + render(g : Graphic) {abstract}
+            + tick(aps : Integer) {abstract}
+            + onClick(buttonMouseButtons) {abstract}
+            + onHover() {abstract}
+            + onHoverLost() {abstract}
+            + onWindowResized(size : Vector2D)
+        }
+        abstract class ImageComponent <<abstract>> extends GameComponent{
+            ..Methods..
+            + <<create>> ImageComponent(image : Images)
+            + <<create>> ImageComponent(image : Images, position : Vector2D)
+            + <<create>> ImageComponent(image : Images, position : Vector2D, size : Vector2D, center : Boolean)
+            + resize(size : Vector2D, centerImage : Boolean)
+            + resize(size : Vector2D, centerImage : Boolean, centerComponent : Boolean)
+            + crop(x : Integer, y : Integer, width : Integer, height : Integer)
+            + render(g : Graphic)
+        }
+        abstract class TextComponent <<abstract>> extends GameComponent{
+            ..Methods..
+            + <<create>> TextComponent(frame : T)
+            + <<create>> TextComponent(frame : T, position : Vector2D)
+            + render(g : Graphic)
+        }
+    }
+    package mixed{
+        abstract class ComposedComponent <<abstract>> extends components.classic.GameComponent{
+            ..Methods..
+            + <<create>> ComposedComponent(position : Vector2D, components : GameComponent[])
+            + move(tps : Integer)
+            + render(g : Graphic)
+            + tick(aps : Integer)
+            + onClick(button : MouseButtons)
+            + onHover()
+            + onHoverLost()
+            + onWindowResized(size : Vector2D)
+        }
+    }
+    package sample{
+        package texts{
+
+        }
+        abstract class SampleAnimatedImageComponent <<abstract>> extends components.animated.AnimatedImageComponent{
+            ..Methods..
+            + <<create>> SampleAnimatedImageComponent(position : Vector2D)
+            + onClick(button : MouseButtons)
+            + onHover()
+            + onHoverLost()
+            + onWindowResized(size : vector2D)
+        }
+        abstract class SampleAnimatedTextComponent <<abstract>> extends components.animated.AnimatedTextComponent{
+            ..Methods..
+            + <<create>> SampleAnimatedTextComponent(position : Vector2D)
+            + onClick(button : MouseButtons)
+            + onHover()
+            + onHoverLost()
+            + onWindowResized(size : vector2D)
+        }
+        abstract class SampleBackgroundComponent <<abstract>> extends components.classic.ImageComponent{
+            ..Methods..
+            + <<create>> SampleBackgroundComponent()
+            + tick(aps : Integer)
+            + onClick(button : MouseButtons)
+            + onHoer()
+            + onHover()
+            + onHoverLost()
+            + onWindowResized(size Vector2D)
+        }
+        abstract class SampleImageComponent <<abstract>> extends components.classic.ImageComponent{
+            ..Methods..
+            + <<create>> SampleImageComponent(position : Vector2D, size : Vector2D)
+            + tick(aps : Integer)
+            + onClick(button : MouseButtons)
+            + onHoer()
+            + onHover()
+            + onHoverLost()
+            + onWindowResized(size Vector2D)
+        }
+        abstract class SampleTextComponent <<abstract>> extends components.classic.TextComponent{
+            ..Methods..
+            + <<create>> SampleTextComponent(position : Vector2D)
+            + tick(aps : Integer)
+            + onClick(button : MouseButtons)
+            + onHoer()
+            + onHover()
+            + onHoverLost()
+            + onWindowResized(size Vector2D)
+        }
+    }
+    package texts{
+        class AnimatedText {
+            ..Methods..
+            + <<create>> AnimatedText(frames : Text[])
+            + getFrames() : Text[]
+            + addFrame(frame : Text)
+        }
+        class Text{
+            ..Methods..
+            + <<create>> Text(parts : TextPart[])
+            + addPart(part : TextPart)
+            + getParts() : TextPart[]
+        }
+        class TextPart{
+            ..Methods..
+            - text : String
+            - color : Color
+            - font : Font
+            + <<create>> Textpart(text : String, color : Color, font : Font)
+            + getText() : String
+            + setText(text : String)
+            + setColor(color : Color)
+            + getFont() : Font
+            + setFont(font : Font)
+        }
+    }
+    package character{
+        package style{
+            enum HairColor{
+                ..Fields..
+                BLACK
+                DARK_BROWN
+                BROWN
+                BLOND
+                GINGER
+                WHITE
+                BLUE
+                PINK
+            }
+            enum EyeColor{
+                ..Fields..
+                BLUE
+                LIGHT_BLUE
+                BROWN
+                GREEN
+                YELLOW
+            }
+            class Beard extends components.classic.ImageComponent{
+                ..Methods..
+                + <<create>> Beard(beard : BeardEnum)
+                + <<create>> Beard(beard : BeardEnum, position : Vector2D)
+                + <<create>> Beard(beard : BeardEnum, position : Vector2D, size : Vecto2D, center : Boolean)
+                ..Methods..
+                + getImages() : Images
+                + getColor() : HairColor
+                + getBeardName() : String
+            }
+            enum BeardEnum{
+                ..Fields..
+                - name : String
+                - image : Images
+                ..Methods..
+                <<create>> BeardEnum(name : String, color : HairColor, image : Images)
+                + getAllColoredAssets(color : HairColor) : BeardEnum[]
+                + getAllColoredAssets(color : HairColor, beards : BeardEnum[]) : BeardEnum[]
+                + getName() : String
+                + getColor() : HairColor
+                + getImages() : Images
+                + getBeardEnum(image : Images) : BeardEnum
+            }
+            class Eyes extends components.classic.ImageComponent{
+                ..Methods..
+                + <<create>> Eyes(eyes : EyesEnum)
+                + <<create>> Eyes(eyes : EyesEnum, position : Vector2D)
+                + <<create>> Eyes(eyes : EyesEnum, position : Vector2D, size : Vecto2D, center : Boolean)
+                + getName() : String
+                + getColor() : HairColor
+                + getImages() : Images
+                + getGender() : Boolean
+                + getOrigins() : Origin[]
+            }
+            enum EyesEnum{
+                ..Fields..
+                - name : String
+                - image : Images
+                - gender : Boolean
+                ..Methods..
+                <<create>> EyesEnum(name : String, color : EyeColor, image : Images)
+                + getAllColoredAssets(color : EyeColor) : EyesEnum[]
+                + getAllColoredAssets(color : EyeColor, eyes : EyesEnum[]) : EyesEnum[]
+                + getAllGenderAssets(gender : Boolean) : EyesEnum[]
+                + getAllGenderAssets(gender : Boolean, eyes : EyesEnum[]) : EyesEnum[]
+                + getAllOriginAssets(origin : Origin) : EyesEnum[]
+                + getAllOriginAssets(origin : Origin, eyes : EyesEnum[]) : EyesEnum[]
+                + getName() : String
+                + getColor() : EyeColor
+                + getImages() : Images
+                + getGender() : Boolean
+                + getOrigin() : Origin
+                + getCommonEyesOrigins() : Origin[] {static}
+                + getAsianEyesOrigins() : Origin[] {static}
+                + getEuesEnum(image : Images) : EyesEnum {static}
+            }
+            class Hair extends components.classic.ImageComponent{
+                ..Methods..
+                + <<create>> Hair(hair : HairEnum)
+                + <<create>> Hair(hair : HairEnum, position : Vector2D)
+                + <<create>> Hair(hair : HairEnum, position : Vector2D, size : Vecto2D, center : Boolean)
+                + getName() : String
+                + getColor() : HairColor
+                + getImages() : Images
+                + getGender() : Boolean
+            }
+            enum HairEnum{
+                ..Fields..
+                - name : String
+                - image : Images
+                - gender : Boolean
+                ..Methods..
+                <<create>> HairEnum(name : String, color : HairColor, image : Images)
+                + getAllColoredAssets(color : HairColor) : HairEnum[]
+                + getAllColoredAssets(color : HairColor, hairs : HairEnum[]) : HairEnum[]
+                + getAllGenderAssets(gender : Boolean) : HairEnum[]
+                + getAllGenderAssets(gender : Boolean, hairs : HairEnum[]) : HairEnum[]
+                + getName() : String
+                + getColor() : HairColor
+                + getImages() : Images
+                + getGender() : Boolean
+                + getHairEnum(image : Images) : HairEnum
+            }
+            class Shirt extends components.classic.ImageComponent{
+                ..Methods..
+                + <<create>> Shirt(shirt : ShirtEnum)
+                + <<create>> Shirt(shirt : ShirtEnum, position : Vector2D)
+                + <<create>> Shirt(shirt : ShirtEnum, position : Vector2D, size : Vecto2D, center : Boolean)
+                + getName() : String
+                + getImages() : Images
+            }
+            enum ShirtEnum{
+                ..Fields..
+                - name : String
+                - image : Images
+                ..Methods..
+                <<create>> ShirtEnum(name : String, image : Images)
+                + getName() : String
+                + getImage() : Images
+                + getShirtEnum(image : Images) : ShirtEnum
+            }
+            class Skin extends components.classic.ImageComponent{
+                ..Methods..
+                + <<create>> Skin(skin : SkinEnum)
+                + <<create>> Skin(skin : SkinEnum, position : Vector2D)
+                + <<create>> Skin(skin : SkinEnum, position : Vector2D, size : Vector2D, center : Boolean)
+                + getName() : String
+                + getImage() : Images
+                + getOrigin() : Origin
+            }
+            enum SkinEnum{
+                ..Fields..
+                - name : String
+                - image : Images
+                ..Methods..
+                <<create>> SkinEnum(name : String, image : Images)
+                + getAllOriginAssets(origin : Origin) : SkinEnum[]
+                + getAllOriginAssets(origin : Origin, skins : SkinEnum[]) : SkinEnum[]
+                + getName() : String
+                + getImage() : Images
+                + getOrigin() : Origin
+                + getSkinEnum(image : Images) : SkinEnum
+            }
+            abstract class StyleManager{
+                ..Methods..
+                + <<create>> StyleManager()
+                + generateHairColor(age : Integer) : HairColor {static}
+                + generateSkin(origin : Origin) : Skin {static}
+                + generateHair() : Hair {abstract}
+                + generateEyes(origin : Origin) : Eyes {abstract}
+                + generateShirt() : Shirt {static}
+            }
+            class FemaleStyleManager extends StyleManager{
+                ..Methods..
+                + generateHair(color : HairColor) : Hair
+                + generateEyes(origin : Origin) : Eyes
+            }
+            class MaleStyleManager extends StyleManager{
+                ..Methods..
+                + generateHair(color : HairColor) : Hair
+                + generateEyes(origin : Origin) : Eyes
+                + generateBeard(color : HairColor) : Beard
+            }
+        }
+
+        package identity{
+            class IdentityManager{
+                ..Fields..
+                rand : Random {static}
+                ..Methods..
+                + <<create>> IdentityManager()
+                + generateOrigin() : Origin {static}
+                + generateMaleFirstName(origin : Origin) : FirstName {static}
+                + generateFemaleFirstName(origin : Origin) : FirstName {static}
+                + generateLastName(origin : Origin) : LastName {static}
+                + generateAge() : Integer {static}
+            }
+            enum FirstName{
+                ..Fields..
+                - firstName : String
+                - gender : Boolean
+                ..Methods..
+                <<create>> FirstName(firstname : String, gender : Boolean, origin : Origin)
+                + getFirstName() : String
+                + getGender() : Boolean
+                + getOrigin() : Origin
+                + getAllOriginFirstNames(origin : Origin) : FirstName[]
+                + getAllMaleFirstNames() : FirstName[]
+                + getAllMaleFirstNames(firstNames : FirstName[]) : FirstName[]
+                + getAllFemaleFirstNames() : FirstName[]
+                + getAllFemaleFirstNames(firstNames : FirstName[]) : FirstName[]
+            }
+            enum LastName{
+                ..Methods..
+                + getOrigin() : Origin
+                + getAllOriginLastNames(origin : Origin) : LastName[]
+                + cleanName() : String
+            }
+            enum Origins{
+                ..Methods..
+                + cleanName() : String
+            }
+        }
+
+        class CharacterFactory{
+            ..Methods..
+            + <<create>> CharacterFactory
+            + generateMale(position : Vector2D) : Male
+            + generateFemale(position : Vector2D) : Female
+        }
+        abstract class Character extends components.mixed.ComposedComponent{
+            ..Fields..
+            - age : Integer
+            ..Methods..
+            + <<create>> Character(position : Vector2D, skin : Skin, hair : Hair, eyes : Eyes, shirt : Shirt, firstName : FirstName, lastName : LastName, age : Integer)
+            + getFirstName() : FirstName
+            + getLastName() : LastName
+            + getHairColor() : HairColor
+            + getSkin() : Skin
+            + getHair() : Hair
+            + getEyes() : Eyes
+            + getShirt() : Shirt
+        }
+        class Male extends Character{
+            ..Fields..
+            - beard : ImageComponent
+            ..Methods..
+            + <<create>> Male(position : Vector2D, skin : Skin, hair : Hair, eyes : Eyes, beard : Beard, shirt : Shirt, firstName : FirstName, lastName : LastName, age : Integer)
+            + getBeard() : Beard
+        }
+        class Female extends Character{
+            ..Methods..
+            + <<create>> Female(position : Vector2D, skin : Skin, hair : Hair, eyes : Eyes, shirt : Shirt, firstName : FirstName, lastName : LastName, age : Integer)
+        }
+    }
+}
+
+package game{
+    package enums{
+        enum MouseButtons <<enum>>{
+            ..Fields..
+            LEFT
+            MIDDLE
+            RIGHT
+            - value : Integer
+            ..Methods..
+            <<create>> MouseButtons(value : Integer)
+            + getValue() : Integer
+            + from(value : Integer) : MouseButtons {static}
+        }
+    }
+    class GameEngine{
+        ..Fields..
+        - devMode : Boolean
+        - componentsLock : ReentrantLock
+        ..Methods..
+        + <<create>> GameEngine(devMode : Boolean)
+        - intScene()
+        + safeListOperation(operation : GameComponent[])
+        + isDevMode() : Boolean
+    }
+    class GameWindow{
+        ..Methods..
+        + <<create>> GameWindow()
+    }
+    class GraphicEngine{
+        ..Fields..
+        + font : Font {static}
+        - resizeTimer : Timer
+        ..Methods..
+        + <<create>> GraphicEngine(gameEngine : GameEngine)
+        - resize()
+        - onClick(e : MouseEvent)
+        - tick()
+        - getReversedComponentsList() : GameComponent[]
+        - triggerHover(mouseVector : Vector2D, component : GameComponent, hoverFound : Boolean) : Boolean
+        # paintComponent(g : Graphic)
+        - drawComponents(g : Graphic)
+    }
+}
+
+package ressources{
+    package images{
+        enum Animations <<enum>>{
+            ..Fields..
+            - path : String
+            - frameCount : Integer
+            - images : BufferedImages[]
+            ..Methods..
+            <<create>> Animations(path : String, frameCount : Integer)
+            - loadImages()
+            + getCopy() : BufferedImage[]
+        }
+        enum Images <<enum>>{
+            ..Fields..
+            - path : String
+            - sizeCache : Boolean
+            - image : BufferedImage
+            - sizeCachemap : Vector2D[], BufferedImage[]
+            ..Methods..
+            <<create>> Images(path : String, sizeCache : Boolean)
+            - loadImages()
+            + getCopy() : BufferedImage
+            + getCopy(size : Vector2D, center : Boolean) : BufferedImage
+            - deepCopy(bi : BufferedImage) : BufferedImage {static}
+            + resize(image : BufferedImage, size : Vector2D, center : Boolean) : BufferedImage {static}
+        }
+    }
+    package sounds{
+         enum Sounds <<enum>>{
+            ..Fields..
+            - path : String
+            - clip : Clip
+            - lineListener : LineListener
+            ..Methods..
+            <<create>> Sound(path : String)
+            - loadSound()
+            + play()
+            + playBackground()
+            + stop()
+            + setVolume(volume : Float)
+            + restart()
+         }
+    }
+}
+
+package tools{
+    class LogFormatter{
+        ..Fields..
+        - dateFormat : SimpleDateFormat
+        ..Methods..
+        + format(record : LogRecord) : String
+    }
+    class Runner{
+        ..Fields..
+        - name : String
+        - action : Runnable
+        - aps : Double
+        - stability : boolean
+        - running : Boolean
+        - paused : Boolean
+        - passedActions : Integer
+        - apsQueue : Long[]
+        - queueLock : ReentrantLock
+        ..Methods..
+        + <<create>> Runner(name : String, action : Runnable)
+        + <<create>> Runner(name : String, action : Runnable, aps : Integer, stabilized : Boolean)
+        + run()
+        - computerAverage() : Double
+        + setPaused(paused : Boolean)
+        + stopRunner()
+        + setAps(aps : Integer)
+        + isRunning() : Boolean
+        + getPassedActions() : Integer
+        + getCurrentAps() : Integer
+        + getAps() : Integer
+    }
+    class STimer{
+        ..Fields..
+        - timers : Long[], Long[] {static}
+        - lastId : Long {static}
+        ..Methods..
+        + start() : Long {static}
+        + stop(id : Long) : Long {static}
+    }
+    class Vector2D{
+        ..Fields..
+        + x : Double
+        + y : Double
+        ..Methods..
+        + <<create>> Vector2D()
+        + <<create>> Vector2D(x : Double, y : Double)
+        + <<create>> Vector2D(v : Vector2D)
+        + set(v : Vector2D)
+        + setZero()
+        + getComponents() : Double[]
+        + getLength() : Double
+        + getLengthSq() : Double
+        + distanceSq(v : Vector2D) : Double
+        + distance(v : vector2D) : Double
+        + getAngle()  : Double
+        + getNormalized() : Vector2D
+        + normalize(v : Vector2D) : Vector2D {static}
+        + toCartesian(magnitude : Double, angle : Double) {static}
+        + getAdded(v : Vector2D) : Vector2D
+        + add(v1 : Vector2D, v2 : Vector2D) : Vector2D {static}
+        + getSubstracted(v : Vector2D) : Vector2D
+        + substract(v1 : Vector2D, v2 : Vector2D) : Vector2D {static}
+        + getMultiplied(v : Vector2D) : Vector2D
+        + multiply(v1 : Vector2D, v2 : Vector2D) : Vector2D {static}
+        + getDivided(v : Vector2D) : Vector2D
+        + divide(v1 : Vector2D, v2 : Vector2D) : Vector2D {static}
+        + getperp() : vector2D
+        + dot(v1 : Vector2D, v2 : Vector2D) : Double {static}
+        + cross(v1 : Vector2D, v2 : Vector2D) : Double {static}
+        + project(v1 : Vector2D, v2 : Vector2D) : Double {static}
+        + getProjectedVector(v1 : Vector2D, v2 : Vector2D) : Vector2D {static}
+        + rotateBy(angle : Double)
+        + getRotatedBy(angle : Double) : vector2D
+        + rotateTo(angle : Double)
+        + getRotatedTo(angle : Double) : vector2D
+        + reverse()
+        + getReversed() : Vector2D
+        + isBetween(target : Vector2D, v1 : Vector2D, v2 : Vector2D) : Boolean {static}
+        + getToPositive() : vector2D
+        + toPositive(v : vector2D) : Vector2D {static}
+        + getToNegative() : vector2D
+        + toNegative(v : vector2D) : Vector2D {static}
+        + clone() : Vector2D
+        + equals(obj : Object) : Boolean
+        + hashCode() : Integer
+        + toString() : String
+    }
+}
+
+class Main{
+    ..Fields..
+    - logger : Logger {static}
+    ..Methods..
+    + main(args : String[]) {static}
+    - setupLogger(devMode : Boolean) {static}
+    + getLogger() : Logger {static}
+    + getGameEngine() : GameEngine {static}
+}
+
+'Utilisations de la class Vector2D
+tools.Vector2D <.. components.animated.AnimatedComponent : <<uses>>
+tools.Vector2D <.. components.animated.AnimatedImageComponent : <<uses>>
+tools.Vector2D <.. components.animated.AnimatedTextComponent : <<uses>>
+tools.Vector2D <.. components.classic.ImageComponent : <<uses>>
+tools.Vector2D <.. components.mixed.ComposedComponent : <<uses>>
+tools.Vector2D <.. components.sample.SampleImageComponent : <<uses>>
+tools.Vector2D <.. components.sample.SampleTextComponent : <<uses>>
+tools.Vector2D <.. ressources.images.Images : <<uses>>
+
+
+components.classic.GameComponent "1" o-> "1\n- position" tools.Vector2D
+components.classic.GameComponent "1" o-> "1\n- size" tools.Vector2D
+components.classic.GameComponent "1" o-> "1\n- target" tools.Vector2D
+components.classic.GameComponent ..> game.enums.MouseButtons : <<uses>>
+
+components.classic.ImageComponent "1" o-> "1\n imageType" ressources.images.Images
+
+components.classic.TextComponent .> components.texts.Text : <<uses>>
+
+components.texts.AnimatedText "1" o-> "*\n- frames" Text
+
+components.texts.Text "1" o-> "*\n- parts" TextPart
+
+game.GameEngine "1" o--> "*\n- components" components.classic.GameComponent
+
+game.GraphicEngine "1" o--> "1\n- gameEngine" tools.Runner
+game.GraphicEngine "1" o--> "1\n- fpsRunner" tools.Runner
+
+Main "1" *--> "1\n- gameEngine" game.GameEngine
+
+components.character.CharacterFactory .> components.character.Male : <<uses>>
+components.character.CharacterFactory .> components.character.Female : <<uses>>
+components.character.CharacterFactory ..> components.character.style.MaleStyleManager : <<uses>>
+components.character.CharacterFactory ..> components.character.style.FemaleStyleManager : <<uses>>
+
+components.character.style.Skin <.. components.character.style.StyleManager : <<uses>>
+components.character.style.Eyes <.. components.character.style.StyleManager : <<uses>>
+components.character.style.Hair <.. components.character.style.StyleManager : <<uses>>
+components.character.style.Shirt <.. components.character.style.StyleManager : <<uses>>
+components.character.style.Beard <.. components.character.style.MaleStyleManager : <<uses>>
+
+components.character.style.HairEnum "1" o--> "1\n- color" components.character.style.HairColor
+components.character.style.BeardEnum "1" o--> "1\n- color" components.character.style.HairColor
+components.character.style.EyesEnum "1" o--> "1\n- color" components.character.style.EyeColor
+components.character.style.EyesEnum "1" o-> "*\n-origins" components.character.identity.Origins
+components.character.style.SkinEnum "1" o-> "*\n-origins" components.character.identity.Origins
+
+ressources.images.Images "1\n-image" <---o "1" components.character.style.HairEnum
+ressources.images.Images "1\n-image" <---o "1" components.character.style.BeardEnum
+ressources.images.Images "1\n-image" <---o "1" components.character.style.EyesEnum
+ressources.images.Images "1\n-image" <---o "1" components.character.style.SkinEnum
+ressources.images.Images "1\n-image" <---o "1" components.character.style.ShirtEnum
+
+components.character.style.Skin "1" o--> "1\n- skin" components.character.style.SkinEnum
+components.character.style.Eyes "1" o--> "1\n- eyes" components.character.style.EyesEnum
+components.character.style.Hair "1" o--> "1\n- hair" components.character.style.HairEnum
+components.character.style.Shirt "1" o--> "1\n- shirt" components.character.style.ShirtEnum
+components.character.style.Beard "1" o--> "1\n- beard" components.character.style.BeardEnum
+
+components.character.identity.IdentityManager ..> components.character.identity.FirstName : <<uses>>
+components.character.identity.IdentityManager ..> components.character.identity.LastName : <<uses>>
+components.character.identity.LastName ..> components.character.identity.Origins : <<uses>>
+components.character.identity.FirstName ..> components.character.identity.Origins : <<uses>>
+
+components.character.Character "1" o---> "1\n- hair" components.character.style.Hair
+components.character.Character "1" o---> "1\n- eyes" components.character.style.Eyes
+components.character.Character "1" o---> "1\n- skin" components.character.style.Skin
+components.character.Character "1" o---> "1\n- shirt" components.character.style.Shirt
+components.character.Male "1" o---> "1\n- beard" components.character.style.Beard
+components.character.Character "1" o---> "1\n- firstname" components.character.identity.FirstName
+components.character.Character "1" o---> "1\n- lastname" components.character.identity.LastName
+components.character.CharacterFactory ..> components.character.identity.IdentityManager : <<uses>>
+
+@enduml
