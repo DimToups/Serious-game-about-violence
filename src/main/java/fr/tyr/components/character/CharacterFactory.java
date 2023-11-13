@@ -17,7 +17,7 @@ public class CharacterFactory {
      * @param position The position of the component
      * @return A male character
      */
-    public static Male generateMale(Vector2D position){
+    public Male generateMale(Vector2D position){
         Main.getLogger().info("Generating a male character...");
         MaleStyleManager msf = new MaleStyleManager();
 
@@ -34,7 +34,7 @@ public class CharacterFactory {
      * @param position The component position
      * @return A female character
      */
-    public static Female generateFemale(Vector2D position){
+    public Female generateFemale(Vector2D position){
         Main.getLogger().info("Generating a female character...");
         FemaleStyleManager fsm = new FemaleStyleManager();
 
