@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.Random;
 
 public abstract class StyleManager {
+    static Random rand = new Random();
     /**
      * Create a StyleManager
      */
@@ -22,10 +23,6 @@ public abstract class StyleManager {
      * @return A corresponding HairColor instance
      */
     public static HairColor generateHairColor(int age){
-        //
-        Random rand = new Random();
-
-        //
         if(age < 55){
             //Décision entre une pilosité naturelle ou non
             if(rand.nextInt(0,30) != 0){
@@ -69,8 +66,6 @@ public abstract class StyleManager {
      * @return A SkinEnum
      */
     public static Skin generateSkin(Origin origin){
-        Random rand = new Random();
-
         try {
             ArrayList<SkinEnum> validAssets = SkinEnum.getAllOriginAssets(origin);
 
@@ -104,8 +99,6 @@ public abstract class StyleManager {
      * @return A Shirt instance
      */
     public static Shirt generateShirt(){
-        Random rand = new Random();
-
         try {
             return new Shirt(ShirtEnum.valueOf(Arrays.stream(ShirtEnum.values()).toList().get(rand.nextInt(0, ShirtEnum.values().length)).name()));
         }

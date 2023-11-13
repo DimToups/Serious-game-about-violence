@@ -4,7 +4,6 @@ import fr.tyr.Main;
 import fr.tyr.components.character.identity.Origin;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class FemaleStyleManager extends StyleManager{
     /**
@@ -14,7 +13,6 @@ public class FemaleStyleManager extends StyleManager{
      */
     @Override
     public Hair generateHair(HairColor color) {
-        Random rand = new Random();
         try {
             ArrayList<HairEnum> validAssets = HairEnum.getAllGenderAssets(false, HairEnum.getAllColoredAssets(color));
 
@@ -36,7 +34,6 @@ public class FemaleStyleManager extends StyleManager{
      */
     @Override
     public Eyes generateEyes(Origin origin) {
-        Random rand = new Random();
         try {
             ArrayList<EyesEnum> validAssets = EyesEnum.getAllGenderAssets(false, EyesEnum.getAllOriginAssets(origin));
 
