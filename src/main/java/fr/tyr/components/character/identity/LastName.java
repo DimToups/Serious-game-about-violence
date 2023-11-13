@@ -1,6 +1,7 @@
 package fr.tyr.components.character.identity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public enum LastName {
 
@@ -107,8 +108,8 @@ public enum LastName {
      * @param origin An specified origin
      * @return The remaining LastNames
      */
-    public static ArrayList<LastName> getAllOriginLastNames(Origin origin){
-        ArrayList<LastName> lastNames = new ArrayList<>();
+    public static List<LastName> getAllOriginLastNames(Origin origin){
+        List<LastName> lastNames = new ArrayList<>();
         for(LastName ln : LastName.values()) {
             if (ln.getOrigin() == origin)
                 lastNames.add(ln);

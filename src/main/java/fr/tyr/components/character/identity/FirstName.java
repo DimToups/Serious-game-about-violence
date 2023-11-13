@@ -1,6 +1,7 @@
 package fr.tyr.components.character.identity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public enum FirstName {
 
@@ -234,8 +235,8 @@ public enum FirstName {
      * @param origin The character's origin
      * @return An array of FirstNames with all the corresponding origins
      */
-    public static ArrayList<FirstName> getAllOriginFirstNames(Origin origin){
-        ArrayList<FirstName> firstNames = new ArrayList<>();
+    public static List<FirstName> getAllOriginFirstNames(Origin origin){
+        List<FirstName> firstNames = new ArrayList<>();
 
         for(FirstName fn : FirstName.values()){
             if(fn.getOrigin() == origin)
@@ -248,8 +249,8 @@ public enum FirstName {
      * Send all the instanciated male firstnames
      * @return All the instanciated male firstnames
      */
-    public static ArrayList<FirstName> getAllMaleFirstNames(){
-        ArrayList<FirstName> amfn = new ArrayList<>();
+    public static List<FirstName> getAllMaleFirstNames(){
+        List<FirstName> amfn = new ArrayList<>();
         for(FirstName fn : FirstName.values()){
             if(fn.getGender())
                 amfn.add(fn);
@@ -260,10 +261,10 @@ public enum FirstName {
     /**
      * Send all the instanciated male firstnames
      * @param firstNames An array of firstname
-     * @return All of the male firstnames of the parameter firstNames
+     * @return All the male firstnames of the parameter firstNames
      */
-    public static ArrayList<FirstName> getAllMaleFirstNames(ArrayList<FirstName> firstNames){
-        ArrayList<FirstName> amfn = new ArrayList<>();
+    public static List<FirstName> getAllMaleFirstNames(List<FirstName> firstNames){
+        List<FirstName> amfn = new ArrayList<>();
         for(FirstName fn : firstNames){
             if(fn.getGender())
                 amfn.add(fn);
@@ -275,8 +276,8 @@ public enum FirstName {
      * Send all the instanciated female firstnames
      * @return All the instanciated female firstnames
      */
-    public static ArrayList<FirstName> getAllFemaleFirstNames(){
-        ArrayList<FirstName> affn = new ArrayList<>();
+    public static List<FirstName> getAllFemaleFirstNames(){
+        List<FirstName> affn = new ArrayList<>();
         for(FirstName fn : FirstName.values()){
             if(!fn.getGender())
                 affn.add(fn);
@@ -287,10 +288,10 @@ public enum FirstName {
     /**
      * Send all the instanciated female firstnames
      * @param firstNames An array of firstname
-     * @return All of the female firstnames of the parameter firstNames
+     * @return All the female firstnames of the parameter firstNames
      */
-    public static ArrayList<FirstName> getAllFemaleFirstNames(ArrayList<FirstName> firstNames){
-        ArrayList<FirstName> affn = new ArrayList<>();
+    public static List<FirstName> getAllFemaleFirstNames(List<FirstName> firstNames){
+        List<FirstName> affn = new ArrayList<>();
         for(FirstName fn : firstNames){
             if(!fn.getGender())
                 affn.add(fn);

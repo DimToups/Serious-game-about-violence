@@ -4,8 +4,8 @@ import fr.tyr.Main;
 import fr.tyr.components.character.identity.Origin;
 import fr.tyr.components.classic.ImageComponent;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 public abstract class StyleManager {
@@ -67,7 +67,7 @@ public abstract class StyleManager {
      */
     public static Skin generateSkin(Origin origin){
         try {
-            ArrayList<SkinEnum> validAssets = SkinEnum.getAllOriginAssets(origin);
+            List<SkinEnum> validAssets = SkinEnum.getAllOriginAssets(origin);
 
             return new Skin(SkinEnum.valueOf(validAssets.get(rand.nextInt(0, validAssets.size())).name()));
         }

@@ -3,7 +3,7 @@ package fr.tyr.components.character.style;
 import fr.tyr.Main;
 import fr.tyr.components.character.identity.Origin;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class FemaleStyleManager extends StyleManager{
     /**
@@ -14,7 +14,7 @@ public class FemaleStyleManager extends StyleManager{
     @Override
     public Hair generateHair(HairColor color) {
         try {
-            ArrayList<HairEnum> validAssets = HairEnum.getAllGenderAssets(false, HairEnum.getAllColoredAssets(color));
+            List<HairEnum> validAssets = HairEnum.getAllGenderAssets(false, HairEnum.getAllColoredAssets(color));
 
             return new Hair(HairEnum.valueOf(validAssets.get(rand.nextInt(0, validAssets.size())).name()));
         }
@@ -35,7 +35,7 @@ public class FemaleStyleManager extends StyleManager{
     @Override
     public Eyes generateEyes(Origin origin) {
         try {
-            ArrayList<EyesEnum> validAssets = EyesEnum.getAllGenderAssets(false, EyesEnum.getAllOriginAssets(origin));
+            List<EyesEnum> validAssets = EyesEnum.getAllGenderAssets(false, EyesEnum.getAllOriginAssets(origin));
 
             return new Eyes(EyesEnum.valueOf(validAssets.get(rand.nextInt(0, validAssets.size())).name()));
         }

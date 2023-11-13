@@ -6,7 +6,7 @@ import fr.tyr.game.enums.MouseButtons;
 import fr.tyr.resources.images.Images;
 import fr.tyr.tools.Vector2D;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class Skin extends ImageComponent {
     SkinEnum skin;
@@ -105,7 +105,7 @@ public class Skin extends ImageComponent {
      * Send all the possible origins of the skin
      * @return All the possible origins of the skin
      */
-    public ArrayList<Origin> getOrigins(){
+    public List<Origin> getOrigins(){
         return this.skin.getOrigin();
     }
 }

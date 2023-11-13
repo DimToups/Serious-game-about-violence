@@ -49,8 +49,8 @@ public enum EyesEnum {
      * @param color The chosen EyeColor instance
      * @return The corresponding assets
      */
-    public static ArrayList<EyesEnum> getAllColoredAssets(EyeColor color){
-        ArrayList<EyesEnum> assets = new ArrayList<>();
+    public static List<EyesEnum> getAllColoredAssets(EyeColor color){
+        List<EyesEnum> assets = new ArrayList<>();
 
         for(EyesEnum eyes : EyesEnum.values()){
             if(eyes.color == color)
@@ -66,8 +66,8 @@ public enum EyesEnum {
      * @param eyes The list of EyesEnum to process
      * @return The corresponding assets
      */
-    public static ArrayList<EyesEnum> getAllColoredAssets(EyeColor color, ArrayList<EyesEnum> eyes){
-        ArrayList<EyesEnum> assets = new ArrayList<>();
+    public static List<EyesEnum> getAllColoredAssets(EyeColor color, List<EyesEnum> eyes){
+        List<EyesEnum> assets = new ArrayList<>();
 
         for(EyesEnum e : eyes){
             if(e.color == color)
@@ -82,8 +82,8 @@ public enum EyesEnum {
      * @param gender The chosen gender (true for male, false for female)
      * @return The corresponding assets
      */
-    public static ArrayList<EyesEnum> getAllGenderAssets(boolean gender){
-        ArrayList<EyesEnum> assets = new ArrayList<>();
+    public static List<EyesEnum> getAllGenderAssets(boolean gender){
+        List<EyesEnum> assets = new ArrayList<>();
 
         for(EyesEnum eyes : EyesEnum.values()){
             if(eyes.gender == gender)
@@ -99,8 +99,8 @@ public enum EyesEnum {
      * @param eyes The list of EyesEnum to process
      * @return The corresponding assets
      */
-    public static ArrayList<EyesEnum> getAllGenderAssets(boolean gender, ArrayList<EyesEnum> eyes){
-        ArrayList<EyesEnum> assets = new ArrayList<>();
+    public static List<EyesEnum> getAllGenderAssets(boolean gender, List<EyesEnum> eyes){
+        List<EyesEnum> assets = new ArrayList<>();
 
         for(EyesEnum e : eyes){
             if(e.gender == gender)
@@ -115,8 +115,8 @@ public enum EyesEnum {
      * @param origin The chosen Origin
      * @return The corresponding assets
      */
-    public static ArrayList<EyesEnum> getAllOriginAssets(Origin origin){
-        ArrayList<EyesEnum> assets = new ArrayList<>();
+    public static List<EyesEnum> getAllOriginAssets(Origin origin){
+        List<EyesEnum> assets = new ArrayList<>();
 
         for(EyesEnum eyes : EyesEnum.values()){
             for(Origin o : eyes.origins) {
@@ -134,8 +134,8 @@ public enum EyesEnum {
      * @param eyes The list of EyesEnum to process
      * @return The corresponding assets
      */
-    public static ArrayList<EyesEnum> getAllOriginAssets(Origin origin, ArrayList<EyesEnum> eyes){
-        ArrayList<EyesEnum> assets = new ArrayList<>();
+    public static List<EyesEnum> getAllOriginAssets(Origin origin, List<EyesEnum> eyes){
+        List<EyesEnum> assets = new ArrayList<>();
 
         for(EyesEnum e : eyes){
             for(Origin o : e.origins) {

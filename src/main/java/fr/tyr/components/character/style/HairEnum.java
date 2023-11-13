@@ -4,6 +4,7 @@ import fr.tyr.Main;
 import fr.tyr.resources.images.Images;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 
 public enum HairEnum {
@@ -53,8 +54,8 @@ public enum HairEnum {
      * @param color The chosen HairColor instance
      * @return The corresponding assets
      */
-    public static ArrayList<HairEnum> getAllColoredAssets(HairColor color){
-        ArrayList<HairEnum> assets = new ArrayList<>();
+    public static List<HairEnum> getAllColoredAssets(HairColor color){
+        List<HairEnum> assets = new ArrayList<>();
 
         for(HairEnum hair : HairEnum.values()){
             if(hair.color == color)
@@ -70,8 +71,8 @@ public enum HairEnum {
      * @param hairs The list of HairEnum to process
      * @return The corresponding assets
      */
-    public static ArrayList<HairEnum> getAllColoredAssets(HairColor color, ArrayList<HairEnum> hairs){
-        ArrayList<HairEnum> assets = new ArrayList<>();
+    public static List<HairEnum> getAllColoredAssets(HairColor color, List<HairEnum> hairs){
+        List<HairEnum> assets = new ArrayList<>();
 
         for(HairEnum hair : hairs){
             if(hair.color == color)
@@ -86,8 +87,8 @@ public enum HairEnum {
      * @param gender The chosen gender (true for male, false for female)
      * @return The corresponding assets
      */
-    public static ArrayList<HairEnum> getAllGenderAssets(boolean gender){
-        ArrayList<HairEnum> assets = new ArrayList<>();
+    public static List<HairEnum> getAllGenderAssets(boolean gender){
+        List<HairEnum> assets = new ArrayList<>();
 
         for(HairEnum hair : HairEnum.values()){
             if(hair.getGender() == gender)
@@ -103,8 +104,8 @@ public enum HairEnum {
      * @param hairs The list of HairEnum to process
      * @return The corresponding assets
      */
-    public static ArrayList<HairEnum> getAllGenderAssets(boolean gender, ArrayList<HairEnum> hairs){
-        ArrayList<HairEnum> assets = new ArrayList<>();
+    public static List<HairEnum> getAllGenderAssets(boolean gender, List<HairEnum> hairs){
+        List<HairEnum> assets = new ArrayList<>();
 
         for(HairEnum hair : hairs){
             if(hair.getGender() == gender)

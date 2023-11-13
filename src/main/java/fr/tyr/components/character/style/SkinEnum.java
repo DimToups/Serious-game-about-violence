@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.logging.Level;
 
 public enum SkinEnum {
@@ -50,7 +51,7 @@ public enum SkinEnum {
      * Send the SkinEnum's Origin
      * @return The SkinEnum's Origin
      */
-    public ArrayList<Origin> getOrigin() {
+    public List<Origin> getOrigin() {
         return origins;
     }
 
@@ -59,8 +60,8 @@ public enum SkinEnum {
      * @param origin The character's Origin
      * @return The corresponding assets
      */
-    public static ArrayList<SkinEnum> getAllOriginAssets(Origin origin){
-        ArrayList<SkinEnum> assets = new ArrayList<>();
+    public static List<SkinEnum> getAllOriginAssets(Origin origin){
+        List<SkinEnum> assets = new ArrayList<>();
 
         for(SkinEnum skin : SkinEnum.values()){
             for(Origin o : skin.origins) {
@@ -78,8 +79,8 @@ public enum SkinEnum {
      * @param skin The List of SkinEnum to process
      * @return The corresponding assets
      */
-    public static ArrayList<SkinEnum> getAllOriginAssets(Origin origin, ArrayList<SkinEnum> skin){
-        ArrayList<SkinEnum> assets = new ArrayList<>();
+    public static List<SkinEnum> getAllOriginAssets(Origin origin, List<SkinEnum> skin){
+        List<SkinEnum> assets = new ArrayList<>();
 
         for(SkinEnum e : skin){
             for(Origin o : e.origins) {

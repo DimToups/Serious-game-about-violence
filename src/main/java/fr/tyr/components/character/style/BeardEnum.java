@@ -4,6 +4,7 @@ import fr.tyr.Main;
 import fr.tyr.resources.images.Images;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 
 public enum BeardEnum {
@@ -37,8 +38,8 @@ public enum BeardEnum {
      * @param color The corresponding Haircolor of the beard
      * @return All the corresponding assets
      */
-    public static ArrayList<BeardEnum> getAllColoredAssets(HairColor color){
-        ArrayList<BeardEnum> assets = new ArrayList<>();
+    public static List<BeardEnum> getAllColoredAssets(HairColor color){
+        List<BeardEnum> assets = new ArrayList<>();
 
         for(BeardEnum beard : BeardEnum.values()){
             if(beard.color == color)
@@ -54,8 +55,8 @@ public enum BeardEnum {
      * @param beards An Array of Beard
      * @return All the corresponding assets
      */
-    public static ArrayList<BeardEnum> getAllColoredAssets(HairColor color, ArrayList<BeardEnum> beards){
-        ArrayList<BeardEnum> assets = new ArrayList<>();
+    public static List<BeardEnum> getAllColoredAssets(HairColor color, List<BeardEnum> beards){
+        List<BeardEnum> assets = new ArrayList<>();
 
         for(BeardEnum beard : beards){
             if(beard.color == color)
