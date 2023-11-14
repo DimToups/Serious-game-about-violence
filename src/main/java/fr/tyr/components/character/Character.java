@@ -1,8 +1,9 @@
 package fr.tyr.components.character;
 
-import fr.tyr.components.character.identity.FirstName;
-import fr.tyr.components.character.identity.LastName;
+import fr.tyr.components.character.identity.enums.FirstName;
+import fr.tyr.components.character.identity.enums.LastName;
 import fr.tyr.components.character.style.*;
+import fr.tyr.components.character.style.enums.HairColor;
 import fr.tyr.components.mixed.ComposedComponent;
 import fr.tyr.resources.images.Images;
 import fr.tyr.tools.Vector2D;

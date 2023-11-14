@@ -1,7 +1,10 @@
 package fr.tyr.components.character.style;
 
 import fr.tyr.Main;
-import fr.tyr.components.character.identity.Origin;
+import fr.tyr.components.character.identity.enums.Origin;
+import fr.tyr.components.character.style.enums.HairColor;
+import fr.tyr.components.character.style.enums.ShirtEnum;
+import fr.tyr.components.character.style.enums.SkinEnum;
 import fr.tyr.components.classic.ImageComponent;
 
 import java.util.Arrays;
@@ -10,12 +13,6 @@ import java.util.Random;
 
 public abstract class StyleManager {
     static Random rand = new Random();
-    /**
-     * Create a StyleManager
-     */
-    public StyleManager(){
-
-    }
 
     /**
      * Generate a HairColor for a character depending on its age

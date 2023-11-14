@@ -1,5 +1,6 @@
 package fr.tyr.components.character.style;
 
+import fr.tyr.components.character.style.enums.ShirtEnum;
 import fr.tyr.components.classic.ImageComponent;
 import fr.tyr.game.enums.MouseButtons;
 import fr.tyr.resources.images.Images;
