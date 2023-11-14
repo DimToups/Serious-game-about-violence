@@ -4,6 +4,7 @@ import fr.tyr.Main;
 import fr.tyr.components.classic.GameComponent;
 import fr.tyr.game.enums.MouseButtons;
 import fr.tyr.tools.Runner;
+import fr.tyr.tools.STimer;
 import fr.tyr.tools.Vector2D;
 
 import javax.swing.*;
@@ -26,6 +27,8 @@ public class GraphicEngine extends JPanel {
     private final Runner tpsRunner;
 
     private final Timer resizeTimer;
+
+    private long lastTickTime;
 
     /**
      * Create a new graphic engine
@@ -72,7 +75,8 @@ public class GraphicEngine extends JPanel {
     private void resize(){
         Vector2D newSize = new Vector2D(getWidth(), getHeight());
         Main.getLogger().info("Window resized to %s".formatted(newSize));
-        gameEngine.safeListOperation(components -> components.forEach(component -> component.onWindowResized(newSize)));
+        gameEngine.safeListOperation(components ->
+                components.forEach(component -> component.onWindowResized(newSize)));
     }
 
     /**
@@ -82,11 +86,14 @@ public class GraphicEngine extends JPanel {
     private void onClick(MouseEvent e){
         List<GameComponent<?>> localComponents = getReversedComponentsList();
         Vector2D mouseVector = new Vector2D(e.getX(), e.getY());
-        Main.getLogger().info("Click detected at %s with %s button".formatted(mouseVector, MouseButtons.from(e.getButton())));
+        Main.getLogger().info("Click detected at %s with %s button"
+                .formatted(mouseVector, MouseButtons.from(e.getButton())));
         for(GameComponent<?> component : localComponents){
             Vector2D componentPosition = component.getPosition();
             Vector2D componentSize = component.getSize();
-            boolean isMouseBetween = mouseVector.isBetween(componentPosition, Vector2D.add(componentPosition, componentSize));
+            boolean isMouseBetween = mouseVector.isBetween(
+                    componentPosition,
+                    Vector2D.add(componentPosition, componentSize));
             if(isMouseBetween){
                 component.onClick(MouseButtons.from(e.getButton()));
                 return;
@@ -98,9 +105,20 @@ public class GraphicEngine extends JPanel {
      * Call the tick event on all components every ticks (60 times per second)
      */
     private void tick(){
+        long timerId = STimer.start();
         List<GameComponent<?>> localComponents = getReversedComponentsList();
-        Thread movingThread = new Thread(() -> localComponents.forEach(component -> component.move(tpsRunner.getAps())));
-        Thread hoverThread = new Thread(() -> {
+        Thread movingThread = Thread.ofVirtual().start(() -> {
+            List<Thread> threads = new ArrayList<>();
+            for(GameComponent<?> component : localComponents)
+                threads.add(Thread.ofVirtual().start(() -> component.move(tpsRunner.getAps())));
+            try{
+                for (Thread thread : threads)
+                    thread.join();
+            }catch (InterruptedException e){
+                Main.getLogger().warning("Tick interrupted");
+            }
+        });
+        Thread hoverThread = Thread.ofVirtual().start(() -> {
             Point mouseLocation = getMousePosition();
             if (Objects.nonNull(mouseLocation)) {
                 Vector2D mouseVector = new Vector2D(mouseLocation.x, mouseLocation.y);
@@ -109,17 +127,72 @@ public class GraphicEngine extends JPanel {
                     hoverFound = triggerHover(mouseVector, component, hoverFound);
             }
         });
-        Thread tickingThread = new Thread(() -> localComponents.forEach(component -> component.tick(tpsRunner.getAps())));
-        movingThread.start();
-        hoverThread.start();
-        tickingThread.start();
+        Thread tickingThread = Thread.ofVirtual().start(() -> {
+            List<Thread> threads = new ArrayList<>();
+            for(GameComponent<?> component : localComponents)
+                threads.add(Thread.ofVirtual().start(() -> component.tick(tpsRunner.getAps())));
+            try{
+                for (Thread thread : threads)
+                    thread.join();
+            } catch (InterruptedException e) {
+                Main.getLogger().warning("Tick interrupted");
+            }
+        });
+        Thread componentOptimizerThread = Thread.ofVirtual().start(this::updateRenderedComponents);
         try {
             movingThread.join();
             hoverThread.join();
             tickingThread.join();
+            componentOptimizerThread.join();
         } catch (InterruptedException e) {
             Main.getLogger().warning("Tick interrupted");
         }
+        lastTickTime = STimer.stop(timerId);
+    }
+
+    /**
+     * Check if a component is under another component
+     * @param bottomComponent The bottom component
+     * @param topComponent The top component
+     * @return If the bottom component is under the top component
+     */
+    private boolean isComponentIsUnder(GameComponent<?> bottomComponent, GameComponent<?> topComponent){
+        Vector2D bottomComponentPosition = bottomComponent.getPosition();
+        Vector2D bottomComponentSize = bottomComponent.getSize();
+        Vector2D topComponentPosition = topComponent.getPosition();
+        Vector2D topComponentSize = topComponent.getSize();
+        return bottomComponentPosition.isBetween(topComponentPosition, Vector2D.add(topComponentPosition, topComponentSize))
+                || Vector2D.add(bottomComponentPosition, bottomComponentSize).isBetween(topComponentPosition, Vector2D.add(topComponentPosition, topComponentSize));
+    }
+
+    /**
+     * Update the rendered state of all components
+     * Make a hidden component not rendered at all
+     */
+    private void updateRenderedComponents(){
+        gameEngine.safeListOperation(components -> {
+            List<Thread> threads = new ArrayList<>();
+            for(int i = 0; i < components.size(); i++) {
+                int finalI = i;
+                threads.add(Thread.ofVirtual().start(() -> {
+                    GameComponent<?> bottomComponent = components.get(finalI);
+                    for(int j = finalI + 1; j < components.size(); j++){
+                        GameComponent<?> topComponent = components.get(j);
+                        if(isComponentIsUnder(bottomComponent, topComponent)){
+                            bottomComponent.setRendered(false);
+                            break;
+                        }
+                    }
+                    bottomComponent.setRendered(true);
+                }));
+            }
+            try{
+                for (Thread thread : threads)
+                    thread.join();
+            }catch(InterruptedException e){
+                Main.getLogger().warning("Tick interrupted");
+            }
+        });
     }
 
     /**
@@ -143,7 +216,9 @@ public class GraphicEngine extends JPanel {
     private boolean triggerHover(Vector2D mouseVector, GameComponent<?> component, boolean hoverFound) {
         Vector2D componentPosition = component.getPosition();
         Vector2D componentSize = component.getSize();
-        boolean isMouseBetween = mouseVector.isBetween(componentPosition, Vector2D.add(componentPosition, componentSize));
+        boolean isMouseBetween = mouseVector.isBetween(
+                componentPosition,
+                Vector2D.add(componentPosition, componentSize));
         if(hoverFound || !isMouseBetween) {
             if(component.isHovered()) {
                 Main.getLogger().info("Hover lost on %s".formatted(component.getClass().getSimpleName()));
@@ -175,9 +250,10 @@ public class GraphicEngine extends JPanel {
         g.setColor(Color.WHITE);
         g.setFont(font);
         if(gameEngine.isDevMode()){
-            g.drawString("TPS : %d".formatted(tpsRunner.getCurrentAps()), 10, 50);
+            g.drawString("TPS : %d    %d ms".formatted(tpsRunner.getCurrentAps(), lastTickTime / 1000000L), 10, 50);
             long end = System.nanoTime();
-            g.drawString("FPS : %d    %d ms".formatted(fpsRunner.getCurrentAps(), (end - start) / 1000000L), 10, 25);
+            g.drawString("FPS : %d    %d ms"
+                    .formatted(fpsRunner.getCurrentAps(), (end - start) / 1000000L), 10, 25);
         }
     }
 
@@ -186,6 +262,7 @@ public class GraphicEngine extends JPanel {
      * @param g The graphics object
      */
     private void drawComponents(Graphics g){
-        gameEngine.safeListOperation(components -> components.forEach(component -> component.render(g)));
+        gameEngine.safeListOperation(components ->
+                components.stream().filter(fn -> fn.isVisible() && fn.isRendered()).forEach(component -> component.render(g)));
     }
 }

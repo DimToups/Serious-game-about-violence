@@ -24,6 +24,9 @@ public abstract class GameComponent<T> {
 
     // Behavior part
     private boolean isHovered = false;
+    private boolean isVisible = true;
+    // Internal optimizations
+    private boolean isRendered = true;
 
     /**
      * Create a component with a frame
@@ -94,6 +97,12 @@ public abstract class GameComponent<T> {
     public boolean isHovered() {
         return isHovered;
     }
+    public boolean isVisible() {
+        return isVisible;
+    }
+    public boolean isRendered() {
+        return isRendered;
+    }
 
     public void setFrame(T frame) {
         this.frame = frame;
@@ -112,6 +121,12 @@ public abstract class GameComponent<T> {
     }
     public Vector2D getTarget() {
         return target;
+    }
+    public void setVisible(boolean visible) {
+        isVisible = visible;
+    }
+    public void setRendered(boolean rendered) {
+        isRendered = rendered;
     }
 
     /**
