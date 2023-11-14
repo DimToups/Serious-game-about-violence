@@ -1,7 +1,7 @@
 package fr.tyr.components.character;
 
-import fr.tyr.components.character.identity.FirstName;
-import fr.tyr.components.character.identity.LastName;
+import fr.tyr.components.character.identity.enums.FirstName;
+import fr.tyr.components.character.identity.enums.LastName;
 import fr.tyr.components.character.style.*;
 import fr.tyr.tools.Vector2D;
 

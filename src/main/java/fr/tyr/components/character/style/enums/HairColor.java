@@ -1,4 +1,4 @@
-package fr.tyr.components.character.style;
+package fr.tyr.components.character.style.enums;
 
 public enum HairColor {
     BLACK,

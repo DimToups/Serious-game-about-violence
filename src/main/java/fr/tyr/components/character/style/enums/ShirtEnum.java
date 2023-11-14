@@ -1,8 +1,10 @@
-package fr.tyr.components.character.style;
+package fr.tyr.components.character.style.enums;
 
 import fr.tyr.Main;
 import fr.tyr.resources.images.Images;
 
+import java.util.Arrays;
+import java.util.Optional;
 import java.util.logging.Level;
 
 public enum ShirtEnum {
@@ -45,11 +47,11 @@ public enum ShirtEnum {
      * @return A ShirtEnum corresponding to the Images param
      */
     public static ShirtEnum getShirtEnum(Images image){
-        for(ShirtEnum shirt : ShirtEnum.values()){
-            if(image.toString().contains(shirt.toString()))
-                return shirt;
+        Optional<ShirtEnum> shirtEnumOptional = Arrays.stream(values()).filter(shirtEnum -> image.toString().contains(shirtEnum.toString())).findFirst();
+        if(shirtEnumOptional.isEmpty()){
+            Main.getLogger().log(Level.SEVERE, "No shirt has been associated with \"" + image.name() + "\"");
+            return null;
         }
-        Main.getLogger().log(Level.SEVERE, "No shirt has been associated with \"" + image.name() + "\"");
-        return null;
+        return shirtEnumOptional.get();
     }
 }

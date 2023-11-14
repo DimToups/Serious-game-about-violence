@@ -1,5 +1,7 @@
 package fr.tyr.components.character.style;
 
+import fr.tyr.components.character.style.enums.BeardEnum;
+import fr.tyr.components.character.style.enums.HairColor;
 import fr.tyr.components.classic.ImageComponent;
 import fr.tyr.game.enums.MouseButtons;
 import fr.tyr.resources.images.Images;

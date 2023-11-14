@@ -1,31 +1,33 @@
-package fr.tyr.components.character.style;
+package fr.tyr.components.character.style.enums;
 
 import fr.tyr.Main;
-import fr.tyr.components.character.identity.Origin;
+import fr.tyr.components.character.identity.enums.Gender;
+import fr.tyr.components.character.identity.enums.Origin;
 import fr.tyr.resources.images.Images;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Level;
 
 public enum EyesEnum {
     //Male
-    COMMON_MALE_BLUE("Blue", EyeColor.BLUE, Images.EYES_COMMON_MALE_BLUE, true, EyesEnum.getCommonEyesOrigins()),
-    COMMON_MALE_LIGHT_BLUE("Light blue", EyeColor.LIGHT_BLUE, Images.EYES_COMMON_MALE_LIGHT_BLUE, true, EyesEnum.getCommonEyesOrigins()),
-    COMMON_MALE_BROWN("brown", EyeColor.BROWN, Images.EYES_COMMON_MALE_BROWN, true, EyesEnum.getCommonEyesOrigins()),
-    COMMON_MALE_GREEN("green", EyeColor.GREEN, Images.EYES_COMMON_MALE_GREEN, true, EyesEnum.getCommonEyesOrigins()),
-    COMMON_MALE_YELLOW("yellow", EyeColor.YELLOW, Images.EYES_COMMON_MALE_YELLOW, true, EyesEnum.getCommonEyesOrigins()),
+    COMMON_MALE_BLUE("Blue", EyeColor.BLUE, Images.EYES_COMMON_MALE_BLUE, Gender.MALE, EyesEnum.getCommonEyesOrigins()),
+    COMMON_MALE_LIGHT_BLUE("Light blue", EyeColor.LIGHT_BLUE, Images.EYES_COMMON_MALE_LIGHT_BLUE, Gender.MALE, EyesEnum.getCommonEyesOrigins()),
+    COMMON_MALE_BROWN("brown", EyeColor.BROWN, Images.EYES_COMMON_MALE_BROWN, Gender.MALE, EyesEnum.getCommonEyesOrigins()),
+    COMMON_MALE_GREEN("green", EyeColor.GREEN, Images.EYES_COMMON_MALE_GREEN, Gender.MALE, EyesEnum.getCommonEyesOrigins()),
+    COMMON_MALE_YELLOW("yellow", EyeColor.YELLOW, Images.EYES_COMMON_MALE_YELLOW, Gender.MALE, EyesEnum.getCommonEyesOrigins()),
     //Female
-    COMMON_FEMALE_DOUBLE_BRUSH_BLUE("female blue double brush blue", EyeColor.BLUE, Images.EYES_COMMON_FEMALE_DOUBLE_BRUSH_BLUE, false, EyesEnum.getCommonEyesOrigins()),
-    COMMON_FEMALE_DOUBLE_BRUSH_LIGHT_BLUE("female blue double brush light blue", EyeColor.LIGHT_BLUE, Images.EYES_COMMON_FEMALE_DOUBLE_BRUSH_LIGHT_BLUE, false, EyesEnum.getCommonEyesOrigins()),
-    COMMON_FEMALE_DOUBLE_BRUSH_BROWN("female blue double brush brown", EyeColor.BROWN, Images.EYES_COMMON_FEMALE_DOUBLE_BRUSH_BROWN, false, EyesEnum.getCommonEyesOrigins()),
-    COMMON_FEMALE_DOUBLE_BRUSH_GREEN("female blue double brush green", EyeColor.GREEN, Images.EYES_COMMON_FEMALE_DOUBLE_BRUSH_GREEN, false, EyesEnum.getCommonEyesOrigins()),
-    COMMON_FEMALE_DOUBLE_BRUSH_YELLOW("female blue double brush yellow", EyeColor.YELLOW, Images.EYES_COMMON_FEMALE_DOUBLE_BRUSH_YELLOW, false, EyesEnum.getCommonEyesOrigins());
+    COMMON_FEMALE_DOUBLE_BRUSH_BLUE("female blue double brush blue", EyeColor.BLUE, Images.EYES_COMMON_FEMALE_DOUBLE_BRUSH_BLUE, Gender.FEMALE, EyesEnum.getCommonEyesOrigins()),
+    COMMON_FEMALE_DOUBLE_BRUSH_LIGHT_BLUE("female blue double brush light blue", EyeColor.LIGHT_BLUE, Images.EYES_COMMON_FEMALE_DOUBLE_BRUSH_LIGHT_BLUE, Gender.FEMALE, EyesEnum.getCommonEyesOrigins()),
+    COMMON_FEMALE_DOUBLE_BRUSH_BROWN("female blue double brush brown", EyeColor.BROWN, Images.EYES_COMMON_FEMALE_DOUBLE_BRUSH_BROWN, Gender.FEMALE, EyesEnum.getCommonEyesOrigins()),
+    COMMON_FEMALE_DOUBLE_BRUSH_GREEN("female blue double brush green", EyeColor.GREEN, Images.EYES_COMMON_FEMALE_DOUBLE_BRUSH_GREEN, Gender.FEMALE, EyesEnum.getCommonEyesOrigins()),
+    COMMON_FEMALE_DOUBLE_BRUSH_YELLOW("female blue double brush yellow", EyeColor.YELLOW, Images.EYES_COMMON_FEMALE_DOUBLE_BRUSH_YELLOW, Gender.FEMALE, EyesEnum.getCommonEyesOrigins());
     private final String name;
     private final EyeColor color;
     private final Images image;
-    private final boolean gender;
+    private final Gender gender;
     private final ArrayList<Origin> origins;
 
     /**
@@ -36,7 +38,7 @@ public enum EyesEnum {
      * @param gender The EyesEnum's gender (true for male, false for female)
      * @param origins The EyesEnum's corresponding Origin instance
      */
-    EyesEnum(String name, EyeColor color, Images image, boolean gender, ArrayList<Origin> origins){
+    EyesEnum(String name, EyeColor color, Images image, Gender gender, ArrayList<Origin> origins){
         this.name = name;
         this.color = color;
         this.image = image;
@@ -50,14 +52,7 @@ public enum EyesEnum {
      * @return The corresponding assets
      */
     public static List<EyesEnum> getAllColoredAssets(EyeColor color){
-        List<EyesEnum> assets = new ArrayList<>();
-
-        for(EyesEnum eyes : EyesEnum.values()){
-            if(eyes.color == color)
-                assets.add(eyes);
-        }
-
-        return assets;
+        return Arrays.stream(values()).filter(eyes -> eyes.color == color).toList();
     }
 
     /**
@@ -67,14 +62,7 @@ public enum EyesEnum {
      * @return The corresponding assets
      */
     public static List<EyesEnum> getAllColoredAssets(EyeColor color, List<EyesEnum> eyes){
-        List<EyesEnum> assets = new ArrayList<>();
-
-        for(EyesEnum e : eyes){
-            if(e.color == color)
-                assets.add(e);
-        }
-
-        return assets;
+        return new ArrayList<>(eyes).stream().filter(eyesEnum -> eyesEnum.color == color).toList();
     }
 
     /**
@@ -82,15 +70,8 @@ public enum EyesEnum {
      * @param gender The chosen gender (true for male, false for female)
      * @return The corresponding assets
      */
-    public static List<EyesEnum> getAllGenderAssets(boolean gender){
-        List<EyesEnum> assets = new ArrayList<>();
-
-        for(EyesEnum eyes : EyesEnum.values()){
-            if(eyes.gender == gender)
-                assets.add(eyes);
-        }
-
-        return assets;
+    public static List<EyesEnum> getAllGenderAssets(Gender gender){
+        return Arrays.stream(values()).filter(fn -> fn.gender == gender).toList();
     }
 
     /**
@@ -99,15 +80,8 @@ public enum EyesEnum {
      * @param eyes The list of EyesEnum to process
      * @return The corresponding assets
      */
-    public static List<EyesEnum> getAllGenderAssets(boolean gender, List<EyesEnum> eyes){
-        List<EyesEnum> assets = new ArrayList<>();
-
-        for(EyesEnum e : eyes){
-            if(e.gender == gender)
-                assets.add(e);
-        }
-
-        return assets;
+    public static List<EyesEnum> getAllGenderAssets(Gender gender, List<EyesEnum> eyes){
+        return new ArrayList<>(eyes).stream().filter(fn -> fn.getGender() == gender).toList();
     }
 
     /**
@@ -135,16 +109,7 @@ public enum EyesEnum {
      * @return The corresponding assets
      */
     public static List<EyesEnum> getAllOriginAssets(Origin origin, List<EyesEnum> eyes){
-        List<EyesEnum> assets = new ArrayList<>();
-
-        for(EyesEnum e : eyes){
-            for(Origin o : e.origins) {
-                if (o == origin)
-                    assets.add(e);
-            }
-        }
-
-        return assets;
+        return new ArrayList<>(eyes).stream().filter(eyesEnum -> eyesEnum.origins.contains(origin)).toList();
     }
 
     /**
@@ -152,7 +117,7 @@ public enum EyesEnum {
      * @return The EyesEnum's name
      */
     public String getName() {
-        return this.name;
+        return name;
     }
 
     /**
@@ -175,7 +140,7 @@ public enum EyesEnum {
      * Send the EyesEnum's gender (true for male, false for female)
      * @return The EyesEnum's gender
      */
-    public boolean getGender(){
+    public Gender getGender(){
         return gender;
     }
 
@@ -208,11 +173,11 @@ public enum EyesEnum {
      * @return A EyesEnum corresponding to the Images param
      */
     public static EyesEnum getEyesEnum(Images image){
-        for(EyesEnum eyes : EyesEnum.values()){
-            if(image.toString().contains(eyes.toString()))
-                return eyes;
+        Optional<EyesEnum> eyesEnumOptional = Arrays.stream(values()).filter(fn -> image.toString().contains(fn.toString())).findFirst();
+        if(eyesEnumOptional.isEmpty()){
+            Main.getLogger().log(Level.SEVERE, "No eyes has been associated with \"" + image.name() + "\"");
+            return null;
         }
-        Main.getLogger().log(Level.SEVERE, "No eyes has been associated with \"" + image.name() + "\"");
-        return null;
+        return eyesEnumOptional.get();
     }
 }

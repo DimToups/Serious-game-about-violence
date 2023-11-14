@@ -1,10 +1,15 @@
-package fr.tyr.components.character.style;
+package fr.tyr.components.character.style.enums;
 
 import fr.tyr.Main;
+import fr.tyr.components.character.style.Beard;
 import fr.tyr.resources.images.Images;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Predicate;
 import java.util.logging.Level;
 
 public enum BeardEnum {
@@ -39,14 +44,7 @@ public enum BeardEnum {
      * @return All the corresponding assets
      */
     public static List<BeardEnum> getAllColoredAssets(HairColor color){
-        List<BeardEnum> assets = new ArrayList<>();
-
-        for(BeardEnum beard : BeardEnum.values()){
-            if(beard.color == color)
-                assets.add(beard);
-        }
-
-        return assets;
+        return Arrays.stream(BeardEnum.values()).filter(beard -> beard.color == color).toList();
     }
 
     /**
@@ -56,14 +54,7 @@ public enum BeardEnum {
      * @return All the corresponding assets
      */
     public static List<BeardEnum> getAllColoredAssets(HairColor color, List<BeardEnum> beards){
-        List<BeardEnum> assets = new ArrayList<>();
-
-        for(BeardEnum beard : beards){
-            if(beard.color == color)
-                assets.add(beard);
-        }
-
-        return assets;
+        return new ArrayList<>(beards).stream().filter(beard -> beard.color == color).toList();
     }
 
     /**
@@ -71,7 +62,7 @@ public enum BeardEnum {
      * @return The Beard name
      */
     public String getName() {
-        return this.name;
+        return name;
     }
 
     /**
@@ -95,12 +86,15 @@ public enum BeardEnum {
      * @param image The Images to focus the search on
      * @return A BeardEnum corresponding to the Images param
      */
+    @Nullable
     public static BeardEnum getBeardEnum(Images image){
-        for(BeardEnum beard : BeardEnum.values()){
-            if(image.toString().contains(beard.toString()))
-                return beard;
+        Optional<BeardEnum> beardOptional = Arrays.stream(BeardEnum.values())
+                .filter(fn -> image.toString().contains(fn.toString()))
+                .findFirst();
+        if(beardOptional.isEmpty()){
+            Main.getLogger().log(Level.SEVERE, "No beard has been associated with \"" + image.name() + "\"");
+            return null;
         }
-        Main.getLogger().log(Level.SEVERE, "No beard has been associated with \"" + image.name() + "\"");
-        return null;
+        return beardOptional.get();
     }
 }

@@ -1,6 +1,9 @@
 package fr.tyr.components.character.style;
 
-import fr.tyr.components.character.identity.Origin;
+import fr.tyr.components.character.identity.enums.Gender;
+import fr.tyr.components.character.identity.enums.Origin;
+import fr.tyr.components.character.style.enums.EyeColor;
+import fr.tyr.components.character.style.enums.EyesEnum;
 import fr.tyr.components.classic.ImageComponent;
 import fr.tyr.game.enums.MouseButtons;
 import fr.tyr.resources.images.Images;
@@ -107,7 +110,7 @@ public class Eyes extends ImageComponent {
      * Send the Eyes gender
      * @return The Eyes gender
      */
-    public boolean getGender(){
+    public Gender getGender(){
         return eyes.getGender();
     }
 

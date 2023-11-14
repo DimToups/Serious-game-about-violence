@@ -2,16 +2,12 @@ package fr.tyr.components.character;
 
 import fr.tyr.Main;
 import fr.tyr.components.character.identity.IdentityManager;
-import fr.tyr.components.character.identity.Origin;
+import fr.tyr.components.character.identity.enums.Origin;
 import fr.tyr.components.character.style.*;
+import fr.tyr.components.character.style.enums.HairColor;
 import fr.tyr.tools.Vector2D;
 
 public class CharacterFactory {
-    /**
-     * Create CharacterFactory
-     */
-    public CharacterFactory(){}
-
     /**
      * Create a random Male Character
      * @param position The position of the component

@@ -1,4 +1,4 @@
-package fr.tyr.components.character.identity;
+package fr.tyr.components.character.identity.enums;
 
 public enum Origin {
     FRENCH,
@@ -15,6 +15,6 @@ public enum Origin {
      * @return The converted Origin
      */
     public String cleanName(){
-        return this.name().toLowerCase();
+        return name().toLowerCase();
     }
 }

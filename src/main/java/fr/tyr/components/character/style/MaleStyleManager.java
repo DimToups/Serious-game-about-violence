@@ -1,7 +1,12 @@
 package fr.tyr.components.character.style;
 
 import fr.tyr.Main;
-import fr.tyr.components.character.identity.Origin;
+import fr.tyr.components.character.identity.enums.Gender;
+import fr.tyr.components.character.identity.enums.Origin;
+import fr.tyr.components.character.style.enums.BeardEnum;
+import fr.tyr.components.character.style.enums.EyesEnum;
+import fr.tyr.components.character.style.enums.HairColor;
+import fr.tyr.components.character.style.enums.HairEnum;
 
 import java.util.List;
 
@@ -14,7 +19,7 @@ public class MaleStyleManager extends StyleManager{
     @Override
     public Hair generateHair(HairColor color) {
         try {
-            List<HairEnum> validAssets = HairEnum.getAllColoredAssets(color ,HairEnum.getAllGenderAssets(true));
+            List<HairEnum> validAssets = HairEnum.getAllColoredAssets(color ,HairEnum.getAllGenderAssets(Gender.MALE));
 
             return new Hair(HairEnum.valueOf(validAssets.get(rand.nextInt(0, validAssets.size())).name()));
         }
@@ -35,7 +40,7 @@ public class MaleStyleManager extends StyleManager{
     @Override
     public Eyes generateEyes(Origin origin) {
         try {
-            List<EyesEnum> validAssets = EyesEnum.getAllGenderAssets(true, EyesEnum.getAllOriginAssets(origin));
+            List<EyesEnum> validAssets = EyesEnum.getAllGenderAssets(Gender.MALE, EyesEnum.getAllOriginAssets(origin));
 
             return new Eyes(EyesEnum.valueOf(validAssets.get(rand.nextInt(0, validAssets.size())).name()));
         }

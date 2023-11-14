@@ -1,6 +1,7 @@
 package fr.tyr.components.character.style;
 
-import fr.tyr.components.character.identity.Origin;
+import fr.tyr.components.character.identity.enums.Origin;
+import fr.tyr.components.character.style.enums.SkinEnum;
 import fr.tyr.components.classic.ImageComponent;
 import fr.tyr.game.enums.MouseButtons;
 import fr.tyr.resources.images.Images;
@@ -106,6 +107,6 @@ public class Skin extends ImageComponent {
      * @return All the possible origins of the skin
      */
     public List<Origin> getOrigins(){
-        return this.skin.getOrigin();
+        return skin.getOrigin();
     }
 }

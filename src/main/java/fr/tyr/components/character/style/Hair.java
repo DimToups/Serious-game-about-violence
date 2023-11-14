@@ -1,5 +1,8 @@
 package fr.tyr.components.character.style;
 
+import fr.tyr.components.character.identity.enums.Gender;
+import fr.tyr.components.character.style.enums.HairColor;
+import fr.tyr.components.character.style.enums.HairEnum;
 import fr.tyr.components.classic.ImageComponent;
 import fr.tyr.game.enums.MouseButtons;
 import fr.tyr.resources.images.Images;
@@ -110,7 +113,7 @@ public class Hair extends ImageComponent {
      * Send the hair cut prefered gender (true for male, false for female)
      * @return The hair cut prefered gender
      */
-    public boolean getGender(){
+    public Gender getGender(){
         return hair.getGender();
     }
 }

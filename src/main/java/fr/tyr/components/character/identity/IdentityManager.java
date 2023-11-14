@@ -1,14 +1,14 @@
 package fr.tyr.components.character.identity;
 
+import fr.tyr.components.character.identity.enums.FirstName;
+import fr.tyr.components.character.identity.enums.LastName;
+import fr.tyr.components.character.identity.enums.Origin;
+
 import java.util.Arrays;
 import java.util.Random;
 
 public class IdentityManager {
     static Random rand = new Random();
-    /**
-     * Create a IdentityManager
-     */
-    public IdentityManager(){}
 
     public static Origin generateOrigin(){
         return Origin.valueOf(Arrays.stream(Origin.values()).toList().get(rand.nextInt(0, Arrays.stream(Origin.values()).toList().size())).name());
