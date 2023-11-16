@@ -372,6 +372,21 @@ package components{
                 + cleanName() : String
             }
         }
+        package enums{
+            enum CharacterComponents{
+                ..Fields..
+                - class : Class
+                ..Methods..
+                + getName() : String
+                + getClass() : Class
+                + getComponentKind() : CharacterComponentKind
+            }
+            enum CharacterComponentKind{
+                ..Fields..
+                IDENTITY
+                STYLE
+            }
+        }
 
         class CharacterFactory{
             ..Methods..
@@ -402,6 +417,43 @@ package components{
         class Female extends Character{
             ..Methods..
             + <<create>> Female(position : Vector2D, skin : Skin, hair : Hair, eyes : Eyes, shirt : Shirt, firstName : FirstName, lastName : LastName, age : Integer)
+        }
+    }
+    package violences{
+        package enums{
+            enum Violences{
+                ..Fields..
+                PHYSICAL
+                VERBAL
+                PSYCHOLOGIC
+                SEXUAL
+                ECONOMIC
+            }
+            enum CardsKind{
+                ..Fields..
+                GLOBAL
+                PERSONNAL
+            }
+            enum Acts{
+                ..Fields..
+                description : String
+                ..Methods..
+
+            }
+        }
+        class ViolenceCardManager{
+            ..Fields..
+
+            ..Methods..
+            + pickNewCardPack() : ViolenceCard
+            + pickNewCommonCard() : ViolenceCard
+            + pickNewPersonnalCard() : ViolenceCard
+        }
+        class ViolenceCard extends components.classic.ImageComponent{
+            ..Fields..
+
+            ..Methods..
+
         }
     }
 }
@@ -667,5 +719,14 @@ components.character.Male "1" o---> "1\n- beard" components.character.style.Bear
 components.character.Character "1" o---> "1\n- firstname" components.character.identity.FirstName
 components.character.Character "1" o---> "1\n- lastname" components.character.identity.LastName
 components.character.CharacterFactory ..> components.character.identity.IdentityManager : <<uses>>
+
+components.violences.ViolenceCardManager "1" o-> "5\n-cards" components.violences.ViolenceCard
+components.violences.ViolenceCard "1" o--> "1\n-act" components.violences.enums.Acts
+
+components.violences.enums.Acts "1" o--> "1\n-violenceKind" components.violences.enums.Violences
+components.violences.enums.Acts "1" o--> "1\n-violenceKind" components.violences.enums.CardsKind
+components.violences.enums.Acts "1" o---> "1\n-violenceTarget" components.character.enums.CharacterComponents
+
+components.character.enums.CharacterComponents "1" o-> "1\n- componentKind" components.character.enums.CharacterComponentKind
 
 @enduml
