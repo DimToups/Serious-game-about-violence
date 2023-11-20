@@ -170,24 +170,101 @@ package components{
     }
     package character{
         package style{
-            enum HairColor{
-                ..Fields..
-                BLACK
-                DARK_BROWN
-                BROWN
-                BLOND
-                GINGER
-                WHITE
-                BLUE
-                PINK
-            }
-            enum EyeColor{
-                ..Fields..
-                BLUE
-                LIGHT_BLUE
-                BROWN
-                GREEN
-                YELLOW
+            package enums{
+                enum HairColor{
+                    ..Fields..
+                    BLACK
+                    DARK_BROWN
+                    BROWN
+                    BLOND
+                    GINGER
+                    WHITE
+                    BLUE
+                    PINK
+                }
+                enum EyeColor{
+                    ..Fields..
+                    BLUE
+                    LIGHT_BLUE
+                    BROWN
+                    GREEN
+                    YELLOW
+                }
+                enum BeardEnum{
+                    ..Fields..
+                    - name : String
+                    - image : Images
+                    ..Methods..
+                    <<create>> BeardEnum(name : String, color : HairColor, image : Images)
+                    + getAllColoredAssets(color : HairColor) : BeardEnum[]
+                    + getAllColoredAssets(color : HairColor, beards : BeardEnum[]) : BeardEnum[]
+                    + getName() : String
+                    + getColor() : HairColor
+                    + getImages() : Images
+                    + getBeardEnum(image : Images) : BeardEnum
+                }
+                enum EyesEnum{
+                    ..Fields..
+                    - name : String
+                    - image : Images
+                    - gender : Boolean
+                    ..Methods..
+                    <<create>> EyesEnum(name : String, color : EyeColor, image : Images)
+                    + getAllColoredAssets(color : EyeColor) : EyesEnum[]
+                    + getAllColoredAssets(color : EyeColor, eyes : EyesEnum[]) : EyesEnum[]
+                    + getAllGenderAssets(gender : Boolean) : EyesEnum[]
+                    + getAllGenderAssets(gender : Boolean, eyes : EyesEnum[]) : EyesEnum[]
+                    + getAllOriginAssets(origin : Origin) : EyesEnum[]
+                    + getAllOriginAssets(origin : Origin, eyes : EyesEnum[]) : EyesEnum[]
+                    + getName() : String
+                    + getColor() : EyeColor
+                    + getImages() : Images
+                    + getGender() : Boolean
+                    + getOrigin() : Origin
+                    + getCommonEyesOrigins() : Origin[] {static}
+                    + getAsianEyesOrigins() : Origin[] {static}
+                    + getEuesEnum(image : Images) : EyesEnum {static}
+                }
+                enum HairEnum{
+                    ..Fields..
+                    - name : String
+                    - image : Images
+                    - gender : Boolean
+                    ..Methods..
+                    <<create>> HairEnum(name : String, color : HairColor, image : Images)
+                    + getAllColoredAssets(color : HairColor) : HairEnum[]
+                    + getAllColoredAssets(color : HairColor, hairs : HairEnum[]) : HairEnum[]
+                    + getAllGenderAssets(gender : Boolean) : HairEnum[]
+                    + getAllGenderAssets(gender : Boolean, hairs : HairEnum[]) : HairEnum[]
+                    + getName() : String
+                    + getColor() : HairColor
+                    + getImages() : Images
+                    + getGender() : Boolean
+                    + getHairEnum(image : Images) : HairEnum
+                }
+                enum ShirtEnum{
+                    ..Fields..
+                    - name : String
+                    - image : Images
+                    ..Methods..
+                    <<create>> ShirtEnum(name : String, image : Images)
+                    + getName() : String
+                    + getImage() : Images
+                    + getShirtEnum(image : Images) : ShirtEnum
+                }
+                enum SkinEnum{
+                    ..Fields..
+                    - name : String
+                    - image : Images
+                    ..Methods..
+                    <<create>> SkinEnum(name : String, image : Images)
+                    + getAllOriginAssets(origin : Origin) : SkinEnum[]
+                    + getAllOriginAssets(origin : Origin, skins : SkinEnum[]) : SkinEnum[]
+                    + getName() : String
+                    + getImage() : Images
+                    + getOrigin() : Origin
+                    + getSkinEnum(image : Images) : SkinEnum
+                }
             }
             class Beard extends components.classic.ImageComponent{
                 ..Methods..
@@ -198,19 +275,6 @@ package components{
                 + getImages() : Images
                 + getColor() : HairColor
                 + getBeardName() : String
-            }
-            enum BeardEnum{
-                ..Fields..
-                - name : String
-                - image : Images
-                ..Methods..
-                <<create>> BeardEnum(name : String, color : HairColor, image : Images)
-                + getAllColoredAssets(color : HairColor) : BeardEnum[]
-                + getAllColoredAssets(color : HairColor, beards : BeardEnum[]) : BeardEnum[]
-                + getName() : String
-                + getColor() : HairColor
-                + getImages() : Images
-                + getBeardEnum(image : Images) : BeardEnum
             }
             class Eyes extends components.classic.ImageComponent{
                 ..Methods..
@@ -223,28 +287,6 @@ package components{
                 + getGender() : Boolean
                 + getOrigins() : Origin[]
             }
-            enum EyesEnum{
-                ..Fields..
-                - name : String
-                - image : Images
-                - gender : Boolean
-                ..Methods..
-                <<create>> EyesEnum(name : String, color : EyeColor, image : Images)
-                + getAllColoredAssets(color : EyeColor) : EyesEnum[]
-                + getAllColoredAssets(color : EyeColor, eyes : EyesEnum[]) : EyesEnum[]
-                + getAllGenderAssets(gender : Boolean) : EyesEnum[]
-                + getAllGenderAssets(gender : Boolean, eyes : EyesEnum[]) : EyesEnum[]
-                + getAllOriginAssets(origin : Origin) : EyesEnum[]
-                + getAllOriginAssets(origin : Origin, eyes : EyesEnum[]) : EyesEnum[]
-                + getName() : String
-                + getColor() : EyeColor
-                + getImages() : Images
-                + getGender() : Boolean
-                + getOrigin() : Origin
-                + getCommonEyesOrigins() : Origin[] {static}
-                + getAsianEyesOrigins() : Origin[] {static}
-                + getEuesEnum(image : Images) : EyesEnum {static}
-            }
             class Hair extends components.classic.ImageComponent{
                 ..Methods..
                 + <<create>> Hair(hair : HairEnum)
@@ -255,23 +297,6 @@ package components{
                 + getImages() : Images
                 + getGender() : Boolean
             }
-            enum HairEnum{
-                ..Fields..
-                - name : String
-                - image : Images
-                - gender : Boolean
-                ..Methods..
-                <<create>> HairEnum(name : String, color : HairColor, image : Images)
-                + getAllColoredAssets(color : HairColor) : HairEnum[]
-                + getAllColoredAssets(color : HairColor, hairs : HairEnum[]) : HairEnum[]
-                + getAllGenderAssets(gender : Boolean) : HairEnum[]
-                + getAllGenderAssets(gender : Boolean, hairs : HairEnum[]) : HairEnum[]
-                + getName() : String
-                + getColor() : HairColor
-                + getImages() : Images
-                + getGender() : Boolean
-                + getHairEnum(image : Images) : HairEnum
-            }
             class Shirt extends components.classic.ImageComponent{
                 ..Methods..
                 + <<create>> Shirt(shirt : ShirtEnum)
@@ -279,16 +304,6 @@ package components{
                 + <<create>> Shirt(shirt : ShirtEnum, position : Vector2D, size : Vecto2D, center : Boolean)
                 + getName() : String
                 + getImages() : Images
-            }
-            enum ShirtEnum{
-                ..Fields..
-                - name : String
-                - image : Images
-                ..Methods..
-                <<create>> ShirtEnum(name : String, image : Images)
-                + getName() : String
-                + getImage() : Images
-                + getShirtEnum(image : Images) : ShirtEnum
             }
             class Skin extends components.classic.ImageComponent{
                 ..Methods..
@@ -298,19 +313,6 @@ package components{
                 + getName() : String
                 + getImage() : Images
                 + getOrigin() : Origin
-            }
-            enum SkinEnum{
-                ..Fields..
-                - name : String
-                - image : Images
-                ..Methods..
-                <<create>> SkinEnum(name : String, image : Images)
-                + getAllOriginAssets(origin : Origin) : SkinEnum[]
-                + getAllOriginAssets(origin : Origin, skins : SkinEnum[]) : SkinEnum[]
-                + getName() : String
-                + getImage() : Images
-                + getOrigin() : Origin
-                + getSkinEnum(image : Images) : SkinEnum
             }
             abstract class StyleManager{
                 ..Methods..
@@ -335,6 +337,33 @@ package components{
         }
 
         package identity{
+            package enums{
+                enum FirstName{
+                    ..Fields..
+                    - firstName : String
+                    - gender : Boolean
+                    ..Methods..
+                    <<create>> FirstName(firstname : String, gender : Boolean, origin : Origin)
+                    + getFirstName() : String
+                    + getGender() : Boolean
+                    + getOrigin() : Origin
+                    + getAllOriginFirstNames(origin : Origin) : FirstName[]
+                    + getAllMaleFirstNames() : FirstName[]
+                    + getAllMaleFirstNames(firstNames : FirstName[]) : FirstName[]
+                    + getAllFemaleFirstNames() : FirstName[]
+                    + getAllFemaleFirstNames(firstNames : FirstName[]) : FirstName[]
+                }
+                enum LastName{
+                    ..Methods..
+                    + getOrigin() : Origin
+                    + getAllOriginLastNames(origin : Origin) : LastName[]
+                    + cleanName() : String
+                }
+                enum Origins{
+                    ..Methods..
+                    + cleanName() : String
+                }
+            }
             class IdentityManager{
                 ..Fields..
                 rand : Random {static}
@@ -345,31 +374,6 @@ package components{
                 + generateFemaleFirstName(origin : Origin) : FirstName {static}
                 + generateLastName(origin : Origin) : LastName {static}
                 + generateAge() : Integer {static}
-            }
-            enum FirstName{
-                ..Fields..
-                - firstName : String
-                - gender : Boolean
-                ..Methods..
-                <<create>> FirstName(firstname : String, gender : Boolean, origin : Origin)
-                + getFirstName() : String
-                + getGender() : Boolean
-                + getOrigin() : Origin
-                + getAllOriginFirstNames(origin : Origin) : FirstName[]
-                + getAllMaleFirstNames() : FirstName[]
-                + getAllMaleFirstNames(firstNames : FirstName[]) : FirstName[]
-                + getAllFemaleFirstNames() : FirstName[]
-                + getAllFemaleFirstNames(firstNames : FirstName[]) : FirstName[]
-            }
-            enum LastName{
-                ..Methods..
-                + getOrigin() : Origin
-                + getAllOriginLastNames(origin : Origin) : LastName[]
-                + cleanName() : String
-            }
-            enum Origins{
-                ..Methods..
-                + cleanName() : String
             }
         }
 
@@ -636,36 +640,36 @@ components.character.style.Hair <.. components.character.style.StyleManager : <<
 components.character.style.Shirt <.. components.character.style.StyleManager : <<uses>>
 components.character.style.Beard <.. components.character.style.MaleStyleManager : <<uses>>
 
-components.character.style.HairEnum "1" o--> "1\n- color" components.character.style.HairColor
-components.character.style.BeardEnum "1" o--> "1\n- color" components.character.style.HairColor
-components.character.style.EyesEnum "1" o--> "1\n- color" components.character.style.EyeColor
-components.character.style.EyesEnum "1" o-> "*\n-origins" components.character.identity.Origins
-components.character.style.SkinEnum "1" o-> "*\n-origins" components.character.identity.Origins
+components.character.style.enums.HairEnum "1" o--> "1\n- color" components.character.style.enums.HairColor
+components.character.style.enums.BeardEnum "1" o--> "1\n- color" components.character.style.enums.HairColor
+components.character.style.enums.EyesEnum "1" o--> "1\n- color" components.character.style.enums.EyeColor
+components.character.style.enums.EyesEnum "1" o-> "*\n-origins" components.character.identity.enums.Origins
+components.character.style.enums.SkinEnum "1" o-> "*\n-origins" components.character.identity.enums.Origins
 
-ressources.images.Images "1\n-image" <---o "1" components.character.style.HairEnum
-ressources.images.Images "1\n-image" <---o "1" components.character.style.BeardEnum
-ressources.images.Images "1\n-image" <---o "1" components.character.style.EyesEnum
-ressources.images.Images "1\n-image" <---o "1" components.character.style.SkinEnum
-ressources.images.Images "1\n-image" <---o "1" components.character.style.ShirtEnum
+ressources.images.Images "1\n-image" <---o "1" components.character.style.enums.HairEnum
+ressources.images.Images "1\n-image" <---o "1" components.character.style.enums.BeardEnum
+ressources.images.Images "1\n-image" <---o "1" components.character.style.enums.EyesEnum
+ressources.images.Images "1\n-image" <---o "1" components.character.style.enums.SkinEnum
+ressources.images.Images "1\n-image" <---o "1" components.character.style.enums.ShirtEnum
 
-components.character.style.Skin "1" o--> "1\n- skin" components.character.style.SkinEnum
-components.character.style.Eyes "1" o--> "1\n- eyes" components.character.style.EyesEnum
-components.character.style.Hair "1" o--> "1\n- hair" components.character.style.HairEnum
-components.character.style.Shirt "1" o--> "1\n- shirt" components.character.style.ShirtEnum
-components.character.style.Beard "1" o--> "1\n- beard" components.character.style.BeardEnum
+components.character.style.Skin "1" o--> "1\n- skin" components.character.style.enums.SkinEnum
+components.character.style.Eyes "1" o--> "1\n- eyes" components.character.style.enums.EyesEnum
+components.character.style.Hair "1" o--> "1\n- hair" components.character.style.enums.HairEnum
+components.character.style.Shirt "1" o--> "1\n- shirt" components.character.style.enums.ShirtEnum
+components.character.style.Beard "1" o--> "1\n- beard" components.character.style.enums.BeardEnum
 
-components.character.identity.IdentityManager ..> components.character.identity.FirstName : <<uses>>
-components.character.identity.IdentityManager ..> components.character.identity.LastName : <<uses>>
-components.character.identity.LastName ..> components.character.identity.Origins : <<uses>>
-components.character.identity.FirstName ..> components.character.identity.Origins : <<uses>>
+components.character.identity.IdentityManager ..> components.character.identity.enums.FirstName : <<uses>>
+components.character.identity.IdentityManager ..> components.character.identity.enums.LastName : <<uses>>
+components.character.identity.enums.LastName ..> components.character.identity.enums.Origins : <<uses>>
+components.character.identity.enums.FirstName ..> components.character.identity.enums.Origins : <<uses>>
 
 components.character.Character "1" o---> "1\n- hair" components.character.style.Hair
 components.character.Character "1" o---> "1\n- eyes" components.character.style.Eyes
 components.character.Character "1" o---> "1\n- skin" components.character.style.Skin
 components.character.Character "1" o---> "1\n- shirt" components.character.style.Shirt
 components.character.Male "1" o---> "1\n- beard" components.character.style.Beard
-components.character.Character "1" o---> "1\n- firstname" components.character.identity.FirstName
-components.character.Character "1" o---> "1\n- lastname" components.character.identity.LastName
+components.character.Character "1" o---> "1\n- firstname" components.character.identity.enums.FirstName
+components.character.Character "1" o---> "1\n- lastname" components.character.identity.enums.LastName
 components.character.CharacterFactory ..> components.character.identity.IdentityManager : <<uses>>
 
 @enduml
