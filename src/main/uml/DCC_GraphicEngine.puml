@@ -438,32 +438,22 @@ package components{
                 ..Fields..
                 description : String
                 ..Methods..
-                + getDescription() : String
-                + getViolenceTarget() : CharacterComponents
-                + getViolenceKind() : Violences
-                + getCardKind() : CardsKind
+
             }
         }
         class ViolenceCardManager{
             ..Fields..
 
             ..Methods..
-            + pickNewCardPack() : ViolenceCard[]
-            + pickNewCard(cardKind : CardsKind) : ViolenceCard
-            + pickNewCard(cardKind : CardsKind, pack : ViolenceCard) : ViolenceCard
-            + pickNewCard(cardKind : CardsKind, violenceKind : Violences) : ViolenceCard
-            + pickNewCard(cardKind : CardsKind, violenceKind : Violences, pack : ViolenceCard) : ViolenceCard
-            + getCards() : ViolenceCard[]
-        }
-        class ViolenceCardFactory{
-            + generateCommonCard() : ViolenceCard
-            + generatePersonalCard() : ViolenceCard
+            + pickNewCardPack() : ViolenceCard
+            + pickNewCommonCard() : ViolenceCard
+            + pickNewPersonnalCard() : ViolenceCard
         }
         class ViolenceCard extends components.classic.ImageComponent{
             ..Fields..
 
             ..Methods..
-            + getAct() : Acts
+
         }
     }
 }
@@ -730,17 +720,12 @@ components.character.Character "1" o---> "1\n- firstname" components.character.i
 components.character.Character "1" o---> "1\n- lastname" components.character.identity.LastName
 components.character.CharacterFactory ..> components.character.identity.IdentityManager : <<uses>>
 
-components.violences.ViolenceCardManager "1" o-> "*\n-cards" components.violences.ViolenceCard
-components.violences.ViolenceCardManager ..> components.violences.ViolenceCardFactory : <<uses>>
-components.violences.ViolenceCardManager ..> components.violences.enums.CardsKind : <<uses>>
-components.violences.ViolenceCardManager ..> components.violences.enums.Violences : <<uses>>
+components.violences.ViolenceCardManager "1" o-> "5\n-cards" components.violences.ViolenceCard
+components.violences.ViolenceCard "1" o--> "1\n-act" components.violences.enums.Acts
 
-components.violences.ViolenceCard <.. components.violences.ViolenceCardFactory : <<uses>>
-components.violences.ViolenceCard "1" o---> "1\n-act" components.violences.enums.Acts
-
-components.violences.enums.Violences "1\n-violenceKind" o--> "1" components.violences.enums.Acts
-components.violences.enums.CardsKind "1\n-cardKind" o--> "1" components.violences.enums.Acts
-components.violences.enums.Acts "1" o--> "1\n-violenceTarget" components.character.enums.CharacterComponents
+components.violences.enums.Acts "1" o--> "1\n-violenceKind" components.violences.enums.Violences
+components.violences.enums.Acts "1" o--> "1\n-violenceKind" components.violences.enums.CardsKind
+components.violences.enums.Acts "1" o---> "1\n-violenceTarget" components.character.enums.CharacterComponents
 
 components.character.enums.CharacterComponents "1" o-> "1\n- componentKind" components.character.enums.CharacterComponentKind
 

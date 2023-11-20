@@ -45,7 +45,7 @@ public class GameEngine {
 
             CharacterFactory cf = new CharacterFactory();
             componentList.add(cf.generateMale(new Vector2D(0,0)));
-            //componentList.add(cf.generateFemale(new Vector2D(0,0)));
+            componentList.add(cf.generateFemale(new Vector2D(0,0)));
         });
         Main.getLogger().info("Scene initialized.");
     }
