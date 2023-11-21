@@ -1,6 +1,7 @@
 package fr.tyr.components.classic;
 
 import fr.tyr.Main;
+import fr.tyr.game.enums.MouseButtons;
 import fr.tyr.resources.images.Images;
 import fr.tyr.tools.STimer;
 import fr.tyr.tools.Vector2D;
@@ -9,7 +10,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Objects;
 
-public abstract class ImageComponent extends GameComponent<BufferedImage> {
+public class ImageComponent extends GameComponent<BufferedImage> {
 
     private final Images imageType;
 
@@ -93,17 +94,42 @@ public abstract class ImageComponent extends GameComponent<BufferedImage> {
      * @param width The width of the crop
      * @param height The height of the crop
      */
-    @Deprecated
-    private void crop(int x, int y, int width, int height) {
-        setFrame(getFrame().getSubimage(x, y, width, height));
-        setSize(new Vector2D(width, height));
+    public void crop(int x, int y, int width, int height) {
+        setFrame(getImage().getCopy().getSubimage(x, y, width, height));
+        setSize(new Vector2D(x + width, y + height));
     }
 
     @Override
     public void render(Graphics g) {
         g.drawImage(getFrame(), (int) getPosition().x, (int) getPosition().y, null);
     }
+
     public Images getImage(){
         return this.imageType;
+    }
+
+    @Override
+    public void tick(int aps) {
+
+    }
+
+    @Override
+    public void onClick(MouseButtons button) {
+
+    }
+
+    @Override
+    public void onHover() {
+
+    }
+
+    @Override
+    public void onHoverLost() {
+
+    }
+
+    @Override
+    public void onWindowResized(Vector2D size) {
+
     }
 }

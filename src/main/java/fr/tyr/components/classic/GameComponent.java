@@ -85,6 +85,10 @@ public abstract class GameComponent<T> {
         duration -= 1f / tps;
     }
 
+    public void move(Vector2D target){
+        this.position = target;
+    }
+
     public T getFrame() {
         return frame;
     }

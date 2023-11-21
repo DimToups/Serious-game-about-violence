@@ -67,7 +67,13 @@ public enum Images {
     BEARD_SHORT_WHITE("assets/character/beards/short_white.png", false),
     BEARD_SHORT_GINGER("assets/character/beards/short_ginger.png", false),
     BEARD_SHORT_BLUE("assets/character/beards/short_blue.png", false),
-    BEARD_SHORT_PINK("assets/character/beards/short_pink.png", false);
+    BEARD_SHORT_PINK("assets/character/beards/short_pink.png", false),
+
+    REPUTATION_GAUGE_BACKGROUND("assets/gauges/reputation/background.png", true),
+    REPUTATION_GAUGE_ICON("assets/gauges/reputation/icon.png", true),
+    REPUTATION_GAUGE_PROGRESS("assets/gauges/reputation/progress.png", true),
+    ;
+
     private final String path;
     private final boolean sizeCache;
     private BufferedImage image;

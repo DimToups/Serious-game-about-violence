@@ -26,7 +26,7 @@ public abstract class ComposedComponent extends GameComponent<List<GameComponent
 
     @Override
     public void render(Graphics g) {
-        getFrame().forEach(component -> component.render(g));
+        getFrame().stream().filter(fn -> fn.isVisible() && fn.isRendered()).forEach(component -> component.render(g));
     }
 
     @Override
