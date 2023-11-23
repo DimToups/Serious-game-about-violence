@@ -29,6 +29,8 @@ public class Gauge extends ComposedComponent {
     }
 
     public void setCurrentProgress(int currentProgress) {
+        if(isVertical)
+            progressBar.move(progressBar.getPosition().getRemoved(0, (int) (progressBar.getOriginalSize().y * ((100 - this.currentProgress) / 100D))));
         this.currentProgress = currentProgress;
         int gaugeSize = 100 - currentProgress;
         Main.getLogger().warning("Gauge size: " + gaugeSize);
@@ -41,7 +43,7 @@ public class Gauge extends ComposedComponent {
         if(isVertical){
             int y = (int) (progressBar.getOriginalSize().y * (gaugeSize / 100D));
             progressBar.crop(0, y, (int) progressBar.getOriginalSize().x, (int) progressBar.getOriginalSize().y - y);
-            progressBar.move(getFrame().get(0).getPosition().getAdded(new Vector2D(0, y)));
+            progressBar.move(progressBar.getPosition().getAdded(new Vector2D(0, y)));
         }else{
             int x = (int) (progressBar.getOriginalSize().x * (gaugeSize / 100D));
             progressBar.crop(0, 0, (int) progressBar.getOriginalSize().x - x, (int) progressBar.getOriginalSize().y);
