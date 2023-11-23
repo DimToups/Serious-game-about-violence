@@ -4,10 +4,8 @@ import fr.tyr.Main;
 import fr.tyr.components.classic.ImageComponent;
 import fr.tyr.components.mixed.ComposedComponent;
 import fr.tyr.game.enums.MouseButtons;
-import fr.tyr.resources.images.Images;
 import fr.tyr.tools.Vector2D;
 
-import java.util.List;
 import java.util.Random;
 
 public class Gauge extends ComposedComponent {
@@ -16,14 +14,18 @@ public class Gauge extends ComposedComponent {
     private int currentProgress = 100;
     private final ImageComponent progressBar;
 
-    public Gauge(Vector2D position, boolean isVertical, Images backgroundImage, Vector2D backgroundOffset, Images iconImages, Vector2D iconOffset, Images progressBarImage, Vector2D imageOffset) {
+    public Gauge(Vector2D position, boolean isVertical, ImageComponent progressBar) {
         super(position);
         this.isVertical = isVertical;
-        ImageComponent background = new ImageComponent(backgroundImage, backgroundOffset.getAdded(position));
-        ImageComponent icon = new ImageComponent(iconImages, iconOffset.getAdded(position));
-        progressBar = new ImageComponent(progressBarImage, imageOffset.getAdded(position));
-        setSize(background.getSize());
-        setFrame(List.of(background, icon, progressBar));
+        this.progressBar = progressBar;
+    }
+
+    public ImageComponent getProgressBar() {
+        return progressBar;
+    }
+
+    public int getCurrentProgress() {
+        return currentProgress;
     }
 
     public void setCurrentProgress(int currentProgress) {
@@ -37,13 +39,12 @@ public class Gauge extends ComposedComponent {
         }else
             progressBar.setVisible(true);
         if(isVertical){
-            int y = (int) (getSize().y * (gaugeSize / 100D));
-            progressBar.crop(0, y, (int) getSize().x, (int) getSize().y - y);
-            progressBar.move(getPosition().getAdded(new Vector2D(0, y)));
+            int y = (int) (progressBar.getOriginalSize().y * (gaugeSize / 100D));
+            progressBar.crop(0, y, (int) progressBar.getOriginalSize().x, (int) progressBar.getOriginalSize().y - y);
+            progressBar.move(getFrame().get(0).getPosition().getAdded(new Vector2D(0, y)));
         }else{
-            int x = (int) (getSize().y * (gaugeSize / 100D));
-            progressBar.crop(x, 0, (int) getSize().x - x, (int) getSize().y);
-            progressBar.move(getPosition().getAdded(new Vector2D(x, 0)));
+            int x = (int) (progressBar.getOriginalSize().x * (gaugeSize / 100D));
+            progressBar.crop(0, 0, (int) progressBar.getOriginalSize().x - x, (int) progressBar.getOriginalSize().y);
         }
     }
 

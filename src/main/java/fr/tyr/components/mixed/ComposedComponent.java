@@ -1,5 +1,6 @@
 package fr.tyr.components.mixed;
 
+import fr.tyr.Main;
 import fr.tyr.components.classic.GameComponent;
 import fr.tyr.game.enums.MouseButtons;
 import fr.tyr.tools.Vector2D;
@@ -20,6 +21,51 @@ public abstract class ComposedComponent extends GameComponent<List<GameComponent
     }
 
     @Override
+    public void setFrame(List<GameComponent<?>> frame) {
+        super.setFrame(frame);
+//        for(GameComponent<?> component: frame){
+//            if(component.getPosition().x < getPosition().x){
+//                Main.getLogger().severe("Component %d is out of bounds (x < 0)".formatted(frame.indexOf(component)));
+//                for(GameComponent<?> component1: frame){
+//                    Main.getLogger().severe("Component %d is at %s".formatted(frame.indexOf(component1), component1.getPosition()));
+//                    component1.move(component1.getPosition().getAdded(new Vector2D(getPosition().x - component.getPosition().x, 0)));
+//                    Main.getLogger().severe("Component %d moved to %s".formatted(frame.indexOf(component1), component1.getPosition()));
+//                }
+//            }
+//            if(component.getPosition().y < getPosition().y){
+//                Main.getLogger().severe("Component %d is out of bounds (y < 0)".formatted(frame.indexOf(component)));
+//                for(GameComponent<?> component1: frame){
+//                    Main.getLogger().severe("Component %d is at %s".formatted(frame.indexOf(component1), component1.getPosition()));
+//                    component1.move(component1.getPosition().getAdded(new Vector2D(0, getPosition().y - component.getPosition().y)));
+//                    Main.getLogger().severe("Component %d moved to %s".formatted(frame.indexOf(component1), component1.getPosition()));
+//                }
+//            }
+//        }
+        for(GameComponent<?> component: frame){
+            if(component.getPosition().x < getPosition().x){
+                Vector2D relativePosition = new Vector2D(getPosition().x - component.getPosition().x, 0);
+                for(GameComponent<?> component1: frame)
+                    component1.move(component1.getPosition().getAdded(relativePosition));
+            }
+            if(component.getPosition().y < getPosition().y){
+                Vector2D relativePosition = new Vector2D(0, getPosition().y - component.getPosition().y);
+                for(GameComponent<?> component1: frame)
+                    component1.move(component1.getPosition().getAdded(relativePosition));
+            }
+        }
+        int sizeX = 0, sizeY = 0;
+        for(GameComponent<?> component: getFrame()){
+            if(component.getPosition().x + component.getSize().x > sizeX){
+                sizeX = (int) (component.getPosition().x + component.getSize().x);
+            }
+            if(component.getPosition().y + component.getSize().y > sizeY){
+                sizeY = (int) (component.getPosition().y + component.getSize().y);
+            }
+        }
+        setSize(new Vector2D(sizeX, sizeY).getRemoved(getPosition()));
+    }
+
+    @Override
     public void move(int tps){
         getFrame().forEach(component -> component.move(tps));
     }
@@ -27,6 +73,8 @@ public abstract class ComposedComponent extends GameComponent<List<GameComponent
     @Override
     public void render(Graphics g) {
         getFrame().stream().filter(fn -> fn.isVisible() && fn.isRendered()).forEach(component -> component.render(g));
+//        g.setColor(Color.RED);
+//        g.drawRect((int) getPosition().x, (int) getPosition().y, (int) getSize().x, (int) getSize().y);
     }
 
     @Override

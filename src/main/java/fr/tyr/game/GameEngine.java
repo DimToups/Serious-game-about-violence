@@ -5,6 +5,8 @@ import fr.tyr.components.character.CharacterFactory;
 import fr.tyr.components.character.Male;
 import fr.tyr.components.classic.GameComponent;
 import fr.tyr.components.gauges.Gauge;
+import fr.tyr.components.gauges.ReputationGauge;
+import fr.tyr.components.gauges.TimeGauge;
 import fr.tyr.components.sample.*;
 import fr.tyr.resources.images.Images;
 import fr.tyr.tools.Vector2D;
@@ -45,18 +47,12 @@ public class GameEngine {
 //            componentList.add(new SampleAnimatedImageComponent(new Vector2D(300, 300)));
 //            componentList.add(new SampleAnimatedTextComponent(new Vector2D(400, 400)));
 
-            CharacterFactory cf = new CharacterFactory();
-            componentList.add(cf.generateMale(new Vector2D(0,0)));
-            componentList.add(cf.generateFemale(new Vector2D(0,0)));
+//            CharacterFactory cf = new CharacterFactory();
+//            componentList.add(cf.generateMale(new Vector2D(0,0)));
+//            componentList.add(cf.generateFemale(new Vector2D(0,0)));
 
-            componentList.add(new Gauge(new Vector2D(300, 200),
-                    true,
-                    Images.REPUTATION_GAUGE_BACKGROUND,
-                    new Vector2D(0, 0),
-                    Images.REPUTATION_GAUGE_ICON,
-                    new Vector2D(-25, 350),
-                    Images.REPUTATION_GAUGE_PROGRESS,
-                    new Vector2D(0, 0)));
+            componentList.add(new ReputationGauge(new Vector2D(500, 200)));
+            componentList.add(new TimeGauge(new Vector2D(700, 200)));
         });
         Main.getLogger().info("Scene initialized.");
     }

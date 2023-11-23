@@ -12,7 +12,8 @@ import java.util.Objects;
 
 public class ImageComponent extends GameComponent<BufferedImage> {
 
-    private final Images imageType;
+    private Images imageType;
+    private Vector2D originalSize;
 
     /**
      * Create a new image component with the given image
@@ -30,8 +31,12 @@ public class ImageComponent extends GameComponent<BufferedImage> {
     public ImageComponent(Images image, Vector2D position) {
         super(image.getCopy(), position);
         this.imageType = image;
-        if(Objects.nonNull(getFrame()))
+        if(Objects.nonNull(getFrame())){
             setSize(new Vector2D(getFrame().getWidth(), getFrame().getHeight()));
+            this.originalSize = getSize();
+        }
+        else
+            throw new RuntimeException("Unable to load image: %s".formatted(image.name()));
     }
 
     /**
@@ -96,16 +101,28 @@ public class ImageComponent extends GameComponent<BufferedImage> {
      */
     public void crop(int x, int y, int width, int height) {
         setFrame(getImage().getCopy().getSubimage(x, y, width, height));
-        setSize(new Vector2D(x + width, y + height));
+        setSize(new Vector2D(getFrame().getWidth(), getFrame().getHeight()));
     }
 
     @Override
     public void render(Graphics g) {
         g.drawImage(getFrame(), (int) getPosition().x, (int) getPosition().y, null);
+//        g.setColor(Color.RED);
+//        g.drawRect((int) getPosition().x, (int) getPosition().y, (int) getSize().x, (int) getSize().y);
+    }
+
+    public void setImage(Images image){
+        this.imageType = image;
+        setFrame(image.getCopy());
+        setSize(new Vector2D(getFrame().getWidth(), getFrame().getHeight()));
     }
 
     public Images getImage(){
         return this.imageType;
+    }
+
+    public Vector2D getOriginalSize() {
+        return originalSize;
     }
 
     @Override

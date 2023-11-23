@@ -72,6 +72,11 @@ public enum Images {
     REPUTATION_GAUGE_BACKGROUND("assets/gauges/reputation/background.png", true),
     REPUTATION_GAUGE_ICON("assets/gauges/reputation/icon.png", true),
     REPUTATION_GAUGE_PROGRESS("assets/gauges/reputation/progress.png", true),
+    TIME_GAUGE_BACKGROUND("assets/gauges/time/background.png", true),
+    TIME_GAUGE_ICON_MORNING("assets/gauges/time/icon_morning.png", true),
+    TIME_GAUGE_ICON_DAY("assets/gauges/time/icon_day.png", true),
+    TIME_GAUGE_ICON_EVENING("assets/gauges/time/icon_evening.png", true),
+    TIME_GAUGE_PROGRESS("assets/gauges/time/progress.png", true),
     ;
 
     private final String path;

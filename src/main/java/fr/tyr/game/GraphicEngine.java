@@ -94,6 +94,10 @@ public class GraphicEngine extends JPanel {
             boolean isMouseBetween = mouseVector.isBetween(
                     componentPosition,
                     Vector2D.add(componentPosition, componentSize));
+            if(isMouseBetween)
+                Main.getLogger().warning("Click detected on %s (pos: %s, size: %s)".formatted(component.getClass().getSimpleName(), componentPosition, componentSize));
+            else
+                Main.getLogger().warning("Click not detected on %s (pos: %s, size: %s)".formatted(component.getClass().getSimpleName(), componentPosition, componentSize));
             if(isMouseBetween){
                 component.onClick(MouseButtons.from(e.getButton()));
                 return;
