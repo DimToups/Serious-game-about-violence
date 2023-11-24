@@ -211,33 +211,51 @@ package character{
 
     package personality{
         package enums{
-            enum OriginPersonnality{
+            enum PastFacts{
+                ..Fields..
+                - title : String
+                - description : String
+                ..Methods..
+                + getTitle() : String
+                + getDescription() : String
+            }
+            enum OriginPersonality{
                 ..Fields..
                 DISLIKES_ALL_COMMENTS
                 DISLIKES_COMMENTS_ON_ITS_ORIGIN
                 NEUTRAL
                 LIKES_ALL_COMMENTS
             }
-            enum GenderPersonnality{
+            enum GenderPersonality{
                 ..Fields..
                 MYSOGYNIST
                 MISANDRIST
                 NEUTRAL
                 DISLIKES_ALL_COMMENTS
             }
-            enum StylePersonnality{
+            enum StylePersonality{
                 ..Fields..
                 DISLIKES_ALL_COMMENTS
                 DISLIKES_COMMENTS_ON_ITS_STYLE
                 NEUTRAL
                 LIKES_ALL_COMMENTS
             }
-            enum MentalStrengh{
+            enum MentalStrength{
                 ..Fields..
                 WEAK
                 NORMAL
                 BOLD
             }
+        }
+        class PersonalityManager{
+            ..Fields..
+
+            ..Methods..
+            + generatePastFact(origin : Origin, gender : Gender) : PastFact
+            + generateOriginPersonality(pastFact : PastFact, origin : Origin) : OriginPersonality
+            + generateGenderPersonality(pastFact : PastFact, gender : Gender) : GenderPersonality
+            + generateStylePersonality(pastFact : PastFact, ) : StylePersonality
+            + generateMentalStrength() : MentalStrength
         }
     }
 
@@ -309,5 +327,11 @@ character.Male "1" o---> "1\n- beard" character.style.Beard
 character.Character "1" o---> "1\n- firstname" character.identity.enums.FirstName
 character.Character "1" o---> "1\n- lastname" character.identity.enums.LastName
 character.CharacterFactory ..> character.identity.IdentityManager : <<uses>>
+
+character.personality.PersonalityManager ..> character.personality.enums.PastFacts : <<uses>>
+character.personality.PersonalityManager ..> character.personality.enums.OriginPersonality : <<uses>>
+character.personality.PersonalityManager ..> character.personality.enums.GenderPersonality : <<uses>>
+character.personality.PersonalityManager ..> character.personality.enums.StylePersonality : <<uses>>
+character.personality.PersonalityManager ..> character.personality.enums.MentalStrength : <<uses>>
 
 @enduml
