@@ -326,7 +326,16 @@ character.Character "1" o---> "1\n- shirt" character.style.Shirt
 character.Male "1" o---> "1\n- beard" character.style.Beard
 character.Character "1" o---> "1\n- firstname" character.identity.enums.FirstName
 character.Character "1" o---> "1\n- lastname" character.identity.enums.LastName
+
+character.Character "1" o--> "1\n- originPersonality" character.personality.enums.OriginPersonality
+character.Character "1" o--> "1\n- genderPersonality" character.personality.enums.GenderPersonality
+character.Character "1" o--> "1\n- stylePersonality" character.personality.enums.StylePersonality
+character.Character "1" o--> "1\n- mentalStrength" character.personality.enums.MentalStrength
+character.Character "1" o--> "*\n- pastFacts" character.personality.enums.PastFacts
+
 character.CharacterFactory ..> character.identity.IdentityManager : <<uses>>
+character.CharacterFactory ...> character.style.StyleManager : <<uses>>
+character.CharacterFactory .> character.personality.PersonalityManager : <<uses>>
 
 character.personality.PersonalityManager ..> character.personality.enums.PastFacts : <<uses>>
 character.personality.PersonalityManager ..> character.personality.enums.OriginPersonality : <<uses>>
