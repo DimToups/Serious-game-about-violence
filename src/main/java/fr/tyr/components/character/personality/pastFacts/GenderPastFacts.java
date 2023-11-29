@@ -9,8 +9,14 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum GenderPastFacts {
-    SEXUAL_HARASSMENT("Harcèlement sexuel", "", MentalStrength.WEAK, null),
     NONE("Aucun fait", "Rien n'a particulièrement marqué la personne sur son sexe", MentalStrength.NORMAL, null),
+    SEXUAL_HARASSMENT("Harcèlement sexuel", "La personne a vécu un harcèlement sexuel lors d'une partie de sa vie.", MentalStrength.WEAK, null),
+    MALE_SUDDEN_DUMP("Séparation soudaine", "La personne s'est fait quitter par sa partenaire de façon assez soudaine et violente. Il exprime depuis une certaine méfiance envers les femmes", MentalStrength.NORMAL, GenderPersonality.MYSOGYNIST),
+    FEMALE_SUDDEN_DUMP("Séparation soudaine", "La personne s'est fait quitter par son partenaire de façon assez soudaine et violente. Elle exprime depuis une certaine méfiance envers les hommes", MentalStrength.NORMAL, GenderPersonality.MISANDRIST),
+    ACTIVIST("Activiste", "La personne a toujours trouvé insensé les différences faites entre les genres. Il est maintenant un activiste et défend l'égalité des genres.", MentalStrength.BOLD, GenderPersonality.DISLIKES_ALL_COMMENTS),
+    EXTREM_FEMINIST("Féministe extrêmiste", "", MentalStrength.BOLD, GenderPersonality.MISANDRIST, Gender.FEMALE),
+    SOCIAL_OPPRESSION_ON_WOMEN("Oppression sociale sur les femmes", "La personne a grandi auprès de personnes se moquant des femmes. Blagues ou non, la personne pense de la même façon que ses pairs.", MentalStrength.NORMAL, GenderPersonality.MYSOGYNIST),
+    SOCIAL_OPPRESSION_ON_MEN("Oppression sociale sur les femmes", "La personne a vécu auprès de personnes ayant jugé la majorité des hommes comme dégoûtants. La personne a gardé une mauvaise image des hommes.", MentalStrength.NORMAL, GenderPersonality.MISANDRIST),
     ;
     private final String title;
     private final String description;

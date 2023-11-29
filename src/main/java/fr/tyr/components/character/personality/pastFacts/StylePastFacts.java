@@ -6,6 +6,8 @@ import fr.tyr.components.character.personality.enums.StylePersonality;
 
 public enum StylePastFacts {
     NONE("Aucun fait", "Rien n'a particulièrement marqué la personne sur son style", null, MentalStrength.NORMAL),
+    RICH_KID("Enfant riche", "La personne a grandi dans une famille riche et devait bien s'habiller pour convenir à ses parents.", StylePersonality.DISLIKES_COMMENTS_ON_ITS_STYLE, MentalStrength.NORMAL),
+
     ;
     private final String title;
     private final String description;
