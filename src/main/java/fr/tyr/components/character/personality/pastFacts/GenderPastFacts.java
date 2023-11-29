@@ -9,8 +9,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum GenderPastFacts {
-    SEXUAL_HARASSMENT("Harcèlement sexuel", "", MentalStrength.WEAK, null, Gender.UNKNOWN),
-    NONE("Aucun fait", "Rien n'a particulièrement marqué la personne sur son sexe", MentalStrength.NORMAL, null, Gender.UNKNOWN),
+    SEXUAL_HARASSMENT("Harcèlement sexuel", "", MentalStrength.WEAK, null),
+    NONE("Aucun fait", "Rien n'a particulièrement marqué la personne sur son sexe", MentalStrength.NORMAL, null),
     ;
     private final String title;
     private final String description;
@@ -40,13 +40,21 @@ public enum GenderPastFacts {
         return this.concernedGenders;
     }
     public static List<GenderPastFacts> getAllGenderPastFacts(Gender g){
-        return (Arrays.stream(GenderPastFacts.values()).filter(f -> f.getConcernedGenders().contains(g))).toList();
+        List<GenderPastFacts> facts = new ArrayList<>();
+
+        for(GenderPastFacts fact : GenderPastFacts.values()){
+            if(fact.concernedGenders.isEmpty() || fact.concernedGenders.contains(g))
+                facts.add(fact);
+        }
+        return facts;
     }
     public static List<GenderPastFacts> getAllGenderPastFacts(Gender g, List<GenderPastFacts> genderPastFacts){
-        List allGenderPastFacts = new ArrayList();
-        for(GenderPastFacts pastFact : genderPastFacts)
-            if(pastFact.concernedGenders.contains(Gender.UNKNOWN) || pastFact.concernedGenders.contains(g))
-                allGenderPastFacts.add(pastFact);
-        return allGenderPastFacts;
+        List<GenderPastFacts> facts = new ArrayList<>();
+
+        for(GenderPastFacts fact : genderPastFacts){
+            if(fact.concernedGenders.isEmpty() || fact.concernedGenders.contains(g))
+                facts.add(fact);
+        }
+        return facts;
     }
 }

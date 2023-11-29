@@ -4,6 +4,7 @@ import fr.tyr.components.character.identity.enums.Origin;
 import fr.tyr.components.character.personality.enums.MentalStrength;
 import fr.tyr.components.character.personality.enums.OriginPersonality;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -41,9 +42,21 @@ public enum OriginPastFacts {
         return overridingPersonality;
     }
     public static List<OriginPastFacts> getAllOriginPastFacts(Origin o){
-        return (Arrays.stream(OriginPastFacts.values()).filter(f -> f.concernedOrigins.contains(o))).toList();
+        List<OriginPastFacts> facts = new ArrayList<>();
+
+        for(OriginPastFacts fact : OriginPastFacts.values()){
+            if(fact.concernedOrigins.isEmpty() || fact.concernedOrigins.contains(o))
+                facts.add(fact);
+        }
+        return facts;
     }
     public static List<OriginPastFacts> getAllOriginPastFacts(Origin o, List<OriginPastFacts> originPastFacts){
-        return (originPastFacts.stream().filter(f -> f.concernedOrigins.contains(o))).toList();
+        List<OriginPastFacts> facts = new ArrayList<>();
+
+        for(OriginPastFacts fact : originPastFacts){
+            if(fact.concernedOrigins.isEmpty() || fact.concernedOrigins.contains(o))
+                facts.add(fact);
+        }
+        return facts;
     }
 }
