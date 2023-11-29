@@ -10,7 +10,7 @@ import java.util.List;
 
 public enum GenderPastFacts {
     SEXUAL_HARASSMENT("Harcèlement sexuel", "", MentalStrength.WEAK, null, Gender.UNKNOWN),
-    NONE("Aucun passé", "Aucun passé en rapport à son sexe", MentalStrength.NORMAL, null, Gender.UNKNOWN)
+    NONE("Aucun fait", "Rien n'a particulièrement marqué la personne sur son sexe", MentalStrength.NORMAL, null, Gender.UNKNOWN),
     ;
     private final String title;
     private final String description;

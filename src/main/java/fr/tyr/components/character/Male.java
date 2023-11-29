@@ -2,6 +2,14 @@ package fr.tyr.components.character;
 
 import fr.tyr.components.character.identity.enums.FirstName;
 import fr.tyr.components.character.identity.enums.LastName;
+import fr.tyr.components.character.personality.enums.GenderPersonality;
+import fr.tyr.components.character.personality.enums.MentalStrength;
+import fr.tyr.components.character.personality.enums.OriginPersonality;
+import fr.tyr.components.character.personality.enums.StylePersonality;
+import fr.tyr.components.character.personality.pastFacts.CommonPastFacts;
+import fr.tyr.components.character.personality.pastFacts.GenderPastFacts;
+import fr.tyr.components.character.personality.pastFacts.OriginPastFacts;
+import fr.tyr.components.character.personality.pastFacts.StylePastFacts;
 import fr.tyr.components.character.style.*;
 import fr.tyr.tools.Vector2D;
 
@@ -19,8 +27,8 @@ public class Male extends Character{
      * @param lastName The Character's LastName
      * @param age The character's age
      */
-    public Male(Vector2D position, Skin skin, Hair hair, Eyes eyes, Beard beard, Shirt shirt, FirstName firstName, LastName lastName, int age) {
-        super(position, skin, hair, eyes, shirt, firstName, lastName, age);
+    public Male(Vector2D position, Skin skin, Hair hair, Eyes eyes, Beard beard, Shirt shirt, FirstName firstName, LastName lastName, int age, CommonPastFacts commonPastFact, OriginPastFacts originPastFact, GenderPastFacts genderPastFact, StylePastFacts stylePastFact, MentalStrength mentalStrength, OriginPersonality originPersonality, GenderPersonality genderPersonality, StylePersonality stylePersonality) {
+        super(position, skin, hair, eyes, shirt, firstName, lastName, age, commonPastFact, originPastFact, genderPastFact, stylePastFact, mentalStrength, originPersonality, genderPersonality, stylePersonality);
         this.beard = beard;
     }
 

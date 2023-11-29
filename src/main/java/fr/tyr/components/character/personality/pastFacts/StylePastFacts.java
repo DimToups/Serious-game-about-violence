@@ -5,6 +5,7 @@ import fr.tyr.components.character.personality.enums.StylePersonality;
 
 
 public enum StylePastFacts {
+    NONE("Aucun fait", "Rien n'a particulièrement marqué la personne sur son style", null, MentalStrength.NORMAL),
     ;
     private final String title;
     private final String description;

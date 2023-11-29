@@ -3,6 +3,7 @@ package fr.tyr.components.character.personality.pastFacts;
 import fr.tyr.components.character.personality.enums.MentalStrength;
 
 public enum CommonPastFacts {
+    NONE("Aucun fait", "Rien n'a particulièrement marqué la personne", MentalStrength.NORMAL),
     ;
     private final String title;
     private final String description;
