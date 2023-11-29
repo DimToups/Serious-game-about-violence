@@ -1,23 +1,27 @@
 package fr.tyr.components.character.personality.pastFacts;
 
 import fr.tyr.components.character.identity.enums.Gender;
+import fr.tyr.components.character.personality.enums.GenderPersonality;
 import fr.tyr.components.character.personality.enums.MentalStrength;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public enum GenderPastFacts {
-    SEXUAL_HARASSMENT("Harcèlement sexuel", "", MentalStrength.WEAK),
-
+    SEXUAL_HARASSMENT("Harcèlement sexuel", "", MentalStrength.WEAK, null, Gender.UNKNOWN),
+    NONE("Aucun passé", "Aucun passé en rapport à son sexe", MentalStrength.NORMAL, null, Gender.UNKNOWN)
     ;
     private final String title;
     private final String description;
     private final MentalStrength leaningMentalStrength;
     private final List<Gender> concernedGenders;
-    GenderPastFacts(String title, String description, MentalStrength leaningMentalStrength, Gender... concernedPastFacts){
+    private final GenderPersonality overridingPersonality;
+    GenderPastFacts(String title, String description, MentalStrength leaningMentalStrength, GenderPersonality overridingPersonality, Gender... concernedPastFacts){
         this.title = title;
         this.description = description;
         this.leaningMentalStrength = leaningMentalStrength;
+        this.overridingPersonality = overridingPersonality;
         this.concernedGenders = Arrays.stream(concernedPastFacts).toList();
     }
     public String getTitle(){
@@ -29,6 +33,9 @@ public enum GenderPastFacts {
     public MentalStrength getLeaningMentalStrength(){
         return this.leaningMentalStrength;
     }
+    public GenderPersonality getOverridingPersonality() {
+        return overridingPersonality;
+    }
     public List<Gender> getConcernedGenders(){
         return this.concernedGenders;
     }
@@ -36,6 +43,10 @@ public enum GenderPastFacts {
         return (Arrays.stream(GenderPastFacts.values()).filter(f -> f.getConcernedGenders().contains(g))).toList();
     }
     public static List<GenderPastFacts> getAllGenderPastFacts(Gender g, List<GenderPastFacts> genderPastFacts){
-        return (genderPastFacts.stream().filter(f -> f.getConcernedGenders().contains(g))).toList();
+        List allGenderPastFacts = new ArrayList();
+        for(GenderPastFacts pastFact : genderPastFacts)
+            if(pastFact.concernedGenders.contains(Gender.UNKNOWN) || pastFact.concernedGenders.contains(g))
+                allGenderPastFacts.add(pastFact);
+        return allGenderPastFacts;
     }
 }
