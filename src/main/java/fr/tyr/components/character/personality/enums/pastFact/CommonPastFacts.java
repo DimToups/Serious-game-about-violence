@@ -1,4 +1,4 @@
-package fr.tyr.components.character.personality.enums.pastFacts;
+package fr.tyr.components.character.personality.enums.pastFact;
 
 import fr.tyr.components.character.personality.enums.MentalStrength;
 

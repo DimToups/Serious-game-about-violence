@@ -1,10 +1,11 @@
-package fr.tyr.components.character.personality.enums.thoughts;
+package fr.tyr.components.character.personality.enums.thought;
 
-public enum OriginThoughts {
-    DISLIKES_ALL_COMMENTS,
-    DISLIKES_COMMENTS_ON_ITS_ORIGIN,
+public enum GenderThoughts {
+    MYSOGYNIST,
+    MISANDRIST,
     NEUTRAL,
-    LIKES_ALL_COMMENTS;
+    DISLIKES_ALL_COMMENTS;
+
     /**
      * Returns a clean name of the instance
      * @return A clean name of the instance
