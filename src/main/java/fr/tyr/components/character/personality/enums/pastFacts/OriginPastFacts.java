@@ -1,8 +1,8 @@
-package fr.tyr.components.character.personality.pastFacts;
+package fr.tyr.components.character.personality.enums.pastFacts;
 
 import fr.tyr.components.character.identity.enums.Origin;
 import fr.tyr.components.character.personality.enums.MentalStrength;
-import fr.tyr.components.character.personality.enums.OriginPersonality;
+import fr.tyr.components.character.personality.enums.thoughts.OriginThoughts;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,30 +17,70 @@ public enum OriginPastFacts {
     private final String title;
     private final String description;
     private final MentalStrength leaningMentalStrength;
-    private final OriginPersonality overridingPersonality;
+    private final OriginThoughts overridingThoughts;
     private final List<Origin> concernedOrigins;
-    OriginPastFacts(String title, String description, MentalStrength leaningMentalStrength, OriginPersonality overridingPersonality, Origin... concernedOrigins){
+
+    /**
+     * Create an instance of OriginPastFacts
+     * @param title The past fact's title
+     * @param description The past fact's description
+     * @param leaningMentalStrength The leaning mental strength of the past fact
+     * @param overridingThoughts The overrided origin thoughts
+     * @param concernedOrigins The concerned origins by the past fact
+     */
+    OriginPastFacts(String title, String description, MentalStrength leaningMentalStrength, OriginThoughts overridingThoughts, Origin... concernedOrigins){
         this.title = title;
         this.description = description;
         this.leaningMentalStrength = leaningMentalStrength;
         this.concernedOrigins = Arrays.stream(concernedOrigins).toList();
-        this.overridingPersonality = overridingPersonality;
+        this.overridingThoughts = overridingThoughts;
     }
+
+    /**
+     * Send the past fact's title
+     * @return The past fact's title
+     */
     public String getTitle(){
         return this.title;
     }
+
+    /**
+     * Send the past fact's description
+     * @return The past fact's description
+     */
     public String getDescription(){
         return this.description;
     }
+
+    /**
+     * Send the leaning mental strength of the character
+     * @return The leaning mental strength of the character
+     */
     public MentalStrength getLeaningMentalStrength(){
         return this.leaningMentalStrength;
     }
+
+    /**
+     * Send the concerned origins by the past fact
+     * @return The concerned origins by the past fact
+     */
     public List<Origin> getConcernedOrigins() {
         return this.concernedOrigins;
     }
-    public OriginPersonality getOverridingPersonality() {
-        return overridingPersonality;
+
+    /**
+     * Send the overrrided origin thoughts
+     * @return The overrrided origin thoughts
+     */
+    public OriginThoughts getOverridingThoughts() {
+        return overridingThoughts;
     }
+
+    /**
+     * Send all the past facts from the enum concerning the origin o in the parameters
+     * @param o The origin
+     * @return All the corresponding past facts
+     */
     public static List<OriginPastFacts> getAllOriginPastFacts(Origin o){
         List<OriginPastFacts> facts = new ArrayList<>();
 
@@ -50,6 +90,13 @@ public enum OriginPastFacts {
         }
         return facts;
     }
+
+    /**
+     * Send all the past facts from the list parameter concerning the origin o in the parameters
+     * @param o The origin
+     * @param originPastFacts A list of originPastFacts
+     * @return All the corresponding past facts
+     */
     public static List<OriginPastFacts> getAllOriginPastFacts(Origin o, List<OriginPastFacts> originPastFacts){
         List<OriginPastFacts> facts = new ArrayList<>();
 

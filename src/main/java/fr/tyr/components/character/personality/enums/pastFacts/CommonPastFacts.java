@@ -1,4 +1,4 @@
-package fr.tyr.components.character.personality.pastFacts;
+package fr.tyr.components.character.personality.enums.pastFacts;
 
 import fr.tyr.components.character.personality.enums.MentalStrength;
 
@@ -14,17 +14,39 @@ public enum CommonPastFacts {
     private final String title;
     private final String description;
     private final MentalStrength leaningMentalStrength;
+
+    /**
+     * Create an instance of CommonPastFacts
+     * @param title The title of the past fact
+     * @param description The description of the past fact
+     * @param leaningMentalStrength The leaning mental strength of the character
+     */
     CommonPastFacts(String title, String description, MentalStrength leaningMentalStrength){
         this.title = title;
         this.description = description;
         this.leaningMentalStrength = leaningMentalStrength;
     }
+
+    /**
+     * Send the past fact's title
+     * @return Send The past fact's title
+     */
     public String getTitle(){
         return this.title;
     }
+
+    /**
+     * Send the past fact's description
+     * @return The past fact's description
+     */
     public String getDescription(){
         return this.description;
     }
+
+    /**
+     * Send the past fact's leaning mental strength
+     * @return The past fact's leaning mental strength
+     */
     public MentalStrength getLeaningMentalStrength(){
         return this.leaningMentalStrength;
     }

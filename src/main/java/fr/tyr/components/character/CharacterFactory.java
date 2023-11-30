@@ -5,14 +5,14 @@ import fr.tyr.components.character.identity.IdentityManager;
 import fr.tyr.components.character.identity.enums.Gender;
 import fr.tyr.components.character.identity.enums.Origin;
 import fr.tyr.components.character.personality.PersonalityManager;
-import fr.tyr.components.character.personality.enums.GenderPersonality;
+import fr.tyr.components.character.personality.enums.thoughts.GenderThoughts;
 import fr.tyr.components.character.personality.enums.MentalStrength;
-import fr.tyr.components.character.personality.enums.OriginPersonality;
-import fr.tyr.components.character.personality.enums.StylePersonality;
-import fr.tyr.components.character.personality.pastFacts.CommonPastFacts;
-import fr.tyr.components.character.personality.pastFacts.GenderPastFacts;
-import fr.tyr.components.character.personality.pastFacts.OriginPastFacts;
-import fr.tyr.components.character.personality.pastFacts.StylePastFacts;
+import fr.tyr.components.character.personality.enums.thoughts.OriginThoughts;
+import fr.tyr.components.character.personality.enums.thoughts.StyleThoughts;
+import fr.tyr.components.character.personality.enums.pastFacts.CommonPastFacts;
+import fr.tyr.components.character.personality.enums.pastFacts.GenderPastFacts;
+import fr.tyr.components.character.personality.enums.pastFacts.OriginPastFacts;
+import fr.tyr.components.character.personality.enums.pastFacts.StylePastFacts;
 import fr.tyr.components.character.style.*;
 import fr.tyr.components.character.style.enums.HairColor;
 import fr.tyr.tools.Vector2D;
@@ -41,9 +41,9 @@ public class CharacterFactory {
 
         //Generation of the character's personality
         MentalStrength mentalStrength = pm.generateMentalStrength(cpf, opf, gpf, spf);
-        OriginPersonality op = pm.generateOriginPersonality(opf, origin);
-        GenderPersonality gp = pm.generateGenderPersonality(gpf, Gender.MALE);
-        StylePersonality sp = pm.generateStylePersonality(spf);
+        OriginThoughts op = pm.generateOriginThoughts(opf, origin);
+        GenderThoughts gp = pm.generateGenderThoughts(gpf, Gender.MALE);
+        StyleThoughts sp = pm.generateStyleThoughts(spf);
 
         return new Male(position, MaleStyleManager.generateSkin(origin), msf.generateHair(hairColor), msf.generateEyes(origin), MaleStyleManager.generateBeard(hairColor), MaleStyleManager.generateShirt(), IdentityManager.generateMaleFirstName(origin), IdentityManager.generateLastName(origin), age, cpf, opf, gpf, spf, mentalStrength, op, gp, sp);
     }
@@ -70,9 +70,9 @@ public class CharacterFactory {
 
         //Generation of the character's personality
         MentalStrength mentalStrength = pm.generateMentalStrength(cpf, opf, gpf, spf);
-        OriginPersonality op = pm.generateOriginPersonality(opf, origin);
-        GenderPersonality gp = pm.generateGenderPersonality(gpf, Gender.FEMALE);
-        StylePersonality sp = pm.generateStylePersonality(spf);
+        OriginThoughts op = pm.generateOriginThoughts(opf, origin);
+        GenderThoughts gp = pm.generateGenderThoughts(gpf, Gender.FEMALE);
+        StyleThoughts sp = pm.generateStyleThoughts(spf);
 
         return new Female(position, FemaleStyleManager.generateSkin(origin), fsm.generateHair(hairColor), fsm.generateEyes(origin), FemaleStyleManager.generateShirt(), IdentityManager.generateFemaleFirstName(origin), IdentityManager.generateLastName(origin), age, cpf, opf, gpf, spf, mentalStrength, op, gp, sp);
     }
