@@ -240,18 +240,18 @@ package character{
                     + getAllOriginPastFacts(o : Origin) : OriginPastFacts[]
                     + getAllOriginPastFacts(o : Origin, originPastFacts : OriginPastFacts) : OriginPastFacts[]
                 }
-                enum StylePastFacts{
+                enum SexualOrientationPastFacts{
                     ..Fields..
                     - title : String
                     - description : String
                     - leaningMentalStrength : MentalStrength
-                    - overridingThoughts : StyleThoughts
+                    - overridingThoughts : SexualOrientationThoughts
                     ..Methods..
-                    <<create>> StylePastFacts(title : String, description : String, leaningMentalStrength : MentalStrength, overridingThoughts : StyleThoughts)
+                    <<create>> SexualOrientationPastFacts(title : String, description : String, leaningMentalStrength : MentalStrength, overridingThoughts : SexualOrientationThoughts)
                     + getTitle() : String
                     + getDescription() : String
                     + getLeaningMentalStrength() : MentalStrength
-                    + getOverridingThoughts() : StyleThoughts
+                    + getOverridingThoughts() : SexualOrientationThoughts
                 }
                 enum GenderPastFacts{
                     ..Fields..
@@ -274,29 +274,32 @@ package character{
             package thought{
                 enum OriginThoughts{
                     ..Fields..
-                    DISLIKES_ALL_COMMENTS
-                    DISLIKES_COMMENTS_ON_ITS_ORIGIN
-                    NEUTRAL
-                    LIKES_ALL_COMMENTS
+                    title : String
+                    description : String
                     ..Methods..
+                    <<create>> OriginThoughts(title : String, description : String)
+                    + getTitle() : String
+                    + getDescription() : String
                     + cleanName() : String
                 }
                 enum GenderThoughts{
                     ..Fields..
-                    MYSOGYNIST
-                    MISANDRIST
-                    NEUTRAL
-                    DISLIKES_ALL_COMMENTS
+                    title : String
+                    description : String
                     ..Methods..
+                    <<create>> GenderThoughts(title : String, description : String)
+                    + getTitle() : String
+                    + getDescription() : String
                     + cleanName() : String
                 }
-                enum StyleThoughts{
+                enum SexualOrientationThoughts{
                     ..Fields..
-                    DISLIKES_ALL_COMMENTS
-                    DISLIKES_COMMENTS_ON_ITS_STYLE
-                    NEUTRAL
-                    LIKES_ALL_COMMENTS
+                    title : String
+                    description : String
                     ..Methods..
+                    <<create>> SexualOrientationThoughts(title : String, description : String)
+                    + getTitle() : String
+                    + getDescription() : String
                     + cleanName() : String
                 }
             }
@@ -306,6 +309,13 @@ package character{
                 NORMAL
                 BOLD
             }
+            enum SexualOrientation{
+                ..Fields..
+                STRAIGHT
+                GAY
+                LESBIAN
+                BISEXUAL
+            }
         }
         class PersonalityManager{
             ..Fields..
@@ -314,7 +324,7 @@ package character{
             + generateCommonPastFact() : CommonPastFact
             + generateOriginPastFact(o : Origin) : OriginPastFact
             + generateGenderPastFact(g : Gender) : GenderPastFact
-            + generateStylePastFact() : StylePastFact
+            + generateSexualOrientationPastFact() : SexualOrientationPastFact
             + generateOriginPersonality(pastFact : PastFact, origin : Origin) : OriginPersonality
             + generateGenderPersonality(pastFact : PastFact, gender : Gender) : GenderPersonality
             + generateStylePersonality(pastFact : PastFact) : StylePersonality
@@ -332,7 +342,7 @@ package character{
         ..Fields..
         - age : Integer
         ..Methods..
-        + <<create>> Character(position : Vector2D, skin : Skin, hair : Hair, eyes : Eyes, shirt : Shirt, firstName : FirstName, lastName : LastName, age : Integer, commonPastFact : CommonPastFacts, originPastFact : OriginPastFacts, genderPastFact : GenderPastFacts, stylePastFact : StylePastFacts, mentalStrength MentalStrength, originThoughts : OriginThoughts, genderThoughts : GenderThoughts, styleThoughts : StyleThoughts)
+        + <<create>> Character(position : Vector2D, skin : Skin, hair : Hair, eyes : Eyes, shirt : Shirt, firstName : FirstName, lastName : LastName, age : Integer, commonPastFact : CommonPastFacts, originPastFact : OriginPastFacts, genderPastFact : GenderPastFacts, sexualOrientationPastFact : SexualOrientationPastFacts, mentalStrength MentalStrength, originThoughts : OriginThoughts, genderThoughts : GenderThoughts, sexualOrientationThoughts : SexualOrientationThoughts)
         + getFirstName() : FirstName
         + getLastName() : LastName
         + getHairColor() : HairColor
@@ -345,12 +355,12 @@ package character{
         ..Fields..
         - beard : ImageComponent
         ..Methods..
-        + <<create>> Male(position : Vector2D, skin : Skin, hair : Hair, eyes : Eyes, beard : Beard, shirt : Shirt, firstName : FirstName, lastName : LastName, age : Integer, commonPastFact : CommonPastFacts, originPastFact : OriginPastFacts, genderPastFact : GenderPastFacts, stylePastFact : StylePastFacts, mentalStrength MentalStrength, originThoughts : OriginThoughts, genderThoughts : GenderThoughts, styleThoughts : StyleThoughts)
+        + <<create>> Male(position : Vector2D, skin : Skin, hair : Hair, eyes : Eyes, beard : Beard, shirt : Shirt, firstName : FirstName, lastName : LastName, age : Integer, commonPastFact : CommonPastFacts, originPastFact : OriginPastFacts, genderPastFact : GenderPastFacts, sexualOrientationPastFact : SexualOrientationPastFacts, mentalStrength MentalStrength, originThoughts : OriginThoughts, genderThoughts : GenderThoughts, sexualOrientationThoughts : SexualOrientationThoughts)
         + getBeard() : Beard
     }
     class Female extends Character{
         ..Methods..
-        + <<create>> Female(position : Vector2D, skin : Skin, hair : Hair, eyes : Eyes, shirt : Shirt, firstName : FirstName, lastName : LastName, age : Integer, commonPastFact : CommonPastFacts, originPastFact : OriginPastFacts, genderPastFact : GenderPastFacts, stylePastFact : StylePastFacts, mentalStrength MentalStrength, originThoughts : OriginThoughts, genderThoughts : GenderThoughts, styleThoughts : StyleThoughts)
+        + <<create>> Female(position : Vector2D, skin : Skin, hair : Hair, eyes : Eyes, shirt : Shirt, firstName : FirstName, lastName : LastName, age : Integer, commonPastFact : CommonPastFacts, originPastFact : OriginPastFacts, genderPastFact : GenderPastFacts, sexualOrientationPastFact : SexualOrientationPastFacts, mentalStrength MentalStrength, originThoughts : OriginThoughts, genderThoughts : GenderThoughts, sexualOrientationThoughts : SexualOrientationThoughts)
     }
 }
 
@@ -392,11 +402,11 @@ character.Character "1" o---> "1\n- lastname" character.identity.enums.LastName
 
 character.Character "1" o--> "1\n- originThought" character.personality.enums.thought.OriginThoughts
 character.Character "1" o--> "1\n- genderThought" character.personality.enums.thought.OriginThoughts
-character.Character "1" o--> "1\n- styleThought" character.personality.enums.thought.OriginThoughts
+character.Character "1" o--> "1\n- sexualOrientationThought" character.personality.enums.thought.OriginThoughts
 character.Character "1" o----> "1\n- mentalStrength" character.personality.enums.MentalStrength
 character.Character "1" o----> "1\n- commonPastFact" character.personality.enums.pastFact.CommonPastFacts
 character.Character "1" o----> "1\n- originPastFact" character.personality.enums.pastFact.OriginPastFacts
-character.Character "1" o----> "1\n- stylePastFact" character.personality.enums.pastFact.StylePastFacts
+character.Character "1" o----> "1\n- sexualOrientationPastFact" character.personality.enums.pastFact.SexualOrientationPastFacts
 character.Character "1" o----> "1\n- genderPastFact" character.personality.enums.pastFact.GenderPastFacts
 
 character.CharacterFactory ..> character.identity.IdentityManager : <<uses>>
@@ -405,11 +415,11 @@ character.CharacterFactory .> character.personality.PersonalityManager : <<uses>
 
 character.personality.PersonalityManager ..> character.personality.enums.pastFact.CommonPastFacts : <<uses>>
 character.personality.PersonalityManager ..> character.personality.enums.pastFact.OriginPastFacts : <<uses>>
-character.personality.PersonalityManager ...> character.personality.enums.pastFact.StylePastFacts : <<uses>>
+character.personality.PersonalityManager ...> character.personality.enums.pastFact.SexualOrientationPastFacts : <<uses>>
 character.personality.PersonalityManager ...> character.personality.enums.pastFact.GenderPastFacts : <<uses>>
 character.personality.PersonalityManager ..> character.personality.enums.thought.OriginThoughts : <<uses>>
 character.personality.PersonalityManager ..> character.personality.enums.thought.GenderThoughts : <<uses>>
-character.personality.PersonalityManager ..> character.personality.enums.thought.StyleThoughts : <<uses>>
+character.personality.PersonalityManager ..> character.personality.enums.thought.SexualOrientationThoughts : <<uses>>
 character.personality.PersonalityManager ..> character.personality.enums.MentalStrength : <<uses>>
 
 character.identity.enums.Genders "*\n- concernedGenders" <--o "1" character.personality.enums.thought.GenderThoughts
@@ -418,6 +428,6 @@ character.identity.enums.Origins "*\n- concernedOrigins" <--o "1" character.pers
 character.personality.enums.MentalStrength "1\n- leaningMentalStrength" <--o "1" character.personality.enums.pastFact.CommonPastFacts
 character.personality.enums.MentalStrength "1\n- leaningMentalStrength" <--o "1" character.personality.enums.pastFact.GenderPastFacts
 character.personality.enums.MentalStrength "1\n- leaningMentalStrength" <--o "1" character.personality.enums.pastFact.OriginPastFacts
-character.personality.enums.MentalStrength "1\n- leaningMentalStrength" <--o "1" character.personality.enums.pastFact.StylePastFacts
+character.personality.enums.MentalStrength "1\n- leaningMentalStrength" <--o "1" character.personality.enums.pastFact.SexualOrientationPastFacts
 
 @enduml
