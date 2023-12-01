@@ -5,14 +5,15 @@ import fr.tyr.components.character.identity.IdentityManager;
 import fr.tyr.components.character.identity.enums.Gender;
 import fr.tyr.components.character.identity.enums.Origin;
 import fr.tyr.components.character.personality.PersonalityManager;
+import fr.tyr.components.character.personality.enums.SexualOrientation;
 import fr.tyr.components.character.personality.enums.thought.GenderThoughts;
 import fr.tyr.components.character.personality.enums.MentalStrength;
 import fr.tyr.components.character.personality.enums.thought.OriginThoughts;
-import fr.tyr.components.character.personality.enums.thought.StyleThoughts;
+import fr.tyr.components.character.personality.enums.thought.SexualOrientationThoughts;
 import fr.tyr.components.character.personality.enums.pastFact.CommonPastFacts;
 import fr.tyr.components.character.personality.enums.pastFact.GenderPastFacts;
 import fr.tyr.components.character.personality.enums.pastFact.OriginPastFacts;
-import fr.tyr.components.character.personality.enums.pastFact.StylePastFacts;
+import fr.tyr.components.character.personality.enums.pastFact.SexualOrientationPastFacts;
 import fr.tyr.components.character.style.*;
 import fr.tyr.components.character.style.enums.HairColor;
 import fr.tyr.tools.Vector2D;
@@ -37,15 +38,18 @@ public class CharacterFactory {
         CommonPastFacts cpf = pm.generateCommonPastFact();
         OriginPastFacts opf = pm.generateOriginPastFacts(origin);
         GenderPastFacts gpf = pm.generateGenderPastFact(Gender.MALE);
-        StylePastFacts spf = pm.generateStylePastFact();
+        SexualOrientationPastFacts spf = pm.generateSexualOrientationPastFact();
 
         //Generation of the character's personality
         MentalStrength mentalStrength = pm.generateMentalStrength(cpf, opf, gpf, spf);
-        OriginThoughts op = pm.generateOriginThoughts(opf, origin);
-        GenderThoughts gp = pm.generateGenderThoughts(gpf, Gender.MALE);
-        StyleThoughts sp = pm.generateStyleThoughts(spf);
+        SexualOrientation sexualOrientation = pm.generateSexualOrientation(spf, Gender.MALE);
 
-        return new Male(position, MaleStyleManager.generateSkin(origin), msf.generateHair(hairColor), msf.generateEyes(origin), MaleStyleManager.generateBeard(hairColor), MaleStyleManager.generateShirt(), IdentityManager.generateMaleFirstName(origin), IdentityManager.generateLastName(origin), age, cpf, opf, gpf, spf, mentalStrength, op, gp, sp);
+        //Generation of the character's thoughts
+        OriginThoughts ot = pm.generateOriginThoughts(opf);
+        GenderThoughts gt = pm.generateGenderThoughts(gpf, Gender.MALE);
+        SexualOrientationThoughts sot = pm.generateSexualOrientationThoughts(spf);
+
+        return new Male(position, MaleStyleManager.generateSkin(origin), msf.generateHair(hairColor), msf.generateEyes(origin), MaleStyleManager.generateBeard(hairColor), MaleStyleManager.generateShirt(), IdentityManager.generateMaleFirstName(origin), IdentityManager.generateLastName(origin), age, cpf, opf, gpf, spf, mentalStrength, sexualOrientation, ot, gt, sot);
     }
 
     /**
@@ -58,6 +62,7 @@ public class CharacterFactory {
         FemaleStyleManager fsm = new FemaleStyleManager();
         PersonalityManager pm = new PersonalityManager();
 
+        //Generation of the character's identity
         Origin origin = IdentityManager.generateOrigin();
         int age = IdentityManager.generateAge();
         HairColor hairColor = StyleManager.generateHairColor(age);
@@ -66,14 +71,17 @@ public class CharacterFactory {
         CommonPastFacts cpf = pm.generateCommonPastFact();
         OriginPastFacts opf = pm.generateOriginPastFacts(origin);
         GenderPastFacts gpf = pm.generateGenderPastFact(Gender.FEMALE);
-        StylePastFacts spf = pm.generateStylePastFact();
+        SexualOrientationPastFacts spf = pm.generateSexualOrientationPastFact();
 
         //Generation of the character's personality
         MentalStrength mentalStrength = pm.generateMentalStrength(cpf, opf, gpf, spf);
-        OriginThoughts op = pm.generateOriginThoughts(opf, origin);
-        GenderThoughts gp = pm.generateGenderThoughts(gpf, Gender.FEMALE);
-        StyleThoughts sp = pm.generateStyleThoughts(spf);
+        SexualOrientation sexualOrientation = pm.generateSexualOrientation(spf, Gender.FEMALE);
 
-        return new Female(position, FemaleStyleManager.generateSkin(origin), fsm.generateHair(hairColor), fsm.generateEyes(origin), FemaleStyleManager.generateShirt(), IdentityManager.generateFemaleFirstName(origin), IdentityManager.generateLastName(origin), age, cpf, opf, gpf, spf, mentalStrength, op, gp, sp);
+        //Generation of the character's thoughts
+        OriginThoughts ot = pm.generateOriginThoughts(opf);
+        GenderThoughts gt = pm.generateGenderThoughts(gpf, Gender.FEMALE);
+        SexualOrientationThoughts sot = pm.generateSexualOrientationThoughts(spf);
+
+        return new Female(position, FemaleStyleManager.generateSkin(origin), fsm.generateHair(hairColor), fsm.generateEyes(origin), FemaleStyleManager.generateShirt(), IdentityManager.generateFemaleFirstName(origin), IdentityManager.generateLastName(origin), age, cpf, opf, gpf, spf, mentalStrength, sexualOrientation, ot, gt, sot);
     }
 }

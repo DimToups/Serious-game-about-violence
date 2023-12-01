@@ -1,9 +1,8 @@
 package fr.tyr.components.character.personality.enums.thought;
 
 
-public enum StyleThoughts {
+public enum SexualOrientationThoughts {
     DISLIKES_ALL_COMMENTS,
-    DISLIKES_COMMENTS_ON_ITS_STYLE,
     NEUTRAL,
     LIKES_ALL_COMMENTS;
     /**

@@ -1,18 +1,19 @@
 package fr.tyr.components.character.personality.enums.pastFact;
 
 import fr.tyr.components.character.personality.enums.MentalStrength;
-import fr.tyr.components.character.personality.enums.thought.StyleThoughts;
+import fr.tyr.components.character.personality.enums.SexualOrientation;
+import fr.tyr.components.character.personality.enums.thought.SexualOrientationThoughts;
 
 
-public enum StylePastFacts {
-    NONE("Aucun fait", "Rien n'a particulièrement marqué la personne sur son style", null, MentalStrength.NORMAL),
-    RICH_KID("Enfant riche", "La personne a grandi dans une famille riche et devait bien s'habiller pour convenir à ses parents.", StyleThoughts.DISLIKES_COMMENTS_ON_ITS_STYLE, MentalStrength.NORMAL),
-
+public enum SexualOrientationPastFacts {
+    NONE("Aucun fait", "Rien n'a particulièrement marqué la personne sur son orientation sexuelle.", null, MentalStrength.NORMAL, null),
+    HOMOPHOBIC_FAMILY("Famille homophobique", "La personne a grandi dans une famille peu ouverte d'esprit. Elle ne s'est posée aucune question sur sa sexualité de peur du jugement de sa famille.", null, MentalStrength.NORMAL, SexualOrientation.STRAIGHT),
     ;
     private final String title;
     private final String description;
     private final MentalStrength leaningMentalStrength;
-    private final StyleThoughts overridingThoughts;
+    private final SexualOrientationThoughts overridingThoughts;
+    private final SexualOrientation overridingSexualOrientation;
 
     /**
      * Create an instance of StylePastFacts
@@ -20,12 +21,14 @@ public enum StylePastFacts {
      * @param description The past fact's description
      * @param overridingThoughts The overrided thoughts of the past fact
      * @param leaningMentalStrength The leaning mental strength of the character
+     * @param overridingSexualOrientation The overrided sexual orientation of the character
      */
-    StylePastFacts(String title, String description, StyleThoughts overridingThoughts, MentalStrength leaningMentalStrength){
+    SexualOrientationPastFacts(String title, String description, SexualOrientationThoughts overridingThoughts, MentalStrength leaningMentalStrength, SexualOrientation overridingSexualOrientation){
         this.title = title;
         this.description = description;
         this.leaningMentalStrength = leaningMentalStrength;
         this.overridingThoughts = overridingThoughts;
+        this.overridingSexualOrientation = overridingSexualOrientation;
     }
 
     /**
@@ -48,7 +51,7 @@ public enum StylePastFacts {
      * Send the overrided thoughts of the past fact
      * @return The overrided thoughts of the past fact
      */
-    public StyleThoughts getOverridingThoughts() {
+    public SexualOrientationThoughts getOverridingThoughts() {
         return overridingThoughts;
     }
 
@@ -58,5 +61,13 @@ public enum StylePastFacts {
      */
     public MentalStrength getLeaningMentalStrength(){
         return this.leaningMentalStrength;
+    }
+
+    /**
+     * Send the overrided sexual orientation of the past fact
+     * @return The overrided sexual orientation of the past fact
+     */
+    public SexualOrientation getOverridingSexualOrientation() {
+        return overridingSexualOrientation;
     }
 }

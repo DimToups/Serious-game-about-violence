@@ -2,14 +2,15 @@ package fr.tyr.components.character;
 
 import fr.tyr.components.character.identity.enums.FirstName;
 import fr.tyr.components.character.identity.enums.LastName;
+import fr.tyr.components.character.personality.enums.SexualOrientation;
 import fr.tyr.components.character.personality.enums.thought.GenderThoughts;
 import fr.tyr.components.character.personality.enums.MentalStrength;
 import fr.tyr.components.character.personality.enums.thought.OriginThoughts;
-import fr.tyr.components.character.personality.enums.thought.StyleThoughts;
+import fr.tyr.components.character.personality.enums.thought.SexualOrientationThoughts;
 import fr.tyr.components.character.personality.enums.pastFact.CommonPastFacts;
 import fr.tyr.components.character.personality.enums.pastFact.GenderPastFacts;
 import fr.tyr.components.character.personality.enums.pastFact.OriginPastFacts;
-import fr.tyr.components.character.personality.enums.pastFact.StylePastFacts;
+import fr.tyr.components.character.personality.enums.pastFact.SexualOrientationPastFacts;
 import fr.tyr.components.character.style.*;
 import fr.tyr.components.character.style.enums.HairColor;
 import fr.tyr.components.mixed.ComposedComponent;
@@ -21,13 +22,16 @@ public abstract class Character extends ComposedComponent{
     private final CommonPastFacts commonPastFact;
     private final OriginPastFacts originPastFact;
     private final GenderPastFacts genderPastFact;
-    private final StylePastFacts stylePastFacts;
+    private final SexualOrientationPastFacts sexualOrientationPastFacts;
+
+    //Thoughts fields
+    private final OriginThoughts originThoughts;
+    private final GenderThoughts genderThoughts;
+    private final SexualOrientationThoughts sexualOrientationThoughts;
 
     //Personality fields
     private final MentalStrength mentalStrength;
-    private final OriginThoughts originThoughts;
-    private final GenderThoughts genderThoughts;
-    private final StyleThoughts styleThoughts;
+    private final SexualOrientation sexualOrientation;
 
     //Identity fields
     private final FirstName firstName;
@@ -58,9 +62,9 @@ public abstract class Character extends ComposedComponent{
      * @param mentalStrength The character's mentalStrength
      * @param originThoughts The character's thoughts on origins
      * @param genderThoughts The character's thoughts on genders
-     * @param styleThoughts The character's thoughts on style
+     * @param sexualOrientationThoughts The character's thoughts on style
      */
-    public Character(Vector2D position, Skin skin, Hair hair, Eyes eyes, Shirt shirt, FirstName firstName, LastName lastName, int age, CommonPastFacts commonPastFact, OriginPastFacts originPastFact, GenderPastFacts genderPastFact, StylePastFacts stylePastFact, MentalStrength mentalStrength, OriginThoughts originThoughts, GenderThoughts genderThoughts, StyleThoughts styleThoughts) {
+    public Character(Vector2D position, Skin skin, Hair hair, Eyes eyes, Shirt shirt, FirstName firstName, LastName lastName, int age, CommonPastFacts commonPastFact, OriginPastFacts originPastFact, GenderPastFacts genderPastFact, SexualOrientationPastFacts stylePastFact, MentalStrength mentalStrength, SexualOrientation sexualOrientation, OriginThoughts originThoughts, GenderThoughts genderThoughts, SexualOrientationThoughts sexualOrientationThoughts) {
         super(position, skin, hair, eyes, shirt);
 
         //Attribution of the character's chosen style in its fields
@@ -78,13 +82,16 @@ public abstract class Character extends ComposedComponent{
         this.commonPastFact = commonPastFact;
         this.originPastFact = originPastFact;
         this.genderPastFact = genderPastFact;
-        this.stylePastFacts = stylePastFact;
+        this.sexualOrientationPastFacts = stylePastFact;
 
         //Attribution of the character's personality
         this.mentalStrength = mentalStrength;
+        this.sexualOrientation = sexualOrientation;
+
+        //Attribution of the character's thoughts
         this.originThoughts = originThoughts;
         this.genderThoughts = genderThoughts;
-        this.styleThoughts = styleThoughts;
+        this.sexualOrientationThoughts = sexualOrientationThoughts;
     }
 
     /**
@@ -179,8 +186,8 @@ public abstract class Character extends ComposedComponent{
      * Send the character's style based past fact
      * @return The character's style based past fact
      */
-    public StylePastFacts getStylePastFacts() {
-        return stylePastFacts;
+    public SexualOrientationPastFacts getStylePastFacts() {
+        return sexualOrientationPastFacts;
     }
 
     /**
@@ -192,10 +199,18 @@ public abstract class Character extends ComposedComponent{
     }
 
     /**
+     * Send the character's sexual orientation
+     * @return The character's sexual orientation
+     */
+    public SexualOrientation getSexualOrientation() {
+        return sexualOrientation;
+    }
+
+    /**
      * Send the Character's thoughts on origins
      * @return The Character's thoughts on origins
      */
-    public OriginThoughts getOriginPersonality() {
+    public OriginThoughts getOriginThoughts() {
         return originThoughts;
     }
 
@@ -203,7 +218,7 @@ public abstract class Character extends ComposedComponent{
      * Send the Character's thoughts on genders
      * @return The Character's thoughts on genders
      */
-    public GenderThoughts getGenderPersonality() {
+    public GenderThoughts getGenderThoughts() {
         return genderThoughts;
     }
 
@@ -211,7 +226,7 @@ public abstract class Character extends ComposedComponent{
      * Send the Character's thoughts on style
      * @return The Character's thoughts on style
      */
-    public StyleThoughts getStylePersonality() {
-        return styleThoughts;
+    public SexualOrientationThoughts getSexualOrientationThoughts() {
+        return sexualOrientationThoughts;
     }
 }

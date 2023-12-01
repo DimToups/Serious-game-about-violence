@@ -5,11 +5,11 @@ import fr.tyr.components.character.identity.enums.Origin;
 import fr.tyr.components.character.personality.enums.*;
 import fr.tyr.components.character.personality.enums.thought.GenderThoughts;
 import fr.tyr.components.character.personality.enums.thought.OriginThoughts;
-import fr.tyr.components.character.personality.enums.thought.StyleThoughts;
+import fr.tyr.components.character.personality.enums.thought.SexualOrientationThoughts;
 import fr.tyr.components.character.personality.enums.pastFact.CommonPastFacts;
 import fr.tyr.components.character.personality.enums.pastFact.GenderPastFacts;
 import fr.tyr.components.character.personality.enums.pastFact.OriginPastFacts;
-import fr.tyr.components.character.personality.enums.pastFact.StylePastFacts;
+import fr.tyr.components.character.personality.enums.pastFact.SexualOrientationPastFacts;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -66,9 +66,9 @@ public class PersonalityManager {
      * Generate a style based past fact for the character
      * @return A style based past fact
      */
-    public StylePastFacts generateStylePastFact(){
-        List<StylePastFacts> values = Arrays.stream(StylePastFacts.values()).toList();
-        return StylePastFacts.valueOf(values.get(rand.nextInt(0, values.size())).name());
+    public SexualOrientationPastFacts generateSexualOrientationPastFact(){
+        List<SexualOrientationPastFacts> values = Arrays.stream(SexualOrientationPastFacts.values()).toList();
+        return SexualOrientationPastFacts.valueOf(values.get(rand.nextInt(0, values.size())).name());
     }
 
     /**
@@ -79,7 +79,7 @@ public class PersonalityManager {
      * @param styleFact The character's style based past fact
      * @return The character's mental strength
      */
-    public MentalStrength generateMentalStrength(CommonPastFacts commonFact, OriginPastFacts originFact, GenderPastFacts genderFact, StylePastFacts styleFact){
+    public MentalStrength generateMentalStrength(CommonPastFacts commonFact, OriginPastFacts originFact, GenderPastFacts genderFact, SexualOrientationPastFacts styleFact){
         ArrayList<MentalStrength> leaningMentalStrength = new ArrayList<>(4);
         leaningMentalStrength.add(commonFact.getLeaningMentalStrength());
         leaningMentalStrength.add(originFact.getLeaningMentalStrength());
@@ -105,14 +105,36 @@ public class PersonalityManager {
         else
             return MentalStrength.NORMAL;
     }
+    public SexualOrientation generateSexualOrientation(SexualOrientationPastFacts fact, Gender gender){
+        if(fact.getOverridingSexualOrientation() != null)
+            return fact.getOverridingSexualOrientation();
 
+        int orientation = rand.nextInt(0,100);
+        if(gender == Gender.MALE){
+            if (orientation < 89)
+                return SexualOrientation.STRAIGHT;
+            else if (orientation < 96)
+                return SexualOrientation.GAY;
+            else
+                return SexualOrientation.BISEXUAL;
+        }
+        else if(gender == Gender.FEMALE){
+            if (orientation < 93)
+                return SexualOrientation.STRAIGHT;
+            else if (orientation < 96)
+                return SexualOrientation.GAY;
+            else
+                return SexualOrientation.BISEXUAL;
+        }
+        else
+            return SexualOrientation.BISEXUAL;
+    }
     /**
      * Generate the character's thoughts on origins
      * @param pastFact An overriding past fact
-     * @param origin the character's origin
      * @return The character's thoughts on origins
      */
-    public OriginThoughts generateOriginThoughts(OriginPastFacts pastFact, Origin origin){
+    public OriginThoughts generateOriginThoughts(OriginPastFacts pastFact){
         if(pastFact.getOverridingThoughts() != null){
             return pastFact.getOverridingThoughts();
         }
@@ -166,22 +188,20 @@ public class PersonalityManager {
     }
 
     /**
-     * Generate the character's thoughts on style
+     * Generate the character's thoughts on sexual orientations
      * @param pastFact An overriding past fact
-     * @return The character's thoughts on style
+     * @return The character's thoughts on sexual orientations
      */
-    public StyleThoughts generateStyleThoughts(StylePastFacts pastFact){
+    public SexualOrientationThoughts generateSexualOrientationThoughts(SexualOrientationPastFacts pastFact){
         if(pastFact.getOverridingThoughts() != null)
             return pastFact.getOverridingThoughts();
 
         int Thoughts = rand.nextInt(0,20);
-        if(Thoughts < 5)
-            return StyleThoughts.DISLIKES_ALL_COMMENTS;
-        else if (Thoughts < 13)
-            return StyleThoughts.DISLIKES_COMMENTS_ON_ITS_STYLE;
-        else if (Thoughts < 17)
-            return StyleThoughts.NEUTRAL;
+        if(Thoughts < 12)
+            return SexualOrientationThoughts.DISLIKES_ALL_COMMENTS;
+        else if (Thoughts < 15)
+            return SexualOrientationThoughts.NEUTRAL;
         else
-            return StyleThoughts.LIKES_ALL_COMMENTS;
+            return SexualOrientationThoughts.LIKES_ALL_COMMENTS;
     }
 }
