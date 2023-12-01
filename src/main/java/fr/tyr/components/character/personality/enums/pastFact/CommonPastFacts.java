@@ -3,7 +3,7 @@ package fr.tyr.components.character.personality.enums.pastFact;
 import fr.tyr.components.character.personality.enums.MentalStrength;
 
 public enum CommonPastFacts {
-    NONE("Aucun fait", "Rien n'a particulièrement marqué la personne", MentalStrength.NORMAL),
+    NONE("Aucun fait", "Rien n'a particulièrement marqué la personne.", MentalStrength.NORMAL),
     LOST_FATHER("Père perdu", "La personne a perdu son père assez jeune. L'absence de figure paternelle l'a marquée à vie.", MentalStrength.WEAK),
     LOST_MOTHER("Mère perdu", "La personne a perdu sa mère assez jeune. L'absence de figure maternelle l'a marquée à vie.", MentalStrength.WEAK),
     HARASSMENT("Harcèlement", "La personne a subi du harcèlement pour une raison qui l'échappe. Elle peut avoir tendance à se replier sur elle-même.", MentalStrength.WEAK),

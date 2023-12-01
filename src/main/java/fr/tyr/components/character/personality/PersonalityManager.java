@@ -167,21 +167,21 @@ public class PersonalityManager {
             if(Thoughts < 10)
                 return GenderThoughts.DISLIKES_ALL_COMMENTS;
             else if (Thoughts < 14)
-                return GenderThoughts.MISANDRIST;
+                return GenderThoughts.MISANDRE;
             else if(Thoughts < 19)
                 return GenderThoughts.NEUTRAL;
             else
-                return GenderThoughts.MYSOGYNIST;
+                return GenderThoughts.MISOGYNIST;
         }
         else if (gender == Gender.MALE){
             if(Thoughts < 7)
                 return GenderThoughts.DISLIKES_ALL_COMMENTS;
             else if (Thoughts < 9)
-                return GenderThoughts.MISANDRIST;
+                return GenderThoughts.MISANDRE;
             else if(Thoughts < 16)
                 return GenderThoughts.NEUTRAL;
             else
-                return GenderThoughts.MYSOGYNIST;
+                return GenderThoughts.MISOGYNIST;
         }
         else
             return null;
@@ -196,11 +196,13 @@ public class PersonalityManager {
         if(pastFact.getOverridingThoughts() != null)
             return pastFact.getOverridingThoughts();
 
-        int Thoughts = rand.nextInt(0,20);
-        if(Thoughts < 12)
+        int thoughts = rand.nextInt(0,20);
+        if(thoughts < 10)
             return SexualOrientationThoughts.DISLIKES_ALL_COMMENTS;
-        else if (Thoughts < 15)
+        else if (thoughts < 14)
             return SexualOrientationThoughts.NEUTRAL;
+        else if(thoughts < 19)
+            return SexualOrientationThoughts.HOMOPHOBIC;
         else
             return SexualOrientationThoughts.LIKES_ALL_COMMENTS;
     }
