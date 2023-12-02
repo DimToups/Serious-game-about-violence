@@ -43,9 +43,9 @@ public class GameEngine {
             componentList.add(new SampleAnimatedImageComponent(new Vector2D(300, 300)));
             componentList.add(new SampleAnimatedTextComponent(new Vector2D(400, 400)));
 
-            CharacterFactory cf = new CharacterFactory();
+            //CharacterFactory cf = new CharacterFactory();
             //componentList.add(cf.generateMale(new Vector2D(0,0)));
-            componentList.add(cf.generateFemale(new Vector2D(0,0)));
+            //componentList.add(cf.generateFemale(new Vector2D(0,0)));
         });
         Main.getLogger().info("Scene initialized.");
     }

@@ -39,19 +39,13 @@ public abstract class Character extends ComposedComponent{
     private final int age;
 
     //Style fields
-    private final Skin skin;
-    private final Hair hair;
-    private final Eyes eyes;
-    private final Shirt shirt;
+    private final CharacterStyle characterStyle;
     private Images special;
 
     /**
      * Create a Character
      * @param position The position of the component
-     * @param skin The character's skin
-     * @param hair The character's hair
-     * @param eyes The character's eyes
-     * @param shirt The character's shirt
+     * @param characterStyle The character's style
      * @param firstName The character's firstname
      * @param lastName The character's lastname
      * @param age The character's age
@@ -64,14 +58,11 @@ public abstract class Character extends ComposedComponent{
      * @param genderThoughts The character's thoughts on genders
      * @param sexualOrientationThoughts The character's thoughts on style
      */
-    public Character(Vector2D position, Skin skin, Hair hair, Eyes eyes, Shirt shirt, FirstName firstName, LastName lastName, int age, CommonPastFacts commonPastFact, OriginPastFacts originPastFact, GenderPastFacts genderPastFact, SexualOrientationPastFacts stylePastFact, MentalStrength mentalStrength, SexualOrientation sexualOrientation, OriginThoughts originThoughts, GenderThoughts genderThoughts, SexualOrientationThoughts sexualOrientationThoughts) {
-        super(position, skin, hair, eyes, shirt);
+    public Character(Vector2D position, CharacterStyle characterStyle, FirstName firstName, LastName lastName, int age, CommonPastFacts commonPastFact, OriginPastFacts originPastFact, GenderPastFacts genderPastFact, SexualOrientationPastFacts stylePastFact, MentalStrength mentalStrength, SexualOrientation sexualOrientation, OriginThoughts originThoughts, GenderThoughts genderThoughts, SexualOrientationThoughts sexualOrientationThoughts) {
+        super(position, characterStyle);
 
         //Attribution of the character's chosen style in its fields
-        this.skin = skin;
-        this.hair = hair;
-        this.eyes = eyes;
-        this.shirt = shirt;
+        this.characterStyle = characterStyle;
 
         //Attribution of the character's identity
         this.firstName = firstName;
@@ -123,39 +114,15 @@ public abstract class Character extends ComposedComponent{
      * @return The Character's HairColor
      */
     public HairColor getHairColor(){
-        return this.hair.getColor();
+        return this.characterStyle.getHair().getColor();
     }
 
     /**
      * Send the Character's Skin
      * @return The Character's Skin
      */
-    public Skin getSkin() {
-        return this.skin;
-    }
-
-    /**
-     * Send the Character's Hair
-     * @return The Character's Hair
-     */
-    public Hair getHair() {
-        return this.hair;
-    }
-
-    /**
-     * Send the Character's Eyes
-     * @return The Character's Eyes
-     */
-    public Eyes getEyes() {
-        return this.eyes;
-    }
-
-    /**
-     * Send the Character's Shirt
-     * @return The Character's Shirt
-     */
-    public Shirt getShirt() {
-        return this.shirt;
+    public CharacterStyle getCharacterStyle(){
+        return this.characterStyle;
     }
 
     /**

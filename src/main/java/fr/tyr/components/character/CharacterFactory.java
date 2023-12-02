@@ -34,6 +34,9 @@ public class CharacterFactory {
         int age = IdentityManager.generateAge();
         HairColor hairColor = StyleManager.generateHairColor(age);
 
+        //Generation of the character's style
+        MaleCharacterStyle maleCharacterStyle = new MaleCharacterStyle(MaleStyleManager.generateBeard(hairColor), msf.generateEyes(origin), msf.generateHair(hairColor), MaleStyleManager.generateShirt(), MaleStyleManager.generateSkin(origin));
+
         //Generation of the character's past
         CommonPastFacts cpf = pm.generateCommonPastFact();
         OriginPastFacts opf = pm.generateOriginPastFacts(origin);
@@ -49,7 +52,7 @@ public class CharacterFactory {
         GenderThoughts gt = pm.generateGenderThoughts(gpf, Gender.MALE);
         SexualOrientationThoughts sot = pm.generateSexualOrientationThoughts(spf);
 
-        return new Male(position, MaleStyleManager.generateSkin(origin), msf.generateHair(hairColor), msf.generateEyes(origin), MaleStyleManager.generateBeard(hairColor), MaleStyleManager.generateShirt(), IdentityManager.generateMaleFirstName(origin), IdentityManager.generateLastName(origin), age, cpf, opf, gpf, spf, mentalStrength, sexualOrientation, ot, gt, sot);
+        return new Male(position, maleCharacterStyle, IdentityManager.generateMaleFirstName(origin), IdentityManager.generateLastName(origin), age, cpf, opf, gpf, spf, mentalStrength, sexualOrientation, ot, gt, sot);
     }
 
     /**
@@ -67,6 +70,9 @@ public class CharacterFactory {
         int age = IdentityManager.generateAge();
         HairColor hairColor = StyleManager.generateHairColor(age);
 
+        //Generation of the character's style
+        CharacterStyle characterStyle = new CharacterStyle(fsm.generateEyes(origin), fsm.generateHair(hairColor), FemaleStyleManager.generateShirt(), FemaleStyleManager.generateSkin(origin));
+
         //Generation of the character's past
         CommonPastFacts cpf = pm.generateCommonPastFact();
         OriginPastFacts opf = pm.generateOriginPastFacts(origin);
@@ -82,6 +88,6 @@ public class CharacterFactory {
         GenderThoughts gt = pm.generateGenderThoughts(gpf, Gender.FEMALE);
         SexualOrientationThoughts sot = pm.generateSexualOrientationThoughts(spf);
 
-        return new Female(position, FemaleStyleManager.generateSkin(origin), fsm.generateHair(hairColor), fsm.generateEyes(origin), FemaleStyleManager.generateShirt(), IdentityManager.generateFemaleFirstName(origin), IdentityManager.generateLastName(origin), age, cpf, opf, gpf, spf, mentalStrength, sexualOrientation, ot, gt, sot);
+        return new Female(position, characterStyle, IdentityManager.generateFemaleFirstName(origin), IdentityManager.generateLastName(origin), age, cpf, opf, gpf, spf, mentalStrength, sexualOrientation, ot, gt, sot);
     }
 }

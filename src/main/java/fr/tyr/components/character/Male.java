@@ -15,29 +15,15 @@ import fr.tyr.components.character.style.*;
 import fr.tyr.tools.Vector2D;
 
 public class Male extends Character{
-    private final Beard beard;
     /**
      * Create a Male Character
      * @param position The position of the component
-     * @param skin The Character's Skin
-     * @param hair The Character's Hair
-     * @param eyes The Character's Eyes
-     * @param beard The Character's Beard
-     * @param shirt The Character's Shirt
+     * @param maleCharacterStyle The Character's style
      * @param firstName The Character's FirstName
      * @param lastName The Character's LastName
      * @param age The character's age
      */
-    public Male(Vector2D position, Skin skin, Hair hair, Eyes eyes, Beard beard, Shirt shirt, FirstName firstName, LastName lastName, int age, CommonPastFacts commonPastFact, OriginPastFacts originPastFact, GenderPastFacts genderPastFact, SexualOrientationPastFacts stylePastFact, MentalStrength mentalStrength, SexualOrientation sexualOrientation, OriginThoughts originThoughts, GenderThoughts genderThoughts, SexualOrientationThoughts sexualOrientationThoughts) {
-        super(position, skin, hair, eyes, shirt, firstName, lastName, age, commonPastFact, originPastFact, genderPastFact, stylePastFact, mentalStrength, sexualOrientation, originThoughts, genderThoughts, sexualOrientationThoughts);
-        this.beard = beard;
-    }
-
-    /**
-     * Send the Character's Beard
-     * @return The Character's Beard
-     */
-    public Beard getBeard() {
-        return beard;
+    public Male(Vector2D position, MaleCharacterStyle maleCharacterStyle, FirstName firstName, LastName lastName, int age, CommonPastFacts commonPastFact, OriginPastFacts originPastFact, GenderPastFacts genderPastFact, SexualOrientationPastFacts stylePastFact, MentalStrength mentalStrength, SexualOrientation sexualOrientation, OriginThoughts originThoughts, GenderThoughts genderThoughts, SexualOrientationThoughts sexualOrientationThoughts) {
+        super(position, maleCharacterStyle, firstName, lastName, age, commonPastFact, originPastFact, genderPastFact, stylePastFact, mentalStrength, sexualOrientation, originThoughts, genderThoughts, sexualOrientationThoughts);
     }
 }
