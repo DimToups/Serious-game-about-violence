@@ -36,6 +36,7 @@ public class CharacterFactory {
 
         //Generation of the character's style
         MaleCharacterStyle maleCharacterStyle = new MaleCharacterStyle(MaleStyleManager.generateBeard(hairColor), msf.generateEyes(origin), msf.generateHair(hairColor), MaleStyleManager.generateShirt(), MaleStyleManager.generateSkin(origin));
+        maleCharacterStyle.assemble();
 
         //Generation of the character's past
         CommonPastFacts cpf = pm.generateCommonPastFact();
@@ -72,6 +73,7 @@ public class CharacterFactory {
 
         //Generation of the character's style
         CharacterStyle characterStyle = new CharacterStyle(fsm.generateEyes(origin), fsm.generateHair(hairColor), FemaleStyleManager.generateShirt(), FemaleStyleManager.generateSkin(origin));
+        characterStyle.assemble();
 
         //Generation of the character's past
         CommonPastFacts cpf = pm.generateCommonPastFact();

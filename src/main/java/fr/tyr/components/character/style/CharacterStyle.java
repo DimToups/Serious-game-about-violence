@@ -1,5 +1,6 @@
 package fr.tyr.components.character.style;
 
+import fr.tyr.components.classic.ImageComponent;
 import fr.tyr.components.mixed.ComposedComponent;
 import fr.tyr.tools.Vector2D;
 
@@ -8,6 +9,7 @@ public class CharacterStyle extends ComposedComponent {
     private final Hair hair;
     private final Shirt shirt;
     private final Skin skin;
+    private ImageComponent additionalComponent;
     /**
      * Create the visual appearance of the character
      * @param eyes The character's eyes
@@ -16,7 +18,23 @@ public class CharacterStyle extends ComposedComponent {
      * @param skin the character's skin
      */
     public CharacterStyle(Eyes eyes, Hair hair, Shirt shirt, Skin skin){
-        super(new Vector2D(), eyes, hair, shirt, skin);
+        super(new Vector2D(), skin, shirt, eyes, hair);
+        this.eyes = eyes;
+        this.hair = hair;
+        this.shirt = shirt;
+        this.skin = skin;
+    }
+    /**
+     * Create the visual appearance of the character
+     * @param eyes The character's eyes
+     * @param hair The character's hair
+     * @param shirt the character's shirt
+     * @param skin the character's skin
+     * @param additionalComponent An additional component of the character
+     */
+    public CharacterStyle(Eyes eyes, Hair hair, Shirt shirt, Skin skin, ImageComponent additionalComponent){
+        super(new Vector2D(), skin, shirt, eyes, hair, additionalComponent);
+        this.additionalComponent = additionalComponent;
         this.eyes = eyes;
         this.hair = hair;
         this.shirt = shirt;
@@ -56,9 +74,23 @@ public class CharacterStyle extends ComposedComponent {
     }
 
     /**
+     * Send the character's additional component
+     * @return The character's additional component
+     */
+    public ImageComponent getAdditionalComponent() {
+        return additionalComponent;
+    }
+
+    /**
      * Assemble the character's components
      */
     public void assemble(){
-
+        this.skin.moveTo(this.getPosition(), 0);
+        this.shirt.moveTo(Vector2D.add(this.skin.getPosition(),
+                new Vector2D((this.skin.getSize().x - this.shirt.getSize().x) / 2, 279)), 1);
+        this.eyes.moveTo(Vector2D.add(this.skin.getPosition(),
+                new Vector2D((this.skin.getSize().x - this.eyes.getSize().x) / 2,98)), 1);
+        this.hair.moveTo(Vector2D.add(this.skin.getPosition(),
+                new Vector2D((this.skin.getSize().x - this.hair.getSize().x) / 2, this.skin.getPosition().y + this.skin.getSize().y - this.hair.getSize().y + 65)), 1);
     }
 }

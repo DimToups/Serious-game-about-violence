@@ -12,13 +12,13 @@ public class MaleCharacterStyle extends CharacterStyle{
      * @param skin the character's skin
      */
     public MaleCharacterStyle(Beard beard, Eyes eyes, Hair hair, Shirt shirt, Skin skin){
-        super(eyes, hair, shirt, skin);
+        super(eyes, hair, shirt, skin, beard);
         this.beard = beard;
     }
 
     /**
      * Send the character's Beard
-     * @return
+     * @return The character's Beard
      */
     public Beard getBeard() {
         return beard;
@@ -31,6 +31,6 @@ public class MaleCharacterStyle extends CharacterStyle{
     public void assemble() {
         super.assemble();
         //Placement of the character's beard
-
+        this.beard.moveTo(super.getHair().getPosition(), 1);
     }
 }
