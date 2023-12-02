@@ -18,7 +18,7 @@ public class FemaleStyleManager extends StyleManager{
     @Override
     public Hair generateHair(HairColor color) {
         try {
-            List<HairEnum> validAssets = HairEnum.getAllGenderAssets(Gender.MALE, HairEnum.getAllColoredAssets(color));
+            List<HairEnum> validAssets = HairEnum.getAllGenderAssets(Gender.FEMALE, HairEnum.getAllColoredAssets(color));
 
             return new Hair(HairEnum.valueOf(validAssets.get(rand.nextInt(0, validAssets.size())).name()));
         }

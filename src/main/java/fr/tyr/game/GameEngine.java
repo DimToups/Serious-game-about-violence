@@ -2,6 +2,7 @@ package fr.tyr.game;
 
 import fr.tyr.Main;
 import fr.tyr.components.character.CharacterFactory;
+import fr.tyr.components.character.Female;
 import fr.tyr.components.character.Male;
 import fr.tyr.components.classic.GameComponent;
 import fr.tyr.components.sample.*;
