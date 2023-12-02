@@ -18,6 +18,11 @@ public enum EyesEnum {
     COMMON_MALE_BROWN("brown", EyeColor.BROWN, Images.EYES_COMMON_MALE_BROWN, Gender.MALE, EyesEnum.getCommonEyesOrigins()),
     COMMON_MALE_GREEN("green", EyeColor.GREEN, Images.EYES_COMMON_MALE_GREEN, Gender.MALE, EyesEnum.getCommonEyesOrigins()),
     COMMON_MALE_YELLOW("yellow", EyeColor.YELLOW, Images.EYES_COMMON_MALE_YELLOW, Gender.MALE, EyesEnum.getCommonEyesOrigins()),
+    ASIAN_MALE_BLUE("Asian Blue", EyeColor.BLUE, Images.EYES_ASIAN_MALE_BLUE, Gender.MALE, EyesEnum.getAsianEyesOrigins()),
+    ASIAN_MALE_LIGHT_BLUE("Asian Light blue", EyeColor.LIGHT_BLUE, Images.EYES_ASIAN_MALE_LIGHT_BLUE, Gender.MALE, EyesEnum.getAsianEyesOrigins()),
+    ASIAN_MALE_BROWN("Asian brown", EyeColor.BROWN, Images.EYES_ASIAN_MALE_BROWN, Gender.MALE, EyesEnum.getAsianEyesOrigins()),
+    ASIAN_MALE_GREEN("Asian green", EyeColor.GREEN, Images.EYES_ASIAN_MALE_GREEN, Gender.MALE, EyesEnum.getAsianEyesOrigins()),
+    ASIAN_MALE_YELLOW("Asian yellow", EyeColor.YELLOW, Images.EYES_ASIAN_MALE_YELLOW, Gender.MALE, EyesEnum.getAsianEyesOrigins()),
     //Female
     COMMON_FEMALE_DOUBLE_BRUSH_BLUE("female blue double brush blue", EyeColor.BLUE, Images.EYES_COMMON_FEMALE_DOUBLE_BRUSH_BLUE, Gender.FEMALE, EyesEnum.getCommonEyesOrigins()),
     COMMON_FEMALE_DOUBLE_BRUSH_LIGHT_BLUE("female blue double brush light blue", EyeColor.LIGHT_BLUE, Images.EYES_COMMON_FEMALE_DOUBLE_BRUSH_LIGHT_BLUE, Gender.FEMALE, EyesEnum.getCommonEyesOrigins()),
@@ -28,7 +33,7 @@ public enum EyesEnum {
     private final EyeColor color;
     private final Images image;
     private final Gender gender;
-    private final ArrayList<Origin> origins;
+    private final List<Origin> origins;
 
     /**
      * Create an EyesEnum instance
@@ -38,7 +43,7 @@ public enum EyesEnum {
      * @param gender The EyesEnum's gender (true for male, false for female)
      * @param origins The EyesEnum's corresponding Origin instance
      */
-    EyesEnum(String name, EyeColor color, Images image, Gender gender, ArrayList<Origin> origins){
+    EyesEnum(String name, EyeColor color, Images image, Gender gender, List<Origin> origins){
         this.name = name;
         this.color = color;
         this.image = image;
@@ -148,7 +153,7 @@ public enum EyesEnum {
      * Send the EyesEnum's Origin
      * @return The EyesEnum's Origin
      */
-    public ArrayList<Origin> getOrigins(){
+    public List<Origin> getOrigins(){
         return origins;
     }
 

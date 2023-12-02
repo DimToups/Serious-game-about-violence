@@ -87,10 +87,10 @@ public class CharacterStyle extends ComposedComponent {
     public void assemble(){
         this.skin.moveTo(this.getPosition(), 0);
         this.shirt.moveTo(Vector2D.add(this.skin.getPosition(),
-                new Vector2D((this.skin.getSize().x - this.shirt.getSize().x) / 2, 279)), 1);
+                new Vector2D((this.skin.getSize().x - this.shirt.getSize().x) / 2,  599 / this.skin.getSize().y * this.shirt.getSize().y)), 1);
         this.eyes.moveTo(Vector2D.add(this.skin.getPosition(),
-                new Vector2D((this.skin.getSize().x - this.eyes.getSize().x) / 2,98)), 1);
+                new Vector2D((this.skin.getSize().x - this.eyes.getSize().x) / 2,400 / this.skin.getSize().y * this.eyes.getSize().y)), 1);
         this.hair.moveTo(Vector2D.add(this.skin.getPosition(),
-                new Vector2D((this.skin.getSize().x - this.hair.getSize().x) / 2, this.skin.getPosition().y + this.skin.getSize().y - this.hair.getSize().y + 65)), 1);
+                new Vector2D((this.skin.getSize().x - this.hair.getSize().x) / 2, this.skin.getPosition().y + this.skin.getSize().y - this.hair.getSize().y + 38 / this.skin.getSize().y * this.hair.getSize().y)), 1);
     }
 }
