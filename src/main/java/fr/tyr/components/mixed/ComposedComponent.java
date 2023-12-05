@@ -1,6 +1,5 @@
 package fr.tyr.components.mixed;
 
-import fr.tyr.Main;
 import fr.tyr.components.classic.GameComponent;
 import fr.tyr.game.enums.MouseButtons;
 import fr.tyr.tools.Vector2D;
@@ -25,19 +24,13 @@ public abstract class ComposedComponent extends GameComponent<List<GameComponent
         super.setFrame(frame);
 //        for(GameComponent<?> component: frame){
 //            if(component.getPosition().x < getPosition().x){
-//                Main.getLogger().severe("Component %d is out of bounds (x < 0)".formatted(frame.indexOf(component)));
 //                for(GameComponent<?> component1: frame){
-//                    Main.getLogger().severe("Component %d is at %s".formatted(frame.indexOf(component1), component1.getPosition()));
 //                    component1.move(component1.getPosition().getAdded(new Vector2D(getPosition().x - component.getPosition().x, 0)));
-//                    Main.getLogger().severe("Component %d moved to %s".formatted(frame.indexOf(component1), component1.getPosition()));
 //                }
 //            }
 //            if(component.getPosition().y < getPosition().y){
-//                Main.getLogger().severe("Component %d is out of bounds (y < 0)".formatted(frame.indexOf(component)));
 //                for(GameComponent<?> component1: frame){
-//                    Main.getLogger().severe("Component %d is at %s".formatted(frame.indexOf(component1), component1.getPosition()));
 //                    component1.move(component1.getPosition().getAdded(new Vector2D(0, getPosition().y - component.getPosition().y)));
-//                    Main.getLogger().severe("Component %d moved to %s".formatted(frame.indexOf(component1), component1.getPosition()));
 //                }
 //            }
 //        }
@@ -55,12 +48,10 @@ public abstract class ComposedComponent extends GameComponent<List<GameComponent
         }
         int sizeX = 0, sizeY = 0;
         for(GameComponent<?> component: getFrame()){
-            if(component.getPosition().x + component.getSize().x > sizeX){
+            if(component.getPosition().x + component.getSize().x > sizeX)
                 sizeX = (int) (component.getPosition().x + component.getSize().x);
-            }
-            if(component.getPosition().y + component.getSize().y > sizeY){
+            if(component.getPosition().y + component.getSize().y > sizeY)
                 sizeY = (int) (component.getPosition().y + component.getSize().y);
-            }
         }
         setSize(new Vector2D(sizeX, sizeY).getRemoved(getPosition()));
     }

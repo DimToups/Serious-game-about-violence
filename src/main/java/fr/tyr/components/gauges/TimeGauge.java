@@ -13,16 +13,16 @@ public class TimeGauge extends Gauge{
     public TimeGauge(Vector2D position) {
         super(position, false, new ImageComponent(Images.TIME_GAUGE_PROGRESS, new Vector2D(25, 23).getAdded(position)));
         ImageComponent background = new ImageComponent(Images.TIME_GAUGE_BACKGROUND, new Vector2D(25, 23).getAdded(position));
-        icon = new ImageComponent(Images.TIME_GAUGE_ICON_DAY, position);
+        icon = new ImageComponent(Images.TIME_GAUGE_ICON_EVENING, position);
         setFrame(List.of(icon, background, getProgressBar()));
     }
 
     @Override
-    public void setCurrentProgress(int currentProgress) {
-        super.setCurrentProgress(currentProgress);
-        if(currentProgress < 100/3D)
+    public void setCurrentProgress(int newProgress) {
+        super.setCurrentProgress(newProgress);
+        if(newProgress < 100/3D)
             icon.setImage(Images.TIME_GAUGE_ICON_MORNING);
-        else if(currentProgress < 200/3D)
+        else if(newProgress < 200/3D)
             icon.setImage(Images.TIME_GAUGE_ICON_DAY);
         else
             icon.setImage(Images.TIME_GAUGE_ICON_EVENING);
