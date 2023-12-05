@@ -1,6 +1,7 @@
 package fr.tyr.components.classic;
 
 import fr.tyr.Main;
+import fr.tyr.game.enums.MouseButtons;
 import fr.tyr.resources.images.Images;
 import fr.tyr.tools.STimer;
 import fr.tyr.tools.Vector2D;
@@ -9,9 +10,10 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Objects;
 
-public abstract class ImageComponent extends GameComponent<BufferedImage> {
+public class ImageComponent extends GameComponent<BufferedImage> {
 
-    private final Images imageType;
+    private Images imageType;
+    private Vector2D originalSize;
 
     /**
      * Create a new image component with the given image
@@ -29,8 +31,12 @@ public abstract class ImageComponent extends GameComponent<BufferedImage> {
     public ImageComponent(Images image, Vector2D position) {
         super(image.getCopy(), position);
         this.imageType = image;
-        if(Objects.nonNull(getFrame()))
+        if(Objects.nonNull(getFrame())){
             setSize(new Vector2D(getFrame().getWidth(), getFrame().getHeight()));
+            this.originalSize = getSize();
+        }
+        else
+            throw new RuntimeException("Unable to load image: %s".formatted(image.name()));
     }
 
     /**
@@ -93,17 +99,54 @@ public abstract class ImageComponent extends GameComponent<BufferedImage> {
      * @param width The width of the crop
      * @param height The height of the crop
      */
-    @Deprecated
-    private void crop(int x, int y, int width, int height) {
-        setFrame(getFrame().getSubimage(x, y, width, height));
-        setSize(new Vector2D(width, height));
+    public void crop(int x, int y, int width, int height) {
+        setFrame(getImage().getCopy().getSubimage(x, y, width, height));
+        setSize(new Vector2D(getFrame().getWidth(), getFrame().getHeight()));
     }
 
     @Override
     public void render(Graphics g) {
         g.drawImage(getFrame(), (int) getPosition().x, (int) getPosition().y, null);
+//        g.setColor(Color.RED);
+//        g.drawRect((int) getPosition().x, (int) getPosition().y, (int) getSize().x, (int) getSize().y);
     }
+
+    public void setImage(Images image){
+        this.imageType = image;
+        setFrame(image.getCopy());
+        setSize(new Vector2D(getFrame().getWidth(), getFrame().getHeight()));
+    }
+
     public Images getImage(){
         return this.imageType;
+    }
+
+    public Vector2D getOriginalSize() {
+        return originalSize;
+    }
+
+    @Override
+    public void tick(int aps) {
+
+    }
+
+    @Override
+    public void onClick(MouseButtons button) {
+
+    }
+
+    @Override
+    public void onHover() {
+
+    }
+
+    @Override
+    public void onHoverLost() {
+
+    }
+
+    @Override
+    public void onWindowResized(Vector2D size) {
+
     }
 }
