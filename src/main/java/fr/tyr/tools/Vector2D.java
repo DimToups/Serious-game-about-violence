@@ -107,6 +107,24 @@ public class Vector2D {
         return new Vector2D(v1.x + v2.x, v1.y + v2.y);
     }
 
+    public void remove(Vector2D v) {
+        this.x -= v.x;
+        this.y -= v.y;
+    }
+    public void remove(double vx, double vy) {
+        this.x -= vx;
+        this.y -= vy;
+    }
+    public Vector2D getRemoved(Vector2D v) {
+        return new Vector2D(this.x - v.x, this.y - v.y);
+    }
+    public Vector2D getRemoved(double vx, double vy) {
+        return new Vector2D(this.x - vx, this.y - vy);
+    }
+    public static Vector2D remove(Vector2D v1, Vector2D v2) {
+        return new Vector2D(v1.x - v2.x, v1.y - v2.y);
+    }
+
     public void subtract(Vector2D v) {
         this.x -= v.x;
         this.y -= v.y;

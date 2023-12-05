@@ -3,7 +3,11 @@ package fr.tyr.game;
 import fr.tyr.Main;
 import fr.tyr.components.character.CharacterFactory;
 import fr.tyr.components.classic.GameComponent;
+import fr.tyr.components.gauges.Gauge;
+import fr.tyr.components.gauges.ReputationGauge;
+import fr.tyr.components.gauges.TimeGauge;
 import fr.tyr.components.sample.*;
+import fr.tyr.resources.images.Images;
 import fr.tyr.tools.Vector2D;
 
 import java.util.ArrayList;
@@ -37,14 +41,17 @@ public class GameEngine {
         Main.getLogger().info("Initializing scene...");
         safeListOperation(componentList -> {
             componentList.add(new SampleBackgroundComponent());
-            componentList.add(new SampleImageComponent(new Vector2D(100, 100), new Vector2D(50, 50)));
-            componentList.add(new SampleTextComponent(new Vector2D(200, 200)));
-            componentList.add(new SampleAnimatedImageComponent(new Vector2D(300, 300)));
-            componentList.add(new SampleAnimatedTextComponent(new Vector2D(400, 400)));
+//            componentList.add(new SampleImageComponent(new Vector2D(100, 100), new Vector2D(50, 50)));
+//            componentList.add(new SampleTextComponent(new Vector2D(200, 200)));
+//            componentList.add(new SampleAnimatedImageComponent(new Vector2D(300, 300)));
+//            componentList.add(new SampleAnimatedTextComponent(new Vector2D(400, 400)));
 
             CharacterFactory cf = new CharacterFactory();
             //componentList.add(cf.generateMale(new Vector2D(0,0)));
             componentList.add(cf.generateFemale(new Vector2D(0,0)));
+
+            componentList.add(new ReputationGauge(new Vector2D(500, 200)));
+            componentList.add(new TimeGauge(new Vector2D(700, 200)));
         });
         Main.getLogger().info("Scene initialized.");
     }
