@@ -31,6 +31,6 @@ public class MaleCharacterStyle extends CharacterStyle{
     public void assemble() {
         super.assemble();
         //Placement of the character's beard
-        this.beard.moveTo(super.getHair().getPosition(), 1);
+        this.beard.move(super.getHair().getPosition());
     }
 }
