@@ -2,6 +2,7 @@ package fr.tyr.components.character;
 
 import fr.tyr.components.character.identity.enums.FirstName;
 import fr.tyr.components.character.identity.enums.LastName;
+import fr.tyr.components.character.identity.enums.Origin;
 import fr.tyr.components.character.personality.enums.SexualOrientation;
 import fr.tyr.components.character.personality.enums.thought.GenderThoughts;
 import fr.tyr.components.character.personality.enums.MentalStrength;
@@ -19,70 +20,41 @@ import fr.tyr.tools.Vector2D;
 
 public abstract class Character extends ComposedComponent{
     //Past facts fields
-    private final CommonPastFacts commonPastFact;
-    private final OriginPastFacts originPastFact;
-    private final GenderPastFacts genderPastFact;
-    private final SexualOrientationPastFacts sexualOrientationPastFacts;
+    private CommonPastFacts commonPastFact;
+    private OriginPastFacts originPastFact;
+    private GenderPastFacts genderPastFact;
+    private SexualOrientationPastFacts sexualOrientationPastFacts;
 
     //Thoughts fields
-    private final OriginThoughts originThoughts;
-    private final GenderThoughts genderThoughts;
-    private final SexualOrientationThoughts sexualOrientationThoughts;
+    private OriginThoughts originThoughts;
+    private GenderThoughts genderThoughts;
+    private SexualOrientationThoughts sexualOrientationThoughts;
 
     //Personality fields
-    private final MentalStrength mentalStrength;
-    private final SexualOrientation sexualOrientation;
+    private MentalStrength mentalStrength;
+    private SexualOrientation sexualOrientation;
 
     //Identity fields
-    private final FirstName firstName;
-    private final LastName lastName;
-    private final int age;
+    private Origin origin;
+    private FirstName firstName;
+    private LastName lastName;
+    private int age;
 
     //Style fields
-    private final CharacterStyle characterStyle;
+    private CharacterStyle characterStyle;
+    private HairColor hairColor;
     private Images special;
 
     /**
      * Create a Character
      * @param position The position of the component
-     * @param characterStyle The character's style
-     * @param firstName The character's firstname
-     * @param lastName The character's lastname
-     * @param age The character's age
-     * @param commonPastFact A common past fact on the character
-     * @param originPastFact A origin based past fact on the character
-     * @param genderPastFact A gender based past fact on the character
-     * @param stylePastFact A style based past fact on the character
-     * @param mentalStrength The character's mentalStrength
-     * @param originThoughts The character's thoughts on origins
-     * @param genderThoughts The character's thoughts on genders
-     * @param sexualOrientationThoughts The character's thoughts on style
      */
-    public Character(Vector2D position, CharacterStyle characterStyle, FirstName firstName, LastName lastName, int age, CommonPastFacts commonPastFact, OriginPastFacts originPastFact, GenderPastFacts genderPastFact, SexualOrientationPastFacts stylePastFact, MentalStrength mentalStrength, SexualOrientation sexualOrientation, OriginThoughts originThoughts, GenderThoughts genderThoughts, SexualOrientationThoughts sexualOrientationThoughts) {
-        super(position, characterStyle);
+    public Character(Vector2D position) {
+        super(position);
+    }
 
-        //Attribution of the character's chosen style in its fields
-        this.characterStyle = characterStyle;
-
-        //Attribution of the character's identity
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.age = age;
-
-        //Attribution of the character's past facts
-        this.commonPastFact = commonPastFact;
-        this.originPastFact = originPastFact;
-        this.genderPastFact = genderPastFact;
-        this.sexualOrientationPastFacts = stylePastFact;
-
-        //Attribution of the character's personality
-        this.mentalStrength = mentalStrength;
-        this.sexualOrientation = sexualOrientation;
-
-        //Attribution of the character's thoughts
-        this.originThoughts = originThoughts;
-        this.genderThoughts = genderThoughts;
-        this.sexualOrientationThoughts = sexualOrientationThoughts;
+    public Origin getOrigin() {
+        return origin;
     }
 
     /**
@@ -114,7 +86,7 @@ public abstract class Character extends ComposedComponent{
      * @return The Character's HairColor
      */
     public HairColor getHairColor(){
-        return this.characterStyle.getHair().getColor();
+        return this.hairColor;
     }
 
     /**
@@ -153,7 +125,7 @@ public abstract class Character extends ComposedComponent{
      * Send the character's style based past fact
      * @return The character's style based past fact
      */
-    public SexualOrientationPastFacts getStylePastFacts() {
+    public SexualOrientationPastFacts getSexualOrientationPastFacts() {
         return sexualOrientationPastFacts;
     }
 
@@ -195,5 +167,51 @@ public abstract class Character extends ComposedComponent{
      */
     public SexualOrientationThoughts getSexualOrientationThoughts() {
         return sexualOrientationThoughts;
+    }
+    public void setCharacterStyle(CharacterStyle characterStyle){
+        this.characterStyle = characterStyle;
+        this.setFrame(characterStyle.getFrame());
+    }
+    public void setHairColor(HairColor hairColor) {
+        this.hairColor = hairColor;
+    }
+    public  void setFirstName(FirstName firstName){
+        this.firstName = firstName;
+    }
+    public void setLastName(LastName lastName){
+        this.lastName = lastName;
+    }
+    public void setAge(int age){
+        this.age = age;
+    }
+    public void setOrigin(Origin origin){
+        this.origin = origin;
+    }
+    public void setCommonPastFact(CommonPastFacts commonPastFact) {
+        this.commonPastFact = commonPastFact;
+    }
+    public void setOriginPastFact(OriginPastFacts originPastFact) {
+        this.originPastFact = originPastFact;
+    }
+    public void setGenderPastFact(GenderPastFacts genderPastFact) {
+        this.genderPastFact = genderPastFact;
+    }
+    public void setSexualOrientationPastFacts(SexualOrientationPastFacts sexualOrientationPastFacts) {
+        this.sexualOrientationPastFacts = sexualOrientationPastFacts;
+    }
+    public void setOriginThoughts(OriginThoughts originThoughts) {
+        this.originThoughts = originThoughts;
+    }
+    public void setGenderThoughts(GenderThoughts genderThoughts) {
+        this.genderThoughts = genderThoughts;
+    }
+    public void setSexualOrientationThoughts(SexualOrientationThoughts sexualOrientationThoughts) {
+        this.sexualOrientationThoughts = sexualOrientationThoughts;
+    }
+    public void setSexualOrientation(SexualOrientation sexualOrientation) {
+        this.sexualOrientation = sexualOrientation;
+    }
+    public void setMentalStrength(MentalStrength mentalStrength) {
+        this.mentalStrength = mentalStrength;
     }
 }
