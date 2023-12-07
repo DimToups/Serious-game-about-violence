@@ -8,14 +8,14 @@ import fr.tyr.tools.Vector2D;
 public class FemaleBuilder implements CharacterBuilder{
     private static final PersonalityManager pm = new PersonalityManager();
     private static final FemaleStyleManager fsm = new FemaleStyleManager();
-    private Female female = new Female(new Vector2D(), fsm.generateCommonCharacter());
+    private Female female = new Female(new Vector2D());
 
     /**
      * Reset the current Character
      */
     @Override
     public void reset() {
-        this.female = new Female(new Vector2D(), fsm.generateCommonCharacter());
+        this.female = new Female(new Vector2D());
     }
 
     /**
@@ -66,7 +66,7 @@ public class FemaleBuilder implements CharacterBuilder{
      */
     @Override
     public void generateStyle() {
-        this.female.setCharacterStyle(new CharacterStyle(fsm.generateEyes(this.female.getOrigin()), fsm.generateHair(this.female.getHairColor()), FemaleStyleManager.generateShirt(), FemaleStyleManager.generateSkin(this.female.getOrigin())));
+        this.female.setCharacterStyle(new CharacterStyle(fsm.generateEyes(this.female.getOrigin()), fsm.generateHair(this.female.getCharacterStyle().getHair().getColor()), FemaleStyleManager.generateShirt(), FemaleStyleManager.generateSkin(this.female.getOrigin())));
         this.female.getCharacterStyle().assemble();
     }
 
