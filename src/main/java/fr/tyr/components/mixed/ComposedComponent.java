@@ -20,13 +20,52 @@ public abstract class ComposedComponent extends GameComponent<List<GameComponent
     }
 
     @Override
+    public void setFrame(List<GameComponent<?>> frame) {
+        super.setFrame(frame);
+//        for(GameComponent<?> component: frame){
+//            if(component.getPosition().x < getPosition().x){
+//                for(GameComponent<?> component1: frame){
+//                    component1.move(component1.getPosition().getAdded(new Vector2D(getPosition().x - component.getPosition().x, 0)));
+//                }
+//            }
+//            if(component.getPosition().y < getPosition().y){
+//                for(GameComponent<?> component1: frame){
+//                    component1.move(component1.getPosition().getAdded(new Vector2D(0, getPosition().y - component.getPosition().y)));
+//                }
+//            }
+//        }
+        for(GameComponent<?> component: frame){
+            if(component.getPosition().x < getPosition().x){
+                Vector2D relativePosition = new Vector2D(getPosition().x - component.getPosition().x, 0);
+                for(GameComponent<?> component1: frame)
+                    component1.move(component1.getPosition().getAdded(relativePosition));
+            }
+            if(component.getPosition().y < getPosition().y){
+                Vector2D relativePosition = new Vector2D(0, getPosition().y - component.getPosition().y);
+                for(GameComponent<?> component1: frame)
+                    component1.move(component1.getPosition().getAdded(relativePosition));
+            }
+        }
+        int sizeX = 0, sizeY = 0;
+        for(GameComponent<?> component: getFrame()){
+            if(component.getPosition().x + component.getSize().x > sizeX)
+                sizeX = (int) (component.getPosition().x + component.getSize().x);
+            if(component.getPosition().y + component.getSize().y > sizeY)
+                sizeY = (int) (component.getPosition().y + component.getSize().y);
+        }
+        setSize(new Vector2D(sizeX, sizeY).getRemoved(getPosition()));
+    }
+
+    @Override
     public void move(int tps){
         getFrame().forEach(component -> component.move(tps));
     }
 
     @Override
     public void render(Graphics g) {
-        getFrame().forEach(component -> component.render(g));
+        getFrame().stream().filter(fn -> fn.isVisible() && fn.isRendered()).forEach(component -> component.render(g));
+//        g.setColor(Color.RED);
+//        g.drawRect((int) getPosition().x, (int) getPosition().y, (int) getSize().x, (int) getSize().y);
     }
 
     @Override
