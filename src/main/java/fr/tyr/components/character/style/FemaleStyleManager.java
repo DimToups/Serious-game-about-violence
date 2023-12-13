@@ -3,13 +3,14 @@ package fr.tyr.components.character.style;
 import fr.tyr.Main;
 import fr.tyr.components.character.identity.enums.Gender;
 import fr.tyr.components.character.identity.enums.Origin;
-import fr.tyr.components.character.style.enums.EyesEnum;
-import fr.tyr.components.character.style.enums.HairColor;
-import fr.tyr.components.character.style.enums.HairEnum;
+import fr.tyr.components.character.style.enums.*;
 
 import java.util.List;
 
 public class FemaleStyleManager extends StyleManager{
+    public CharacterStyle generateCommonCharacter(){
+        return new CharacterStyle(new Eyes(EyesEnum.COMMON_FEMALE_DOUBLE_BRUSH_BLUE), new Hair(HairEnum.MID_LENGHT_BLACK), new Shirt(ShirtEnum.RED), new Skin(SkinEnum.WHITE));
+    }
     /**
      * Generate a random Hair instance
      * @param color The character's HairColor
@@ -18,7 +19,7 @@ public class FemaleStyleManager extends StyleManager{
     @Override
     public Hair generateHair(HairColor color) {
         try {
-            List<HairEnum> validAssets = HairEnum.getAllGenderAssets(Gender.MALE, HairEnum.getAllColoredAssets(color));
+            List<HairEnum> validAssets = HairEnum.getAllGenderAssets(Gender.FEMALE, HairEnum.getAllColoredAssets(color));
 
             return new Hair(HairEnum.valueOf(validAssets.get(rand.nextInt(0, validAssets.size())).name()));
         }
@@ -27,7 +28,7 @@ public class FemaleStyleManager extends StyleManager{
             Main.getLogger().info(e.getMessage());
 
             //Retour d'une coupe de base
-            return new Hair(HairEnum.BLACK_DISHEVELLED);
+            return new Hair(HairEnum.BOWL_BLACK);
         }
     }
 

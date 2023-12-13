@@ -11,7 +11,7 @@ public enum Origin {
     AFRICAN;
 
     /**
-     * Convert the Origin into an clean String
+     * Convert the Origin into a clean String
      * @return The converted Origin
      */
     public String cleanName(){

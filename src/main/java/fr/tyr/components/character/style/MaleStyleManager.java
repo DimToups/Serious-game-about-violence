@@ -3,14 +3,14 @@ package fr.tyr.components.character.style;
 import fr.tyr.Main;
 import fr.tyr.components.character.identity.enums.Gender;
 import fr.tyr.components.character.identity.enums.Origin;
-import fr.tyr.components.character.style.enums.BeardEnum;
-import fr.tyr.components.character.style.enums.EyesEnum;
-import fr.tyr.components.character.style.enums.HairColor;
-import fr.tyr.components.character.style.enums.HairEnum;
+import fr.tyr.components.character.style.enums.*;
 
 import java.util.List;
 
 public class MaleStyleManager extends StyleManager{
+    public MaleCharacterStyle generateCommonCharacter(){
+        return new MaleCharacterStyle(new Beard(BeardEnum.SHORT_BLACK) ,new Eyes(EyesEnum.COMMON_MALE_BLUE), new Hair(HairEnum.BOWL_BLACK), new Shirt(ShirtEnum.RED), new Skin(SkinEnum.WHITE));
+    }
     /**
      * Generate a random Hair instance
      * @param color The character's HairColor
