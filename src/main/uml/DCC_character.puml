@@ -2,10 +2,225 @@
 skinparam classAttributeIconSize 0
 
 package character{
+    package identity{
+        package enums{
+            enum FirstName{
+                ..Fields..
+                - firstName : String
+                ..Methods..
+                <<create>> FirstName(firstname : FirstName, gender : Gender, origin : Origin)
+                + getFirstName() : String
+                + getGender() : Gender
+                + getOrigin() : Origin
+                + getAllOriginFirstName(origin : Origin) : FirstName*
+                + getAllMaleFirstName() : FirstName*
+                + getAllMaleFirstName(firstnames : FirstName) : FirstName*
+                + getAllFemaleFirstName() : FirstName*
+                + getAllFemaleFirstName(firstnames : FirstName) : FirstName*
+            }
+            enum Gender{
+                ..Values..
+                MALE
+                FEMALE
+                UNKNOWN
+            }
+            enum LastName{
+                ..Methods..
+                <<create>> LastName(origin : Origin)
+                + getOrigin() : Origin
+                + getAllOriginLastNames(origin : Origin) : LastName*
+                + cleanName() : String
+            }
+            enum Origin{
+                ..Values..
+                FRENCH
+                GERMAN
+                ARABIC
+                SPANISH
+                ASIAN
+                AMERICAN
+                RUSSIAN
+                AFRICAN
+                ..Methods..
+                + cleanName() : String
+            }
+        }
+
+        class IdentityManager{
+            ..Fields..
+            - rand : Random {static}
+            ..Methods..
+            + generateOrigin() : Origin {static}
+            + generateMaleFirstName() : FirstName {static}
+            + generateFemaleFirstName() : FirstName {static}
+            + generateLastName() : LastName {static}
+            + generateInteger() : Integer {static}
+        }
+    }
+
+    package personality{
+        package enums{
+            package pastFacts{
+                enum CommonPastFacts{
+                    ..Fields..
+                    - title : String
+                    - description : String
+                    ..Methods..
+                    <<create>> CommonPastFacts(title : String, description : String, leaningMentalStrength : MentalStrength)
+                    + getTitle() : String
+                    + getDescription() : String
+                    + getLeaningMentalStrength() : MentalStrength
+                }
+                enum GenderPastFacts{
+                    ..Fields..
+                    - title : String
+                    - description : String
+                    ..Methods..
+                    <<create>> GenderPastFacts(title : String, description : String, leaningMentalStrength : MentalStrength, overridingThoughts : GenderThoughts, concernedGender : Gender)
+                    + getTitle() : String
+                    + getDescription() : String
+                    + getLeaningMentalStrength() : MentalStrength
+                    + getOverridingThoughts() : GenderThoughts
+                    + getAllGenderPastFacts(g : Gender) : GenderPastFacts*
+                    + getAllGenderPastFacts(g : Gender, genderPastFacts : GenderPastFacts*) : GenderPastFacts*
+                }
+                enum OriginPastFacts{
+                    ..Fields..
+                    - title : String
+                    - description : String
+                    ..Methods..
+                    <<create>> OriginPastFacts(title : String, description : String, leaningMentalStrength : MentalStrength, overridingThoughts : OriginThoughts, concernedOrigins : Origin)
+                    + getTitle() : String
+                    + getDescription() : String
+                    + getLeaningMentalStrength() : MentalStrength
+                    + getOverridingThoughts() : OriginThoughts
+                    + getAllOriginPastFacts(o : Origin) : OriginPastFacts*
+                    + getAllOriginPastFacts(o : Origin, orifinPastFacts : OriginPastFacts*) : OriginPastFacts*
+                }
+                enum SexualOrientationPastFacts{
+                    ..Fields..
+                    - title : String
+                    - description : String
+                    ..Methods..
+                    <<create>> SexualOrientationPastFacts(title : String, description : String, leaningMentalStrength : MentalStrength, overridingThoughts : SexualOrientationThoughts, overridingSexualOrientation : SexualOrientation)
+                    + getTitle() : String
+                    + getDescription() : String
+                    + getLeaningMentalStrength() : MentalStrength
+                    + getOverridingThoughts() : SexualOrientationThoughts
+                    + getOverridingSexualOrientation() : SexualOrientation
+                }
+            }
+            package thought{
+                enum GenderThoughts{
+                    ..Fields..
+                    - title : String
+                    - description : String
+                    ..Methods..
+                    <<create>> GenderThoughts(title : String, description : String)
+                    + getTile() : String
+                    + getDescription() : String
+                    + cleanName() : String
+                }
+                enum OriginThoughts{
+                    ..Fields..
+                    - title : String
+                    - description : String
+                    ..Methods..
+                    <<create>> OriginThoughts(title : String, description : String)
+                    + getTile() : String
+                    + getDescription() : String
+                    + cleanName() : String
+                }
+                enum SexualOrientationThoughts{
+                    ..Fields..
+                    - title : String
+                    - description : String
+                    ..Methods..
+                    <<create>> SexualOrientationThoughts(title : String, description : String)
+                    + getTile() : String
+                    + getDescription() : String
+                    + cleanName() : String
+                }
+            }
+
+            enum MentalStrength{
+                ..Values..
+                WEAK
+                NORMAL
+                BOLD
+            }
+            enum SexualOrientation{
+                ..Values..
+                STRAIGHT
+                GAY
+                LESBIAN
+                BISEXUAL
+            }
+        }
+
+        class PersonalityManager{
+            ..Fields..
+            - rand : Random {static}
+            ..Methods..
+            + generateCommonPastFact() : CommonPastFacts
+            + generateGenderPastFact() : GenderPastFacts
+            + generateOriginPastFact() : OriginPastFacts
+            + generateSexualOrientationPastFact() : SexualOrientationPastFacts
+            + generateMentalStrength() : MentalStrength
+            + generateSexualOrientation() : SexualOrientation
+            + generateOriginThoughts() : OriginThoughts
+            + generateGenderThoughts() : GenderThoughts
+            + GenerateSexualOrientationThoughts() : SexualOrientationThoughts
+
+        }
+    }
+
     package style{
         package enums{
-            enum HairColor{
+            enum BeardEnum{
                 ..Fields..
+                - name : String
+                - image : Images
+                ..Methods..
+                <<create>> BeardEnum(name : String, color : HairColor, image : Images)
+                + getAllColoredAssets(color : HairColor) : BeardEnum*
+                + getAllColoredAssets(color : HairColor, beards : BeardEnum*) : BeardEnum*
+                + getName() : String
+                + getColor() : HairColor
+                + getImage() : Images
+                + getBeardEnum(image : Images) : BeardEnum
+            }
+            enum EyeColor{
+                ..Values..
+                BLUE
+                LIGHT_BLUE
+                BROWN
+                GREEN
+                YELLOW
+            }
+            enum EyesEnum{
+                ..Fields..
+                - name : String
+                - image : Images
+                ..Methods..
+                <<create>> EyesEnum(name : String, color : EyeColor, image : Images, origin : Origin*)
+                + getAllColoredAssets(color : EyeColor) : EyesEnum*
+                + getAllColoredAssets(color : EyeColor, eyes : EyesEnum*) : EyesEnum*
+                + getAllGenderAssets(gender : Gender) : EyesEnum
+                + getAllGenderAssets(gender : Gender, eyes : EyesEnum) : EyesEnum
+                + getAllOriginAssets(origin : Origin) : EyesEnum
+                + getAllOriginAssets(origin : Origin, eys : EyesEnum) : EyesEnum
+                + getName() : String
+                + getColor() : EyeColor
+                + getImage() : Images
+                + getGender() : Gender
+                + getOrigins() : Origin*
+                + getCommonEyesOrigins() : Origin*
+                + getAsianEyesOrigins() : Origin*
+                + getEyesEnum(image : Images) : EyesEnum
+            }
+            enum HairColor{
+                ..Values..
                 BLACK
                 DARK_BROWN
                 BROWN
@@ -15,65 +230,20 @@ package character{
                 BLUE
                 PINK
             }
-            enum EyeColor{
-                ..Fields..
-                BLUE
-                LIGHT_BLUE
-                BROWN
-                GREEN
-                YELLOW
-            }
-            enum BeardEnum{
-                ..Fields..
-                - name : String
-                - image : Images
-                ..Methods..
-                <<create>> BeardEnum(name : String, color : HairColor, image : Images)
-                + getAllColoredAssets(color : HairColor) : BeardEnum[]
-                + getAllColoredAssets(color : HairColor, beards : BeardEnum[]) : BeardEnum[]
-                + getName() : String
-                + getColor() : HairColor
-                + getImages() : Images
-                + getBeardEnum(image : Images) : BeardEnum
-            }
-            enum EyesEnum{
-                ..Fields..
-                - name : String
-                - image : Images
-                - gender : Boolean
-                ..Methods..
-                <<create>> EyesEnum(name : String, color : EyeColor, image : Images)
-                + getAllColoredAssets(color : EyeColor) : EyesEnum[]
-                + getAllColoredAssets(color : EyeColor, eyes : EyesEnum[]) : EyesEnum[]
-                + getAllGenderAssets(gender : Boolean) : EyesEnum[]
-                + getAllGenderAssets(gender : Boolean, eyes : EyesEnum[]) : EyesEnum[]
-                + getAllOriginAssets(origin : Origin) : EyesEnum[]
-                + getAllOriginAssets(origin : Origin, eyes : EyesEnum[]) : EyesEnum[]
-                + getName() : String
-                + getColor() : EyeColor
-                + getImages() : Images
-                + getGender() : Boolean
-                + getOrigin() : Origin
-                + getCommonEyesOrigins() : Origin[] {static}
-                + getAsianEyesOrigins() : Origin[] {static}
-                + getEuesEnum(image : Images) : EyesEnum {static}
-            }
             enum HairEnum{
                 ..Fields..
                 - name : String
                 - image : Images
-                - gender : Boolean
                 ..Methods..
-                <<create>> HairEnum(name : String, color : HairColor, image : Images)
-                + getAllColoredAssets(color : HairColor) : HairEnum[]
-                + getAllColoredAssets(color : HairColor, hairs : HairEnum[]) : HairEnum[]
-                + getAllGenderAssets(gender : Boolean) : HairEnum[]
-                + getAllGenderAssets(gender : Boolean, hairs : HairEnum[]) : HairEnum[]
+                <<create>> HairEnum(name : String, color : HairColor, image : Images, gender : Gender)
+                + getAllColoredAssets(color : HairColor) : HairEnum*
+                + getAllColoredAssets(color : HairColor, hairs : HairEnum) : HairEnum*
+                + getAllGenderAssets(gender : Gender) : HairEnum
+                + getAllGenderAssets(gender : Gender, hairs : HairEnum) : HairEnum
                 + getName() : String
-                + getColor() : HairColor
-                + getImages() : Images
-                + getGender() : Boolean
-                + getHairEnum(image : Images) : HairEnum
+                + getImage() : Images
+                + getGender() : Gender
+                + getHairEnum(image : Images)
             }
             enum ShirtEnum{
                 ..Fields..
@@ -90,12 +260,13 @@ package character{
                 - name : String
                 - image : Images
                 ..Methods..
-                <<create>> SkinEnum(name : String, image : Images)
-                + getAllOriginAssets(origin : Origin) : SkinEnum[]
-                + getAllOriginAssets(origin : Origin, skins : SkinEnum[]) : SkinEnum[]
+                <<create>> ShirtEnum(name : String, image : Images, origin : Origin)
                 + getName() : String
                 + getImage() : Images
-                + getOrigin() : Origin
+                + getOrigins() : Origin*
+                + getAllOriginAssets(origin : Origin) : SkinEnum
+                + getAllOriginAssets(origin : Origin, skin : SkinEnum) : SkinEnum
+                + getShirtEnum(image : Images) : ShirtEnum
                 + getSkinEnum(image : Images) : SkinEnum
             }
         }
@@ -103,39 +274,71 @@ package character{
             ..Methods..
             + <<create>> Beard(beard : BeardEnum)
             + <<create>> Beard(beard : BeardEnum, position : Vector2D)
-            + <<create>> Beard(beard : BeardEnum, position : Vector2D, size : Vecto2D, center : Boolean)
-            + getImages() : Images
+            + <<create>> Beard(beard : BeardEnum, position : Vector2D, size : Vector2D, center : Boolean)
+            + getImage() : Images
             + getColor() : HairColor
             + getBeardName() : String
+        }
+        class CharacterStyle{
+            ..Fields..
+            + additionalComponent() : ImageComponent
+            ..Methods..
+            + <<create>> CharacterStyle(eyes : Eyes, hair : Hair, shirt : Shirt, skin : Skin)
+            + <<create>> CharacterStyle(eyes : Eyes, hair : Hair, shirt : Shirt, skin : Skin, additionalComponent : ImageComponent)
+            + getEyes() : Eyes
+            + getHair() : Hair
+            + getShirt() : Shirt
+            + getSkin() : Skin
+            + getAdditionalComponent() : ImageComponent
+            + assemble()
         }
         class Eyes{
             ..Methods..
             + <<create>> Eyes(eyes : EyesEnum)
             + <<create>> Eyes(eyes : EyesEnum, position : Vector2D)
-            + <<create>> Eyes(eyes : EyesEnum, position : Vector2D, size : Vecto2D, center : Boolean)
+            + <<create>> Eyes(eyes : EyesEnum, position : Vector2D, size : Vector2D, size : Boolean)
             + getName() : String
-            + getColor() : HairColor
-            + getImages() : Images
-            + getGender() : Boolean
-            + getOrigins() : Origin[]
+            + getColor() : EyeColor
+            + getImage() : Images
+            + getGender() : Gender
+            + getOrigins() : Origin*
+        }
+        class FemaleStyleManager{
+            ..Methods..
+            + generateCommonCharacter() : CharacterStyle
+            + generateHair(color : HairColor) : Hair
+            + generateEyes(origin : Origin) : Eyes
         }
         class Hair{
             ..Methods..
             + <<create>> Hair(hair : HairEnum)
             + <<create>> Hair(hair : HairEnum, position : Vector2D)
-            + <<create>> Hair(hair : HairEnum, position : Vector2D, size : Vecto2D, center : Boolean)
+            + <<create>> Hair(hair : HairEnum, position : Vector2D, size : Vector2D, center : Boolean)
             + getName() : String
             + getColor() : HairColor
-            + getImages() : Images
-            + getGender() : Boolean
+            + getImage() : Images
+            + getGender() : Gender
+        }
+        class MaleCharacterStyle{
+            ..Methods..
+            + <<create>> MaleCharacterStyle(beard : Beard, eyes : Eyes, hair : Hair, shirt : Shirt, skin : Skin)
+            + getBeard() : Beard
+            + assemble()
+        }
+        class MaleStyleManager{
+            ..Methods..
+            + generateCommonCharacter() : MaleCharacterStyle
+            + generateHair(color : HairColor) : Hair
+            + generateEyes(origin : Origin) : Eyes
+            + generateBeard(color : HairColor) : Beard
         }
         class Shirt{
             ..Methods..
             + <<create>> Shirt(shirt : ShirtEnum)
             + <<create>> Shirt(shirt : ShirtEnum, position : Vector2D)
-            + <<create>> Shirt(shirt : ShirtEnum, position : Vector2D, size : Vecto2D, center : Boolean)
+            + <<create>> Shirt(shirt : ShirtEnum, position : Vector2D, size : Vector2D, center : Boolean)
             + getName() : String
-            + getImages() : Images
+            + getImage() : Images
         }
         class Skin{
             ..Methods..
@@ -144,290 +347,223 @@ package character{
             + <<create>> Skin(skin : SkinEnum, position : Vector2D, size : Vector2D, center : Boolean)
             + getName() : String
             + getImage() : Images
-            + getOrigin() : Origin
+            + getOrigins() : Origin
         }
-        abstract class StyleManager{
-            ..Methods..
-            + <<create>> StyleManager()
-            + generateHairColor(age : Integer) : HairColor {static}
-            + generateSkin(origin : Origin) : Skin {static}
-            + generateHair() : Hair {abstract}
-            + generateEyes(origin : Origin) : Eyes {abstract}
-            + generateShirt() : Shirt {static}
-        }
-        class FemaleStyleManager extends StyleManager{
-            ..Methods..
-            + generateHair(color : HairColor) : Hair
-            + generateEyes(origin : Origin) : Eyes
-        }
-        class MaleStyleManager extends StyleManager{
-            ..Methods..
-            + generateHair(color : HairColor) : Hair
-            + generateEyes(origin : Origin) : Eyes
-            + generateBeard(color : HairColor) : Beard
-        }
-    }
-
-    package identity{
-        package enums{
-            enum FirstName{
-                ..Fields..
-                - firstName : String
-                - gender : Boolean
-                ..Methods..
-                <<create>> FirstName(firstname : String, gender : Boolean, origin : Origin)
-                + getFirstName() : String
-                + getGender() : Boolean
-                + getOrigin() : Origin
-                + getAllOriginFirstNames(origin : Origin) : FirstName[]
-                + getAllMaleFirstNames() : FirstName[]
-                + getAllMaleFirstNames(firstNames : FirstName[]) : FirstName[]
-                + getAllFemaleFirstNames() : FirstName[]
-                + getAllFemaleFirstNames(firstNames : FirstName[]) : FirstName[]
-            }
-            enum LastName{
-                ..Methods..
-                + getOrigin() : Origin
-                + getAllOriginLastNames(origin : Origin) : LastName[]
-                + cleanName() : String
-            }
-            enum Origins{
-                ..Methods..
-                + cleanName() : String
-            }
-        }
-        class IdentityManager{
+        class StyleManager{
             ..Fields..
             rand : Random {static}
             ..Methods..
-            + <<create>> IdentityManager()
-            + generateOrigin() : Origin {static}
-            + generateMaleFirstName(origin : Origin) : FirstName {static}
-            + generateFemaleFirstName(origin : Origin) : FirstName {static}
-            + generateLastName(origin : Origin) : LastName {static}
-            + generateAge() : Integer {static}
+            + generateHairColor(age : Integer) : HairColor
+            + generateSkin(origin : Origin) : Skin
+            + generateHair(color : HairColor) : Hair
+            + generateEyes(origin : Origin) : Eyes
+            + generateShirt() : Shirt
+            + generateShirt() : Shirt
         }
     }
 
-    package personality{
-        package enums{
-            package pastFact{
-                enum CommonPastFacts{
-                    ..Fields..
-                    - title : String
-                    - description : String
-                    - leaningMentalStrength : MentalStrength
-                    ..Methods..
-                    <<create>> CommonPastFacts(title : String, description : String, leaningMentalStrength : MentalStrength)
-                    + getTitle() : String
-                    + getDescription() : String
-                    + getLeaningMentalStrength() : MentalStrength
-                }
-                enum OriginPastFacts{
-                    ..Fields..
-                    - title : String
-                    - description : String
-                    - leaningMentalStrength : MentalStrength
-                    - overrindingThoughts : OriginThoughts
-                    - concernedOrigins : Origin[]
-                    ..Methods..
-                    <<create>> OriginPastFacts(title : String, description : String, leaningMentalStrength : MentalStrength, overrindingThoughts : OriginThoughts, concernedOrigins : Origin[])
-                    + getTitle() : String
-                    + getDescription() : String
-                    + getLeaningMentalStrength() : MentalStrength
-                    + getOverridingThoughts() : OriginThoughts
-                    + getConcernedOrigins() : Origin[]
-                    + getAllOriginPastFacts(o : Origin) : OriginPastFacts[]
-                    + getAllOriginPastFacts(o : Origin, originPastFacts : OriginPastFacts) : OriginPastFacts[]
-                }
-                enum SexualOrientationPastFacts{
-                    ..Fields..
-                    - title : String
-                    - description : String
-                    - leaningMentalStrength : MentalStrength
-                    - overridingThoughts : SexualOrientationThoughts
-                    ..Methods..
-                    <<create>> SexualOrientationPastFacts(title : String, description : String, leaningMentalStrength : MentalStrength, overridingThoughts : SexualOrientationThoughts)
-                    + getTitle() : String
-                    + getDescription() : String
-                    + getLeaningMentalStrength() : MentalStrength
-                    + getOverridingThoughts() : SexualOrientationThoughts
-                }
-                enum GenderPastFacts{
-                    ..Fields..
-                    - title : String
-                    - description : String
-                    - leaningMentalStrength : MentalStrength
-                    - overridingThoughts : GenderThoughts
-                    - concernedGenders : Gender
-                    ..Methods..
-                    <<create>> GenderPastFacts(title : String, description : String, leaningMentalStrength : MentalStrength, overridingThoughts : GenderThoughts, concernedGenders : Gender)
-                    + getTitle() : String
-                    + getDescription() : String
-                    + getLeaningMentalStrength() : MentalStrength
-                    + getOverridingThoughts() : GenderThoughts
-                    + getConcernedGenders() : Gender
-                    + getAllGenderPastFacts(g : Gender) : GenderPastFacts[]
-                    + getAllGenderPastFacts(g : Gender, genderPastFacts : GenderPastFacts[]) : GenderPastFacts[]
-                }
-            }
-            package thought{
-                enum OriginThoughts{
-                    ..Fields..
-                    title : String
-                    description : String
-                    ..Methods..
-                    <<create>> OriginThoughts(title : String, description : String)
-                    + getTitle() : String
-                    + getDescription() : String
-                    + cleanName() : String
-                }
-                enum GenderThoughts{
-                    ..Fields..
-                    title : String
-                    description : String
-                    ..Methods..
-                    <<create>> GenderThoughts(title : String, description : String)
-                    + getTitle() : String
-                    + getDescription() : String
-                    + cleanName() : String
-                }
-                enum SexualOrientationThoughts{
-                    ..Fields..
-                    title : String
-                    description : String
-                    ..Methods..
-                    <<create>> SexualOrientationThoughts(title : String, description : String)
-                    + getTitle() : String
-                    + getDescription() : String
-                    + cleanName() : String
-                }
-            }
-            enum MentalStrength{
-                ..Fields..
-                WEAK
-                NORMAL
-                BOLD
-            }
-            enum SexualOrientation{
-                ..Fields..
-                STRAIGHT
-                GAY
-                LESBIAN
-                BISEXUAL
-            }
-        }
-        class PersonalityManager{
-            ..Fields..
-
-            ..Methods..
-            + generateCommonPastFact() : CommonPastFact
-            + generateOriginPastFact(o : Origin) : OriginPastFact
-            + generateGenderPastFact(g : Gender) : GenderPastFact
-            + generateSexualOrientationPastFact() : SexualOrientationPastFact
-            + generateOriginPersonality(pastFact : PastFact, origin : Origin) : OriginPersonality
-            + generateGenderPersonality(pastFact : PastFact, gender : Gender) : GenderPersonality
-            + generateStylePersonality(pastFact : PastFact) : StylePersonality
-            + generateMentalStrength(pastFact : PastFact) : MentalStrength
-        }
-    }
-
-    class CharacterFactory{
-        ..Methods..
-        + <<create>> CharacterFactory
-        + generateMale(position : Vector2D) : Male
-        + generateFemale(position : Vector2D) : Female
-    }
     abstract class Character{
         ..Fields..
-        - age : Integer
+        age : Integer
         ..Methods..
-        + <<create>> Character(position : Vector2D, skin : Skin, hair : Hair, eyes : Eyes, shirt : Shirt, firstName : FirstName, lastName : LastName, age : Integer, commonPastFact : CommonPastFacts, originPastFact : OriginPastFacts, genderPastFact : GenderPastFacts, sexualOrientationPastFact : SexualOrientationPastFacts, mentalStrength MentalStrength, originThoughts : OriginThoughts, genderThoughts : GenderThoughts, sexualOrientationThoughts : SexualOrientationThoughts)
+        + <<create>> Character(position : Vector2D)
+        + getOrigin() : Origin
         + getFirstName() : FirstName
         + getLastName() : LastName
+        + getAge() : Integer
         + getHairColor() : HairColor
-        + getSkin() : Skin
-        + getHair() : Hair
-        + getEyes() : Eyes
-        + getShirt() : Shirt
+        + getCharacterStyle() : CharacterStyle
+        + getCommonPastFact() : CommonPastFacts
+        + OriginPastFact() : OriginPastFacts
+        + getGenderPastFact() : GenderPastFacts
+        + getSexualOrientationFact() : SexualOrientationFacts
+        + getMentalStrength() : MentalStrength
+        + getSexualOrientation() : SexualOrientation
+        + getOriginThoughts() : OriginThoughts
+        + getSexualOrientationThoughts() : SexualOrientationThoughts
+        + setOrigin(origin : Origin)
+        + setFirstName(firstname : FirstName)
+        + setLastName(lastName : Lastname)
+        + setAge(age : Integer)
+        + setHairColor(hairColor : HairColor)
+        + setCharacterStyle(characterStyle : CharacterStyle)
+        + setCommonPastFact(commonPastFact : CommonPastFacts)
+        + setOriginPastFact(originPastFact : OriginPastFacts)
+        + setGenderPastFact(genderPastFact : GenderPastFacts)
+        + setSexualOrientationPastFact(sexualOrientationPastFact : SexualOrientationFacts)
+        + setMentalStrength(mentalStrength : MentalStrength)
+        + setSexualOrientation(sexualOrientation : SexualOrientation)
+        + setOriginThoughts(originThoughts : OriginThoughts)
+        + setSexualOrientationThoughts(sexualOrientationThoughts : SexualOrientationThoughts)
     }
-    class Male extends Character{
-        ..Fields..
-        - beard : ImageComponent
+    interface CharacterBuilder <<interface>>{
         ..Methods..
-        + <<create>> Male(position : Vector2D, skin : Skin, hair : Hair, eyes : Eyes, beard : Beard, shirt : Shirt, firstName : FirstName, lastName : LastName, age : Integer, commonPastFact : CommonPastFacts, originPastFact : OriginPastFacts, genderPastFact : GenderPastFacts, sexualOrientationPastFact : SexualOrientationPastFacts, mentalStrength MentalStrength, originThoughts : OriginThoughts, genderThoughts : GenderThoughts, sexualOrientationThoughts : SexualOrientationThoughts)
-        + getBeard() : Beard
+        + reset()
+        + generateIdentity()
+        + generatePersonality()
+        + generatePast()
+        + generateThoughts()
+        + generateStyle()
     }
-    class Female extends Character{
+    class CharacterDirector{
         ..Methods..
-        + <<create>> Female(position : Vector2D, skin : Skin, hair : Hair, eyes : Eyes, shirt : Shirt, firstName : FirstName, lastName : LastName, age : Integer, commonPastFact : CommonPastFacts, originPastFact : OriginPastFacts, genderPastFact : GenderPastFacts, sexualOrientationPastFact : SexualOrientationPastFacts, mentalStrength MentalStrength, originThoughts : OriginThoughts, genderThoughts : GenderThoughts, sexualOrientationThoughts : SexualOrientationThoughts)
+        + <<create>> CharacterDirector(builder : CharacterBuilder)
+        + getBuilder() : CharacterBuilder
+        + setBuilder(builder : CharacterBuilder)
+        + generateCharacter()
+    }
+    class Female{
+        ..Methods..
+        + <<create>> Female(position : Vector2D)
+    }
+    class FemaleBuilder{
+        ..Methods..
+        + reset()
+        + generateIdentity()
+        + generatePersonality()
+        + generatePast()
+        + generateThoughts()
+        + generateStyle()
+        + getFemale() : Female
+    }
+    class Male{
+        ..Methods..
+        + <<create>> Male(position : Vector2D)
+    }
+    class MaleBuilder{
+        ..Methods..
+        + reset()
+        + generateIdentity()
+        + generatePersonality()
+        + generatePast()
+        + generateThoughts()
+        + generateStyle()
+        + getMale() : Male
     }
 }
 
-character.CharacterFactory .> character.Male : <<uses>>
-character.CharacterFactory .> character.Female : <<uses>>
-character.CharacterFactory ..> character.style.MaleStyleManager : <<uses>>
-character.CharacterFactory ..> character.style.FemaleStyleManager : <<uses>>
+'Identity
+character.identity.enums.FirstName "1" o--> "1\n- gender" character.identity.enums.Gender
+character.identity.enums.FirstName "1" o--> "1\n- origin" character.identity.enums.Origin
 
-character.style.Skin <.. character.style.StyleManager : <<uses>>
-character.style.Eyes <.. character.style.StyleManager : <<uses>>
-character.style.Hair <.. character.style.StyleManager : <<uses>>
-character.style.Shirt <.. character.style.StyleManager : <<uses>>
-character.style.Beard <.. character.style.MaleStyleManager : <<uses>>
+character.identity.enums.LastName "1" o--> "1\n- origin" character.identity.enums.Origin
 
-character.style.enums.HairEnum "1" o--> "1\n- color" character.style.enums.HairColor
-character.style.enums.BeardEnum "1" o--> "1\n- color" character.style.enums.HairColor
-character.style.enums.EyesEnum "1" o--> "1\n- color" character.style.enums.EyeColor
-character.style.enums.EyesEnum "1" o-> "*\n-origins" character.identity.enums.Origins
-character.style.enums.SkinEnum "1" o-> "*\n-origins" character.identity.enums.Origins
-
-character.style.Skin "1" o--> "1\n- skin" character.style.enums.SkinEnum
-character.style.Eyes "1" o--> "1\n- eyes" character.style.enums.EyesEnum
-character.style.Hair "1" o--> "1\n- hair" character.style.enums.HairEnum
-character.style.Shirt "1" o--> "1\n- shirt" character.style.enums.ShirtEnum
-character.style.Beard "1" o--> "1\n- beard" character.style.enums.BeardEnum
-
+character.identity.IdentityManager ..> character.identity.enums.Origin : <<uses>>
 character.identity.IdentityManager ..> character.identity.enums.FirstName : <<uses>>
 character.identity.IdentityManager ..> character.identity.enums.LastName : <<uses>>
-character.identity.enums.LastName ..> character.identity.enums.Origins : <<uses>>
-character.identity.enums.FirstName ..> character.identity.enums.Origins : <<uses>>
 
-character.Character "1" o---> "1\n- hair" character.style.Hair
-character.Character "1" o---> "1\n- eyes" character.style.Eyes
-character.Character "1" o---> "1\n- skin" character.style.Skin
-character.Character "1" o---> "1\n- shirt" character.style.Shirt
-character.Male "1" o---> "1\n- beard" character.style.Beard
-character.Character "1" o---> "1\n- firstname" character.identity.enums.FirstName
-character.Character "1" o---> "1\n- lastname" character.identity.enums.LastName
+'Personality
+character.personality.enums.pastFacts.CommonPastFacts "1" o--> "1\n- leaningMentalStrength" character.personality.enums.MentalStrength
 
-character.Character "1" o--> "1\n- originThought" character.personality.enums.thought.OriginThoughts
-character.Character "1" o--> "1\n- genderThought" character.personality.enums.thought.OriginThoughts
-character.Character "1" o--> "1\n- sexualOrientationThought" character.personality.enums.thought.OriginThoughts
-character.Character "1" o----> "1\n- mentalStrength" character.personality.enums.MentalStrength
-character.Character "1" o----> "1\n- commonPastFact" character.personality.enums.pastFact.CommonPastFacts
-character.Character "1" o----> "1\n- originPastFact" character.personality.enums.pastFact.OriginPastFacts
-character.Character "1" o----> "1\n- sexualOrientationPastFact" character.personality.enums.pastFact.SexualOrientationPastFacts
-character.Character "1" o----> "1\n- genderPastFact" character.personality.enums.pastFact.GenderPastFacts
+character.personality.enums.pastFacts.GenderPastFacts "1" o--> "1\n- leaningMentalStrength" character.personality.enums.MentalStrength
+character.personality.enums.pastFacts.GenderPastFacts "1" o--> "1\n- overridingThoughts" character.personality.enums.thought.GenderThoughts
+character.personality.enums.pastFacts.GenderPastFacts "1" o--> "1\n- concernedGender" character.identity.enums.Gender
 
-character.CharacterFactory ..> character.identity.IdentityManager : <<uses>>
-character.CharacterFactory ...> character.style.StyleManager : <<uses>>
-character.CharacterFactory .> character.personality.PersonalityManager : <<uses>>
+character.personality.enums.pastFacts.OriginPastFacts "1" o--> "1\n- leaningMentalStrength" character.personality.enums.MentalStrength
+character.personality.enums.pastFacts.OriginPastFacts "1" o--> "1\n- overridingThoughts" character.personality.enums.thought.OriginThoughts
+character.personality.enums.pastFacts.OriginPastFacts "1" o--> "1\n- concernedOrigins" character.identity.enums.Origin
 
-character.personality.PersonalityManager ..> character.personality.enums.pastFact.CommonPastFacts : <<uses>>
-character.personality.PersonalityManager ..> character.personality.enums.pastFact.OriginPastFacts : <<uses>>
-character.personality.PersonalityManager ...> character.personality.enums.pastFact.SexualOrientationPastFacts : <<uses>>
-character.personality.PersonalityManager ...> character.personality.enums.pastFact.GenderPastFacts : <<uses>>
-character.personality.PersonalityManager ..> character.personality.enums.thought.OriginThoughts : <<uses>>
-character.personality.PersonalityManager ..> character.personality.enums.thought.GenderThoughts : <<uses>>
-character.personality.PersonalityManager ..> character.personality.enums.thought.SexualOrientationThoughts : <<uses>>
-character.personality.PersonalityManager ..> character.personality.enums.MentalStrength : <<uses>>
+character.personality.enums.pastFacts.SexualOrientationPastFacts "1" o--> "1\n- leaningMentalStrength" character.personality.enums.MentalStrength
+character.personality.enums.pastFacts.SexualOrientationPastFacts "1" o--> "1\n- overridingThoughts" character.personality.enums.thought.SexualOrientationThoughts
+character.personality.enums.pastFacts.SexualOrientationPastFacts "1" o--> "1\n- overridingSexualOrientation" character.personality.enums.SexualOrientation
 
-character.identity.enums.Genders "*\n- concernedGenders" <--o "1" character.personality.enums.thought.GenderThoughts
-character.identity.enums.Origins "*\n- concernedOrigins" <--o "1" character.personality.enums.thought.OriginThoughts
+character.personality.PersonalityManager ..> character.personality.enums.pastFacts.CommonPastFacts : <<uses>>
+character.personality.PersonalityManager ..> character.personality.enums.pastFacts.GenderPastFacts : <<uses>>
+character.personality.PersonalityManager ..> character.personality.enums.pastFacts.OriginPastFacts : <<uses>>
+character.personality.PersonalityManager ..> character.personality.enums.pastFacts.SexualOrientationPastFacts : <<uses>>
+character.personality.PersonalityManager ...> character.personality.enums.thought.OriginThoughts : <<uses>>
+character.personality.PersonalityManager ...> character.personality.enums.thought.GenderThoughts : <<uses>>
+character.personality.PersonalityManager ...> character.personality.enums.thought.SexualOrientationThoughts : <<uses>>
+character.personality.PersonalityManager ...> character.personality.enums.MentalStrength : <<uses>>
+character.personality.PersonalityManager ...> character.personality.enums.SexualOrientation : <<uses>>
+character.personality.PersonalityManager ..> character.identity.enums.Gender : <<uses>>
+character.personality.PersonalityManager ..> character.identity.enums.Origin : <<uses>>
 
-character.personality.enums.MentalStrength "1\n- leaningMentalStrength" <--o "1" character.personality.enums.pastFact.CommonPastFacts
-character.personality.enums.MentalStrength "1\n- leaningMentalStrength" <--o "1" character.personality.enums.pastFact.GenderPastFacts
-character.personality.enums.MentalStrength "1\n- leaningMentalStrength" <--o "1" character.personality.enums.pastFact.OriginPastFacts
-character.personality.enums.MentalStrength "1\n- leaningMentalStrength" <--o "1" character.personality.enums.pastFact.SexualOrientationPastFacts
+'Style
+character.style.enums.BeardEnum "1" o--> "1\n- color" character.style.enums.HairColor : <<uses>>
+
+character.style.enums.EyesEnum "1" o--> "1\n- color" character.style.enums.EyeColor
+character.style.enums.EyesEnum "1" o-> "1\n- gender" character.identity.enums.Gender
+character.style.enums.EyesEnum "1" o-> "*\n- origins" character.identity.enums.Origin
+
+character.style.enums.HairEnum "1" o--> "1\n- color" character.style.enums.HairColor
+character.style.enums.HairEnum "1" o-> "1\n- gender" character.identity.enums.Gender
+
+character.style.enums.SkinEnum "1" o-> "*\n- origins" character.identity.enums.Origin
+
+character.style.Beard "1" o-> "1\n- beard" character.style.enums.BeardEnum
+
+character.style.CharacterStyle --|> character.style.MaleCharacterStyle
+character.style.CharacterStyle "1" o--> "1\n- eyes" character.style.Eyes
+character.style.CharacterStyle "1" o--> "1\n- hair" character.style.Hair
+character.style.CharacterStyle "1" o--> "1\n- shirt" character.style.Shirt
+character.style.CharacterStyle "1" o--> "1\n- skin" character.style.Skin
+
+character.style.Eyes "1" o--> "1\n- eyes" character.style.enums.EyesEnum
+character.style.Eyes .> character.identity.enums.Origin : <<uses>>
+
+character.style.FemaleStyleManager ...> character.style.enums.EyesEnum : <<uses>>
+character.style.FemaleStyleManager ...> character.style.enums.HairEnum : <<uses>>
+character.style.FemaleStyleManager ...> character.style.enums.ShirtEnum : <<uses>>
+character.style.FemaleStyleManager ...> character.style.enums.SkinEnum : <<uses>>
+character.style.FemaleStyleManager ...> character.style.enums.HairColor : <<uses>>
+character.style.FemaleStyleManager ..> character.identity.enums.Origin : <<uses>>
+
+character.style.Hair o--> character.style.enums.HairEnum
+character.style.Hair o--> character.style.enums.HairColor
+
+character.style.MaleCharacterStyle o--> character.style.Beard
+character.style.MaleCharacterStyle ..> character.style.Eyes
+character.style.MaleCharacterStyle ..> character.style.Hair
+character.style.MaleCharacterStyle ..> character.style.Shirt
+character.style.MaleCharacterStyle ..> character.style.Skin
+
+character.style.MaleStyleManager .> character.style.MaleCharacterStyle :<<uses>>
+character.style.MaleStyleManager .> character.style.Hair
+character.style.MaleStyleManager .> character.style.enums.HairColor
+character.style.MaleStyleManager .> character.style.Eyes
+character.style.MaleStyleManager ..> character.identity.enums.Origin
+character.style.MaleStyleManager .> character.style.Beard
+
+character.style.Shirt "1" o--> "1\n- shirt" character.style.enums.ShirtEnum
+
+character.style.Skin "1" o--> "1\n- skin" character.style.enums.SkinEnum
+character.style.Skin ..> character.identity.enums.Origin
+
+character.style.StyleManager --|> character.style.MaleStyleManager
+character.style.StyleManager --|> character.style.FemaleStyleManager
+character.style.StyleManager .> character.style.CharacterStyle : <<uses>>
+character.style.StyleManager ...> character.style.enums.HairColor : <<uses>>
+character.style.StyleManager ..> character.style.Skin : <<uses>>
+character.style.StyleManager ..> character.style.Hair : <<uses>>
+character.style.StyleManager ..> character.style.Eyes : <<uses>>
+
+'Global
+character.Character --|> character.Male
+character.Character --|> character.Female
+character.Character "1" o--> "1\n- commonPastFact" character.personality.enums.pastFacts.CommonPastFacts
+character.Character "1" o--> "1\n- originPastFact" character.personality.enums.pastFacts.OriginPastFacts
+character.Character "1" o--> "1\n- genderPastFact" character.personality.enums.pastFacts.GenderPastFacts
+character.Character "1" o--> "1\n- sexualOrientationPastFact" character.personality.enums.pastFacts.SexualOrientationPastFacts
+character.Character "1" o--> "1\n- originThoughts" character.personality.enums.thought.OriginThoughts
+character.Character "1" o--> "1\n- genderThoughts" character.personality.enums.thought.GenderThoughts
+character.Character "1" o--> "1\n- sexualOrientationThoughts" character.personality.enums.thought.SexualOrientationThoughts
+character.Character "1" o--> "1\n- MentalStrength" character.personality.enums.MentalStrength
+character.Character "1" o--> "1\n- sexualOrientation" character.personality.enums.SexualOrientation
+character.Character "1" o--> "1\n- origin" character.identity.enums.Origin
+character.Character "1" o--> "1\n- firstName" character.identity.enums.FirstName
+character.Character "1" o--> "1\n- lastname" character.identity.enums.LastName
+character.Character "1" o--> "1\n- characterStyle" character.style.CharacterStyle
+character.Character "1" o--> "1\n- hairColor" character.style.enums.HairColor
+
+character.CharacterDirector "1" o--> "1\n- builder" character.CharacterBuilder
+
+character.FemaleBuilder "1" o--> "1\n- pm" character.personality.PersonalityManager
+character.FemaleBuilder "1" o--> "1\n- fsm" character.style.FemaleStyleManager
+character.FemaleBuilder "1" o--> "1\n- female" character.Female
+
+character.MaleBuilder "1" o--> "1\n- pm" character.personality.PersonalityManager
+character.MaleBuilder "1" o--> "1\n- msm" character.style.MaleStyleManager
+character.MaleBuilder "1" o--> "1\n- male" character.Male
 
 @enduml
