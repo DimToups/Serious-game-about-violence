@@ -3,6 +3,7 @@ package fr.tyr.game;
 import fr.tyr.Main;
 import fr.tyr.components.character.CharacterDirector;
 import fr.tyr.components.character.FemaleBuilder;
+import fr.tyr.components.character.Male;
 import fr.tyr.components.character.MaleBuilder;
 import fr.tyr.components.classic.GameComponent;
 import fr.tyr.components.gauges.ReputationGauge;
@@ -49,7 +50,10 @@ public class GameEngine {
             MaleBuilder mb = new MaleBuilder();
             CharacterDirector cd = new CharacterDirector(mb);
             cd.generateCharacter();
-            componentList.add(mb.getMale());
+            Male maleCharacter = mb.getMale();
+            maleCharacter.resize(new Vector2D(200, 200));
+            maleCharacter.move(new Vector2D(300, 300));
+            componentList.add(maleCharacter);
 
             componentList.add(new ReputationGauge(new Vector2D(500, 200)));
             componentList.add(new TimeGauge(new Vector2D(700, 200)));
