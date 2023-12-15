@@ -1,6 +1,5 @@
 package fr.tyr.components.mixed;
 
-import fr.tyr.Main;
 import fr.tyr.components.classic.GameComponent;
 import fr.tyr.components.classic.ImageComponent;
 import fr.tyr.game.enums.MouseButtons;
@@ -50,10 +49,17 @@ public abstract class ComposedComponent extends GameComponent<List<GameComponent
         Vector2D ratio = size.getDivided(getSize());
         for(GameComponent<?> component: getFrame()){
             component.move(component.getPosition().getMultiplied(ratio));
-            if(component instanceof ImageComponent imageComponent)
+            if(component instanceof ImageComponent imageComponent){
                 imageComponent.resize(component.getSize().getMultiplied(ratio), false);
+            }else if(component instanceof ComposedComponent composedComponent){
+                composedComponent.resize(component.getSize().getMultiplied(ratio));
+            }
         }
         setSize(size);
+    }
+
+    public void resize(double ratio){
+        resize(getSize().getMultiplied(ratio));
     }
 
     @Override
@@ -63,14 +69,15 @@ public abstract class ComposedComponent extends GameComponent<List<GameComponent
 
     @Override
     public void move(Vector2D target) {
+        super.move(target);
         getFrame().forEach(component -> component.move(component.getPosition().getAdded(target)));
     }
 
     @Override
     public void render(Graphics g) {
         getFrame().stream().filter(fn -> fn.isVisible() && fn.isRendered()).forEach(component -> component.render(g));
-//        g.setColor(Color.RED);
-//        g.drawRect((int) getPosition().x, (int) getPosition().y, (int) getSize().x, (int) getSize().y);
+        g.setColor(Color.RED);
+        g.drawRect((int) getPosition().x, (int) getPosition().y, (int) getSize().x, (int) getSize().y);
     }
 
     @Override

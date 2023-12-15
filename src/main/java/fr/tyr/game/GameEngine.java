@@ -1,10 +1,7 @@
 package fr.tyr.game;
 
 import fr.tyr.Main;
-import fr.tyr.components.character.CharacterDirector;
-import fr.tyr.components.character.FemaleBuilder;
-import fr.tyr.components.character.Male;
-import fr.tyr.components.character.MaleBuilder;
+import fr.tyr.components.character.*;
 import fr.tyr.components.classic.GameComponent;
 import fr.tyr.components.gauges.ReputationGauge;
 import fr.tyr.components.gauges.TimeGauge;
@@ -22,6 +19,7 @@ public class GameEngine {
 
     private final ReentrantLock componentsLock = new ReentrantLock();
     private final List<GameComponent<?>> components;
+    private final CharacterSheet characterSheet = new CharacterSheet(new Vector2D(200, 300));
 
     /**
      * Create a new game engine
@@ -47,16 +45,19 @@ public class GameEngine {
             //componentList.add(new SampleAnimatedImageComponent(new Vector2D(300, 300)));
             //componentList.add(new SampleAnimatedTextComponent(new Vector2D(400, 400)));
 
-            MaleBuilder mb = new MaleBuilder();
-            CharacterDirector cd = new CharacterDirector(mb);
-            cd.generateCharacter();
-            Male maleCharacter = mb.getMale();
+            MaleBuilder maleBuilder = new MaleBuilder();
+            CharacterDirector characterDirector = new CharacterDirector(maleBuilder);
+            characterDirector.generateCharacter();
+            Male maleCharacter = maleBuilder.getMale();
             maleCharacter.resize(new Vector2D(200, 200));
-            maleCharacter.move(new Vector2D(300, 300));
+            maleCharacter.resize(new Vector2D(200, 200));
+            maleCharacter.move(new Vector2D(50, 50));
             componentList.add(maleCharacter);
 
             componentList.add(new ReputationGauge(new Vector2D(500, 200)));
             componentList.add(new TimeGauge(new Vector2D(700, 200)));
+            componentList.add(characterSheet);
+            characterSheet.show(maleCharacter);
         });
         Main.getLogger().info("Scene initialized.");
     }

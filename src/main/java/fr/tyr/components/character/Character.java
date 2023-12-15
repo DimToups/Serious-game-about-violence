@@ -1,5 +1,6 @@
 package fr.tyr.components.character;
 
+import fr.tyr.Main;
 import fr.tyr.components.character.identity.enums.FirstName;
 import fr.tyr.components.character.identity.enums.LastName;
 import fr.tyr.components.character.identity.enums.Origin;
@@ -17,6 +18,10 @@ import fr.tyr.components.character.style.enums.HairColor;
 import fr.tyr.components.mixed.ComposedComponent;
 import fr.tyr.resources.images.Images;
 import fr.tyr.tools.Vector2D;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 
 public abstract class Character extends ComposedComponent{
     //Past facts fields
@@ -169,8 +174,10 @@ public abstract class Character extends ComposedComponent{
         return sexualOrientationThoughts;
     }
     public void setCharacterStyle(CharacterStyle characterStyle){
+        if(Objects.nonNull(this.characterStyle))
+            throw new RuntimeException("Character style already set");
         this.characterStyle = characterStyle;
-        this.setFrame(characterStyle.getFrame());
+        this.setFrame(List.of(this.characterStyle));
     }
     public void setHairColor(HairColor hairColor) {
         this.hairColor = hairColor;
@@ -213,5 +220,10 @@ public abstract class Character extends ComposedComponent{
     }
     public void setMentalStrength(MentalStrength mentalStrength) {
         this.mentalStrength = mentalStrength;
+    }
+
+    @Override
+    public void resize(Vector2D size) {
+        super.resize(size);
     }
 }
