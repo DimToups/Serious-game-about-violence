@@ -3,16 +3,14 @@ skinparam classAttributeIconSize 0
 
 package violence{
     class ViolenceCard
+    class ViolenceCardManadgement
     package enums {
         enum Types{
-            ..Values..
             PHYSICAL
             ECONOMIC
             VERBAL
             PSYCHOLOGICAL
             SEXUAL
-            ..Method..
-            + getType() : Types
         }
         enum Backgrounds{
             ..Fields..
@@ -23,12 +21,11 @@ package violence{
             - image : Images
         }
         enum Acts
-        
     }
 }
-violence.ViolenceCard *->"1\n-_type" Types
-violence.enums.Types *-->"1\n-_background" violence.enums.Backgrounds
-violence.enums.Types *->"1\n-_icon" violence.enums.Icon
-violence.enums.Types *-->"1\n-_acts" violence.enums.Acts
-
+violence.ViolenceCard *-->"1\n-_icon" violence.enums.Icon
+violence.ViolenceCard *-->"1\n-_background" violence.enums.Backgrounds
+violence.ViolenceCard *-->"1\n-_acts" violence.enums.Acts
+violence.ViolenceCardManadgement ..> violence.ViolenceCard : uses
+violence.ViolenceCardManadgement ..> violence.enums.Types : uses
 @enduml
