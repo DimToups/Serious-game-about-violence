@@ -10,14 +10,14 @@ import fr.tyr.tools.Vector2D;
 public class MaleBuilder implements CharacterBuilder{
     private static final PersonalityManager pm = new PersonalityManager();
     private static final MaleStyleManager msf = new MaleStyleManager();
-    private Male male = new Male(new Vector2D());
+    private Character male = new Character(new Vector2D());
 
     /**
      * Reset the current Character
      */
     @Override
     public void reset() {
-        this.male = new Male(new Vector2D());
+        this.male = new Character(new Vector2D());
     }
 
     /**
@@ -76,7 +76,7 @@ public class MaleBuilder implements CharacterBuilder{
      * Send the current character
      * @return The current character
      */
-    public Male getMale() {
+    public Character getMale() {
         return male;
     }
 }

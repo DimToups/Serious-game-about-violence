@@ -18,7 +18,7 @@ import fr.tyr.components.mixed.ComposedComponent;
 import fr.tyr.resources.images.Images;
 import fr.tyr.tools.Vector2D;
 
-public abstract class Character extends ComposedComponent{
+public class Character extends ComposedComponent{
     //Past facts fields
     private CommonPastFacts commonPastFact;
     private OriginPastFacts originPastFact;

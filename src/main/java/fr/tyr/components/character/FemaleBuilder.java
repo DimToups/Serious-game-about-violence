@@ -8,14 +8,14 @@ import fr.tyr.tools.Vector2D;
 public class FemaleBuilder implements CharacterBuilder{
     private static final PersonalityManager pm = new PersonalityManager();
     private static final FemaleStyleManager fsm = new FemaleStyleManager();
-    private Female female = new Female(new Vector2D());
+    private Character female = new Character(new Vector2D());
 
     /**
      * Reset the current Character
      */
     @Override
     public void reset() {
-        this.female = new Female(new Vector2D());
+        this.female = new Character(new Vector2D());
     }
 
     /**
@@ -74,7 +74,7 @@ public class FemaleBuilder implements CharacterBuilder{
      * Send the current character
      * @return The current character
      */
-    public Female getFemale() {
+    public Character getFemale() {
         return female;
     }
 }
