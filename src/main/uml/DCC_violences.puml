@@ -1,0 +1,34 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+package violence{
+    class ViolenceCard
+    package enums {
+        enum Types{
+            ..Values..
+            PHYSICAL
+            ECONOMIC
+            VERBAL
+            PSYCHOLOGICAL
+            SEXUAL
+            ..Method..
+            + getType() : Types
+        }
+        enum Backgrounds{
+            ..Fields..
+            - image : Images
+        }
+        enum Icon{
+            ..Fields..
+            - image : Images
+        }
+        enum Acts
+        
+    }
+}
+violence.ViolenceCard *->"1\n-_type" Types
+violence.enums.Types *-->"1\n-_background" violence.enums.Backgrounds
+violence.enums.Types *->"1\n-_icon" violence.enums.Icon
+violence.enums.Types *-->"1\n-_acts" violence.enums.Acts
+
+@enduml
