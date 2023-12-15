@@ -14,16 +14,6 @@ public class CharacterStyle extends ComposedComponent {
     private final Skin skin;
     private ImageComponent additionalComponent;
 
-    public CharacterStyle(CharacterStyle style){
-        super(new Vector2D());
-        setFrame(List.of(style.getSkin(), style.getShirt(), style.getEyes(), style.getHair(), style.getAdditionalComponent()));
-        this.eyes = style.getEyes();
-        this.hair = style.getHair();
-        this.shirt = style.getShirt();
-        this.skin = style.getSkin();
-        this.additionalComponent = style.getAdditionalComponent();
-    }
-
     /**
      * Create the visual appearance of the character
      * @param eyes The character's eyes
