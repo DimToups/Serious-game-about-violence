@@ -24,7 +24,7 @@ public class Main {
         logger.info("Creating graphic engine");
         GraphicEngine graphicEngine = new GraphicEngine(gameEngine);
         logger.info("Creating game window");
-        GameWindow gameWindow = new GameWindow();
+        GameWindow gameWindow = new GameWindow(graphicEngine);
         gameWindow.add(graphicEngine);
         gameWindow.setVisible(true);
         logger.info("Game initialized");
