@@ -9,7 +9,7 @@ import java.util.List;
 
 public class FemaleStyleManager extends StyleManager{
     public CharacterStyle generateCommonCharacter(){
-        return new CharacterStyle(new Eyes(EyesEnum.COMMON_FEMALE_DOUBLE_BRUSH_BLUE), new Hair(HairEnum.MID_LENGHT_BLACK), new Shirt(ShirtEnum.RED), new Skin(SkinEnum.WHITE));
+        return new CharacterStyle(EyesEnum.COMMON_FEMALE_DOUBLE_BRUSH_BLUE, HairEnum.MID_LENGHT_BLACK, ShirtEnum.RED, SkinEnum.WHITE);
     }
     /**
      * Generate a random Hair instance
@@ -17,18 +17,18 @@ public class FemaleStyleManager extends StyleManager{
      * @return A random Hair instance
      */
     @Override
-    public Hair generateHair(HairColor color) {
+    public HairEnum generateHair(HairColor color) {
         try {
             List<HairEnum> validAssets = HairEnum.getAllGenderAssets(Gender.FEMALE, HairEnum.getAllColoredAssets(color));
 
-            return new Hair(HairEnum.valueOf(validAssets.get(rand.nextInt(0, validAssets.size())).name()));
+            return HairEnum.valueOf(validAssets.get(rand.nextInt(0, validAssets.size())).name());
         }
         catch (Exception e){
             //Passage de l'information
             Main.getLogger().info(e.getMessage());
 
             //Retour d'une coupe de base
-            return new Hair(HairEnum.BOWL_BLACK);
+            return HairEnum.BOWL_BLACK;
         }
     }
 
@@ -38,18 +38,18 @@ public class FemaleStyleManager extends StyleManager{
      * @return A random female Eye
      */
     @Override
-    public Eyes generateEyes(Origin origin) {
+    public EyesEnum generateEyes(Origin origin) {
         try {
             List<EyesEnum> validAssets = EyesEnum.getAllGenderAssets(Gender.FEMALE, EyesEnum.getAllOriginAssets(origin));
 
-            return new Eyes(EyesEnum.valueOf(validAssets.get(rand.nextInt(0, validAssets.size())).name()));
+            return EyesEnum.valueOf(validAssets.get(rand.nextInt(0, validAssets.size())).name());
         }
         catch (Exception e){
             //Passage de l'information
             Main.getLogger().info(e.getMessage());
 
             //Retour de yeux de base
-            return new Eyes(EyesEnum.COMMON_MALE_BLUE);
+            return EyesEnum.COMMON_MALE_BLUE;
         }
     }
 }

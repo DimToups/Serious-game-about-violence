@@ -61,49 +61,49 @@ public abstract class StyleManager {
      * @param origin The character's Origin
      * @return A SkinEnum
      */
-    public static Skin generateSkin(Origin origin){
+    public static SkinEnum generateSkin(Origin origin){
         try {
             List<SkinEnum> validAssets = SkinEnum.getAllOriginAssets(origin);
 
-            return new Skin(SkinEnum.valueOf(validAssets.get(rand.nextInt(0, validAssets.size())).name()));
+            return SkinEnum.valueOf(validAssets.get(rand.nextInt(0, validAssets.size())).name());
         }
         catch (Exception e){
             //Passage de l'information
             Main.getLogger().info(e.getMessage());
 
             //Retour d'une peau de base
-            return new Skin(SkinEnum.WHITE);
+            return SkinEnum.WHITE;
         }
     }
 
     /**
      * Create a random Hair
      * @param color The character's HairColor
-     * @return A Hair instance
+     * @return A HairEnum instance
      */
-    public abstract Hair generateHair(HairColor color);
+    public abstract HairEnum generateHair(HairColor color);
 
     /**
      * Create random Eyes
      * @param origin The character's Origin
-     * @return An Eyes instance
+     * @return An EyesEnum instance
      */
-    public abstract Eyes generateEyes(Origin origin);
+    public abstract EyesEnum generateEyes(Origin origin);
 
     /**
      * Create a random Shirt
-     * @return A Shirt instance
+     * @return A ShirtEnum instance
      */
-    public static Shirt generateShirt(){
+    public static ShirtEnum generateShirt(){
         try {
-            return new Shirt(ShirtEnum.valueOf(Arrays.stream(ShirtEnum.values()).toList().get(rand.nextInt(0, ShirtEnum.values().length)).name()));
+            return ShirtEnum.valueOf(Arrays.stream(ShirtEnum.values()).toList().get(rand.nextInt(0, ShirtEnum.values().length)).name());
         }
         catch (Exception e){
             //Passage de l'information
             Main.getLogger().info(e.getMessage());
 
             //Retour d'une haut de base
-            return new Shirt(ShirtEnum.RED);
+            return ShirtEnum.RED;
         }
     }
 

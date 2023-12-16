@@ -18,7 +18,6 @@ import fr.tyr.components.mixed.ComposedComponent;
 import fr.tyr.resources.images.Images;
 import fr.tyr.tools.Vector2D;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
