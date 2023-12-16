@@ -4,12 +4,15 @@ import fr.tyr.components.classic.ImageComponent;
 import fr.tyr.components.mixed.ComposedComponent;
 import fr.tyr.tools.Vector2D;
 
+import java.util.List;
+
 public class CharacterStyle extends ComposedComponent {
     private final Eyes eyes;
     private final Hair hair;
     private final Shirt shirt;
     private final Skin skin;
     private ImageComponent additionalComponent;
+
     /**
      * Create the visual appearance of the character
      * @param eyes The character's eyes
@@ -18,7 +21,8 @@ public class CharacterStyle extends ComposedComponent {
      * @param skin the character's skin
      */
     public CharacterStyle(Eyes eyes, Hair hair, Shirt shirt, Skin skin){
-        super(new Vector2D(), skin, shirt, eyes, hair);
+        super(new Vector2D());
+        setFrame(List.of(skin, shirt, eyes, hair));
         this.eyes = eyes;
         this.hair = hair;
         this.shirt = shirt;
@@ -33,7 +37,8 @@ public class CharacterStyle extends ComposedComponent {
      * @param additionalComponent An additional component of the character
      */
     public CharacterStyle(Eyes eyes, Hair hair, Shirt shirt, Skin skin, ImageComponent additionalComponent){
-        super(new Vector2D(), skin, shirt, eyes, hair, additionalComponent);
+        super(new Vector2D());
+        setFrame(List.of(skin, shirt, eyes, hair, additionalComponent));
         this.additionalComponent = additionalComponent;
         this.eyes = eyes;
         this.hair = hair;
@@ -92,5 +97,10 @@ public class CharacterStyle extends ComposedComponent {
                 new Vector2D((this.skin.getSize().x - this.eyes.getSize().x) / 2,400 / this.skin.getSize().y * this.eyes.getSize().y)));
         this.hair.move(Vector2D.add(this.skin.getPosition(),
                 new Vector2D((this.skin.getSize().x - this.hair.getSize().x) / 2, this.skin.getPosition().y + this.skin.getSize().y - this.hair.getSize().y + 38 / this.skin.getSize().y * this.hair.getSize().y)));
+    }
+
+    @Override
+    public void resize(Vector2D size) {
+        super.resize(size);
     }
 }
