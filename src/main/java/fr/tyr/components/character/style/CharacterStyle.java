@@ -30,7 +30,7 @@ public class CharacterStyle extends ComposedComponent {
         this.hair = new ImageComponent(hair.getImage());
         this.shirt = new ImageComponent(shirt.getImage());
         this.skin = new ImageComponent(skin.getImage());
-        setFrame(List.of(this.eyes, this.shirt, this.eyes, this.hair));
+        setFrame(List.of(this.skin, this.shirt, this.eyes, this.hair));
     }
     /**
      * Create the visual appearance of the character

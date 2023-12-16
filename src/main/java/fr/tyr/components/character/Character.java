@@ -1,17 +1,7 @@
 package fr.tyr.components.character;
 
-import fr.tyr.components.character.identity.enums.FirstName;
-import fr.tyr.components.character.identity.enums.LastName;
-import fr.tyr.components.character.identity.enums.Origin;
-import fr.tyr.components.character.personality.enums.SexualOrientation;
-import fr.tyr.components.character.personality.enums.thought.GenderThoughts;
-import fr.tyr.components.character.personality.enums.MentalStrength;
-import fr.tyr.components.character.personality.enums.thought.OriginThoughts;
-import fr.tyr.components.character.personality.enums.thought.SexualOrientationThoughts;
-import fr.tyr.components.character.personality.enums.pastFact.CommonPastFacts;
-import fr.tyr.components.character.personality.enums.pastFact.GenderPastFacts;
-import fr.tyr.components.character.personality.enums.pastFact.OriginPastFacts;
-import fr.tyr.components.character.personality.enums.pastFact.SexualOrientationPastFacts;
+import fr.tyr.components.character.identity.Identity;
+import fr.tyr.components.character.personality.Personality;
 import fr.tyr.components.character.style.*;
 import fr.tyr.components.character.style.enums.HairColor;
 import fr.tyr.components.mixed.ComposedComponent;
@@ -22,26 +12,11 @@ import java.util.List;
 import java.util.Objects;
 
 public class Character extends ComposedComponent{
-    //Past facts fields
-    private CommonPastFacts commonPastFact;
-    private OriginPastFacts originPastFact;
-    private GenderPastFacts genderPastFact;
-    private SexualOrientationPastFacts sexualOrientationPastFacts;
+    // Personality field
+    private Personality personality = new Personality();
 
-    //Thoughts fields
-    private OriginThoughts originThoughts;
-    private GenderThoughts genderThoughts;
-    private SexualOrientationThoughts sexualOrientationThoughts;
-
-    //Personality fields
-    private MentalStrength mentalStrength;
-    private SexualOrientation sexualOrientation;
-
-    //Identity fields
-    private Origin origin;
-    private FirstName firstName;
-    private LastName lastName;
-    private int age;
+    //Identity field
+    private Identity identity = new Identity();
 
     //Style fields
     private CharacterStyle characterStyle;
@@ -56,32 +31,37 @@ public class Character extends ComposedComponent{
         super(position);
     }
 
-    public Origin getOrigin() {
-        return origin;
+    public Personality getPersonality() {
+        return personality;
     }
 
-    /**
-     * Send the Character's FirstName
-     * @return The Character's FirstName
-     */
-    public FirstName getFirstName(){
-        return this.firstName;
+    public void setPersonality(Personality personality) {
+        this.personality = personality;
     }
 
-    /**
-     * Send the Character's LastName
-     * @return The Character's LastName
-     */
-    public LastName getLastName() {
-        return this.lastName;
+    public Identity getIdentity() {
+        return identity;
     }
 
+    public void setIdentity(Identity identity) {
+        this.identity = identity;
+    }
+
+
     /**
-     * Send the Character's age
-     * @return The Character's age
+     * Send the Character's Skin
+     * @return The Character's Skin
      */
-    public int getAge() {
-        return age;
+    public CharacterStyle getCharacterStyle(){
+        return this.characterStyle;
+    }
+
+
+    public void setCharacterStyle(CharacterStyle characterStyle){
+        if(Objects.nonNull(this.characterStyle))
+            throw new RuntimeException("Character style already set");
+        this.characterStyle = characterStyle;
+        this.setFrame(List.of(this.characterStyle));
     }
 
     /**
@@ -92,132 +72,8 @@ public class Character extends ComposedComponent{
         return this.hairColor;
     }
 
-    /**
-     * Send the Character's Skin
-     * @return The Character's Skin
-     */
-    public CharacterStyle getCharacterStyle(){
-        return this.characterStyle;
-    }
-
-    /**
-     * Send the character's common past fact
-     * @return The character's common past fact
-     */
-    public CommonPastFacts getCommonPastFact() {
-        return commonPastFact;
-    }
-
-    /**
-     * Send the character's origin based past fact
-     * @return The character's origin based past fact
-     */
-    public OriginPastFacts getOriginPastFact() {
-        return originPastFact;
-    }
-
-    /**
-     * Send the character's gender based past fact
-     * @return The character's gender based past fact
-     */
-    public GenderPastFacts getGenderPastFact() {
-        return genderPastFact;
-    }
-
-    /**
-     * Send the character's style based past fact
-     * @return The character's style based past fact
-     */
-    public SexualOrientationPastFacts getSexualOrientationPastFacts() {
-        return sexualOrientationPastFacts;
-    }
-
-    /**
-     * Send the character's mental strength
-     * @return The character's mental strength
-     */
-    public MentalStrength getMentalStrength() {
-        return mentalStrength;
-    }
-
-    /**
-     * Send the character's sexual orientation
-     * @return The character's sexual orientation
-     */
-    public SexualOrientation getSexualOrientation() {
-        return sexualOrientation;
-    }
-
-    /**
-     * Send the Character's thoughts on origins
-     * @return The Character's thoughts on origins
-     */
-    public OriginThoughts getOriginThoughts() {
-        return originThoughts;
-    }
-
-    /**
-     * Send the Character's thoughts on genders
-     * @return The Character's thoughts on genders
-     */
-    public GenderThoughts getGenderThoughts() {
-        return genderThoughts;
-    }
-
-    /**
-     * Send the Character's thoughts on style
-     * @return The Character's thoughts on style
-     */
-    public SexualOrientationThoughts getSexualOrientationThoughts() {
-        return sexualOrientationThoughts;
-    }
-    public void setCharacterStyle(CharacterStyle characterStyle){
-        if(Objects.nonNull(this.characterStyle))
-            throw new RuntimeException("Character style already set");
-        this.characterStyle = characterStyle;
-        this.setFrame(List.of(this.characterStyle));
-    }
     public void setHairColor(HairColor hairColor) {
         this.hairColor = hairColor;
-    }
-    public  void setFirstName(FirstName firstName){
-        this.firstName = firstName;
-    }
-    public void setLastName(LastName lastName){
-        this.lastName = lastName;
-    }
-    public void setAge(int age){
-        this.age = age;
-    }
-    public void setOrigin(Origin origin){
-        this.origin = origin;
-    }
-    public void setCommonPastFact(CommonPastFacts commonPastFact) {
-        this.commonPastFact = commonPastFact;
-    }
-    public void setOriginPastFact(OriginPastFacts originPastFact) {
-        this.originPastFact = originPastFact;
-    }
-    public void setGenderPastFact(GenderPastFacts genderPastFact) {
-        this.genderPastFact = genderPastFact;
-    }
-    public void setSexualOrientationPastFacts(SexualOrientationPastFacts sexualOrientationPastFacts) {
-        this.sexualOrientationPastFacts = sexualOrientationPastFacts;
-    }
-    public void setOriginThoughts(OriginThoughts originThoughts) {
-        this.originThoughts = originThoughts;
-    }
-    public void setGenderThoughts(GenderThoughts genderThoughts) {
-        this.genderThoughts = genderThoughts;
-    }
-    public void setSexualOrientationThoughts(SexualOrientationThoughts sexualOrientationThoughts) {
-        this.sexualOrientationThoughts = sexualOrientationThoughts;
-    }
-    public void setSexualOrientation(SexualOrientation sexualOrientation) {
-        this.sexualOrientation = sexualOrientation;
-    }
-    public void setMentalStrength(MentalStrength mentalStrength) {
-        this.mentalStrength = mentalStrength;
     }
 
     @Override

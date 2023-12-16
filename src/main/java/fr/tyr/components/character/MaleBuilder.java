@@ -1,4 +1,5 @@
 package fr.tyr.components.character;
+
 import fr.tyr.components.character.identity.IdentityManager;
 import fr.tyr.components.character.identity.enums.Gender;
 import fr.tyr.components.character.personality.PersonalityManager;
@@ -25,11 +26,12 @@ public class MaleBuilder implements CharacterBuilder{
      */
     @Override
     public void generateIdentity() {
-        this.male.setOrigin(IdentityManager.generateOrigin());
-        this.male.setFirstName(IdentityManager.generateMaleFirstName(this.male.getOrigin()));
-        this.male.setLastName(IdentityManager.generateLastName(this.male.getOrigin()));
+        this.male.getIdentity().setGender(Gender.MALE);
+        this.male.getIdentity().setOrigin(IdentityManager.generateOrigin());
+        this.male.getIdentity().setFirstName(IdentityManager.generateMaleFirstName(this.male.getIdentity().getOrigin()));
+        this.male.getIdentity().setLastName(IdentityManager.generateLastName(this.male.getIdentity().getOrigin()));
         int age = IdentityManager.generateAge();
-        this.male.setAge(age);
+        this.male.getIdentity().setAge(age);
         this.male.setHairColor(StyleManager.generateHairColor(age));
     }
 
@@ -38,8 +40,8 @@ public class MaleBuilder implements CharacterBuilder{
      */
     @Override
     public void generatePersonality() {
-        this.male.setMentalStrength(pm.generateMentalStrength(this.male.getCommonPastFact(), this.getMale().getOriginPastFact(), this.getMale().getGenderPastFact(), this.getMale().getSexualOrientationPastFacts()));
-        this.male.setSexualOrientation(pm.generateSexualOrientation(this.getMale().getSexualOrientationPastFacts(), Gender.MALE));
+        this.male.getPersonality().setMentalStrength(pm.generateMentalStrength(this.male.getPersonality().getPastFact().getCommonPastFact(), this.getMale().getPersonality().getPastFact().getOriginPastFact(), this.getMale().getPersonality().getPastFact().getGenderPastFact(), this.getMale().getPersonality().getPastFact().getSexualOrientationPastFact()));
+        this.male.getPersonality().setSexualOrientation(pm.generateSexualOrientation(this.getMale().getPersonality().getPastFact().getSexualOrientationPastFact(), Gender.MALE));
     }
 
     /**
@@ -47,10 +49,10 @@ public class MaleBuilder implements CharacterBuilder{
      */
     @Override
     public void generatePast() {
-        this.male.setCommonPastFact(pm.generateCommonPastFact());
-        this.male.setOriginPastFact(pm.generateOriginPastFacts(this.male.getOrigin()));
-        this.male.setGenderPastFact(pm.generateGenderPastFact(Gender.MALE));
-        this.male.setSexualOrientationPastFacts(pm.generateSexualOrientationPastFact());
+        this.male.getPersonality().getPastFact().setCommonPastFact(pm.generateCommonPastFact());
+        this.male.getPersonality().getPastFact().setOriginPastFact(pm.generateOriginPastFacts(this.male.getIdentity().getOrigin()));
+        this.male.getPersonality().getPastFact().setGenderPastFact(pm.generateGenderPastFact(Gender.MALE));
+        this.male.getPersonality().getPastFact().setSexualOrientationPastFact(pm.generateSexualOrientationPastFact());
     }
 
     /**
@@ -58,9 +60,9 @@ public class MaleBuilder implements CharacterBuilder{
      */
     @Override
     public void generateThoughts() {
-        this.male.setOriginThoughts(pm.generateOriginThoughts(this.male.getOriginPastFact()));
-        this.male.setGenderThoughts(pm.generateGenderThoughts(this.male.getGenderPastFact(), Gender.MALE));
-        this.male.setSexualOrientationThoughts(pm.generateSexualOrientationThoughts(this.male.getSexualOrientationPastFacts()));
+        this.male.getPersonality().getThoughts().setOriginThoughts(pm.generateOriginThoughts(this.male.getPersonality().getPastFact().getOriginPastFact()));
+        this.male.getPersonality().getThoughts().setGenderThoughts(pm.generateGenderThoughts(this.male.getPersonality().getPastFact().getGenderPastFact(), Gender.MALE));
+        this.male.getPersonality().getThoughts().setSexualOrientationThoughts(pm.generateSexualOrientationThoughts(this.male.getPersonality().getPastFact().getSexualOrientationPastFact()));
     }
 
     /**
@@ -68,7 +70,7 @@ public class MaleBuilder implements CharacterBuilder{
      */
     @Override
     public void generateStyle() {
-        this.male.setCharacterStyle(new MaleCharacterStyle(MaleStyleManager.generateBeard(this.male.getHairColor()), msf.generateEyes(this.male.getOrigin()), msf.generateHair(this.male.getHairColor()), MaleStyleManager.generateShirt(), MaleStyleManager.generateSkin(this.male.getOrigin())));
+        this.male.setCharacterStyle(new MaleCharacterStyle(MaleStyleManager.generateBeard(this.male.getHairColor()), msf.generateEyes(this.male.getIdentity().getOrigin()), msf.generateHair(this.male.getHairColor()), MaleStyleManager.generateShirt(), MaleStyleManager.generateSkin(this.male.getIdentity().getOrigin())));
         this.male.getCharacterStyle().assemble();
     }
 
