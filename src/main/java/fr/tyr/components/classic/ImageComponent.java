@@ -55,6 +55,14 @@ public class ImageComponent extends GameComponent<BufferedImage> {
     /**
      * Resize the image to the given size
      * @param size The new size of the image
+     */
+    public void resize(Vector2D size) {
+        resize(size, false, false);
+    }
+
+    /**
+     * Resize the image to the given size
+     * @param size The new size of the image
      * @param centerImage If true, the image will be centered in the new size
      */
     public void resize(Vector2D size, boolean centerImage) {
@@ -74,18 +82,17 @@ public class ImageComponent extends GameComponent<BufferedImage> {
         setSize(size);
         Main.getLogger().info("%s image resized from %s to %s (%dms)".formatted(imageType.name(), getSize(), size, STimer.stop(timerId)));
         if(centerComponent){
-            Vector2D tempVector = null;
-            if(baseSize.x > size.x && baseSize.y > size.y)
-                tempVector = Vector2D.toPositive(Vector2D.subtract(baseSize, size)).getDivided(2);
-            else if(baseSize.x < size.x && baseSize.y < size.y)
-                tempVector = Vector2D.toNegative(Vector2D.subtract(baseSize, size)).getDivided(2);
-            if(Objects.isNull(tempVector)){
-                Main.getLogger().severe("Unable to center component from size %s to size %s".formatted(baseSize, size));
-                return;
-            }
-            getPosition().add(tempVector);
-            if(isMoving())
-                moveTo(getTarget().getAdded(tempVector), getRemainingDuration());
+            throw new RuntimeException("Centering component is not implemented yet");
+//            Vector2D tempVector = null;
+//            if(baseSize.x > size.x && baseSize.y > size.y)
+//                tempVector = Vector2D.toPositive(Vector2D.subtract(baseSize, size)).getDivided(2);
+//            else if(baseSize.x < size.x && baseSize.y < size.y)
+//                tempVector = Vector2D.toNegative(Vector2D.subtract(baseSize, size)).getDivided(2);
+//            if(Objects.isNull(tempVector))
+//                throw new RuntimeException("Unable to center component from size %s to size %s".formatted(baseSize, size));
+//            getPosition().add(tempVector);
+//            if(isMoving())
+//                moveTo(getTarget().getAdded(tempVector), getRemainingDuration());
         }
     }
 
@@ -105,8 +112,8 @@ public class ImageComponent extends GameComponent<BufferedImage> {
     @Override
     public void render(Graphics g) {
         g.drawImage(getFrame(), (int) getPosition().x, (int) getPosition().y, null);
-//        g.setColor(Color.RED);
-//        g.drawRect((int) getPosition().x, (int) getPosition().y, (int) getSize().x, (int) getSize().y);
+        if(Main.doesHitboxDisplay())
+            displayHitbox(g, Color.RED);
     }
 
     public void setImage(Images image){

@@ -86,7 +86,7 @@ public abstract class GameComponent<T> {
     }
 
     public void move(Vector2D target){
-        this.position = target;
+        this.position = new Vector2D(target);
     }
 
     public T getFrame() {
@@ -133,8 +133,8 @@ public abstract class GameComponent<T> {
         isRendered = rendered;
     }
 
-    public void displayHitbox(Graphics g){
-        g.setColor(Color.RED);
+    public void displayHitbox(Graphics g, Color color){
+        g.setColor(color);
         g.drawRect((int) position.x, (int) position.y, (int) size.x, (int) size.y);
     }
 
