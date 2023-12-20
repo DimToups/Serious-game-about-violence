@@ -71,7 +71,7 @@ public class MaleBuilder implements CharacterBuilder{
     @Override
     public void generateStyle() {
         this.male.setCharacterStyle(new MaleCharacterStyle(MaleStyleManager.generateBeard(this.male.getHairColor()), msf.generateEyes(this.male.getIdentity().getOrigin()), msf.generateHair(this.male.getHairColor()), MaleStyleManager.generateShirt(), MaleStyleManager.generateSkin(this.male.getIdentity().getOrigin())));
-        this.male.getCharacterStyle().assemble();
+//        this.male.getCharacterStyle().assemble();
     }
 
     /**
