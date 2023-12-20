@@ -1,5 +1,6 @@
 package fr.tyr.components.texts;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +14,10 @@ public class Text {
      */
     public Text(TextPart... parts) {
         this.parts = new ArrayList<>(List.of(parts));
+    }
+
+    public Text(String text, Color color, Font font) {
+        this.parts = new ArrayList<>(List.of(new TextPart(text, color, font)));
     }
 
     /**

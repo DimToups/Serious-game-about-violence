@@ -5,6 +5,8 @@ import fr.tyr.game.GameWindow;
 import fr.tyr.game.GraphicEngine;
 import fr.tyr.tools.LogFormatter;
 
+import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,13 +16,21 @@ public class Main {
     private static Logger logger;
     private static GameEngine gameEngine;
 
+    private static boolean hitboxDisplay = false;
+
     public static void main(String[] args) {
-        boolean devMode = false;
-        if(args.length > 0)
-            devMode = args[0].equals("--dev");
-        setupLogger(devMode);
+        AtomicBoolean devMode = new AtomicBoolean(false);
+        if(args.length > 0){
+            List<String> argsList = List.of(args);
+            if(argsList.contains("--dev"))
+                devMode.set(true);
+            if(argsList.contains("--hitbox"))
+                hitboxDisplay = true;
+        }
+
+        setupLogger(devMode.get());
         logger.info("Creating game engine");
-        gameEngine = new GameEngine(devMode);
+        gameEngine = new GameEngine(devMode.get());
         logger.info("Creating graphic engine");
         GraphicEngine graphicEngine = new GraphicEngine(gameEngine);
         logger.info("Creating game window");
@@ -49,5 +59,9 @@ public class Main {
 
     public static GameEngine getGameEngine() {
         return gameEngine;
+    }
+
+    public static boolean doesHitboxDisplay() {
+        return hitboxDisplay;
     }
 }
