@@ -51,7 +51,7 @@ public class TextComponent extends GameComponent<Text>{
             }
         setSize(new Vector2D(x - (int) getPosition().x, maxY));
         if(Main.doesHitboxDisplay())
-            displayHitbox(g);
+            displayHitbox(g, Color.BLUE);
     }
 
     public void setText(String text){

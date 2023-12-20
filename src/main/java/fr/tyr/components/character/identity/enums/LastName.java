@@ -1,6 +1,5 @@
 package fr.tyr.components.character.identity.enums;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
