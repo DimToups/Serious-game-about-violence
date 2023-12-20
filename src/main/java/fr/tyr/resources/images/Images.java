@@ -95,6 +95,9 @@ public enum Images {
     ICON_ECONOMICAL("assets/violenceCard/icons/economic_violence.png",true),
     ICON_VERBAL("assets/violenceCard/icons/verbal_violence.png",true),
     ICON_SEXUAL("assets/violenceCard/icons/sexual_violence.png",true),
+
+    // Character Sheet
+    CHARACTER_SHEET_BACKGROUND("assets/character_sheet/background.png", true),
     ;
 
     private final String path;

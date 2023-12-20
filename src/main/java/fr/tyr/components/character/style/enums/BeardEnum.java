@@ -1,7 +1,6 @@
 package fr.tyr.components.character.style.enums;
 
 import fr.tyr.Main;
-import fr.tyr.components.character.style.Beard;
 import fr.tyr.resources.images.Images;
 import org.jetbrains.annotations.Nullable;
 
@@ -9,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Predicate;
 import java.util.logging.Level;
 
 public enum BeardEnum {

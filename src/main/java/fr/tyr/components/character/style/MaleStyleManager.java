@@ -9,7 +9,7 @@ import java.util.List;
 
 public class MaleStyleManager extends StyleManager{
     public MaleCharacterStyle generateCommonCharacter(){
-        return new MaleCharacterStyle(new Beard(BeardEnum.SHORT_BLACK) ,new Eyes(EyesEnum.COMMON_MALE_BLUE), new Hair(HairEnum.BOWL_BLACK), new Shirt(ShirtEnum.RED), new Skin(SkinEnum.WHITE));
+        return new MaleCharacterStyle(BeardEnum.SHORT_BLACK, EyesEnum.COMMON_MALE_BLUE, HairEnum.BOWL_BLACK, ShirtEnum.RED, SkinEnum.WHITE);
     }
     /**
      * Generate a random Hair instance
@@ -17,18 +17,18 @@ public class MaleStyleManager extends StyleManager{
      * @return a Hair instance
      */
     @Override
-    public Hair generateHair(HairColor color) {
+    public HairEnum generateHair(HairColor color) {
         try {
             List<HairEnum> validAssets = HairEnum.getAllColoredAssets(color ,HairEnum.getAllGenderAssets(Gender.MALE));
 
-            return new Hair(HairEnum.valueOf(validAssets.get(rand.nextInt(0, validAssets.size())).name()));
+            return HairEnum.valueOf(validAssets.get(rand.nextInt(0, validAssets.size())).name());
         }
         catch (Exception e){
             //Passage de l'information
             Main.getLogger().info(e.getMessage());
 
             //Retour d'une coupe de base
-            return new Hair(HairEnum.BLACK_DISHEVELLED);
+            return HairEnum.BLACK_DISHEVELLED;
         }
     }
 
@@ -38,18 +38,18 @@ public class MaleStyleManager extends StyleManager{
      * @return A male Eye
      */
     @Override
-    public Eyes generateEyes(Origin origin) {
+    public EyesEnum generateEyes(Origin origin) {
         try {
             List<EyesEnum> validAssets = EyesEnum.getAllGenderAssets(Gender.MALE, EyesEnum.getAllOriginAssets(origin));
 
-            return new Eyes(EyesEnum.valueOf(validAssets.get(rand.nextInt(0, validAssets.size())).name()));
+            return EyesEnum.valueOf(validAssets.get(rand.nextInt(0, validAssets.size())).name());
         }
         catch (Exception e){
             //Passage de l'information
             Main.getLogger().info(e.getMessage());
 
             //Retour de yeux de base
-            return new Eyes(EyesEnum.COMMON_MALE_BLUE);
+            return EyesEnum.COMMON_MALE_BLUE;
         }
     }
 
@@ -58,18 +58,18 @@ public class MaleStyleManager extends StyleManager{
      * @param color The character's HairColor
      * @return A Beard
      */
-    public static Beard generateBeard(HairColor color){
+    public static BeardEnum generateBeard(HairColor color){
         try {
             List<BeardEnum> validAssets = BeardEnum.getAllColoredAssets(color);
 
-            return new Beard(BeardEnum.valueOf(validAssets.get(rand.nextInt(0, validAssets.size())).name()));
+            return BeardEnum.valueOf(validAssets.get(rand.nextInt(0, validAssets.size())).name());
         }
         catch (Exception e){
             //Passage de l'information
             Main.getLogger().info(e.getMessage());
 
             //Retour d'une barbe de base
-            return new Beard(BeardEnum.NONE);
+            return BeardEnum.NONE;
         }
     }
 }

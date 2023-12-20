@@ -1,7 +1,10 @@
 package fr.tyr.components.character.style;
 
+import fr.tyr.components.character.style.enums.*;
+import fr.tyr.components.classic.ImageComponent;
+
 public class MaleCharacterStyle extends CharacterStyle{
-    private final Beard beard;
+    private final ImageComponent beard;
 
     /**
      * Create the visual appearance of the character
@@ -11,16 +14,16 @@ public class MaleCharacterStyle extends CharacterStyle{
      * @param shirt the character's shirt
      * @param skin the character's skin
      */
-    public MaleCharacterStyle(Beard beard, Eyes eyes, Hair hair, Shirt shirt, Skin skin){
-        super(eyes, hair, shirt, skin, beard);
-        this.beard = beard;
+    public MaleCharacterStyle(BeardEnum beard, EyesEnum eyes, HairEnum hair, ShirtEnum shirt, SkinEnum skin){
+        super(eyes, hair, shirt, skin, new ImageComponent(beard.getImage()));
+        this.beard = super.getAdditionalComponent();
     }
 
     /**
      * Send the character's Beard
      * @return The character's Beard
      */
-    public Beard getBeard() {
+    public ImageComponent getBeard() {
         return beard;
     }
 

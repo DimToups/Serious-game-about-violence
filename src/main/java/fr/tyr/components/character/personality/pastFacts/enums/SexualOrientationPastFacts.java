@@ -1,8 +1,8 @@
-package fr.tyr.components.character.personality.enums.pastFact;
+package fr.tyr.components.character.personality.pastFacts.enums;
 
 import fr.tyr.components.character.personality.enums.MentalStrength;
 import fr.tyr.components.character.personality.enums.SexualOrientation;
-import fr.tyr.components.character.personality.enums.thought.SexualOrientationThoughts;
+import fr.tyr.components.character.personality.thoughts.enums.SexualOrientationThoughts;
 
 
 public enum SexualOrientationPastFacts {
