@@ -10,8 +10,8 @@ public class Identity {
     private LastName lastName;
     private Gender gender;
     private Origin origin;
+    private boolean isOriginDiscovered = false;
     private int age;
-
     public FirstName getFirstName() {
         return firstName;
     }
@@ -42,6 +42,14 @@ public class Identity {
 
     public void setOrigin(Origin origin) {
         this.origin = origin;
+    }
+
+    public boolean isOriginDiscovered() {
+        return isOriginDiscovered;
+    }
+
+    public void setOriginDiscovered(boolean originDiscovered) {
+        isOriginDiscovered = originDiscovered;
     }
 
     public int getAge() {

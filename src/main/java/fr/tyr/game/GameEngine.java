@@ -46,10 +46,10 @@ public class GameEngine {
             //componentList.add(new SampleAnimatedImageComponent(new Vector2D(300, 300)));
             //componentList.add(new SampleAnimatedTextComponent(new Vector2D(400, 400)));
 
-            FemaleBuilder femaleBuilder = new FemaleBuilder();
-            CharacterDirector characterDirector = new CharacterDirector(femaleBuilder);
+            MaleBuilder maleBuilder = new MaleBuilder();
+            CharacterDirector characterDirector = new CharacterDirector(maleBuilder);
             characterDirector.generateCharacter();
-            Character maleCharacter = femaleBuilder.getFemale();
+            Character maleCharacter = maleBuilder.getMale();
             maleCharacter.resize(new Vector2D(200, 200));
             maleCharacter.resize(new Vector2D(200, 200));
             maleCharacter.move(new Vector2D(50, 50));
