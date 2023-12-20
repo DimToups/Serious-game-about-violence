@@ -2,8 +2,32 @@
 skinparam classAttributeIconSize 0
 
 package violence{
-    class ViolenceCard
-    class ViolenceCardManager
+    class ViolenceCard{
+        ..Methods..
+        + getIcon(): Icon
+        + setIcon(Icon)
+        + getBackground(): Backgrounds
+        +setBackground(Backgrounds)
+        + getActs(): Acts
+        + setActs(Acts)
+        + getTypes(): Types
+        + setTypes(Types)
+    }
+    class ViolenceCardBuilder{
+        ..Fields..
+        rand: Random {static}
+        ..Methods..
+        + generateIcon(type: Types)
+        + generateBackground(type: Types)
+        + generateActs(type: Types)
+        + generateType()
+        + getViolenceCard(): ViolenceCard
+    }
+    class ViolenceCardDirector {
+        ..Methods..
+        + generateCard()
+        + getViolenceCardBuilder(): ViolenceCardBuilder
+    }
     package enums {
         enum Types{
             PHYSICAL
@@ -14,30 +38,36 @@ package violence{
         }
         enum Backgrounds{
             ..Fields..
-            - type : Types
-            - image : Images
+            - type: Types
+            - image: Images
             ..Methods..
-            <<create>> Backgrounds(type : Types, background : Images)
+            <<create>> Backgrounds(type: Types, background: Images)
+            + getImage(): Images
         }
         enum Icon{
             ..Fields..
-            - type : Types
-            - image : Images
+            - type: Types
+            - image: Images
             ..Methods..
-            <<create>> Icon(type : Types, icon : Images)
+            <<create>> Icon(type: Types, icon: Images)
+            + getImage(): Images
         }
         enum Acts{
         ..Fields..
-        - type : Types
-        - description : String
+        - type: Types
+        - description: String
         ..Methods..
-        <<create>> Acts(type : Types, description : String)
+        <<create>> Acts(type: Types, description: String)
+        + getAllActs(type: Types) Acts[]
+        + getDescription(): String
         }
     }
 }
-violence.ViolenceCard *-->"1\n-_icon" violence.enums.Icon
-violence.ViolenceCard *-->"1\n-_background" violence.enums.Backgrounds
-violence.ViolenceCard *-->"1\n-_acts" violence.enums.Acts
-violence.ViolenceCardManager ..> violence.ViolenceCard : uses
-violence.ViolenceCardManager ..> violence.enums.Types : uses
+violence.ViolenceCard o-->"1\n-_icon" violence.enums.Icon
+violence.ViolenceCard o-->"1\n-_background" violence.enums.Backgrounds
+violence.ViolenceCard o-->"1\n-_acts" violence.enums.Acts
+violence.ViolenceCard o-->"1\n-_type" violence.enums.Types
+violence.ViolenceCardBuilder o-->"1\n-_violenceCard" violence.ViolenceCard
+violence.ViolenceCardDirector o-->"1\n-_violenceCardBuilder" violence.ViolenceCardBuilder
+
 @enduml

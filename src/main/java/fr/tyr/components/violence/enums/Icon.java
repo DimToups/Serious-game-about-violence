@@ -21,5 +21,8 @@ public enum Icon {
         this.type = type;
         this.icon = icon;
     }
+    public Images getImage(){
+        return this.icon;
+    }
 }
 
