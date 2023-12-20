@@ -1,12 +1,15 @@
 package fr.tyr.components.character;
 
+import fr.tyr.Main;
 import fr.tyr.components.classic.ImageComponent;
 import fr.tyr.components.classic.TextComponent;
 import fr.tyr.components.mixed.ComposedComponent;
+import fr.tyr.game.enums.MouseButtons;
 import fr.tyr.resources.images.Images;
 import fr.tyr.tools.Vector2D;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -32,7 +35,10 @@ public class CharacterSheet extends ComposedComponent {
     static {
         sheetBackground.resize(sheetBackground.getSize().getMultiplied(0.5D), false);
     }
+
     private Character character;
+    private Vector2D baseCharacterPosition;
+    private Vector2D baseCharacterSize;
 
     /**
      * Create a composed component
@@ -41,24 +47,27 @@ public class CharacterSheet extends ComposedComponent {
      */
     public CharacterSheet(Vector2D position) {
         super(position);
-        setFrame(List.of(sheetBackground));
+        setFrame(new ArrayList<>(List.of(sheetBackground)));
         this.setVisible(false);
     }
 
     public void show(Character character){
         if(Objects.nonNull(this.character))
-            getFrame().remove(character);
+            hide();
         this.character = character;
+        baseCharacterPosition = new Vector2D(character.getPosition());
+        baseCharacterSize = new Vector2D(character.getSize());
         updateCharacter();
         updateTexts();
-        setFrame(List.of(sheetBackground, character, firstName, lastName, age, commonPastFacts, genderPastFacts, originPastFacts, sexualOrientationPastFacts, genderThoughts, originThoughts, sexualOrientationThoughts));
+        setFrame(new ArrayList<>(List.of(sheetBackground, character, firstName, lastName, age, commonPastFacts, genderPastFacts, originPastFacts, sexualOrientationPastFacts, genderThoughts, originThoughts, sexualOrientationThoughts)));
         refreshSize();
         this.setVisible(true);
+        Main.getLogger().info("Showing character sheet for %s %s".formatted(character.getIdentity().getFirstName(), character.getIdentity().getLastName()));
     }
 
     private void updateCharacter(){
-        character.resize(character.getSize().getMultiplied(0.44));
-        character.move(getPosition().getAdded(new Vector2D(0, 95)));
+        character.resize(0.6);
+        character.move(getPosition().getAdded(new Vector2D(12, 105)));
         character.refreshSize();
     }
 
@@ -86,9 +95,20 @@ public class CharacterSheet extends ComposedComponent {
     }
 
     public void hide(){
-        if(Objects.nonNull(character))
-            getFrame().remove(character);
+        if(Objects.isNull(character))
+            throw new UnsupportedOperationException("Cannot hide a character sheet if it is not shown");
+        // Log resize
+        character.resize(baseCharacterSize);
+        character.move(baseCharacterPosition);
+        character.unframe();
+        Main.getLogger().info("Hiding character sheet for %s %s".formatted(character.getIdentity().getFirstName(), character.getIdentity().getLastName()));
         character = null;
+        setFrame(new ArrayList<>(List.of(sheetBackground)));
         this.setVisible(false);
+    }
+
+    @Override
+    public void onClick(MouseButtons button) {
+        hide();
     }
 }
