@@ -1,4 +1,4 @@
-package fr.tyr.components.character.personality.enums.thought;
+package fr.tyr.components.character.personality.thoughts.enums;
 
 public enum GenderThoughts {
     MISOGYNIST("Misogyne", "La personne n'aime pas les femmes."),

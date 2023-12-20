@@ -3,7 +3,6 @@ package fr.tyr.tools;
 import fr.tyr.Main;
 
 import java.util.HashMap;
-import java.util.Objects;
 
 public class STimer {
 

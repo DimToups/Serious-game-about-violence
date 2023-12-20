@@ -2,6 +2,7 @@ package fr.tyr.game;
 
 import fr.tyr.Main;
 import fr.tyr.components.character.*;
+import fr.tyr.components.character.Character;
 import fr.tyr.components.classic.GameComponent;
 import fr.tyr.components.gauges.ReputationGauge;
 import fr.tyr.components.gauges.TimeGauge;
@@ -45,10 +46,10 @@ public class GameEngine {
             //componentList.add(new SampleAnimatedImageComponent(new Vector2D(300, 300)));
             //componentList.add(new SampleAnimatedTextComponent(new Vector2D(400, 400)));
 
-            MaleBuilder maleBuilder = new MaleBuilder();
-            CharacterDirector characterDirector = new CharacterDirector(maleBuilder);
+            FemaleBuilder femaleBuilder = new FemaleBuilder();
+            CharacterDirector characterDirector = new CharacterDirector(femaleBuilder);
             characterDirector.generateCharacter();
-            Male maleCharacter = maleBuilder.getMale();
+            Character maleCharacter = femaleBuilder.getFemale();
             maleCharacter.resize(new Vector2D(200, 200));
             maleCharacter.resize(new Vector2D(200, 200));
             maleCharacter.move(new Vector2D(50, 50));

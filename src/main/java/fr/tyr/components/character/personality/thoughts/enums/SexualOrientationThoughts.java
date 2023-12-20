@@ -1,14 +1,15 @@
-package fr.tyr.components.character.personality.enums.thought;
+package fr.tyr.components.character.personality.thoughts.enums;
 
-public enum OriginThoughts {
-    DISLIKES_ALL_COMMENTS("Aime aucun commentaire", "La personne ne tolère pas les commentaires racistes."),
-    DISLIKES_COMMENTS_ON_ITS_ORIGIN("N'aime pas les commentaires sur son origine", "La personne n'aime pas qu'on se moque de son origine."),
-    NEUTRAL("Aucun avis", "La personne n'a pas vraiment d'avis sur les origines."),
-    LIKES_ALL_COMMENTS("Aime tous les commentaires", "La personne est apprécie les commentaires racistes.")
+
+public enum SexualOrientationThoughts {
+    DISLIKES_ALL_COMMENTS("Aime aucun commentaire", "La personne n'aime pas qu'on se moque des orientations sexuelles des personnes."),
+    NEUTRAL("Aucun avis", "La personne n'a aucun avis sur les orientations sexuelles des personnes."),
+    HOMOPHOBIC("Homophobe", "La personne n'aime pas l'idée que des gens de même sexe puissent s'aimer."),
+    LIKES_ALL_COMMENTS("Aime tous les commentaires", "La personne aime particulièrement qu'on se moque des orientations sexuelles des personnes.")
     ;
     private final String title;
     private final String description;
-    OriginThoughts(String title, String description){
+    SexualOrientationThoughts(String title, String description){
         this.title = title;
         this.description = description;
     }

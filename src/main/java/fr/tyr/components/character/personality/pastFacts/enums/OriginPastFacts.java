@@ -1,8 +1,8 @@
-package fr.tyr.components.character.personality.enums.pastFact;
+package fr.tyr.components.character.personality.pastFacts.enums;
 
 import fr.tyr.components.character.identity.enums.Origin;
 import fr.tyr.components.character.personality.enums.MentalStrength;
-import fr.tyr.components.character.personality.enums.thought.OriginThoughts;
+import fr.tyr.components.character.personality.thoughts.enums.OriginThoughts;
 
 import java.util.ArrayList;
 import java.util.Arrays;

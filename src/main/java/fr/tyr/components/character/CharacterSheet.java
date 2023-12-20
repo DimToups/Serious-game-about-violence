@@ -2,13 +2,11 @@ package fr.tyr.components.character;
 
 import fr.tyr.Main;
 import fr.tyr.components.character.style.CharacterStyle;
-import fr.tyr.components.classic.GameComponent;
 import fr.tyr.components.classic.ImageComponent;
 import fr.tyr.components.mixed.ComposedComponent;
 import fr.tyr.resources.images.Images;
 import fr.tyr.tools.Vector2D;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
