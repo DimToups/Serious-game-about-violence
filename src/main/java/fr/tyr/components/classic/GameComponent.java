@@ -133,6 +133,11 @@ public abstract class GameComponent<T> {
         isRendered = rendered;
     }
 
+    public void displayHitbox(Graphics g){
+        g.setColor(Color.RED);
+        g.drawRect((int) position.x, (int) position.y, (int) size.x, (int) size.y);
+    }
+
     /**
      * Render the component
      * @param g The graphics object
