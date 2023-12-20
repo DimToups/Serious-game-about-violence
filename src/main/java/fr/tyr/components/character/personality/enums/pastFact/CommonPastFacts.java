@@ -10,6 +10,8 @@ public enum CommonPastFacts {
     YOUNG_LONELY_ADULT("Jeune adulte seul", "La personne est partie très tôt de chez ses parents. Cela l'a obligée à se débrouiller seul.", MentalStrength.BOLD),
     KIND_FAMILY("Famille bienveillante", "La personne a grandie dans une famille bienveillante. Elle a pu se développer dans de bonnes conditions.", MentalStrength.NORMAL),
     ROUGH_SCHOOL_YEARS("Années scolaires difficiles", "La personne a vécu des année scolaires difficiles, la forçant à s'affirmer et faire savoir ce qu'il ne va pas.", MentalStrength.BOLD),
+    LOST_MONEY_AT_CASINO("A perdu son argent au casino","La personne a perdu une grande partie de sa fortune a des jeux d'argent. il est toujours dependent au jeu d'argent",MentalStrength.WEAK),
+    DEBTS("Doit beaucoup d'argent","La personne doit beaucoup d'argent a sont oncle",MentalStrength.NORMAL)
     ;
     private final String title;
     private final String description;
