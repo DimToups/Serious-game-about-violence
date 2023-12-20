@@ -18,7 +18,7 @@ import java.util.logging.Level;
 
 public enum Images {
     SWORDS("swords.png", true),
-    BACKGROUND("background.jpg", false),
+    BACKGROUND("background.png", false),
     NONE("assets/none.png", false),
     //Skins
     SKIN_WHITE("assets/character/skins/white.png", false),
@@ -95,6 +95,9 @@ public enum Images {
     ICON_ECONOMICAL("assets/violenceCard/icons/economic_violence.png",true),
     ICON_VERBAL("assets/violenceCard/icons/verbal_violence.png",true),
     ICON_SEXUAL("assets/violenceCard/icons/sexual_violence.png",true),
+
+    // Character Sheet
+    CHARACTER_SHEET_BACKGROUND("assets/character_sheet/background.png", true),
     ;
 
     private final String path;

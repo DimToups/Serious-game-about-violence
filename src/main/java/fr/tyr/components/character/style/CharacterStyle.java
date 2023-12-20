@@ -1,15 +1,24 @@
 package fr.tyr.components.character.style;
 
+import fr.tyr.components.character.style.enums.EyesEnum;
+import fr.tyr.components.character.style.enums.HairEnum;
+import fr.tyr.components.character.style.enums.ShirtEnum;
+import fr.tyr.components.character.style.enums.SkinEnum;
 import fr.tyr.components.classic.ImageComponent;
 import fr.tyr.components.mixed.ComposedComponent;
 import fr.tyr.tools.Vector2D;
 
-public class CharacterStyle extends ComposedComponent {
-    private final Eyes eyes;
-    private final Hair hair;
-    private final Shirt shirt;
-    private final Skin skin;
-    private ImageComponent additionalComponent;
+import javax.annotation.Nullable;
+import java.util.List;
+import java.util.Objects;
+
+public class CharacterStyle {
+    private final ImageComponent eyes;
+    private final ImageComponent hair;
+    private final ImageComponent shirt;
+    private final ImageComponent skin;
+    private final ImageComponent additionalComponent;
+
     /**
      * Create the visual appearance of the character
      * @param eyes The character's eyes
@@ -17,12 +26,12 @@ public class CharacterStyle extends ComposedComponent {
      * @param shirt the character's shirt
      * @param skin the character's skin
      */
-    public CharacterStyle(Eyes eyes, Hair hair, Shirt shirt, Skin skin){
-        super(new Vector2D(), skin, shirt, eyes, hair);
-        this.eyes = eyes;
-        this.hair = hair;
-        this.shirt = shirt;
-        this.skin = skin;
+    public CharacterStyle(EyesEnum eyes, HairEnum hair, ShirtEnum shirt, SkinEnum skin){
+        this.eyes = new ImageComponent(eyes.getImage());
+        this.hair = new ImageComponent(hair.getImage());
+        this.shirt = new ImageComponent(shirt.getImage());
+        this.skin = new ImageComponent(skin.getImage());
+        this.additionalComponent = null;
     }
     /**
      * Create the visual appearance of the character
@@ -32,20 +41,19 @@ public class CharacterStyle extends ComposedComponent {
      * @param skin the character's skin
      * @param additionalComponent An additional component of the character
      */
-    public CharacterStyle(Eyes eyes, Hair hair, Shirt shirt, Skin skin, ImageComponent additionalComponent){
-        super(new Vector2D(), skin, shirt, eyes, hair, additionalComponent);
+    public CharacterStyle(EyesEnum eyes, HairEnum hair, ShirtEnum shirt, SkinEnum skin, ImageComponent additionalComponent){
+        this.eyes = new ImageComponent(eyes.getImage());
+        this.hair = new ImageComponent(hair.getImage());
+        this.shirt = new ImageComponent(shirt.getImage());
+        this.skin = new ImageComponent(skin.getImage());
         this.additionalComponent = additionalComponent;
-        this.eyes = eyes;
-        this.hair = hair;
-        this.shirt = shirt;
-        this.skin = skin;
     }
 
     /**
      * Send the character's Eyes
      * @return The character's Eyes
      */
-    public Eyes getEyes() {
+    public ImageComponent getEyes() {
         return eyes;
     }
 
@@ -53,7 +61,7 @@ public class CharacterStyle extends ComposedComponent {
      * Send the character's Hair
      * @return The character's Hair
      */
-    public Hair getHair() {
+    public ImageComponent getHair() {
         return hair;
     }
 
@@ -61,7 +69,7 @@ public class CharacterStyle extends ComposedComponent {
      * Send the character's Shirt
      * @return The character's Shirt
      */
-    public Shirt getShirt() {
+    public ImageComponent getShirt() {
         return shirt;
     }
 
@@ -69,7 +77,7 @@ public class CharacterStyle extends ComposedComponent {
      * Send the character's Skin
      * @return The character's Skin
      */
-    public Skin getSkin() {
+    public ImageComponent getSkin() {
         return skin;
     }
 
@@ -77,6 +85,7 @@ public class CharacterStyle extends ComposedComponent {
      * Send the character's additional component
      * @return The character's additional component
      */
+    @Nullable
     public ImageComponent getAdditionalComponent() {
         return additionalComponent;
     }
@@ -84,8 +93,10 @@ public class CharacterStyle extends ComposedComponent {
     /**
      * Assemble the character's components
      */
-    public void assemble(){
-        this.skin.move(this.getPosition());
+    public void assemble(Vector2D position){
+        if(Objects.isNull(position))
+            position = new Vector2D(0, 0);
+        this.skin.move(position);
         this.shirt.move(Vector2D.add(this.skin.getPosition(),
                 new Vector2D((this.skin.getSize().x - this.shirt.getSize().x) / 2,  599 / this.skin.getSize().y * this.shirt.getSize().y)));
         this.eyes.move(Vector2D.add(this.skin.getPosition(),

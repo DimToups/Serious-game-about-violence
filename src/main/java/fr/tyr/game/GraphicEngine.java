@@ -9,10 +9,7 @@ import fr.tyr.tools.Vector2D;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -264,5 +261,12 @@ public class GraphicEngine extends JPanel {
     private void drawComponents(Graphics g){
         gameEngine.safeListOperation(components ->
                 components.stream().filter(fn -> fn.isVisible() && fn.isRendered()).forEach(component -> component.render(g)));
+    }
+
+    public Runner getFpsRunner() {
+        return fpsRunner;
+    }
+    public Runner getTpsRunner() {
+        return tpsRunner;
     }
 }

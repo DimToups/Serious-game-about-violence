@@ -1,5 +1,7 @@
 package fr.tyr.tools;
 
+import fr.tyr.Main;
+
 import java.util.HashMap;
 
 public class STimer {
@@ -22,6 +24,10 @@ public class STimer {
      * @return The time in milliseconds
      */
     public static long stop(long id){
+        if(!timers.containsKey(id)){
+            Main.getLogger().severe("Timer %d does not exist".formatted(id));
+            return -1;
+        }
         long time = System.currentTimeMillis() - timers.get(id);
         timers.remove(id);
         return time;

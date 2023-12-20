@@ -1,9 +1,8 @@
 package fr.tyr.game;
 
 import fr.tyr.Main;
-import fr.tyr.components.character.CharacterDirector;
-import fr.tyr.components.character.FemaleBuilder;
-import fr.tyr.components.character.MaleBuilder;
+import fr.tyr.components.character.*;
+import fr.tyr.components.character.Character;
 import fr.tyr.components.classic.GameComponent;
 import fr.tyr.components.gauges.ReputationGauge;
 import fr.tyr.components.gauges.TimeGauge;
@@ -21,6 +20,9 @@ public class GameEngine {
 
     private final ReentrantLock componentsLock = new ReentrantLock();
     private final List<GameComponent<?>> components;
+    private final ReputationGauge reputationGauge = new ReputationGauge(new Vector2D(25, 75));
+    private final TimeGauge timeGauge = new TimeGauge(new Vector2D(700, 25));
+    private final CharacterSheet characterSheet = new CharacterSheet(new Vector2D(850, 175));
 
     /**
      * Create a new game engine
@@ -40,19 +42,23 @@ public class GameEngine {
     private void initScene(){
         Main.getLogger().info("Initializing scene...");
         safeListOperation(componentList -> {
+            // Production components
             componentList.add(new SampleBackgroundComponent());
-            //componentList.add(new SampleImageComponent(new Vector2D(100, 100), new Vector2D(50, 50)));
-            //componentList.add(new SampleTextComponent(new Vector2D(200, 200)));
-            //componentList.add(new SampleAnimatedImageComponent(new Vector2D(300, 300)));
-            //componentList.add(new SampleAnimatedTextComponent(new Vector2D(400, 400)));
+            componentList.add(reputationGauge);
+            componentList.add(timeGauge);
+            componentList.add(characterSheet);
 
-            MaleBuilder mb = new MaleBuilder();
-            CharacterDirector cd = new CharacterDirector(mb);
-            cd.generateCharacter();
-            componentList.add(mb.getMale());
+            // Dev components
+            FemaleBuilder femaleBuilder = new FemaleBuilder();
+            CharacterDirector characterDirector = new CharacterDirector(femaleBuilder);
+            characterDirector.generateCharacter();
+            Character maleCharacter = femaleBuilder.getFemale();
+            maleCharacter.resize(new Vector2D(200, 200));
+            maleCharacter.resize(new Vector2D(200, 200));
+            maleCharacter.move(new Vector2D(50, 50));
+            componentList.add(maleCharacter);
 
-            componentList.add(new ReputationGauge(new Vector2D(500, 200)));
-            componentList.add(new TimeGauge(new Vector2D(700, 200)));
+            characterSheet.show(maleCharacter);
         });
         Main.getLogger().info("Scene initialized.");
     }

@@ -69,26 +69,24 @@ public class ImageComponent extends GameComponent<BufferedImage> {
      */
     public void resize(Vector2D size, boolean centerImage, boolean centerComponent) {
         Vector2D baseSize = getSize();
-        Thread.ofVirtual().start(() -> {
-            long timerId = STimer.start();
-            setFrame(imageType.getCopy(size, centerImage));
-            setSize(size);
-            Main.getLogger().info("%s image resized from %s to %s (%dms)".formatted(imageType.name(), getSize(), size, STimer.stop(timerId)));
-            if(centerComponent){
-                Vector2D tempVector = null;
-                if(baseSize.x > size.x && baseSize.y > size.y)
-                    tempVector = Vector2D.toPositive(Vector2D.subtract(baseSize, size)).getDivided(2);
-                else if(baseSize.x < size.x && baseSize.y < size.y)
-                    tempVector = Vector2D.toNegative(Vector2D.subtract(baseSize, size)).getDivided(2);
-                if(Objects.isNull(tempVector)){
-                    Main.getLogger().severe("Unable to center component from size %s to size %s".formatted(baseSize, size));
-                    return;
-                }
-                getPosition().add(tempVector);
-                if(isMoving())
-                    moveTo(getTarget().getAdded(tempVector), getRemainingDuration());
+        long timerId = STimer.start();
+        setFrame(imageType.getCopy(size, centerImage));
+        setSize(size);
+        Main.getLogger().info("%s image resized from %s to %s (%dms)".formatted(imageType.name(), getSize(), size, STimer.stop(timerId)));
+        if(centerComponent){
+            Vector2D tempVector = null;
+            if(baseSize.x > size.x && baseSize.y > size.y)
+                tempVector = Vector2D.toPositive(Vector2D.subtract(baseSize, size)).getDivided(2);
+            else if(baseSize.x < size.x && baseSize.y < size.y)
+                tempVector = Vector2D.toNegative(Vector2D.subtract(baseSize, size)).getDivided(2);
+            if(Objects.isNull(tempVector)){
+                Main.getLogger().severe("Unable to center component from size %s to size %s".formatted(baseSize, size));
+                return;
             }
-        });
+            getPosition().add(tempVector);
+            if(isMoving())
+                moveTo(getTarget().getAdded(tempVector), getRemainingDuration());
+        }
     }
 
     /**

@@ -1,6 +1,8 @@
 package fr.tyr.components.mixed;
 
+import fr.tyr.Main;
 import fr.tyr.components.classic.GameComponent;
+import fr.tyr.components.classic.ImageComponent;
 import fr.tyr.game.enums.MouseButtons;
 import fr.tyr.tools.Vector2D;
 
@@ -22,18 +24,6 @@ public abstract class ComposedComponent extends GameComponent<List<GameComponent
     @Override
     public void setFrame(List<GameComponent<?>> frame) {
         super.setFrame(frame);
-//        for(GameComponent<?> component: frame){
-//            if(component.getPosition().x < getPosition().x){
-//                for(GameComponent<?> component1: frame){
-//                    component1.move(component1.getPosition().getAdded(new Vector2D(getPosition().x - component.getPosition().x, 0)));
-//                }
-//            }
-//            if(component.getPosition().y < getPosition().y){
-//                for(GameComponent<?> component1: frame){
-//                    component1.move(component1.getPosition().getAdded(new Vector2D(0, getPosition().y - component.getPosition().y)));
-//                }
-//            }
-//        }
         for(GameComponent<?> component: frame){
             if(component.getPosition().x < getPosition().x){
                 Vector2D relativePosition = new Vector2D(getPosition().x - component.getPosition().x, 0);
@@ -46,6 +36,10 @@ public abstract class ComposedComponent extends GameComponent<List<GameComponent
                     component1.move(component1.getPosition().getAdded(relativePosition));
             }
         }
+        refreshSize();
+    }
+
+    public void refreshSize(){
         int sizeX = 0, sizeY = 0;
         for(GameComponent<?> component: getFrame()){
             if(component.getPosition().x + component.getSize().x > sizeX)
@@ -56,16 +50,39 @@ public abstract class ComposedComponent extends GameComponent<List<GameComponent
         setSize(new Vector2D(sizeX, sizeY).getRemoved(getPosition()));
     }
 
+    public void resize(Vector2D size){
+        Vector2D ratio = size.getDivided(getSize());
+        for(GameComponent<?> component: getFrame()){
+            component.move(component.getPosition().getMultiplied(ratio));
+            if(component instanceof ImageComponent imageComponent){
+                imageComponent.resize(component.getSize().getMultiplied(ratio), false);
+            }else if(component instanceof ComposedComponent composedComponent){
+                composedComponent.resize(component.getSize().getMultiplied(ratio));
+            }
+        }
+        setSize(size);
+    }
+
+    public void resize(double ratio){
+        resize(getSize().getMultiplied(ratio));
+    }
+
     @Override
     public void move(int tps){
         getFrame().forEach(component -> component.move(tps));
     }
 
     @Override
+    public void move(Vector2D target) {
+        super.move(target);
+        getFrame().forEach(component -> component.move(component.getPosition().getAdded(target)));
+    }
+
+    @Override
     public void render(Graphics g) {
         getFrame().stream().filter(fn -> fn.isVisible() && fn.isRendered()).forEach(component -> component.render(g));
-//        g.setColor(Color.RED);
-//        g.drawRect((int) getPosition().x, (int) getPosition().y, (int) getSize().x, (int) getSize().y);
+        if(Main.doesHitboxDisplay())
+            displayHitbox(g);
     }
 
     @Override

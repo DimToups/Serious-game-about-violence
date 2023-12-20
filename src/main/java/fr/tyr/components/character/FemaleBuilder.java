@@ -8,14 +8,14 @@ import fr.tyr.tools.Vector2D;
 public class FemaleBuilder implements CharacterBuilder{
     private static final PersonalityManager pm = new PersonalityManager();
     private static final FemaleStyleManager fsm = new FemaleStyleManager();
-    private Female female = new Female(new Vector2D());
+    private Character female = new Character(new Vector2D());
 
     /**
      * Reset the current Character
      */
     @Override
     public void reset() {
-        this.female = new Female(new Vector2D());
+        this.female = new Character(new Vector2D());
     }
 
     /**
@@ -23,11 +23,12 @@ public class FemaleBuilder implements CharacterBuilder{
      */
     @Override
     public void generateIdentity() {
-        this.female.setOrigin(IdentityManager.generateOrigin());
-        this.female.setFirstName(IdentityManager.generateFemaleFirstName(this.female.getOrigin()));
-        this.female.setLastName(IdentityManager.generateLastName(this.female.getOrigin()));
+        this.female.getIdentity().setGender(Gender.FEMALE);
+        this.female.getIdentity().setOrigin(IdentityManager.generateOrigin());
+        this.female.getIdentity().setFirstName(IdentityManager.generateFemaleFirstName(this.female.getIdentity().getOrigin()));
+        this.female.getIdentity().setLastName(IdentityManager.generateLastName(this.female.getIdentity().getOrigin()));
         int age = IdentityManager.generateAge();
-        this.female.setAge(age);
+        this.female.getIdentity().setAge(age);
         this.female.setHairColor(StyleManager.generateHairColor(age));
     }
 
@@ -36,8 +37,8 @@ public class FemaleBuilder implements CharacterBuilder{
      */
     @Override
     public void generatePersonality() {
-        this.female.setMentalStrength(pm.generateMentalStrength(this.female.getCommonPastFact(), this.getFemale().getOriginPastFact(), this.getFemale().getGenderPastFact(), this.getFemale().getSexualOrientationPastFacts()));
-        this.female.setSexualOrientation(pm.generateSexualOrientation(this.getFemale().getSexualOrientationPastFacts(), Gender.FEMALE));
+        this.female.getPersonality().setMentalStrength(pm.generateMentalStrength(this.female.getPersonality().getPastFact().getCommonPastFact(), this.getFemale().getPersonality().getPastFact().getOriginPastFact(), this.getFemale().getPersonality().getPastFact().getGenderPastFact(), this.getFemale().getPersonality().getPastFact().getSexualOrientationPastFact()));
+        this.female.getPersonality().setSexualOrientation(pm.generateSexualOrientation(this.getFemale().getPersonality().getPastFact().getSexualOrientationPastFact(), Gender.FEMALE));
     }
 
     /**
@@ -45,10 +46,10 @@ public class FemaleBuilder implements CharacterBuilder{
      */
     @Override
     public void generatePast() {
-        this.female.setCommonPastFact(pm.generateCommonPastFact());
-        this.female.setOriginPastFact(pm.generateOriginPastFacts(this.female.getOrigin()));
-        this.female.setGenderPastFact(pm.generateGenderPastFact(Gender.FEMALE));
-        this.female.setSexualOrientationPastFacts(pm.generateSexualOrientationPastFact());
+        this.female.getPersonality().getPastFact().setCommonPastFact(pm.generateCommonPastFact());
+        this.female.getPersonality().getPastFact().setOriginPastFact(pm.generateOriginPastFacts(this.female.getIdentity().getOrigin()));
+        this.female.getPersonality().getPastFact().setGenderPastFact(pm.generateGenderPastFact(Gender.FEMALE));
+        this.female.getPersonality().getPastFact().setSexualOrientationPastFact(pm.generateSexualOrientationPastFact());
     }
 
     /**
@@ -56,9 +57,9 @@ public class FemaleBuilder implements CharacterBuilder{
      */
     @Override
     public void generateThoughts() {
-        this.female.setOriginThoughts(pm.generateOriginThoughts(this.female.getOriginPastFact()));
-        this.female.setGenderThoughts(pm.generateGenderThoughts(this.female.getGenderPastFact(), Gender.FEMALE));
-        this.female.setSexualOrientationThoughts(pm.generateSexualOrientationThoughts(this.female.getSexualOrientationPastFacts()));
+        this.female.getPersonality().getThoughts().setOriginThoughts(pm.generateOriginThoughts(this.female.getPersonality().getPastFact().getOriginPastFact()));
+        this.female.getPersonality().getThoughts().setGenderThoughts(pm.generateGenderThoughts(this.female.getPersonality().getPastFact().getGenderPastFact(), Gender.FEMALE));
+        this.female.getPersonality().getThoughts().setSexualOrientationThoughts(pm.generateSexualOrientationThoughts(this.female.getPersonality().getPastFact().getSexualOrientationPastFact()));
     }
 
     /**
@@ -66,15 +67,14 @@ public class FemaleBuilder implements CharacterBuilder{
      */
     @Override
     public void generateStyle() {
-        this.female.setCharacterStyle(new CharacterStyle(fsm.generateEyes(this.female.getOrigin()), fsm.generateHair(this.female.getHairColor()), FemaleStyleManager.generateShirt(), FemaleStyleManager.generateSkin(this.female.getOrigin())));
-        this.female.getCharacterStyle().assemble();
+        this.female.setCharacterStyle(new CharacterStyle(fsm.generateEyes(this.female.getIdentity().getOrigin()), fsm.generateHair(this.female.getHairColor()), FemaleStyleManager.generateShirt(), FemaleStyleManager.generateSkin(this.female.getIdentity().getOrigin())));
     }
 
     /**
      * Send the current character
      * @return The current character
      */
-    public Female getFemale() {
+    public Character getFemale() {
         return female;
     }
 }
