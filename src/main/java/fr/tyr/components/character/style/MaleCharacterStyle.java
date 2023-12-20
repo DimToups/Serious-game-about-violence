@@ -2,6 +2,7 @@ package fr.tyr.components.character.style;
 
 import fr.tyr.components.character.style.enums.*;
 import fr.tyr.components.classic.ImageComponent;
+import fr.tyr.tools.Vector2D;
 
 public class MaleCharacterStyle extends CharacterStyle{
     private final ImageComponent beard;
@@ -31,8 +32,8 @@ public class MaleCharacterStyle extends CharacterStyle{
      * Assemble the character's components
      */
     @Override
-    public void assemble() {
-        super.assemble();
+    public void assemble(Vector2D position) {
+        super.assemble(position);
         //Placement of the character's beard
         this.beard.move(super.getHair().getPosition());
     }

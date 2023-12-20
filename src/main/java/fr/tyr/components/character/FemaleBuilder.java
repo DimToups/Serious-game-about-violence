@@ -68,7 +68,6 @@ public class FemaleBuilder implements CharacterBuilder{
     @Override
     public void generateStyle() {
         this.female.setCharacterStyle(new CharacterStyle(fsm.generateEyes(this.female.getIdentity().getOrigin()), fsm.generateHair(this.female.getHairColor()), FemaleStyleManager.generateShirt(), FemaleStyleManager.generateSkin(this.female.getIdentity().getOrigin())));
-        this.female.getCharacterStyle().assemble();
     }
 
     /**
