@@ -30,4 +30,6 @@ public interface CharacterBuilder {
      * Generate the Character's Style
      */
     void generateStyle();
+
+    Character getCharacter();
 }
