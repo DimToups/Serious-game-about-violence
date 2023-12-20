@@ -3,10 +3,7 @@ package fr.tyr.components.gauges;
 import fr.tyr.Main;
 import fr.tyr.components.classic.ImageComponent;
 import fr.tyr.components.mixed.ComposedComponent;
-import fr.tyr.game.enums.MouseButtons;
 import fr.tyr.tools.Vector2D;
-
-import java.util.Random;
 
 public class Gauge extends ComposedComponent {
 
