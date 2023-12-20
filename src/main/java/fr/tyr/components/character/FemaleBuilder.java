@@ -1,8 +1,11 @@
 package fr.tyr.components.character;
+
 import fr.tyr.components.character.identity.IdentityManager;
 import fr.tyr.components.character.identity.enums.Gender;
 import fr.tyr.components.character.personality.PersonalityManager;
-import fr.tyr.components.character.style.*;
+import fr.tyr.components.character.style.CharacterStyle;
+import fr.tyr.components.character.style.FemaleStyleManager;
+import fr.tyr.components.character.style.StyleManager;
 import fr.tyr.tools.Vector2D;
 
 public class FemaleBuilder implements CharacterBuilder{

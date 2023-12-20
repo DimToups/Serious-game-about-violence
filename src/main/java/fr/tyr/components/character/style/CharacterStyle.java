@@ -5,11 +5,9 @@ import fr.tyr.components.character.style.enums.HairEnum;
 import fr.tyr.components.character.style.enums.ShirtEnum;
 import fr.tyr.components.character.style.enums.SkinEnum;
 import fr.tyr.components.classic.ImageComponent;
-import fr.tyr.components.mixed.ComposedComponent;
 import fr.tyr.tools.Vector2D;
 
 import javax.annotation.Nullable;
-import java.util.List;
 import java.util.Objects;
 
 public class CharacterStyle {

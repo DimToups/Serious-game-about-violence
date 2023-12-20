@@ -1,12 +1,12 @@
 package fr.tyr.game;
 
 import fr.tyr.Main;
-import fr.tyr.components.character.*;
 import fr.tyr.components.character.Character;
+import fr.tyr.components.character.*;
 import fr.tyr.components.classic.GameComponent;
 import fr.tyr.components.gauges.ReputationGauge;
 import fr.tyr.components.gauges.TimeGauge;
-import fr.tyr.components.sample.*;
+import fr.tyr.components.sample.SampleBackgroundComponent;
 import fr.tyr.tools.Vector2D;
 
 import java.util.ArrayList;
