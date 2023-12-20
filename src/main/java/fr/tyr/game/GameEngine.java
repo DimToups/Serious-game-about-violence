@@ -11,12 +11,15 @@ import fr.tyr.tools.Vector2D;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.Consumer;
 
 public class GameEngine {
 
     private final boolean devMode;
+
+    private boolean isEnded = false;
 
     private final ReentrantLock componentsLock = new ReentrantLock();
     private final List<GameComponent<?>> components;
@@ -49,18 +52,43 @@ public class GameEngine {
             componentList.add(characterSheet);
 
             // Dev components
-            FemaleBuilder femaleBuilder = new FemaleBuilder();
-            CharacterDirector characterDirector = new CharacterDirector(femaleBuilder);
-            characterDirector.generateCharacter();
-            Character maleCharacter = femaleBuilder.getFemale();
-            maleCharacter.resize(new Vector2D(200, 200));
-            maleCharacter.resize(new Vector2D(200, 200));
-            maleCharacter.move(new Vector2D(50, 50));
-            componentList.add(maleCharacter);
-
-            characterSheet.show(maleCharacter);
+//            FemaleBuilder femaleBuilder = new FemaleBuilder();
+//            CharacterDirector characterDirector = new CharacterDirector(femaleBuilder);
+//            characterDirector.generateCharacter();
+//            Character maleCharacter = femaleBuilder.getFemale();
+//            maleCharacter.resize(new Vector2D(200, 200));
+//            maleCharacter.resize(new Vector2D(200, 200));
+//            maleCharacter.move(new Vector2D(50, 50));
+//            componentList.add(maleCharacter);
+//
+//            characterSheet.show(maleCharacter);
         });
+        generateRandomCharacters(5);
+        timeGauge.setCurrentProgress(10);
+        reputationGauge.setCurrentProgress(85);
         Main.getLogger().info("Scene initialized.");
+    }
+
+    private void generateRandomCharacters(int count){
+        Random random = new Random();
+        for(int i = 0; i < count; i++){
+            boolean isMale = random.nextBoolean();
+            CharacterBuilder characterBuilder = isMale ? new MaleBuilder() : new FemaleBuilder();
+            CharacterDirector characterDirector = new CharacterDirector(characterBuilder);
+            characterDirector.generateCharacter();
+            Character character = characterBuilder.getCharacter();
+            character.resize(character.getSize().getMultiplied(0.3));
+            int x = random.nextInt(625) + 80;
+            int y = random.nextInt(175) + 325;
+            character.move(new Vector2D(x, y));
+            safeListOperation(componentList -> componentList.add(character));
+        }
+    }
+
+    private void clearCharacters(){
+        safeListOperation(componentList -> {
+            componentList.removeIf(component -> component instanceof Character);
+        });
     }
 
     /**
@@ -81,5 +109,21 @@ public class GameEngine {
 
     public boolean isDevMode() {
         return devMode;
+    }
+
+    public boolean isEnded() {
+        return isEnded;
+    }
+
+    public ReputationGauge getReputationGauge() {
+        return reputationGauge;
+    }
+
+    public TimeGauge getTimeGauge() {
+        return timeGauge;
+    }
+
+    public CharacterSheet getCharacterSheet() {
+        return characterSheet;
     }
 }
