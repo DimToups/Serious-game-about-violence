@@ -100,11 +100,35 @@ public class Character extends ComposedComponent{
             return;
         if(button != MouseButtons.LEFT)
             return;
+        if(isHovered())
+            onHoverLost();
         Main.getLogger().info("Showing character sheet...");
         Main.getGameEngine().getCharacterSheet().show(this);
     }
 
     public void setFramed(boolean framed) {
         isFramed = framed;
+    }
+
+    private Vector2D baseSize;
+
+    @Override
+    public void onHover() {
+        if(isFramed) return;
+        super.onHover();
+        baseSize = new Vector2D(getSize());
+        resize(baseSize.getMultiplied(1.1));
+        Vector2D difference = baseSize.getMultiplied(1.1).getSubtracted(baseSize);
+        move(getPosition().getSubtracted(difference.getMultiplied(0.5)));
+    }
+
+    @Override
+    public void onHoverLost() {
+        if(isFramed) return;
+        super.onHoverLost();
+        if(Objects.isNull(baseSize)) return;
+        Vector2D difference = getSize().getSubtracted(baseSize);
+        resize(baseSize);
+        move(getPosition().getAdded(difference.getMultiplied(0.5)));
     }
 }
