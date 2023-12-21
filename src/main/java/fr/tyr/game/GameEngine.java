@@ -179,6 +179,12 @@ public class GameEngine {
             safeListOperation(componentList -> componentList.add(violenceCard));
         }
     }
+    private void removeViolenceCard(ViolenceCard violenceCard){
+        safeListOperation(componentList -> {
+            componentList.remove(violenceCard);
+            members.remove(violenceCard);
+        });
+    }
     private void clearViolenceCard(){
         safeListOperation(componentList -> componentList.removeIf(component -> component instanceof ViolenceCard));
     }
