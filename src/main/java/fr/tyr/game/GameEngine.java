@@ -52,7 +52,7 @@ public class GameEngine {
     }
 
     /**
-     * Initialize the scene with the components
+     * Display the game scene
      */
     public void displayGameScene(){
         Main.getLogger().info("Initializing scene...");
@@ -79,6 +79,10 @@ public class GameEngine {
     private final TextComponent winStateText = new TextComponent("", Color.BLACK, new Font("Roboto", Font.PLAIN, 80), new Vector2D(500, 100));
     private final TextComponent winStateMessageText = new TextComponent("", Color.BLACK, new Font("Roboto", Font.PLAIN, 25), new Vector2D(325, 175));
 
+    /**
+     * Display the end screen
+     * @param isWin If true, the player won
+     */
     public void displayEndScene(boolean isWin){
         Main.getLogger().info("Displaying end screen...");
         safeListOperation(componentList -> {
@@ -90,7 +94,7 @@ public class GameEngine {
             componentList.add(new BackgroundComponent(Images.END_BACKGROUND));
             componentList.add(winStateText);
             componentList.add(winStateMessageText);
-            componentList.add(new MembersSummary(new Vector2D(525, 250), members.size(), 100));
+            componentList.add(new MembersSummary(new Vector2D(525, 250), members.size(), -1));
             componentList.add(new ReputationSummary(new Vector2D(525, 340), reputationGauge.getCurrentProgress()));
             componentList.add(new MoneySummary(new Vector2D(525, 425), moneyGauge.getMoneyCount()));
             componentList.add(new TimeSummary(new Vector2D(525, 475), timeGauge.getDayCount()));
@@ -99,6 +103,10 @@ public class GameEngine {
         Main.getLogger().info("End screen displayed.");
     }
 
+    /**
+     * Display random characters on the screen from the members list
+     * @param count The number of characters to display
+     */
     private void displayRandomCharacters(int count){
         Random random = new Random();
         clearCharacters();
@@ -107,15 +115,18 @@ public class GameEngine {
                 Character member = members.get(random.nextInt(members.size()));
                 while(componentList.contains(member))
                     member = members.get(random.nextInt(members.size()));
-                // Set random position
-                int x = random.nextInt(625) + 80;
-                int y = random.nextInt(175) + 325;
-                member.move(new Vector2D(x, y));
+                member.move(getRandomCharacterPosition());
                 componentList.add(member);
             }
+            componentList.remove(characterSheet);
+            componentList.add(characterSheet);
         });
     }
 
+    /**
+     * Generate random characters to members list
+     * @param count The number of characters to generate
+     */
     private void generateRandomCharacters(int count){
         Random random = new Random();
         for(int i = 0; i < count; i++){
@@ -129,6 +140,10 @@ public class GameEngine {
         }
     }
 
+    /**
+     * Remove a member from the member list
+     * @param member The member to remove
+     */
     private void removeMember(Character member){
         safeListOperation(componentList -> {
             componentList.remove(member);
@@ -136,6 +151,9 @@ public class GameEngine {
         });
     }
 
+    /**
+     * Clear characters from the active components list
+     */
     private void clearCharacters(){
         safeListOperation(componentList -> {
             componentList.removeIf(component -> component instanceof Character);
@@ -193,5 +211,16 @@ public class GameEngine {
 
     public CharacterSheet getCharacterSheet() {
         return characterSheet;
+    }
+
+    /**
+     * Get a random valid position for a character
+     * @return The random position as a Vector2D
+     */
+    public Vector2D getRandomCharacterPosition(){
+        Random random = new Random();
+        int x = random.nextInt(800) + 80;
+        int y = random.nextInt(175) + 325;
+        return new Vector2D(x, y);
     }
 }
