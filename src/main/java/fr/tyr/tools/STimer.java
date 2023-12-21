@@ -18,6 +18,11 @@ public class STimer {
         return lastId;
     }
 
+    public static long startNano(){
+        timers.put(++lastId, System.nanoTime());
+        return lastId;
+    }
+
     /**
      * Stop a timer and return the time in milliseconds
      * @param id The id of the timer
@@ -29,6 +34,16 @@ public class STimer {
             return -1;
         }
         long time = System.currentTimeMillis() - timers.get(id);
+        timers.remove(id);
+        return time;
+    }
+
+    public static long stopNano(long id){
+        if(!timers.containsKey(id)){
+            Main.getLogger().severe("Timer %d does not exist".formatted(id));
+            return -1;
+        }
+        long time = System.nanoTime() - timers.get(id);
         timers.remove(id);
         return time;
     }
