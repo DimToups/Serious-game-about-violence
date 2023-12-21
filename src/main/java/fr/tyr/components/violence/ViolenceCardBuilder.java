@@ -6,10 +6,11 @@ import fr.tyr.components.violence.enums.*;
 import java.util.List;
 import java.util.Random;
 
-public class ViolenceCardBuilder {
-    private ViolenceCard violenceCard;
-    static Random rand = new Random();
+import static fr.tyr.components.violence.enums.Types.PSYCHOLOGICAL;
 
+public class ViolenceCardBuilder {
+    private ViolenceCard violenceCard = new ViolenceCard();
+    static Random rand = new Random();
 
     public void generateIcon(Types type){
         Icon icon;
@@ -56,9 +57,9 @@ public class ViolenceCardBuilder {
     }
     public void generateActs(Types type){
         try {
-            List<Acts> actsList = List.of(Acts.values());
+            List<Acts> actsList = Acts.getAllActs(type);
 
-            this.violenceCard.setActs(Acts.valueOf(actsList.get(rand.nextInt(0, actsList.size())).name()));
+            this.violenceCard.setDescription(Acts.valueOf(actsList.get(rand.nextInt(0, actsList.size())).name()));
         }
         catch (Exception e){
             //Passage de l'information
@@ -85,4 +86,5 @@ public class ViolenceCardBuilder {
     public ViolenceCard getViolenceCard(){
         return this.violenceCard;
     }
+
 }
