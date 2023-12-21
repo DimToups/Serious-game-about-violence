@@ -14,6 +14,7 @@ import fr.tyr.tools.Vector2D;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
 public class Character extends ComposedComponent{
     // Personality field
@@ -100,15 +101,54 @@ public class Character extends ComposedComponent{
             return;
         if(button != MouseButtons.LEFT)
             return;
+        if(isHovered())
+            onHoverLost();
         Main.getLogger().info("Showing character sheet...");
         Main.getGameEngine().getCharacterSheet().show(this);
-        isFramed = true;
-//        resize(0.9);
-//        move(getPosition().getAdded(new Vector2D(-10, 0)));
-//        move(getPosition().getAdded(new Vector2D(20, 0)));
     }
 
-    public void unframe(){
-        isFramed = false;
+    public void setFramed(boolean framed) {
+        isFramed = framed;
+    }
+
+    private Vector2D baseSize;
+
+    @Override
+    public void onHover() {
+        super.onHover();
+        if(isFramed) return;
+        if(isMoving()) return;
+        baseSize = new Vector2D(getSize());
+        resize(baseSize.getMultiplied(1.1));
+        Vector2D difference = baseSize.getMultiplied(1.1).getSubtracted(baseSize);
+        move(getPosition().getSubtracted(difference.getMultiplied(0.5)));
+    }
+
+    @Override
+    public void onHoverLost() {
+        super.onHoverLost();
+        if(isFramed) return;
+        if(isMoving()) return;
+        if(Objects.isNull(baseSize)) return;
+        Vector2D difference = getSize().getSubtracted(baseSize);
+        resize(baseSize);
+        move(getPosition().getAdded(difference.getMultiplied(0.5)));
+    }
+
+    @Override
+    public void tick(int aps) {
+        super.tick(aps);
+        if(isFramed) return;
+        if(isMoving()) return;
+        // Random character movement
+        Random random = new Random();
+        if(random.nextInt(200) == 0){
+            if(isHovered())
+                onHoverLost();
+            Vector2D nextPosition = Main.getGameEngine().getRandomCharacterPosition();
+            double distance = nextPosition.distance(getPosition());
+            float duration = (float) (distance / 100);
+            moveTo(nextPosition, duration);
+        }
     }
 }

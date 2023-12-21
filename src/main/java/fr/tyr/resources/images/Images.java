@@ -17,62 +17,68 @@ import java.util.Objects;
 import java.util.logging.Level;
 
 public enum Images {
-    SWORDS("swords.png", true),
-    BACKGROUND("background.png", false),
     NONE("assets/none.png", false),
-    //Skins
-    SKIN_WHITE("assets/character/skins/white.png", false),
-    SKIN_BLACK("assets/character/skins/black.png", false),
-    SKIN_ASIAN("assets/character/skins/asian.png", false),
-    SKIN_TANNED("assets/character/skins/tanned.png", false),
-    //Shirts
-    SHIRT_RED("assets/character/shirts/red.png", false),
-    SHIRT_PURPLE("assets/character/shirts/purple.png", false),
-    SHIRT_LIGHT_BLUE("assets/character/shirts/light_blue.png", false),
-    SHIRT_GREEN("assets/character/shirts/green.png", false),
-    //Eyes
-    EYES_COMMON_MALE_BLUE("assets/character/eyes/male/blue.png", false),
-    EYES_COMMON_MALE_LIGHT_BLUE("assets/character/eyes/male/light_blue.png", false),
-    EYES_COMMON_MALE_BROWN("assets/character/eyes/male/brown.png", false),
-    EYES_COMMON_MALE_GREEN("assets/character/eyes/male/green.png", false),
-    EYES_COMMON_MALE_YELLOW("assets/character/eyes/male/yellow.png", false),
-    EYES_ASIAN_MALE_BLUE("assets/character/eyes/male/asian_blue.png", false),
-    EYES_ASIAN_MALE_LIGHT_BLUE("assets/character/eyes/male/asian_light_blue.png", false),
-    EYES_ASIAN_MALE_BROWN("assets/character/eyes/male/asian_brown.png", false),
-    EYES_ASIAN_MALE_GREEN("assets/character/eyes/male/asian_green.png", false),
-    EYES_ASIAN_MALE_YELLOW("assets/character/eyes/male/asian_yellow.png", false),
-    EYES_COMMON_FEMALE_DOUBLE_BRUSH_BLUE("assets/character/eyes/female/common_double_brush_blue.png", false),
-    EYES_COMMON_FEMALE_DOUBLE_BRUSH_LIGHT_BLUE("assets/character/eyes/female/common_double_brush_light_blue.png", false),
-    EYES_COMMON_FEMALE_DOUBLE_BRUSH_BROWN("assets/character/eyes/female/common_double_brush_brown.png", false),
-    EYES_COMMON_FEMALE_DOUBLE_BRUSH_GREEN("assets/character/eyes/female/common_double_brush_green.png", false),
-    EYES_COMMON_FEMALE_DOUBLE_BRUSH_YELLOW("assets/character/eyes/female/common_double_brush_yellow.png", false),
-    //Hairs
-    HAIR_MALE_DISHEVELLED("assets/character/hairs/male/dishevelled.png", false),
-    HAIR_BOWL_BLACK("assets/character/hairs/male/bowl_black.png", false),
-    HAIR_BOWL_DARK_BROWN("assets/character/hairs/male/bowl_dark_brown.png", false),
-    HAIR_BOWL_BROWN("assets/character/hairs/male/bowl_brown.png", false),
-    HAIR_BOWL_BLOND("assets/character/hairs/male/bowl_blond.png", false),
-    HAIR_BOWL_WHITE("assets/character/hairs/male/bowl_white.png", false),
-    HAIR_BOWL_GINGER("assets/character/hairs/male/bowl_ginger.png", false),
-    HAIR_BOWL_BLUE("assets/character/hairs/male/bowl_blue.png", false),
-    HAIR_BOWL_PINK("assets/character/hairs/male/bowl_pink.png", false),
-    HAIR_MID_LENGTH_BLACK("assets/character/hairs/female/mid_length_black.png", false),
-    HAIR_MID_LENGTH_DARK_BROWN("assets/character/hairs/female/mid_length_dark_brown.png", false),
-    HAIR_MID_LENGTH_BROWN("assets/character/hairs/female/mid_length_brown.png", false),
-    HAIR_MID_LENGTH_BLOND("assets/character/hairs/female/mid_length_blond.png", false),
-    HAIR_MID_LENGTH_WHITE("assets/character/hairs/female/mid_length_white.png", false),
-    HAIR_MID_LENGTH_GINGER("assets/character/hairs/female/mid_length_ginger.png", false),
-    HAIR_MID_LENGTH_BLUE("assets/character/hairs/female/mid_length_blue.png", false),
-    HAIR_MID_LENGTH_PINK("assets/character/hairs/female/mid_length_pink.png", false),
-    //Beards
-    BEARD_SHORT_BLACK("assets/character/beards/short_black.png", false),
-    BEARD_SHORT_DARK_BROWN("assets/character/beards/short_dark_brown.png", false),
-    BEARD_SHORT_BROWN("assets/character/beards/short_brown.png", false),
-    BEARD_SHORT_BLOND("assets/character/beards/short_blond.png", false),
-    BEARD_SHORT_WHITE("assets/character/beards/short_white.png", false),
-    BEARD_SHORT_GINGER("assets/character/beards/short_ginger.png", false),
-    BEARD_SHORT_BLUE("assets/character/beards/short_blue.png", false),
-    BEARD_SHORT_PINK("assets/character/beards/short_pink.png", false),
+    // Game scene
+    BACKGROUND("assets/game_scene/background.png", true),
+    // End scene
+    END_BACKGROUND("assets/end_scene/background.png", true),
+    END_FIGURE_ICON("assets/end_scene/figure.png", true),
+    END_STAR_ICON("assets/end_scene/star.png", true),
+    END_TIME_ICON("assets/end_scene/time.png", true),
+    RESTART_BUTTON("assets/end_scene/restart.png", true),
+    // Skins
+    SKIN_WHITE("assets/character/skins/white.png", true),
+    SKIN_BLACK("assets/character/skins/black.png", true),
+    SKIN_ASIAN("assets/character/skins/asian.png", true),
+    SKIN_TANNED("assets/character/skins/tanned.png", true),
+    // Shirts
+    SHIRT_RED("assets/character/shirts/red.png", true),
+    SHIRT_PURPLE("assets/character/shirts/purple.png", true),
+    SHIRT_LIGHT_BLUE("assets/character/shirts/light_blue.png", true),
+    SHIRT_GREEN("assets/character/shirts/green.png", true),
+    // Eyes
+    EYES_COMMON_MALE_BLUE("assets/character/eyes/male/blue.png", true),
+    EYES_COMMON_MALE_LIGHT_BLUE("assets/character/eyes/male/light_blue.png", true),
+    EYES_COMMON_MALE_BROWN("assets/character/eyes/male/brown.png", true),
+    EYES_COMMON_MALE_GREEN("assets/character/eyes/male/green.png", true),
+    EYES_COMMON_MALE_YELLOW("assets/character/eyes/male/yellow.png", true),
+    EYES_ASIAN_MALE_BLUE("assets/character/eyes/male/asian_blue.png", true),
+    EYES_ASIAN_MALE_LIGHT_BLUE("assets/character/eyes/male/asian_light_blue.png", true),
+    EYES_ASIAN_MALE_BROWN("assets/character/eyes/male/asian_brown.png", true),
+    EYES_ASIAN_MALE_GREEN("assets/character/eyes/male/asian_green.png", true),
+    EYES_ASIAN_MALE_YELLOW("assets/character/eyes/male/asian_yellow.png", true),
+    EYES_COMMON_FEMALE_DOUBLE_BRUSH_BLUE("assets/character/eyes/female/common_double_brush_blue.png", true),
+    EYES_COMMON_FEMALE_DOUBLE_BRUSH_LIGHT_BLUE("assets/character/eyes/female/common_double_brush_light_blue.png", true),
+    EYES_COMMON_FEMALE_DOUBLE_BRUSH_BROWN("assets/character/eyes/female/common_double_brush_brown.png", true),
+    EYES_COMMON_FEMALE_DOUBLE_BRUSH_GREEN("assets/character/eyes/female/common_double_brush_green.png", true),
+    EYES_COMMON_FEMALE_DOUBLE_BRUSH_YELLOW("assets/character/eyes/female/common_double_brush_yellow.png", true),
+    // Hairs
+    HAIR_MALE_DISHEVELLED("assets/character/hairs/male/dishevelled.png", true),
+    HAIR_BOWL_BLACK("assets/character/hairs/male/bowl_black.png", true),
+    HAIR_BOWL_DARK_BROWN("assets/character/hairs/male/bowl_dark_brown.png", true),
+    HAIR_BOWL_BROWN("assets/character/hairs/male/bowl_brown.png", true),
+    HAIR_BOWL_BLOND("assets/character/hairs/male/bowl_blond.png", true),
+    HAIR_BOWL_WHITE("assets/character/hairs/male/bowl_white.png", true),
+    HAIR_BOWL_GINGER("assets/character/hairs/male/bowl_ginger.png", true),
+    HAIR_BOWL_BLUE("assets/character/hairs/male/bowl_blue.png", true),
+    HAIR_BOWL_PINK("assets/character/hairs/male/bowl_pink.png", true),
+    HAIR_MID_LENGTH_BLACK("assets/character/hairs/female/mid_length_black.png", true),
+    HAIR_MID_LENGTH_DARK_BROWN("assets/character/hairs/female/mid_length_dark_brown.png", true),
+    HAIR_MID_LENGTH_BROWN("assets/character/hairs/female/mid_length_brown.png", true),
+    HAIR_MID_LENGTH_BLOND("assets/character/hairs/female/mid_length_blond.png", true),
+    HAIR_MID_LENGTH_WHITE("assets/character/hairs/female/mid_length_white.png", true),
+    HAIR_MID_LENGTH_GINGER("assets/character/hairs/female/mid_length_ginger.png", true),
+    HAIR_MID_LENGTH_BLUE("assets/character/hairs/female/mid_length_blue.png", true),
+    HAIR_MID_LENGTH_PINK("assets/character/hairs/female/mid_length_pink.png", true),
+    // Beards
+    BEARD_SHORT_BLACK("assets/character/beards/short_black.png", true),
+    BEARD_SHORT_DARK_BROWN("assets/character/beards/short_dark_brown.png", true),
+    BEARD_SHORT_BROWN("assets/character/beards/short_brown.png", true),
+    BEARD_SHORT_BLOND("assets/character/beards/short_blond.png", true),
+    BEARD_SHORT_WHITE("assets/character/beards/short_white.png", true),
+    BEARD_SHORT_GINGER("assets/character/beards/short_ginger.png", true),
+    BEARD_SHORT_BLUE("assets/character/beards/short_blue.png", true),
+    BEARD_SHORT_PINK("assets/character/beards/short_pink.png", true),
 
     REPUTATION_GAUGE_BACKGROUND("assets/gauges/reputation/background.png", true),
     REPUTATION_GAUGE_ICON("assets/gauges/reputation/icon.png", true),
@@ -82,14 +88,15 @@ public enum Images {
     TIME_GAUGE_ICON_DAY("assets/gauges/time/icon_day.png", true),
     TIME_GAUGE_ICON_EVENING("assets/gauges/time/icon_evening.png", true),
     TIME_GAUGE_PROGRESS("assets/gauges/time/progress.png", true),
-    //violence
-    //backgrounds
+    MONEY_GAUGE_ICON("assets/gauges/money/icon.png", true),
+    // violence
+    // backgrounds
     BACKGROUND_PHYSICAL("assets/violenceCard/backgrounds/physical_violence.png",true),
     BACKGROUND_PSYCHOLOGICAL("assets/violenceCard/backgrounds/psychological_violence.png",true),
     BACKGROUND_ECONOMICAL("assets/violenceCard/backgrounds/economic_violence.png",true),
     BACKGROUND_VERBAL("assets/violenceCard/backgrounds/verbal_violence.png",true),
     BACKGROUND_SEXUAL("assets/violenceCard/backgrounds/sexual_violence.png",true),
-    //icon
+    // icon
     ICON_PHYSICAL("assets/violenceCard/icons/physical_violence.png",true),
     ICON_PSYCHOLOGICAL("assets/violenceCard/icons/psychological_violence.png",true),
     ICON_ECONOMICAL("assets/violenceCard/icons/economic_violence.png",true),
@@ -155,6 +162,7 @@ public enum Images {
      * @return A copy of the image resized
      */
     public BufferedImage getCopy(Vector2D size, boolean center){
+        size = new Vector2D((int) size.x, (int) size.y);
         if (Objects.isNull(image))
             loadImage();
         if(!sizeCache)
