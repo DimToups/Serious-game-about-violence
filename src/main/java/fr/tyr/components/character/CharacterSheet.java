@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Timer;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class CharacterSheet extends ComposedComponent {
 
@@ -34,6 +35,8 @@ public class CharacterSheet extends ComposedComponent {
     private final TextComponent genderThoughts = new TextComponent("", Color.BLACK, contentFont);
     private final TextComponent originThoughts = new TextComponent("", Color.BLACK, contentFont);
     private final TextComponent sexualOrientationThoughts = new TextComponent("", Color.BLACK, contentFont);
+
+    private final List<TextComponent> factsAndThoughts = new ArrayList<>(List.of(commonPastFacts, genderPastFacts, originPastFacts, sexualOrientationPastFacts, genderThoughts, originThoughts, sexualOrientationThoughts));
 
     private final Vector2D sheetPosition;
     private Character character;
@@ -96,13 +99,15 @@ public class CharacterSheet extends ComposedComponent {
         firstName.move(getPosition().getAdded(new Vector2D(110, 112)));
         lastName.move(getPosition().getAdded(new Vector2D(110, 155)));
         age.move(getPosition().getAdded(new Vector2D(110, 196)));
-        commonPastFacts.move(getPosition().getAdded(new Vector2D(10, 238)));
-        genderPastFacts.move(getPosition().getAdded(new Vector2D(10, 280)));
-        originPastFacts.move(getPosition().getAdded(new Vector2D(10, 322)));
-        sexualOrientationPastFacts.move(getPosition().getAdded(new Vector2D(10, 363)));
-        genderThoughts.move(getPosition().getAdded(new Vector2D(10, 405)));
-        originThoughts.move(getPosition().getAdded(new Vector2D(10, 447)));
-        sexualOrientationThoughts.move(getPosition().getAdded(new Vector2D(10, 488)));
+
+        // Move facts and thoughts
+        AtomicInteger y = new AtomicInteger(238);
+        factsAndThoughts.stream().filter(TextComponent::isVisible).forEach(textComponent -> {
+            textComponent.move(getPosition().getAdded(new Vector2D(10, y.get())));
+            y.addAndGet(42);
+        });
+
+        // Set facts and thoughts text content
         firstName.setText(character.getIdentity().getFirstName().getFirstName());
         lastName.setText(character.getIdentity().getLastName().cleanName());
         age.setText("%d ans".formatted(character.getIdentity().getAge()));
@@ -126,35 +131,28 @@ public class CharacterSheet extends ComposedComponent {
             moveTo(new Vector2D(sheetPosition.x, 720), 0.5F);
             // Replace character on the screen after the animation
             new Timer().schedule(
-                    new java.util.TimerTask() {
-                        @Override
-                        public void run() {
-                            character.resize(baseCharacterSize);
-                            character.move(baseCharacterPosition);
-                            character.setFramed(false);
-                            Main.getGameEngine().safeListOperation(components -> {
-                                components.add(character);
-                                components.remove(CharacterSheet.this);
-                                components.add(CharacterSheet.this);
-                            });
-                            Main.getLogger().info("Hiding character sheet for %s %s".formatted(character.getIdentity().getFirstName(), character.getIdentity().getLastName()));
-                            character = null;
-                            setFrame(new ArrayList<>(List.of(sheetBackground)));
-                            setVisible(false);
-                            isMoving = false;
-                        }
-                    },
-                    600
+                new java.util.TimerTask() {
+                    @Override
+                    public void run() {
+                        resetSheet();
+                        isMoving = false;
+                    }
+                },
+                600
             );
             return;
         }
+        resetSheet();
+    }
+
+    private void resetSheet(){
         character.resize(baseCharacterSize);
         character.move(baseCharacterPosition);
         character.setFramed(false);
         Main.getGameEngine().safeListOperation(components -> {
             components.add(character);
-            components.remove(CharacterSheet.this);
-            components.add(CharacterSheet.this);
+            components.remove(this);
+            components.add(this);
         });
         Main.getLogger().info("Hiding character sheet for %s %s".formatted(character.getIdentity().getFirstName(), character.getIdentity().getLastName()));
         character = null;
