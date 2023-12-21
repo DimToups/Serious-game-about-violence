@@ -88,4 +88,5 @@ public class TextComponent extends GameComponent<Text>{
     public void onWindowResized(Vector2D size) {
 
     }
+
 }

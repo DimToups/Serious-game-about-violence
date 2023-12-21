@@ -11,6 +11,9 @@ import fr.tyr.components.gauges.ReputationGauge;
 import fr.tyr.components.gauges.TimeGauge;
 import fr.tyr.components.others.BackgroundComponent;
 import fr.tyr.resources.images.Images;
+import fr.tyr.components.violence.ViolenceCard;
+import fr.tyr.components.violence.ViolenceCardBuilder;
+import fr.tyr.components.violence.ViolenceCardDirector;
 import fr.tyr.tools.Vector2D;
 
 import java.awt.*;
@@ -70,6 +73,7 @@ public class GameEngine {
         reputationGauge.setCurrentProgress(85);
         moneyGauge.setMoney(100);
         Main.getLogger().info("Scene initialized.");
+        generateViolenceCard(4);
     }
 
     private final TextComponent winStateText = new TextComponent("", Color.BLACK, new Font("Roboto", Font.PLAIN, 80), new Vector2D(500, 100));
@@ -154,6 +158,23 @@ public class GameEngine {
         safeListOperation(componentList -> {
             componentList.removeIf(component -> component instanceof Character);
         });
+    }
+
+    private void generateViolenceCard(int count){
+        double j = 0;
+        for(int i = 0; i < count; i++){
+            ViolenceCardBuilder violenceCardBuilder = new ViolenceCardBuilder();
+            ViolenceCardDirector violenceCardDirector = new ViolenceCardDirector(violenceCardBuilder);
+            violenceCardDirector.generateViolenceCard();
+            ViolenceCard violenceCard = violenceCardBuilder.getViolenceCard();
+            violenceCard.resize(violenceCard.getSize().getMultiplied(0.95));
+            violenceCard.move(new Vector2D(50 + j,720 - (violenceCard.getSize().y/3 * 2)));
+            j += 10 + violenceCard.getSize().x ;
+            safeListOperation(componentList -> componentList.add(violenceCard));
+        }
+    }
+    private void clearViolenceCard(){
+        safeListOperation(componentList -> componentList.removeIf(component -> component instanceof ViolenceCard));
     }
 
     /**

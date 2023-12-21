@@ -89,6 +89,19 @@ public enum Images {
     TIME_GAUGE_ICON_EVENING("assets/gauges/time/icon_evening.png", true),
     TIME_GAUGE_PROGRESS("assets/gauges/time/progress.png", true),
     MONEY_GAUGE_ICON("assets/gauges/money/icon.png", true),
+    // violence
+    // backgrounds
+    BACKGROUND_PHYSICAL("assets/violenceCard/backgrounds/physical_violence.png",true),
+    BACKGROUND_PSYCHOLOGICAL("assets/violenceCard/backgrounds/psychological_violence.png",true),
+    BACKGROUND_ECONOMICAL("assets/violenceCard/backgrounds/economic_violence.png",true),
+    BACKGROUND_VERBAL("assets/violenceCard/backgrounds/verbal_violence.png",true),
+    BACKGROUND_SEXUAL("assets/violenceCard/backgrounds/sexual_violence.png",true),
+    // icon
+    ICON_PHYSICAL("assets/violenceCard/icons/physical_violence.png",true),
+    ICON_PSYCHOLOGICAL("assets/violenceCard/icons/psychological_violence.png",true),
+    ICON_ECONOMICAL("assets/violenceCard/icons/economic_violence.png",true),
+    ICON_VERBAL("assets/violenceCard/icons/verbal_violence.png",true),
+    ICON_SEXUAL("assets/violenceCard/icons/sexual_violence.png",true),
 
     // Character Sheet
     CHARACTER_SHEET_BACKGROUND("assets/character_sheet/background.png", true),
