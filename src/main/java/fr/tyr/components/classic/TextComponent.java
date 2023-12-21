@@ -82,7 +82,7 @@ public class TextComponent extends GameComponent<Text>{
                 size += font.getSize();
                 i++;
             }
-            if(size > lineSize){
+            if(size > lineSize * 1.8){
                 finalText.get(textc).setText(ligne);
                 finalText.add(new TextComponent("", color, font));
                 size -= lineSize;
