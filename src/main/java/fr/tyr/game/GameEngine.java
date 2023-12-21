@@ -86,7 +86,7 @@ public class GameEngine {
             componentList.add(new BackgroundComponent(Images.END_BACKGROUND));
             componentList.add(winStateText);
             componentList.add(winStateMessageText);
-            componentList.add(new MembersSummary(new Vector2D(525, 250), members.size(), 100));
+            componentList.add(new MembersSummary(new Vector2D(525, 250), members.size(), -1));
             componentList.add(new ReputationSummary(new Vector2D(525, 340), reputationGauge.getCurrentProgress()));
             componentList.add(new MoneySummary(new Vector2D(525, 425), moneyGauge.getMoneyCount()));
             componentList.add(new TimeSummary(new Vector2D(525, 475), timeGauge.getDayCount()));
@@ -103,12 +103,11 @@ public class GameEngine {
                 Character member = members.get(random.nextInt(members.size()));
                 while(componentList.contains(member))
                     member = members.get(random.nextInt(members.size()));
-                // Set random position
-                int x = random.nextInt(625) + 80;
-                int y = random.nextInt(175) + 325;
-                member.move(new Vector2D(x, y));
+                member.move(getRandomCharacterPosition());
                 componentList.add(member);
             }
+            componentList.remove(characterSheet);
+            componentList.add(characterSheet);
         });
     }
 
@@ -132,6 +131,9 @@ public class GameEngine {
         });
     }
 
+    /**
+     * Clear characters from the active components list
+     */
     private void clearCharacters(){
         safeListOperation(componentList -> {
             componentList.removeIf(component -> component instanceof Character);
@@ -172,5 +174,12 @@ public class GameEngine {
 
     public CharacterSheet getCharacterSheet() {
         return characterSheet;
+    }
+
+    public Vector2D getRandomCharacterPosition(){
+        Random random = new Random();
+        int x = random.nextInt(800) + 80;
+        int y = random.nextInt(175) + 325;
+        return new Vector2D(x, y);
     }
 }

@@ -14,6 +14,7 @@ import fr.tyr.tools.Vector2D;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
 public class Character extends ComposedComponent{
     // Personality field
@@ -114,8 +115,9 @@ public class Character extends ComposedComponent{
 
     @Override
     public void onHover() {
-        if(isFramed) return;
         super.onHover();
+        if(isFramed) return;
+        if(isMoving()) return;
         baseSize = new Vector2D(getSize());
         resize(baseSize.getMultiplied(1.1));
         Vector2D difference = baseSize.getMultiplied(1.1).getSubtracted(baseSize);
@@ -124,11 +126,29 @@ public class Character extends ComposedComponent{
 
     @Override
     public void onHoverLost() {
-        if(isFramed) return;
         super.onHoverLost();
+        if(isFramed) return;
+        if(isMoving()) return;
         if(Objects.isNull(baseSize)) return;
         Vector2D difference = getSize().getSubtracted(baseSize);
         resize(baseSize);
         move(getPosition().getAdded(difference.getMultiplied(0.5)));
+    }
+
+    @Override
+    public void tick(int aps) {
+        super.tick(aps);
+        if(isFramed) return;
+        if(isMoving()) return;
+        // Random character movement
+        Random random = new Random();
+        if(random.nextInt(200) == 0){
+            if(isHovered())
+                onHoverLost();
+            Vector2D nextPosition = Main.getGameEngine().getRandomCharacterPosition();
+            double distance = nextPosition.distance(getPosition());
+            float duration = (float) (distance / 100);
+            moveTo(nextPosition, duration);
+        }
     }
 }
