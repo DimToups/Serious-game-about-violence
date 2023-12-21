@@ -82,6 +82,7 @@ public abstract class ComposedComponent extends GameComponent<List<GameComponent
 
     @Override
     public void move(int tps){
+        super.move(tps);
         getFrame().forEach(component -> component.move(tps));
     }
 
@@ -89,9 +90,14 @@ public abstract class ComposedComponent extends GameComponent<List<GameComponent
     public void move(Vector2D target) {
         Vector2D difference = target.getRemoved(getPosition());
         super.move(target);
-        getFrame().forEach(component -> {
-            component.move(component.getPosition().getAdded(difference));
-        });
+        getFrame().forEach(component -> component.move(component.getPosition().getAdded(difference)));
+    }
+
+    @Override
+    public void moveTo(Vector2D target, float duration) {
+        Vector2D difference = target.getRemoved(getPosition());
+        super.moveTo(target, duration);
+        getFrame().forEach(component -> component.moveTo(component.getPosition().getAdded(difference), duration));
     }
 
     @Override

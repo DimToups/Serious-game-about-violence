@@ -30,6 +30,8 @@ public class GraphicEngine extends JPanel {
 
     private long lastTickTime;
 
+    private static Vector2D windowSize;
+
     /**
      * Create a new graphic engine
      * @param gameEngine The game engine
@@ -67,6 +69,7 @@ public class GraphicEngine extends JPanel {
                     resizeTimer.start();
             }
         });
+        windowSize = new Vector2D(getWidth(), getHeight());
     }
 
     /**
@@ -74,9 +77,10 @@ public class GraphicEngine extends JPanel {
      */
     private void resize(){
         Vector2D newSize = new Vector2D(getWidth(), getHeight());
+        windowSize = newSize;
         Main.getLogger().info("Window resized to %s".formatted(newSize));
         gameEngine.safeListOperation(components ->
-                components.forEach(component -> component.onWindowResized(newSize)));
+                components.forEach(component -> component.onWindowResized(new Vector2D(newSize))));
     }
 
     /**
@@ -88,7 +92,7 @@ public class GraphicEngine extends JPanel {
         Vector2D mouseVector = new Vector2D(e.getX(), e.getY());
         Main.getLogger().info("Click detected at %s with %s button"
                 .formatted(mouseVector, MouseButtons.from(e.getButton())));
-        for(GameComponent<?> component : localComponents){
+        for(GameComponent<?> component : localComponents.stream().filter(GameComponent::isVisible).toList()){
             Vector2D componentPosition = component.getPosition();
             Vector2D componentSize = component.getSize();
             boolean isMouseBetween = mouseVector.isBetween(
@@ -123,7 +127,7 @@ public class GraphicEngine extends JPanel {
             if (Objects.nonNull(mouseLocation)) {
                 Vector2D mouseVector = new Vector2D(mouseLocation.x, mouseLocation.y);
                 boolean hoverFound = false;
-                for (GameComponent<?> component : localComponents)
+                for (GameComponent<?> component : localComponents.stream().filter(GameComponent::isVisible).toList())
                     hoverFound = triggerHover(mouseVector, component, hoverFound);
             }
         });
@@ -271,5 +275,9 @@ public class GraphicEngine extends JPanel {
     }
     public Runner getTpsRunner() {
         return tpsRunner;
+    }
+
+    public static Vector2D getWindowSize() {
+        return windowSize;
     }
 }

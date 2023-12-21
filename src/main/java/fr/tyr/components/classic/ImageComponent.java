@@ -60,6 +60,10 @@ public class ImageComponent extends GameComponent<BufferedImage> {
         resize(size, false, false);
     }
 
+    public void resize(double ratio){
+        resize(getOriginalSize().getMultiplied(ratio));
+    }
+
     /**
      * Resize the image to the given size
      * @param size The new size of the image
