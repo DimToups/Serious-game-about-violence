@@ -4,6 +4,7 @@ import fr.tyr.Main;
 import fr.tyr.components.character.Character;
 import fr.tyr.components.character.*;
 import fr.tyr.components.classic.GameComponent;
+import fr.tyr.components.gauges.MoneyGauge;
 import fr.tyr.components.gauges.ReputationGauge;
 import fr.tyr.components.gauges.TimeGauge;
 import fr.tyr.components.sample.SampleBackgroundComponent;
@@ -25,6 +26,7 @@ public class GameEngine {
     private final List<GameComponent<?>> components;
     private final ReputationGauge reputationGauge = new ReputationGauge(new Vector2D(25, 75));
     private final TimeGauge timeGauge = new TimeGauge(new Vector2D(700, 25));
+    private final MoneyGauge moneyGauge = new MoneyGauge(new Vector2D(150, 25));
     private final CharacterSheet characterSheet = new CharacterSheet(new Vector2D(850, 175));
 
     /**
@@ -49,6 +51,7 @@ public class GameEngine {
             componentList.add(new SampleBackgroundComponent());
             componentList.add(reputationGauge);
             componentList.add(timeGauge);
+            componentList.add(moneyGauge);
             componentList.add(characterSheet);
 
             // Dev components
@@ -63,9 +66,10 @@ public class GameEngine {
 //
 //            characterSheet.show(maleCharacter);
         });
-        generateRandomCharacters(5);
+        generateRandomCharacters(1);
         timeGauge.setCurrentProgress(10);
         reputationGauge.setCurrentProgress(85);
+        moneyGauge.setMoney(100);
         Main.getLogger().info("Scene initialized.");
     }
 

@@ -82,6 +82,7 @@ public enum Images {
     TIME_GAUGE_ICON_DAY("assets/gauges/time/icon_day.png", true),
     TIME_GAUGE_ICON_EVENING("assets/gauges/time/icon_evening.png", true),
     TIME_GAUGE_PROGRESS("assets/gauges/time/progress.png", true),
+    MONEY_GAUGE_LOGO("assets/gauges/money/logo.png", true),
 
     // Character Sheet
     CHARACTER_SHEET_BACKGROUND("assets/character_sheet/background.png", true),
