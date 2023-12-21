@@ -67,7 +67,7 @@ public class ViolenceCard extends ComposedComponent{
         this.icon.move(Vector2D.add(background.getPosition(),
                 new Vector2D(this.background.getSize().x /25,this.background.getSize().x /25 )));
 
-        description = finalizeText(description.getFirst().getFrame().getParts().getFirst().getText());
+        description = TextComponent.adjustText(description.getFirst(), this.background.getSize().x, cardFont);
         for(int i = 0; i < description.size(); i++) {
             description.get(i).move(Vector2D.add(background.getPosition(),
                     new Vector2D(icon.getPosition().x, (this.background.getSize().y - (this.icon.getPosition().y + this.icon.getSize().y + description.get(i).getSize().y)) / 10 + (this.icon.getPosition().y + this.icon.getSize().y + (description.get(i).getSize().y + cardFont.getSize() * 1.2) * i))));
@@ -77,34 +77,5 @@ public class ViolenceCard extends ComposedComponent{
         List<GameComponent<?>> components = new ArrayList<>(List.of(this.background, this.icon));
         components.addAll(description);
         setFrame(components);
-    }
-    public List<TextComponent> finalizeText(String text){
-        int size = 0;
-        int textc = 0;
-        List<TextComponent> finalText = new ArrayList<>();
-        finalText.add(new TextComponent("", Color.BLACK, cardFont));
-        int i = 0;
-        String ligne = "";
-        while (i < text.length()) {
-            String tmp = "";
-            while (i < text.length() && text.charAt(i) != ' ') {
-                tmp += text.charAt(i);
-                size += 18;
-                i++;
-            }
-            if(size > this.background.getSize().x){
-                finalText.get(textc).setText(ligne);
-                finalText.add(new TextComponent("", Color.BLACK, cardFont));
-                size -= 200;
-                textc ++;
-                ligne = "";
-                ligne += tmp+" ";
-            }
-            else
-                ligne += tmp+" ";
-            i++;
-        }
-        finalText.get(textc).setText(ligne);
-        return finalText;
     }
 }
