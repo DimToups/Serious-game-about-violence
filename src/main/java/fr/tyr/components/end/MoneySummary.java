@@ -20,7 +20,7 @@ public class MoneySummary extends ComposedComponent {
     public MoneySummary(Vector2D position, int currentMoneyCount) {
         super(position);
         moneyIcon.resize(0.15);
-        moneyText.setText("%d".formatted(currentMoneyCount));
+        moneyText.setText("%d $".formatted(currentMoneyCount));
         setFrame(new ArrayList<>(List.of(moneyIcon, moneyText)));
     }
 }
