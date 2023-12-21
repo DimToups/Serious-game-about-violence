@@ -1,0 +1,56 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+package memo{
+    package enums{
+        enum Memos <<enum>>{
+            ..Values..
+            GREEN
+            YELLOW
+            PINK
+            ..Fields..
+            image : ImageComponent
+            ..Methods..
+            <<create>> Memos(image : ImageComponent)
+        }
+        enum Questions{
+            ..Fields..
+            + description : String
+            ..Methods..
+        }
+    }
+
+
+    class Memo{
+        ..Fields..
+        - background : ImageComponent
+        - text : TextComponent
+        ..Methods..
+        + getBackground() : ImageComponent
+        + setBackground(memo : Memos)
+        + getText() : TextComponent
+        + setText(text : TextComponent)
+        + assemble()
+    }
+
+    class MemoDirector{
+        ..Methods..
+        + <<create>> MemoDirector(memoBuilder : MemoBuilder)
+        + setMemoBuilder(memoBuilder : MemoBuilder)
+        + generateMemo()
+        + getBuilder() : MemoBuilder
+    }
+
+    class MemoBuilder{
+        + generateBackground()
+        + generateText()
+    }
+}
+
+' Global
+memo.Memo ..> memo.enums.Memos : <<uses>>
+memo.Memo ..> memo.enums.Questions : <<uses>>
+memo.MemoDirector "1" o-> "1\n- builder" memo.MemoBuilder
+memo.MemoBuilder "1" o--> "1\n- memo" memo.Memo
+
+@enduml

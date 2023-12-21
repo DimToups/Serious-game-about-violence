@@ -9,6 +9,9 @@ import fr.tyr.components.end.*;
 import fr.tyr.components.gauges.MoneyGauge;
 import fr.tyr.components.gauges.ReputationGauge;
 import fr.tyr.components.gauges.TimeGauge;
+import fr.tyr.components.memo.Memo;
+import fr.tyr.components.memo.MemoBuilder;
+import fr.tyr.components.memo.MemoDirector;
 import fr.tyr.components.others.BackgroundComponent;
 import fr.tyr.components.violence.ViolenceCard;
 import fr.tyr.components.violence.ViolenceCardBuilder;
@@ -68,12 +71,13 @@ public class GameEngine {
         });
         generateRandomCharacters(10);
         displayRandomCharacters(5);
+        generateMemos(4);
 
         timeGauge.setCurrentProgress(10);
         reputationGauge.setCurrentProgress(85);
         moneyGauge.setMoney(100);
         Main.getLogger().info("Scene initialized.");
-        generateViolenceCard(4);
+        //generateViolenceCard(4);
     }
 
     private final TextComponent winStateText = new TextComponent("", Color.BLACK, new Font("Roboto", Font.PLAIN, 80), new Vector2D(500, 100));
@@ -155,9 +159,7 @@ public class GameEngine {
      * Clear characters from the active components list
      */
     private void clearCharacters(){
-        safeListOperation(componentList -> {
-            componentList.removeIf(component -> component instanceof Character);
-        });
+        safeListOperation(componentList -> componentList.removeIf(component -> component instanceof Character));
     }
 
     private void generateViolenceCard(int count){
@@ -175,6 +177,16 @@ public class GameEngine {
     }
     private void clearViolenceCard(){
         safeListOperation(componentList -> componentList.removeIf(component -> component instanceof ViolenceCard));
+    }
+
+    public void generateMemos(int count){
+        MemoDirector md = new MemoDirector(new MemoBuilder());
+        for(int i = 0; i < count; i++){
+            md.generateMemo();
+            Memo memo = md.getBuilder().getMemo();
+            memo.move(new Vector2D(memo.getSize().x + 50 + (memo.getSize().x + 10) * i, 575));
+            safeListOperation(componentList -> componentList.add(memo));
+        }
     }
 
     /**

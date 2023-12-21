@@ -18,8 +18,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class CharacterSheet extends ComposedComponent {
 
     // Fonts
-    public static final Font personalityFont = new Font("Roboto", Font.PLAIN, 25);
-    public static final Font contentFont = new Font("Roboto", Font.PLAIN, 18);
+    public static final Font personalityFont = new Font("Monospaced", Font.BOLD, 25);
+    public static final Font contentFont = new Font("Monospaced", Font.BOLD, 18);
 
     private static ImageComponent sheetBackground = new ImageComponent(Images.CHARACTER_SHEET_BACKGROUND, new Vector2D(0, 0));
     // Personality infos

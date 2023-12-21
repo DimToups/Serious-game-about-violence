@@ -105,6 +105,11 @@ public enum Images {
 
     // Character Sheet
     CHARACTER_SHEET_BACKGROUND("assets/character_sheet/background.png", true),
+
+    // Memos
+    MEMO_GREEN("assets/memo/green_memo.png", true),
+    MEMO_YELLOW("assets/memo/yellow_memo.png", true),
+    MEMO_PINK("assets/memo/pink_memo.png", true),
     ;
 
     private final String path;
