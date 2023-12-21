@@ -88,7 +88,7 @@ public class GraphicEngine extends JPanel {
         Vector2D mouseVector = new Vector2D(e.getX(), e.getY());
         Main.getLogger().info("Click detected at %s with %s button"
                 .formatted(mouseVector, MouseButtons.from(e.getButton())));
-        for(GameComponent<?> component : localComponents){
+        for(GameComponent<?> component : localComponents.stream().filter(GameComponent::isVisible).toList()){
             Vector2D componentPosition = component.getPosition();
             Vector2D componentSize = component.getSize();
             boolean isMouseBetween = mouseVector.isBetween(
@@ -123,7 +123,7 @@ public class GraphicEngine extends JPanel {
             if (Objects.nonNull(mouseLocation)) {
                 Vector2D mouseVector = new Vector2D(mouseLocation.x, mouseLocation.y);
                 boolean hoverFound = false;
-                for (GameComponent<?> component : localComponents)
+                for (GameComponent<?> component : localComponents.stream().filter(GameComponent::isVisible).toList())
                     hoverFound = triggerHover(mouseVector, component, hoverFound);
             }
         });
