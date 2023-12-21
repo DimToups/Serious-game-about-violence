@@ -70,7 +70,7 @@ public class CharacterSheet extends ComposedComponent {
         setFrame(new ArrayList<>(List.of(sheetBackground, character, firstName, lastName, age, commonPastFacts, genderPastFacts, originPastFacts, sexualOrientationPastFacts, genderThoughts, originThoughts, sexualOrientationThoughts)));
         refreshSize();
         // Appearance animation
-        move(new Vector2D(sheetPosition.x, 1000));
+        move(new Vector2D(sheetPosition.x, 720));
         isMoving = true;
         moveTo(sheetPosition, 0.5F);
         new Timer().schedule(
@@ -123,7 +123,7 @@ public class CharacterSheet extends ComposedComponent {
         if(animate){
             // Disappear animation
             isMoving = true;
-            moveTo(new Vector2D(sheetPosition.x, 1000), 0.5F);
+            moveTo(new Vector2D(sheetPosition.x, 720), 0.5F);
             // Replace character on the screen after the animation
             new Timer().schedule(
                     new java.util.TimerTask() {
@@ -132,7 +132,11 @@ public class CharacterSheet extends ComposedComponent {
                             character.resize(baseCharacterSize);
                             character.move(baseCharacterPosition);
                             character.setFramed(false);
-                            Main.getGameEngine().safeListOperation(components -> components.add(character));
+                            Main.getGameEngine().safeListOperation(components -> {
+                                components.add(character);
+                                components.remove(CharacterSheet.this);
+                                components.add(CharacterSheet.this);
+                            });
                             Main.getLogger().info("Hiding character sheet for %s %s".formatted(character.getIdentity().getFirstName(), character.getIdentity().getLastName()));
                             character = null;
                             setFrame(new ArrayList<>(List.of(sheetBackground)));
@@ -147,7 +151,11 @@ public class CharacterSheet extends ComposedComponent {
         character.resize(baseCharacterSize);
         character.move(baseCharacterPosition);
         character.setFramed(false);
-        Main.getGameEngine().safeListOperation(components -> components.add(character));
+        Main.getGameEngine().safeListOperation(components -> {
+            components.add(character);
+            components.remove(CharacterSheet.this);
+            components.add(CharacterSheet.this);
+        });
         Main.getLogger().info("Hiding character sheet for %s %s".formatted(character.getIdentity().getFirstName(), character.getIdentity().getLastName()));
         character = null;
         setFrame(new ArrayList<>(List.of(sheetBackground)));
