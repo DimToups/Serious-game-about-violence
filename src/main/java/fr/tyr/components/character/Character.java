@@ -102,13 +102,9 @@ public class Character extends ComposedComponent{
             return;
         Main.getLogger().info("Showing character sheet...");
         Main.getGameEngine().getCharacterSheet().show(this);
-        isFramed = true;
-//        resize(0.9);
-//        move(getPosition().getAdded(new Vector2D(-10, 0)));
-//        move(getPosition().getAdded(new Vector2D(20, 0)));
     }
 
-    public void unframe(){
-        isFramed = false;
+    public void setFramed(boolean framed) {
+        isFramed = framed;
     }
 }

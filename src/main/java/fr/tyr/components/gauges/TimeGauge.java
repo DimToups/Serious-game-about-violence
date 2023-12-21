@@ -9,6 +9,7 @@ import java.util.List;
 public class TimeGauge extends Gauge{
 
     private final ImageComponent icon;
+    private int dayCount = 0;
 
     public TimeGauge(Vector2D position) {
         super(position, false, new ImageComponent(Images.TIME_GAUGE_PROGRESS, new Vector2D(25, 23).getAdded(position)));
@@ -26,5 +27,17 @@ public class TimeGauge extends Gauge{
             icon.setImage(Images.TIME_GAUGE_ICON_DAY);
         else
             icon.setImage(Images.TIME_GAUGE_ICON_EVENING);
+    }
+
+    public int getDayCount() {
+        return dayCount;
+    }
+
+    public void setDayCount(int dayCount) {
+        this.dayCount = dayCount;
+    }
+
+    public void nextDay(){
+        dayCount++;
     }
 }
