@@ -13,7 +13,7 @@ public enum Icon {
     private final Images icon;
 
     /**
-     *
+     * create an instance of Icon
      * @param type The Icon's name
      * @param icon The Icon's corresponding Images instance
      */
@@ -21,6 +21,10 @@ public enum Icon {
         this.type = type;
         this.icon = icon;
     }
+    /**
+     * Return the corresponding Images depending on the Icon
+     * @return The Images corresponding of the Icon
+     */
     public Images getImage(){
         return this.icon;
     }

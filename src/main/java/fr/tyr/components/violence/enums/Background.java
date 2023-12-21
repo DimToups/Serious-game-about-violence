@@ -13,7 +13,7 @@ public enum Background {
     private final Images background;
 
     /**
-     *
+     * create an instance of background
      * @param type The Background's name
      * @param background The Background's corresponding Images instance
      */
@@ -21,6 +21,11 @@ public enum Background {
         this.type = type;
         this.background = background;
     }
+
+    /**
+     * Return the corresponding Images depending on the Background
+     * @return The Images corresponding of the Background
+     */
     public Images getImage(){
         return this.background;
     }

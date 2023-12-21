@@ -23,43 +23,91 @@ public class ViolenceCard extends ComposedComponent{
     private Acts acts;
     public static final Font cardFont = new Font("Roboto", Font.PLAIN,18);
     private List<TextComponent> description = new ArrayList<>();
+
+    /**
+     * Create a ViolenceCard
+     */
     public ViolenceCard(){
         super(new Vector2D());
     }
 
-
+    /**
+     * Send the ImageComponent's Icon
+     * @return The ImageComponent's Icon
+     */
     public ImageComponent getIcon(){
         return this.icon;
     }
+    /**
+     * Defines the wanted Icon
+     * @param icon The wanted Icon
+     */
     public void setIcon(Icon icon){
         this.icon = new ImageComponent(icon.getImage());
     }
+    /**
+     * Send the ImageComponent's Background
+     * @return The ImageComponent's Background
+     */
     public ImageComponent getBackground(){
         return this.background;
     }
+    /**
+     * Defines the wanted Background
+     * @param background The wanted Background
+     */
     public void setBackground(Background background){
         this.background = new ImageComponent(background.getImage());
     }
+    /**
+     * Defines the wanted Acts
+     * @param acts The wanted Acts
+     */
     public void setActs(Acts acts){
         this.acts = acts;
     }
-
+    /**
+     * Send the Acts
+     * @return The Acts
+     */
     public Acts getActs() {
         return this.acts;
     }
+    /**
+     * Send the Type
+     * @return The Type
+     */
     public Types getType(){
         return this.type;
     }
+    /**
+     * Defines the wanted Types
+     * @param type The wanted Types
+     */
     public void setType(Types type){
         this.type = type;
     }
+    /**
+     * Defines the description of wanted Acts
+     * @param act The wanted Acts
+     */
     public void setDescription(Acts act) {
         this.description.getFirst().setText(act.getDescription());
     }
+
+    /**
+     * Resize component with the wanted Vector2D
+     * @param size the wanted Vector2D
+     */
     @Override
     public void resize(Vector2D size) {
         super.resize(size);
     }
+
+    /**
+     * Places all elements in the desired position
+     * @param position desired position
+     */
     public void finalize(Vector2D position){
         if(Objects.isNull(position))
             position = new Vector2D(0, 0);
@@ -84,6 +132,12 @@ public class ViolenceCard extends ComposedComponent{
         components.addAll(description);
         setFrame(components);
     }
+
+    /**
+     * Line breaks when wanted text is too long
+     * @param text the wanted text
+     * @return a list containing all the text each element is a line
+     */
     public List<TextComponent> finalizeText(String text){
         int size = 0;
         int textc = 0;

@@ -12,6 +12,9 @@ public class ViolenceCardBuilder {
     private ViolenceCard violenceCard = new ViolenceCard();
     static Random rand = new Random();
 
+    /**
+     * Generate the violence's icon
+     */
     public void generateIcon(Types type){
         Icon icon;
         switch (type){
@@ -34,6 +37,9 @@ public class ViolenceCardBuilder {
         }
         this.violenceCard.setIcon(icon);
     }
+    /**
+     * Generate the violence's background
+     */
     public void generateBackground(Types type){
         Background background;
         switch (type){
@@ -55,6 +61,9 @@ public class ViolenceCardBuilder {
         }
         this.violenceCard.setBackground(background);
     }
+    /**
+     * Generate the violence's acts
+     */
     public void generateActs(Types type){
         try {
             List<Acts> actsList = Acts.getAllActs(type);
@@ -69,6 +78,9 @@ public class ViolenceCardBuilder {
             this.violenceCard.setType(Types.PHYSICAL);
         }
     }
+    /**
+     * Generate the violence's types
+     */
     public void generateType(){
         try {
             List<Types> typesList = List.of(Types.values());
@@ -83,6 +95,11 @@ public class ViolenceCardBuilder {
             this.violenceCard.setType(Types.PHYSICAL);
         }
     }
+
+    /**
+     * Send the violenceCard
+     * @return the violenceCard
+     */
     public ViolenceCard getViolenceCard(){
         return this.violenceCard;
     }
