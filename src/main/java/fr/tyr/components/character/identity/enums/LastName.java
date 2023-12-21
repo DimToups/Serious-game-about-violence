@@ -116,16 +116,13 @@ public enum LastName {
      * Convert the LastName into an clean String
      * @return The converted LastName
      */
-    public String cleanName(){
-        String name = this.name().toLowerCase();
-
-        name = name.substring(0,1).toUpperCase() + name.substring(1);
-
-        for(int i = 0 ; i < name.length(); i++){
-            if(name.charAt(i) == '_')
-                name = name.substring(0, i-1) + " " + name.substring(0, i+1).toUpperCase() + name.substring(0, i+2);
+    public String cleanName() {
+        String name = this.name().toLowerCase().replace('_', ' ');
+        String[] words = name.split(" ");
+        StringBuilder sb = new StringBuilder();
+        for (String word : words) {
+            sb.append(Character.toUpperCase(word.charAt(0))).append(word.substring(1)).append(" ");
         }
-
-        return name;
+        return sb.toString().trim();
     }
 }
