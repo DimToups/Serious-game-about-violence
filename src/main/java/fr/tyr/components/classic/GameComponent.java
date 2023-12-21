@@ -64,7 +64,7 @@ public abstract class GameComponent<T> {
      * @param duration The duration of the movement
      */
     public void moveTo(Vector2D target, float duration){
-        this.target = target;
+        this.target = new Vector2D(target);
         this.duration = duration;
     }
 
