@@ -8,13 +8,10 @@ import fr.tyr.components.violence.enums.*;
 import fr.tyr.components.classic.TextComponent;
 import fr.tyr.tools.Vector2D;
 
-import javax.swing.text.JTextComponent;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
-import static java.time.chrono.JapaneseEra.values;
 
 public class ViolenceCard extends ComposedComponent{
     private Types type;
@@ -26,8 +23,6 @@ public class ViolenceCard extends ComposedComponent{
     public ViolenceCard(){
         super(new Vector2D());
     }
-
-
     public ImageComponent getIcon(){
         return this.icon;
     }
@@ -43,7 +38,6 @@ public class ViolenceCard extends ComposedComponent{
     public void setActs(Acts acts){
         this.acts = acts;
     }
-
     public Acts getActs() {
         return this.acts;
     }
@@ -68,8 +62,8 @@ public class ViolenceCard extends ComposedComponent{
             this.description.add(new TextComponent("", Color.BLACK, cardFont));
         this.description.getFirst().setText(this.acts.getDescription());
 
-        this.icon.resize(new Vector2D(background.getSize().x/4,background.getSize().x/4));
 
+        this.icon.resize(new Vector2D(background.getSize().x/4,background.getSize().x/4));
         this.icon.move(Vector2D.add(background.getPosition(),
                 new Vector2D(this.background.getSize().x /25,this.background.getSize().x /25 )));
 
@@ -87,31 +81,30 @@ public class ViolenceCard extends ComposedComponent{
     public List<TextComponent> finalizeText(String text){
         int size = 0;
         int textc = 0;
-        List<TextComponent> finale = new ArrayList<>();
-        finale.add(new TextComponent("", Color.BLACK, cardFont));
+        List<TextComponent> finalText = new ArrayList<>();
+        finalText.add(new TextComponent("", Color.BLACK, cardFont));
         int i = 0;
         String ligne = "";
         while (i < text.length()) {
             String tmp = "";
             while (i < text.length() && text.charAt(i) != ' ') {
-                tmp = tmp + text.charAt(i);
+                tmp += text.charAt(i);
                 size += 18;
                 i++;
             }
             if(size > this.background.getSize().x){
-                finale.get(textc).setText(ligne);
-                finale.add(new TextComponent("", Color.BLACK, cardFont));
+                finalText.get(textc).setText(ligne);
+                finalText.add(new TextComponent("", Color.BLACK, cardFont));
                 size -= 200;
                 textc ++;
                 ligne = "";
                 ligne += tmp+" ";
             }
-            else{
+            else
                 ligne += tmp+" ";
-            }
             i++;
         }
-        finale.get(textc).setText(ligne);
-        return finale;
+        finalText.get(textc).setText(ligne);
+        return finalText;
     }
 }

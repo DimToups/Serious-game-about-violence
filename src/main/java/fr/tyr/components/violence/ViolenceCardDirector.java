@@ -10,6 +10,7 @@ public class ViolenceCardDirector {
         this.violenceCardBuilder = violenceCardBuilder;
     }
     public void generateViolenceCard(){
+        // At the moment, no sexual violences are allowed
         Types type = Types.SEXUAL;
         while(type == Types.SEXUAL) {
             this.violenceCardBuilder.generateType();
@@ -22,5 +23,8 @@ public class ViolenceCardDirector {
     }
     public ViolenceCardBuilder getViolenceCardBuilder(){
         return this.violenceCardBuilder;
+    }
+    public void setViolenceCardBuilder(ViolenceCardBuilder violenceCardBuilder) {
+        this.violenceCardBuilder = violenceCardBuilder;
     }
 }

@@ -21,6 +21,11 @@ public enum Background {
         this.type = type;
         this.background = background;
     }
+
+    public Types getType() {
+        return type;
+    }
+
     public Images getImage(){
         return this.background;
     }

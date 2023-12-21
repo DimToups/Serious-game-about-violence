@@ -21,6 +21,11 @@ public enum Icon {
         this.type = type;
         this.icon = icon;
     }
+
+    public Types getType() {
+        return type;
+    }
+
     public Images getImage(){
         return this.icon;
     }
