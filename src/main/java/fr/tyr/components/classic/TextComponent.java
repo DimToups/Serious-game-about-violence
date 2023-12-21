@@ -66,6 +66,13 @@ public class TextComponent extends GameComponent<Text>{
         setFrame(new Text(text, color, font));
     }
 
+    /**
+     * Adjusts a text to put it into several lines represented by the List<TextComponent>
+     * @param baseText The TextComponent to adjust
+     * @param lineSize The size of the line
+     * @param font The used font
+     * @return A list of TextComponents representing the lines
+     */
     public static List<TextComponent> adjustText(TextComponent baseText, double lineSize, Font font){
         double size = 0;
         int textc = 0;
@@ -82,7 +89,7 @@ public class TextComponent extends GameComponent<Text>{
                 size += font.getSize();
                 i++;
             }
-            if(size > lineSize * 1.8){
+            if(size > lineSize * 1.7){
                 finalText.get(textc).setText(ligne);
                 finalText.add(new TextComponent("", color, font));
                 size -= lineSize;

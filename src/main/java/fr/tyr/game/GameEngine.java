@@ -72,12 +72,12 @@ public class GameEngine {
         generateRandomCharacters(10);
         displayRandomCharacters(5);
         generateMemos(4);
+        generateViolenceCard(4);
 
         timeGauge.setCurrentProgress(10);
         reputationGauge.setCurrentProgress(85);
         moneyGauge.setMoney(100);
         Main.getLogger().info("Scene initialized.");
-        //generateViolenceCard(4);
     }
 
     private final TextComponent winStateText = new TextComponent("", Color.BLACK, new Font("Roboto", Font.PLAIN, 80), new Vector2D(500, 100));
@@ -163,15 +163,13 @@ public class GameEngine {
     }
 
     private void generateViolenceCard(int count){
-        double j = 0;
         for(int i = 0; i < count; i++){
             ViolenceCardBuilder violenceCardBuilder = new ViolenceCardBuilder();
             ViolenceCardDirector violenceCardDirector = new ViolenceCardDirector(violenceCardBuilder);
             violenceCardDirector.generateViolenceCard();
             ViolenceCard violenceCard = violenceCardBuilder.getViolenceCard();
-            violenceCard.resize(violenceCard.getSize().getMultiplied(0.95));
-            violenceCard.move(new Vector2D(50 + j,720 - (violenceCard.getSize().y/3 * 2)));
-            j += 10 + violenceCard.getSize().x ;
+            violenceCard.resize(violenceCard.getSize().getMultiplied(0.75));
+            violenceCard.move(new Vector2D(violenceCard.getSize().x + 50 + (violenceCard.getSize().x + 10) * i,720 - (violenceCard.getSize().y/3 * 2)));
             safeListOperation(componentList -> componentList.add(violenceCard));
         }
     }
