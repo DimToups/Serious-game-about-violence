@@ -7,6 +7,9 @@ import fr.tyr.components.classic.GameComponent;
 import fr.tyr.components.gauges.ReputationGauge;
 import fr.tyr.components.gauges.TimeGauge;
 import fr.tyr.components.sample.SampleBackgroundComponent;
+import fr.tyr.components.violence.ViolenceCard;
+import fr.tyr.components.violence.ViolenceCardBuilder;
+import fr.tyr.components.violence.ViolenceCardDirector;
 import fr.tyr.tools.Vector2D;
 
 import java.util.ArrayList;
@@ -67,6 +70,7 @@ public class GameEngine {
         timeGauge.setCurrentProgress(10);
         reputationGauge.setCurrentProgress(85);
         Main.getLogger().info("Scene initialized.");
+        generateViolenceCard(4);
     }
 
     private void generateRandomCharacters(int count){
@@ -91,11 +95,33 @@ public class GameEngine {
         });
     }
 
+    private void generateViolenceCard(int count){
+        double j = 0;
+        for(int i = 0; i < count; i++){
+            ViolenceCardBuilder violenceCardBuilder = new ViolenceCardBuilder();
+            ViolenceCardDirector violenceCardDirector = new ViolenceCardDirector(violenceCardBuilder);
+            violenceCardDirector.generateViolenceCard();
+            ViolenceCard violenceCard = violenceCardBuilder.getViolenceCard();
+            violenceCard.resize(violenceCard.getSize().getMultiplied(0.5));
+            double x =  300 + j;
+            double y =720 - violenceCard.getSize().y;
+            violenceCard.move(new Vector2D(x,y));
+            j += 10 + violenceCard.getSize().x ;
+            safeListOperation(componentList -> componentList.add(violenceCard));
+        }
+    }
+    private void clearViolenceCard(){
+        safeListOperation(componentList -> {
+            componentList.removeIf(component -> component instanceof ViolenceCard);
+        });
+    }
+
     /**
      * Add a component to the game engine
      * Protect the list against concurrent modification
      * @param operation The operation to execute on the list
      */
+
     public void safeListOperation(Consumer<List<GameComponent<?>>> operation){
         componentsLock.lock();
         try{
