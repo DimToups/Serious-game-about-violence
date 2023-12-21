@@ -25,6 +25,7 @@ public enum Images {
     END_FIGURE_ICON("assets/end_scene/figure.png", false),
     END_STAR_ICON("assets/end_scene/star.png", false),
     END_TIME_ICON("assets/end_scene/time.png", false),
+    RESTART_BUTTON("assets/end_scene/restart.png", false),
     // Skins
     SKIN_WHITE("assets/character/skins/white.png", false),
     SKIN_BLACK("assets/character/skins/black.png", false),

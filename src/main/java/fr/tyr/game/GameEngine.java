@@ -5,10 +5,7 @@ import fr.tyr.components.character.Character;
 import fr.tyr.components.character.*;
 import fr.tyr.components.classic.GameComponent;
 import fr.tyr.components.classic.TextComponent;
-import fr.tyr.components.end.MembersSummary;
-import fr.tyr.components.end.MoneySummary;
-import fr.tyr.components.end.ReputationSummary;
-import fr.tyr.components.end.TimeSummary;
+import fr.tyr.components.end.*;
 import fr.tyr.components.gauges.MoneyGauge;
 import fr.tyr.components.gauges.ReputationGauge;
 import fr.tyr.components.gauges.TimeGauge;
@@ -47,15 +44,16 @@ public class GameEngine {
         this.devMode = devMode;
         components = new ArrayList<>();
         displayGameScene();
-//        displayEndScene(false);
+        displayEndScene(true);
         Main.getLogger().info("Game engine initialized.");
     }
 
     /**
      * Initialize the scene with the components
      */
-    private void displayGameScene(){
+    public void displayGameScene(){
         Main.getLogger().info("Initializing scene...");
+        members.clear();
         safeListOperation(componentList -> {
             componentList.clear();
             // Production components
@@ -65,7 +63,7 @@ public class GameEngine {
             componentList.add(moneyGauge);
             componentList.add(characterSheet);
         });
-        generateRandomCharacters(50);
+        generateRandomCharacters(10);
         displayRandomCharacters(5);
 
         timeGauge.setCurrentProgress(10);
@@ -77,7 +75,7 @@ public class GameEngine {
     private final TextComponent winStateText = new TextComponent("", Color.BLACK, new Font("Roboto", Font.PLAIN, 80), new Vector2D(500, 100));
     private final TextComponent winStateMessageText = new TextComponent("", Color.BLACK, new Font("Roboto", Font.PLAIN, 25), new Vector2D(325, 175));
 
-    private void displayEndScene(boolean isWin){
+    public void displayEndScene(boolean isWin){
         Main.getLogger().info("Displaying end screen...");
         safeListOperation(componentList -> {
             componentList.clear();
@@ -92,6 +90,7 @@ public class GameEngine {
             componentList.add(new ReputationSummary(new Vector2D(525, 340), reputationGauge.getCurrentProgress()));
             componentList.add(new MoneySummary(new Vector2D(525, 425), moneyGauge.getMoneyCount()));
             componentList.add(new TimeSummary(new Vector2D(525, 475), timeGauge.getDayCount()));
+            componentList.add(new RestartButton(new Vector2D(1000, 600)));
         });
         Main.getLogger().info("End screen displayed.");
     }
