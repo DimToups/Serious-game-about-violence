@@ -10,10 +10,10 @@ import fr.tyr.components.gauges.MoneyGauge;
 import fr.tyr.components.gauges.ReputationGauge;
 import fr.tyr.components.gauges.TimeGauge;
 import fr.tyr.components.others.BackgroundComponent;
-import fr.tyr.resources.images.Images;
 import fr.tyr.components.violence.ViolenceCard;
 import fr.tyr.components.violence.ViolenceCardBuilder;
 import fr.tyr.components.violence.ViolenceCardDirector;
+import fr.tyr.resources.images.Images;
 import fr.tyr.tools.Vector2D;
 
 import java.awt.*;
@@ -47,7 +47,7 @@ public class GameEngine {
         this.devMode = devMode;
         components = new ArrayList<>();
         displayGameScene();
-        displayEndScene(true);
+//        displayEndScene(true);
         Main.getLogger().info("Game engine initialized.");
     }
 
@@ -220,7 +220,7 @@ public class GameEngine {
     public Vector2D getRandomCharacterPosition(){
         Random random = new Random();
         int x = random.nextInt(800) + 80;
-        int y = random.nextInt(175) + 325;
+        int y = random.nextInt(150) + 275;
         return new Vector2D(x, y);
     }
 }
