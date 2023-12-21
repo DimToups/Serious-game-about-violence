@@ -37,6 +37,7 @@ public class GameEngine {
     private final CharacterSheet characterSheet = new CharacterSheet(new Vector2D(850, 175));
 
     private final List<Character> members = new ArrayList<>();
+    private List<ViolenceCard> inTheHand = new ArrayList<>();
 
     /**
      * Create a new game engine
@@ -150,7 +151,6 @@ public class GameEngine {
             members.remove(member);
         });
     }
-
     /**
      * Clear characters from the active components list
      */
@@ -170,6 +170,12 @@ public class GameEngine {
             violenceCard.resize(violenceCard.getSize().getMultiplied(0.95));
             violenceCard.move(new Vector2D(50 + j,720 - (violenceCard.getSize().y/3 * 2)));
             j += 10 + violenceCard.getSize().x ;
+            for (int x = 0; x < inTheHand.size(); x++) {
+                if (violenceCard.getActs() == inTheHand.get(x).getActs()) {
+                    generateViolenceCard(i);
+                }
+            }
+            inTheHand.add((violenceCard));
             safeListOperation(componentList -> componentList.add(violenceCard));
         }
     }
