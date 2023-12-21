@@ -59,6 +59,7 @@ public class CharacterSheet extends ComposedComponent {
             return;
         if(Objects.nonNull(this.character))
             hide(false);
+        character.setFramed(true);
         this.character = character;
         baseCharacterPosition = new Vector2D(character.getPosition());
         baseCharacterSize = new Vector2D(character.getSize());
@@ -79,7 +80,7 @@ public class CharacterSheet extends ComposedComponent {
                     isMoving = false;
                 }
             },
-            500
+            600
         );
         this.setVisible(true);
         Main.getLogger().info("Showing character sheet for %s %s".formatted(character.getIdentity().getFirstName(), character.getIdentity().getLastName()));
@@ -130,7 +131,7 @@ public class CharacterSheet extends ComposedComponent {
                         public void run() {
                             character.resize(baseCharacterSize);
                             character.move(baseCharacterPosition);
-                            character.unframe();
+                            character.setFramed(false);
                             Main.getGameEngine().safeListOperation(components -> components.add(character));
                             Main.getLogger().info("Hiding character sheet for %s %s".formatted(character.getIdentity().getFirstName(), character.getIdentity().getLastName()));
                             character = null;
@@ -139,19 +140,18 @@ public class CharacterSheet extends ComposedComponent {
                             isMoving = false;
                         }
                     },
-                    500
+                    600
             );
             return;
         }
         character.resize(baseCharacterSize);
         character.move(baseCharacterPosition);
-        character.unframe();
+        character.setFramed(false);
         Main.getGameEngine().safeListOperation(components -> components.add(character));
         Main.getLogger().info("Hiding character sheet for %s %s".formatted(character.getIdentity().getFirstName(), character.getIdentity().getLastName()));
         character = null;
         setFrame(new ArrayList<>(List.of(sheetBackground)));
         setVisible(false);
-        isMoving = false;
     }
 
     @Override

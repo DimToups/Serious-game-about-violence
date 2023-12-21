@@ -101,11 +101,9 @@ public class GameEngine {
         clearCharacters();
         safeListOperation(componentList -> {
             for(int i = 0; i < count; i++){
-                // Select a random member and make sure it's not already in the list
                 Character member = members.get(random.nextInt(members.size()));
-                while(componentList.contains(member)){
+                while(componentList.contains(member))
                     member = members.get(random.nextInt(members.size()));
-                }
                 // Set random position
                 int x = random.nextInt(625) + 80;
                 int y = random.nextInt(175) + 325;
