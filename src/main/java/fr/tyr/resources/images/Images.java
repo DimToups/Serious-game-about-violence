@@ -17,20 +17,25 @@ import java.util.Objects;
 import java.util.logging.Level;
 
 public enum Images {
-    SWORDS("swords.png", true),
-    BACKGROUND("background.png", false),
     NONE("assets/none.png", false),
-    //Skins
+    // Game scene
+    BACKGROUND("assets/game_scene/background.png", false),
+    // End scene
+    END_BACKGROUND("assets/end_scene/background.png", false),
+    END_FIGURE_ICON("assets/end_scene/figure.png", false),
+    END_STAR_ICON("assets/end_scene/star.png", false),
+    END_TIME_ICON("assets/end_scene/time.png", false),
+    // Skins
     SKIN_WHITE("assets/character/skins/white.png", false),
     SKIN_BLACK("assets/character/skins/black.png", false),
     SKIN_ASIAN("assets/character/skins/asian.png", false),
     SKIN_TANNED("assets/character/skins/tanned.png", false),
-    //Shirts
+    // Shirts
     SHIRT_RED("assets/character/shirts/red.png", false),
     SHIRT_PURPLE("assets/character/shirts/purple.png", false),
     SHIRT_LIGHT_BLUE("assets/character/shirts/light_blue.png", false),
     SHIRT_GREEN("assets/character/shirts/green.png", false),
-    //Eyes
+    // Eyes
     EYES_COMMON_MALE_BLUE("assets/character/eyes/male/blue.png", false),
     EYES_COMMON_MALE_LIGHT_BLUE("assets/character/eyes/male/light_blue.png", false),
     EYES_COMMON_MALE_BROWN("assets/character/eyes/male/brown.png", false),
@@ -46,7 +51,7 @@ public enum Images {
     EYES_COMMON_FEMALE_DOUBLE_BRUSH_BROWN("assets/character/eyes/female/common_double_brush_brown.png", false),
     EYES_COMMON_FEMALE_DOUBLE_BRUSH_GREEN("assets/character/eyes/female/common_double_brush_green.png", false),
     EYES_COMMON_FEMALE_DOUBLE_BRUSH_YELLOW("assets/character/eyes/female/common_double_brush_yellow.png", false),
-    //Hairs
+    // Hairs
     HAIR_MALE_DISHEVELLED("assets/character/hairs/male/dishevelled.png", false),
     HAIR_BOWL_BLACK("assets/character/hairs/male/bowl_black.png", false),
     HAIR_BOWL_DARK_BROWN("assets/character/hairs/male/bowl_dark_brown.png", false),
@@ -64,7 +69,7 @@ public enum Images {
     HAIR_MID_LENGTH_GINGER("assets/character/hairs/female/mid_length_ginger.png", false),
     HAIR_MID_LENGTH_BLUE("assets/character/hairs/female/mid_length_blue.png", false),
     HAIR_MID_LENGTH_PINK("assets/character/hairs/female/mid_length_pink.png", false),
-    //Beards
+    // Beards
     BEARD_SHORT_BLACK("assets/character/beards/short_black.png", false),
     BEARD_SHORT_DARK_BROWN("assets/character/beards/short_dark_brown.png", false),
     BEARD_SHORT_BROWN("assets/character/beards/short_brown.png", false),
@@ -82,7 +87,7 @@ public enum Images {
     TIME_GAUGE_ICON_DAY("assets/gauges/time/icon_day.png", true),
     TIME_GAUGE_ICON_EVENING("assets/gauges/time/icon_evening.png", true),
     TIME_GAUGE_PROGRESS("assets/gauges/time/progress.png", true),
-    MONEY_GAUGE_LOGO("assets/gauges/money/logo.png", true),
+    MONEY_GAUGE_ICON("assets/gauges/money/icon.png", true),
 
     // Character Sheet
     CHARACTER_SHEET_BACKGROUND("assets/character_sheet/background.png", true),

@@ -16,7 +16,7 @@ public class MoneyGauge extends ComposedComponent {
 
     private int moneyCount;
 
-    private final ImageComponent moneyLogo = new ImageComponent(Images.MONEY_GAUGE_LOGO, new Vector2D(0, 0));
+    private final ImageComponent moneyLogo = new ImageComponent(Images.MONEY_GAUGE_ICON, new Vector2D(0, 0));
     private final TextComponent moneyText = new TextComponent("%d".formatted(moneyCount), Color.WHITE, moneyFont, new Vector2D(125, 35));
 
     public MoneyGauge(Vector2D position) {
