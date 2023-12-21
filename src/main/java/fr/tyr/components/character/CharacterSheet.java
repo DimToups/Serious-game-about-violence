@@ -39,6 +39,7 @@ public class CharacterSheet extends ComposedComponent {
     private Character character;
     private Vector2D baseCharacterPosition;
     private Vector2D baseCharacterSize;
+    private boolean isMoving = false;
 
     /**
      * Create a composed component
@@ -54,8 +55,10 @@ public class CharacterSheet extends ComposedComponent {
     }
 
     public void show(Character character){
+        if(isMoving)
+            return;
         if(Objects.nonNull(this.character))
-            hide();
+            hide(false);
         this.character = character;
         baseCharacterPosition = new Vector2D(character.getPosition());
         baseCharacterSize = new Vector2D(character.getSize());
@@ -67,7 +70,17 @@ public class CharacterSheet extends ComposedComponent {
         refreshSize();
         // Appearance animation
         move(new Vector2D(sheetPosition.x, 1000));
+        isMoving = true;
         moveTo(sheetPosition, 0.5F);
+        new Timer().schedule(
+            new java.util.TimerTask() {
+                @Override
+                public void run() {
+                    isMoving = false;
+                }
+            },
+            500
+        );
         this.setVisible(true);
         Main.getLogger().info("Showing character sheet for %s %s".formatted(character.getIdentity().getFirstName(), character.getIdentity().getLastName()));
     }
@@ -101,32 +114,48 @@ public class CharacterSheet extends ComposedComponent {
         sexualOrientationThoughts.setText(character.getPersonality().getThoughts().getSexualOrientationThoughts().getTitle());
     }
 
-    public void hide(){
+    public void hide(boolean animate){
+        if(isMoving)
+            return;
         if(Objects.isNull(character))
             throw new UnsupportedOperationException("Cannot hide a character sheet if it is not shown");
-        // Disappear animation
-        moveTo(new Vector2D(sheetPosition.x, 1000), 0.5F);
-        // Replace character on the screen after the animation
-        new Timer().schedule(
-            new java.util.TimerTask() {
-                @Override
-                public void run() {
-                    character.resize(baseCharacterSize);
-                    character.move(baseCharacterPosition);
-                    character.unframe();
-                    Main.getGameEngine().safeListOperation(components -> components.add(character));
-                    Main.getLogger().info("Hiding character sheet for %s %s".formatted(character.getIdentity().getFirstName(), character.getIdentity().getLastName()));
-                    character = null;
-                    setFrame(new ArrayList<>(List.of(sheetBackground)));
-                    setVisible(false);
-                }
-            },
-            500
-        );
+        if(animate){
+            // Disappear animation
+            isMoving = true;
+            moveTo(new Vector2D(sheetPosition.x, 1000), 0.5F);
+            // Replace character on the screen after the animation
+            new Timer().schedule(
+                    new java.util.TimerTask() {
+                        @Override
+                        public void run() {
+                            character.resize(baseCharacterSize);
+                            character.move(baseCharacterPosition);
+                            character.unframe();
+                            Main.getGameEngine().safeListOperation(components -> components.add(character));
+                            Main.getLogger().info("Hiding character sheet for %s %s".formatted(character.getIdentity().getFirstName(), character.getIdentity().getLastName()));
+                            character = null;
+                            setFrame(new ArrayList<>(List.of(sheetBackground)));
+                            setVisible(false);
+                            isMoving = false;
+                        }
+                    },
+                    500
+            );
+            return;
+        }
+        character.resize(baseCharacterSize);
+        character.move(baseCharacterPosition);
+        character.unframe();
+        Main.getGameEngine().safeListOperation(components -> components.add(character));
+        Main.getLogger().info("Hiding character sheet for %s %s".formatted(character.getIdentity().getFirstName(), character.getIdentity().getLastName()));
+        character = null;
+        setFrame(new ArrayList<>(List.of(sheetBackground)));
+        setVisible(false);
+        isMoving = false;
     }
 
     @Override
     public void onClick(MouseButtons button) {
-        hide();
+        hide(true);
     }
 }
