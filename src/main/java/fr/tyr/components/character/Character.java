@@ -1,13 +1,17 @@
 package fr.tyr.components.character;
 
+import fr.tyr.Main;
 import fr.tyr.components.character.identity.Identity;
 import fr.tyr.components.character.personality.Personality;
-import fr.tyr.components.character.style.*;
+import fr.tyr.components.character.style.CharacterStyle;
 import fr.tyr.components.character.style.enums.HairColor;
+import fr.tyr.components.classic.GameComponent;
 import fr.tyr.components.mixed.ComposedComponent;
+import fr.tyr.game.enums.MouseButtons;
 import fr.tyr.resources.images.Images;
 import fr.tyr.tools.Vector2D;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -22,6 +26,9 @@ public class Character extends ComposedComponent{
     private CharacterStyle characterStyle;
     private HairColor hairColor;
     private Images special;
+
+    // Sheet
+    private boolean isFramed = false;
 
     /**
      * Create a Character
@@ -58,10 +65,16 @@ public class Character extends ComposedComponent{
 
 
     public void setCharacterStyle(CharacterStyle characterStyle){
-        if(Objects.nonNull(this.characterStyle))
-            throw new RuntimeException("Character style already set");
         this.characterStyle = characterStyle;
-        this.setFrame(List.of(this.characterStyle));
+        characterStyle.assemble(getPosition());
+        List<GameComponent<?>> components = new ArrayList<>();
+        components.add(characterStyle.getSkin());
+        components.add(characterStyle.getShirt());
+        components.add(characterStyle.getEyes());
+        components.add(characterStyle.getHair());
+        if(Objects.nonNull(characterStyle.getAdditionalComponent()))
+            components.add(characterStyle.getAdditionalComponent());
+        this.setFrame(components);
     }
 
     /**
@@ -79,5 +92,23 @@ public class Character extends ComposedComponent{
     @Override
     public void resize(Vector2D size) {
         super.resize(size);
+    }
+
+    @Override
+    public void onClick(MouseButtons button) {
+        if(isFramed)
+            return;
+        if(button != MouseButtons.LEFT)
+            return;
+        Main.getLogger().info("Showing character sheet...");
+        Main.getGameEngine().getCharacterSheet().show(this);
+        isFramed = true;
+//        resize(0.9);
+//        move(getPosition().getAdded(new Vector2D(-10, 0)));
+//        move(getPosition().getAdded(new Vector2D(20, 0)));
+    }
+
+    public void unframe(){
+        isFramed = false;
     }
 }

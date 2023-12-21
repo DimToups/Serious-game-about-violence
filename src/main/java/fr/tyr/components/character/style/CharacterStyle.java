@@ -5,17 +5,17 @@ import fr.tyr.components.character.style.enums.HairEnum;
 import fr.tyr.components.character.style.enums.ShirtEnum;
 import fr.tyr.components.character.style.enums.SkinEnum;
 import fr.tyr.components.classic.ImageComponent;
-import fr.tyr.components.mixed.ComposedComponent;
 import fr.tyr.tools.Vector2D;
 
-import java.util.List;
+import javax.annotation.Nullable;
+import java.util.Objects;
 
-public class CharacterStyle extends ComposedComponent {
+public class CharacterStyle {
     private final ImageComponent eyes;
     private final ImageComponent hair;
     private final ImageComponent shirt;
     private final ImageComponent skin;
-    private ImageComponent additionalComponent;
+    private final ImageComponent additionalComponent;
 
     /**
      * Create the visual appearance of the character
@@ -25,12 +25,11 @@ public class CharacterStyle extends ComposedComponent {
      * @param skin the character's skin
      */
     public CharacterStyle(EyesEnum eyes, HairEnum hair, ShirtEnum shirt, SkinEnum skin){
-        super(new Vector2D());
         this.eyes = new ImageComponent(eyes.getImage());
         this.hair = new ImageComponent(hair.getImage());
         this.shirt = new ImageComponent(shirt.getImage());
         this.skin = new ImageComponent(skin.getImage());
-        setFrame(List.of(this.skin, this.shirt, this.eyes, this.hair));
+        this.additionalComponent = null;
     }
     /**
      * Create the visual appearance of the character
@@ -41,13 +40,11 @@ public class CharacterStyle extends ComposedComponent {
      * @param additionalComponent An additional component of the character
      */
     public CharacterStyle(EyesEnum eyes, HairEnum hair, ShirtEnum shirt, SkinEnum skin, ImageComponent additionalComponent){
-        super(new Vector2D());
-        this.additionalComponent = additionalComponent;
         this.eyes = new ImageComponent(eyes.getImage());
         this.hair = new ImageComponent(hair.getImage());
         this.shirt = new ImageComponent(shirt.getImage());
         this.skin = new ImageComponent(skin.getImage());
-        setFrame(List.of(this.skin, this.shirt, this.eyes, this.hair, additionalComponent));
+        this.additionalComponent = additionalComponent;
     }
 
     /**
@@ -86,6 +83,7 @@ public class CharacterStyle extends ComposedComponent {
      * Send the character's additional component
      * @return The character's additional component
      */
+    @Nullable
     public ImageComponent getAdditionalComponent() {
         return additionalComponent;
     }
@@ -93,18 +91,15 @@ public class CharacterStyle extends ComposedComponent {
     /**
      * Assemble the character's components
      */
-    public void assemble(){
-        this.skin.move(this.getPosition());
+    public void assemble(Vector2D position){
+        if(Objects.isNull(position))
+            position = new Vector2D(0, 0);
+        this.skin.move(position);
         this.shirt.move(Vector2D.add(this.skin.getPosition(),
                 new Vector2D((this.skin.getSize().x - this.shirt.getSize().x) / 2,  599 / this.skin.getSize().y * this.shirt.getSize().y)));
         this.eyes.move(Vector2D.add(this.skin.getPosition(),
                 new Vector2D((this.skin.getSize().x - this.eyes.getSize().x) / 2,400 / this.skin.getSize().y * this.eyes.getSize().y)));
         this.hair.move(Vector2D.add(this.skin.getPosition(),
                 new Vector2D((this.skin.getSize().x - this.hair.getSize().x) / 2, this.skin.getPosition().y + this.skin.getSize().y - this.hair.getSize().y + 38 / this.skin.getSize().y * this.hair.getSize().y)));
-    }
-
-    @Override
-    public void resize(Vector2D size) {
-        super.resize(size);
     }
 }

@@ -1,5 +1,6 @@
 package fr.tyr.components.mixed;
 
+import fr.tyr.Main;
 import fr.tyr.components.classic.GameComponent;
 import fr.tyr.components.classic.ImageComponent;
 import fr.tyr.game.enums.MouseButtons;
@@ -23,18 +24,34 @@ public abstract class ComposedComponent extends GameComponent<List<GameComponent
     @Override
     public void setFrame(List<GameComponent<?>> frame) {
         super.setFrame(frame);
-        for(GameComponent<?> component: frame){
+        updateComponentPosition();
+    }
+
+    public void updateComponentPosition(){
+        for(GameComponent<?> component: getFrame()){
             if(component.getPosition().x < getPosition().x){
                 Vector2D relativePosition = new Vector2D(getPosition().x - component.getPosition().x, 0);
-                for(GameComponent<?> component1: frame)
+                for(GameComponent<?> component1: getFrame())
                     component1.move(component1.getPosition().getAdded(relativePosition));
             }
             if(component.getPosition().y < getPosition().y){
                 Vector2D relativePosition = new Vector2D(0, getPosition().y - component.getPosition().y);
-                for(GameComponent<?> component1: frame)
+                for(GameComponent<?> component1: getFrame())
                     component1.move(component1.getPosition().getAdded(relativePosition));
             }
         }
+//        for(GameComponent<?> component: getFrame()){
+//            Vector2D relativeX = new Vector2D(getPosition().x - component.getPosition().x, 0);
+//            for(GameComponent<?> component1: getFrame())
+//                component1.move(component1.getPosition().getAdded(relativeX));
+//            Vector2D relativeY = new Vector2D(0, getPosition().y - component.getPosition().y);
+//            for(GameComponent<?> component1: getFrame())
+//                component1.move(component1.getPosition().getAdded(relativeY));
+//        }
+        refreshSize();
+    }
+
+    public void refreshSize(){
         int sizeX = 0, sizeY = 0;
         for(GameComponent<?> component: getFrame()){
             if(component.getPosition().x + component.getSize().x > sizeX)
@@ -48,9 +65,10 @@ public abstract class ComposedComponent extends GameComponent<List<GameComponent
     public void resize(Vector2D size){
         Vector2D ratio = size.getDivided(getSize());
         for(GameComponent<?> component: getFrame()){
-            component.move(component.getPosition().getMultiplied(ratio));
+            Vector2D relativePosition = component.getPosition().getRemoved(getPosition());
+            component.move(getPosition().getAdded(relativePosition.getMultiplied(ratio)));
             if(component instanceof ImageComponent imageComponent){
-                imageComponent.resize(component.getSize().getMultiplied(ratio), false);
+                imageComponent.resize(component.getSize().getMultiplied(ratio));
             }else if(component instanceof ComposedComponent composedComponent){
                 composedComponent.resize(component.getSize().getMultiplied(ratio));
             }
@@ -69,15 +87,18 @@ public abstract class ComposedComponent extends GameComponent<List<GameComponent
 
     @Override
     public void move(Vector2D target) {
+        Vector2D difference = target.getRemoved(getPosition());
         super.move(target);
-        getFrame().forEach(component -> component.move(component.getPosition().getAdded(target)));
+        getFrame().forEach(component -> {
+            component.move(component.getPosition().getAdded(difference));
+        });
     }
 
     @Override
     public void render(Graphics g) {
         getFrame().stream().filter(fn -> fn.isVisible() && fn.isRendered()).forEach(component -> component.render(g));
-        g.setColor(Color.RED);
-        g.drawRect((int) getPosition().x, (int) getPosition().y, (int) getSize().x, (int) getSize().y);
+        if(Main.doesHitboxDisplay())
+            displayHitbox(g, Color.GREEN);
     }
 
     @Override

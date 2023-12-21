@@ -1,16 +1,17 @@
 package fr.tyr.game;
 
 import fr.tyr.Main;
-import fr.tyr.components.character.*;
 import fr.tyr.components.character.Character;
+import fr.tyr.components.character.*;
 import fr.tyr.components.classic.GameComponent;
 import fr.tyr.components.gauges.ReputationGauge;
 import fr.tyr.components.gauges.TimeGauge;
-import fr.tyr.components.sample.*;
+import fr.tyr.components.sample.SampleBackgroundComponent;
 import fr.tyr.tools.Vector2D;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.Consumer;
 
@@ -18,9 +19,13 @@ public class GameEngine {
 
     private final boolean devMode;
 
+    private boolean isEnded = false;
+
     private final ReentrantLock componentsLock = new ReentrantLock();
     private final List<GameComponent<?>> components;
-    private final CharacterSheet characterSheet = new CharacterSheet(new Vector2D(200, 300));
+    private final ReputationGauge reputationGauge = new ReputationGauge(new Vector2D(25, 75));
+    private final TimeGauge timeGauge = new TimeGauge(new Vector2D(700, 25));
+    private final CharacterSheet characterSheet = new CharacterSheet(new Vector2D(850, 175));
 
     /**
      * Create a new game engine
@@ -40,27 +45,50 @@ public class GameEngine {
     private void initScene(){
         Main.getLogger().info("Initializing scene...");
         safeListOperation(componentList -> {
+            // Production components
             componentList.add(new SampleBackgroundComponent());
-            //componentList.add(new SampleImageComponent(new Vector2D(100, 100), new Vector2D(50, 50)));
-            //componentList.add(new SampleTextComponent(new Vector2D(200, 200)));
-            //componentList.add(new SampleAnimatedImageComponent(new Vector2D(300, 300)));
-            //componentList.add(new SampleAnimatedTextComponent(new Vector2D(400, 400)));
-
-            MaleBuilder maleBuilder = new MaleBuilder();
-            CharacterDirector characterDirector = new CharacterDirector(maleBuilder);
-            characterDirector.generateCharacter();
-            Character maleCharacter = maleBuilder.getMale();
-            maleCharacter.resize(new Vector2D(200, 200));
-            maleCharacter.resize(new Vector2D(200, 200));
-            maleCharacter.move(new Vector2D(50, 50));
-            componentList.add(maleCharacter);
-
-            componentList.add(new ReputationGauge(new Vector2D(500, 200)));
-            componentList.add(new TimeGauge(new Vector2D(700, 200)));
+            componentList.add(reputationGauge);
+            componentList.add(timeGauge);
             componentList.add(characterSheet);
-            characterSheet.show(maleCharacter);
+
+            // Dev components
+//            FemaleBuilder femaleBuilder = new FemaleBuilder();
+//            CharacterDirector characterDirector = new CharacterDirector(femaleBuilder);
+//            characterDirector.generateCharacter();
+//            Character maleCharacter = femaleBuilder.getFemale();
+//            maleCharacter.resize(new Vector2D(200, 200));
+//            maleCharacter.resize(new Vector2D(200, 200));
+//            maleCharacter.move(new Vector2D(50, 50));
+//            componentList.add(maleCharacter);
+//
+//            characterSheet.show(maleCharacter);
         });
+        generateRandomCharacters(5);
+        timeGauge.setCurrentProgress(10);
+        reputationGauge.setCurrentProgress(85);
         Main.getLogger().info("Scene initialized.");
+    }
+
+    private void generateRandomCharacters(int count){
+        Random random = new Random();
+        for(int i = 0; i < count; i++){
+            boolean isMale = random.nextBoolean();
+            CharacterBuilder characterBuilder = isMale ? new MaleBuilder() : new FemaleBuilder();
+            CharacterDirector characterDirector = new CharacterDirector(characterBuilder);
+            characterDirector.generateCharacter();
+            Character character = characterBuilder.getCharacter();
+            character.resize(character.getSize().getMultiplied(0.3));
+            int x = random.nextInt(625) + 80;
+            int y = random.nextInt(175) + 325;
+            character.move(new Vector2D(x, y));
+            safeListOperation(componentList -> componentList.add(character));
+        }
+    }
+
+    private void clearCharacters(){
+        safeListOperation(componentList -> {
+            componentList.removeIf(component -> component instanceof Character);
+        });
     }
 
     /**
@@ -81,5 +109,21 @@ public class GameEngine {
 
     public boolean isDevMode() {
         return devMode;
+    }
+
+    public boolean isEnded() {
+        return isEnded;
+    }
+
+    public ReputationGauge getReputationGauge() {
+        return reputationGauge;
+    }
+
+    public TimeGauge getTimeGauge() {
+        return timeGauge;
+    }
+
+    public CharacterSheet getCharacterSheet() {
+        return characterSheet;
     }
 }

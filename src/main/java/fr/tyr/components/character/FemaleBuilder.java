@@ -1,8 +1,11 @@
 package fr.tyr.components.character;
+
 import fr.tyr.components.character.identity.IdentityManager;
 import fr.tyr.components.character.identity.enums.Gender;
 import fr.tyr.components.character.personality.PersonalityManager;
-import fr.tyr.components.character.style.*;
+import fr.tyr.components.character.style.CharacterStyle;
+import fr.tyr.components.character.style.FemaleStyleManager;
+import fr.tyr.components.character.style.StyleManager;
 import fr.tyr.tools.Vector2D;
 
 public class FemaleBuilder implements CharacterBuilder{
@@ -37,8 +40,8 @@ public class FemaleBuilder implements CharacterBuilder{
      */
     @Override
     public void generatePersonality() {
-        this.female.getPersonality().setMentalStrength(pm.generateMentalStrength(this.female.getPersonality().getPastFact().getCommonPastFact(), this.getFemale().getPersonality().getPastFact().getOriginPastFact(), this.getFemale().getPersonality().getPastFact().getGenderPastFact(), this.getFemale().getPersonality().getPastFact().getSexualOrientationPastFact()));
-        this.female.getPersonality().setSexualOrientation(pm.generateSexualOrientation(this.getFemale().getPersonality().getPastFact().getSexualOrientationPastFact(), Gender.FEMALE));
+        this.female.getPersonality().setMentalStrength(pm.generateMentalStrength(this.female.getPersonality().getPastFact().getCommonPastFact(), this.getCharacter().getPersonality().getPastFact().getOriginPastFact(), this.getCharacter().getPersonality().getPastFact().getGenderPastFact(), this.getCharacter().getPersonality().getPastFact().getSexualOrientationPastFact()));
+        this.female.getPersonality().setSexualOrientation(pm.generateSexualOrientation(this.getCharacter().getPersonality().getPastFact().getSexualOrientationPastFact(), Gender.FEMALE));
     }
 
     /**
@@ -68,14 +71,10 @@ public class FemaleBuilder implements CharacterBuilder{
     @Override
     public void generateStyle() {
         this.female.setCharacterStyle(new CharacterStyle(fsm.generateEyes(this.female.getIdentity().getOrigin()), fsm.generateHair(this.female.getHairColor()), FemaleStyleManager.generateShirt(), FemaleStyleManager.generateSkin(this.female.getIdentity().getOrigin())));
-        this.female.getCharacterStyle().assemble();
     }
 
-    /**
-     * Send the current character
-     * @return The current character
-     */
-    public Character getFemale() {
+    @Override
+    public Character getCharacter() {
         return female;
     }
 }

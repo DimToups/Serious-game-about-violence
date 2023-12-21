@@ -40,8 +40,8 @@ public class MaleBuilder implements CharacterBuilder{
      */
     @Override
     public void generatePersonality() {
-        this.male.getPersonality().setMentalStrength(pm.generateMentalStrength(this.male.getPersonality().getPastFact().getCommonPastFact(), this.getMale().getPersonality().getPastFact().getOriginPastFact(), this.getMale().getPersonality().getPastFact().getGenderPastFact(), this.getMale().getPersonality().getPastFact().getSexualOrientationPastFact()));
-        this.male.getPersonality().setSexualOrientation(pm.generateSexualOrientation(this.getMale().getPersonality().getPastFact().getSexualOrientationPastFact(), Gender.MALE));
+        this.male.getPersonality().setMentalStrength(pm.generateMentalStrength(this.male.getPersonality().getPastFact().getCommonPastFact(), this.getCharacter().getPersonality().getPastFact().getOriginPastFact(), this.getCharacter().getPersonality().getPastFact().getGenderPastFact(), this.getCharacter().getPersonality().getPastFact().getSexualOrientationPastFact()));
+        this.male.getPersonality().setSexualOrientation(pm.generateSexualOrientation(this.getCharacter().getPersonality().getPastFact().getSexualOrientationPastFact(), Gender.MALE));
     }
 
     /**
@@ -71,14 +71,11 @@ public class MaleBuilder implements CharacterBuilder{
     @Override
     public void generateStyle() {
         this.male.setCharacterStyle(new MaleCharacterStyle(MaleStyleManager.generateBeard(this.male.getHairColor()), msf.generateEyes(this.male.getIdentity().getOrigin()), msf.generateHair(this.male.getHairColor()), MaleStyleManager.generateShirt(), MaleStyleManager.generateSkin(this.male.getIdentity().getOrigin())));
-        this.male.getCharacterStyle().assemble();
+//        this.male.getCharacterStyle().assemble();
     }
 
-    /**
-     * Send the current character
-     * @return The current character
-     */
-    public Character getMale() {
+    @Override
+    public Character getCharacter() {
         return male;
     }
 }
