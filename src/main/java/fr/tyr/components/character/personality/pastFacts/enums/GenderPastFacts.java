@@ -15,7 +15,7 @@ public enum GenderPastFacts {
     ACTIVIST("Activiste", "La personne a toujours trouvé insensé les différences faites entre les genres. Il est maintenant un activiste et défend l'égalité des genres.", MentalStrength.BOLD, GenderThoughts.DISLIKES_ALL_COMMENTS, Gender.UNKNOWN),
     EXTREM_FEMINIST("Féministe extrêmiste", "", MentalStrength.BOLD, GenderThoughts.MISANDRE, Gender.FEMALE),
     SOCIAL_OPPRESSION_ON_WOMEN("Oppression sociale sur les femmes", "La personne a grandi auprès de personnes se moquant des femmes. Blagues ou non, la personne pense de la même façon que ses pairs.", MentalStrength.NORMAL, GenderThoughts.MISOGYNIST, Gender.UNKNOWN),
-    SOCIAL_OPPRESSION_ON_MEN("Oppression sociale sur les femmes", "La personne a vécu auprès de personnes ayant jugé la majorité des hommes comme dégoûtants. La personne a gardé une mauvaise image des hommes.", MentalStrength.NORMAL, GenderThoughts.MISANDRE, Gender.UNKNOWN),
+    SOCIAL_OPPRESSION_ON_MEN("Oppression sociale sur les homme", "La personne a vécu auprès de personnes ayant jugé la majorité des hommes comme dégoûtants. La personne a gardé une mauvaise image des hommes.", MentalStrength.NORMAL, GenderThoughts.MISANDRE, Gender.UNKNOWN),
     ;
     private final String title;
     private final String description;
