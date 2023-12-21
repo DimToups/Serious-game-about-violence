@@ -4,11 +4,16 @@ import fr.tyr.Main;
 import fr.tyr.components.character.Character;
 import fr.tyr.components.character.*;
 import fr.tyr.components.classic.GameComponent;
+import fr.tyr.components.classic.TextComponent;
+import fr.tyr.components.end.*;
+import fr.tyr.components.gauges.MoneyGauge;
 import fr.tyr.components.gauges.ReputationGauge;
 import fr.tyr.components.gauges.TimeGauge;
-import fr.tyr.components.sample.SampleBackgroundComponent;
+import fr.tyr.components.others.BackgroundComponent;
+import fr.tyr.resources.images.Images;
 import fr.tyr.tools.Vector2D;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -25,7 +30,10 @@ public class GameEngine {
     private final List<GameComponent<?>> components;
     private final ReputationGauge reputationGauge = new ReputationGauge(new Vector2D(25, 75));
     private final TimeGauge timeGauge = new TimeGauge(new Vector2D(700, 25));
+    private final MoneyGauge moneyGauge = new MoneyGauge(new Vector2D(150, 25));
     private final CharacterSheet characterSheet = new CharacterSheet(new Vector2D(850, 175));
+
+    private final List<Character> members = new ArrayList<>();
 
     /**
      * Create a new game engine
@@ -35,38 +43,73 @@ public class GameEngine {
         Main.getLogger().info("Initializing game engine...");
         this.devMode = devMode;
         components = new ArrayList<>();
-        initScene();
+        displayGameScene();
+        displayEndScene(true);
         Main.getLogger().info("Game engine initialized.");
     }
 
     /**
      * Initialize the scene with the components
      */
-    private void initScene(){
+    public void displayGameScene(){
         Main.getLogger().info("Initializing scene...");
+        members.clear();
         safeListOperation(componentList -> {
+            componentList.clear();
             // Production components
-            componentList.add(new SampleBackgroundComponent());
+            componentList.add(new BackgroundComponent(Images.BACKGROUND));
             componentList.add(reputationGauge);
             componentList.add(timeGauge);
+            componentList.add(moneyGauge);
             componentList.add(characterSheet);
-
-            // Dev components
-//            FemaleBuilder femaleBuilder = new FemaleBuilder();
-//            CharacterDirector characterDirector = new CharacterDirector(femaleBuilder);
-//            characterDirector.generateCharacter();
-//            Character maleCharacter = femaleBuilder.getFemale();
-//            maleCharacter.resize(new Vector2D(200, 200));
-//            maleCharacter.resize(new Vector2D(200, 200));
-//            maleCharacter.move(new Vector2D(50, 50));
-//            componentList.add(maleCharacter);
-//
-//            characterSheet.show(maleCharacter);
         });
-        generateRandomCharacters(5);
+        generateRandomCharacters(10);
+        displayRandomCharacters(5);
+
         timeGauge.setCurrentProgress(10);
         reputationGauge.setCurrentProgress(85);
+        moneyGauge.setMoney(100);
         Main.getLogger().info("Scene initialized.");
+    }
+
+    private final TextComponent winStateText = new TextComponent("", Color.BLACK, new Font("Roboto", Font.PLAIN, 80), new Vector2D(500, 100));
+    private final TextComponent winStateMessageText = new TextComponent("", Color.BLACK, new Font("Roboto", Font.PLAIN, 25), new Vector2D(325, 175));
+
+    public void displayEndScene(boolean isWin){
+        Main.getLogger().info("Displaying end screen...");
+        safeListOperation(componentList -> {
+            componentList.clear();
+            String winOrLose = isWin ? "Gagné" : "Perdu";
+            String winOrLoseMessage = isWin ? "Tu as réussi à passer sous les radars de la police !" : "Tu as perdu !";
+            winStateText.setText(winOrLose);
+            winStateMessageText.setText(winOrLoseMessage);
+            componentList.add(new BackgroundComponent(Images.END_BACKGROUND));
+            componentList.add(winStateText);
+            componentList.add(winStateMessageText);
+            componentList.add(new MembersSummary(new Vector2D(525, 250), members.size(), 100));
+            componentList.add(new ReputationSummary(new Vector2D(525, 340), reputationGauge.getCurrentProgress()));
+            componentList.add(new MoneySummary(new Vector2D(525, 425), moneyGauge.getMoneyCount()));
+            componentList.add(new TimeSummary(new Vector2D(525, 475), timeGauge.getDayCount()));
+            componentList.add(new RestartButton(new Vector2D(1000, 600)));
+        });
+        Main.getLogger().info("End screen displayed.");
+    }
+
+    private void displayRandomCharacters(int count){
+        Random random = new Random();
+        clearCharacters();
+        safeListOperation(componentList -> {
+            for(int i = 0; i < count; i++){
+                Character member = members.get(random.nextInt(members.size()));
+                while(componentList.contains(member))
+                    member = members.get(random.nextInt(members.size()));
+                // Set random position
+                int x = random.nextInt(625) + 80;
+                int y = random.nextInt(175) + 325;
+                member.move(new Vector2D(x, y));
+                componentList.add(member);
+            }
+        });
     }
 
     private void generateRandomCharacters(int count){
@@ -78,11 +121,15 @@ public class GameEngine {
             characterDirector.generateCharacter();
             Character character = characterBuilder.getCharacter();
             character.resize(character.getSize().getMultiplied(0.3));
-            int x = random.nextInt(625) + 80;
-            int y = random.nextInt(175) + 325;
-            character.move(new Vector2D(x, y));
-            safeListOperation(componentList -> componentList.add(character));
+            members.add(character);
         }
+    }
+
+    private void removeMember(Character member){
+        safeListOperation(componentList -> {
+            componentList.remove(member);
+            members.remove(member);
+        });
     }
 
     private void clearCharacters(){
