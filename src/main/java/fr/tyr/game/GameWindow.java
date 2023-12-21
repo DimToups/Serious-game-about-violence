@@ -1,10 +1,8 @@
 package fr.tyr.game;
 
-import fr.tyr.Main;
+import fr.tyr.resources.images.Images;
 
 import javax.swing.*;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowFocusListener;
 
 public class GameWindow extends JFrame {
 
@@ -17,6 +15,7 @@ public class GameWindow extends JFrame {
         setSize(1280, 720);
         setLocationRelativeTo(null);
         setResizable(false);
+        setIconImage(Images.LOGO.getCopy());
         setVisible(true);
 
 //        addWindowFocusListener(new WindowFocusListener() {
