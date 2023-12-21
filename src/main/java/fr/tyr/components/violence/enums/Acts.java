@@ -22,7 +22,7 @@ public enum Acts {
     PSYCHOLOGICAL_EXCESSIVE_PRESSURE(Types.PSYCHOLOGICAL,"Mettre la pression a l'adhérent par rapports a un match"),
     PSYCHOLOGICAL_SOCIAL_ISOLATION(Types.PSYCHOLOGICAL,"Ignorer complètement l'adhérent"),
     PSYCHOLOGICAL_GENDER_DISCRIMINATION(Types.PSYCHOLOGICAL,"Faire une blague misogyne"),
-    PSYCHOLOGICAL_ETHNIC_DISCRIMINATION(Types.PSYCHOLOGICAL,"Faire un blague raciste"),
+    PSYCHOLOGICAL_ETHNIC_DISCRIMINATION(Types.PSYCHOLOGICAL,"Faire une blague raciste"),
     PSYCHOLOGICAL_SEXUAL_ORIENTATION_DISCRIMINATION(Types.PSYCHOLOGICAL,"Faire une blague homophobe"),
     VERBAL_INSULTS(Types.VERBAL,"Insulter l'adhérent"),
     VERBAL_DENIGRATION(Types.VERBAL,"Dénigrer les competence de l'adhérent "),

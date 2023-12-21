@@ -59,7 +59,7 @@ public class ViolenceCardBuilder {
         try {
             List<Acts> actsList = Acts.getAllActs(type);
 
-            this.violenceCard.setDescription(Acts.valueOf(actsList.get(rand.nextInt(0, actsList.size())).name()));
+            this.violenceCard.setActs(Acts.valueOf(actsList.get(rand.nextInt(0, actsList.size())).name()));
         }
         catch (Exception e){
             //Passage de l'information

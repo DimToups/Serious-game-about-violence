@@ -102,10 +102,8 @@ public class GameEngine {
             ViolenceCardDirector violenceCardDirector = new ViolenceCardDirector(violenceCardBuilder);
             violenceCardDirector.generateViolenceCard();
             ViolenceCard violenceCard = violenceCardBuilder.getViolenceCard();
-            violenceCard.resize(violenceCard.getSize().getMultiplied(0.5));
-            double x =  300 + j;
-            double y =720 - violenceCard.getSize().y;
-            violenceCard.move(new Vector2D(x,y));
+            violenceCard.resize(violenceCard.getSize().getMultiplied(0.95));
+            violenceCard.move(new Vector2D(50 + j,720 - (violenceCard.getSize().y/3 * 2)));
             j += 10 + violenceCard.getSize().x ;
             safeListOperation(componentList -> componentList.add(violenceCard));
         }
