@@ -49,7 +49,7 @@ public class GameEngine {
     }
 
     /**
-     * Initialize the scene with the components
+     * Display the game scene
      */
     public void displayGameScene(){
         Main.getLogger().info("Initializing scene...");
@@ -75,6 +75,10 @@ public class GameEngine {
     private final TextComponent winStateText = new TextComponent("", Color.BLACK, new Font("Roboto", Font.PLAIN, 80), new Vector2D(500, 100));
     private final TextComponent winStateMessageText = new TextComponent("", Color.BLACK, new Font("Roboto", Font.PLAIN, 25), new Vector2D(325, 175));
 
+    /**
+     * Display the end screen
+     * @param isWin If true, the player won
+     */
     public void displayEndScene(boolean isWin){
         Main.getLogger().info("Displaying end screen...");
         safeListOperation(componentList -> {
@@ -95,6 +99,10 @@ public class GameEngine {
         Main.getLogger().info("End screen displayed.");
     }
 
+    /**
+     * Display random characters on the screen from the members list
+     * @param count The number of characters to display
+     */
     private void displayRandomCharacters(int count){
         Random random = new Random();
         clearCharacters();
@@ -111,6 +119,10 @@ public class GameEngine {
         });
     }
 
+    /**
+     * Generate random characters to members list
+     * @param count The number of characters to generate
+     */
     private void generateRandomCharacters(int count){
         Random random = new Random();
         for(int i = 0; i < count; i++){
@@ -124,6 +136,10 @@ public class GameEngine {
         }
     }
 
+    /**
+     * Remove a member from the member list
+     * @param member The member to remove
+     */
     private void removeMember(Character member){
         safeListOperation(componentList -> {
             componentList.remove(member);
@@ -176,6 +192,10 @@ public class GameEngine {
         return characterSheet;
     }
 
+    /**
+     * Get a random valid position for a character
+     * @return The random position as a Vector2D
+     */
     public Vector2D getRandomCharacterPosition(){
         Random random = new Random();
         int x = random.nextInt(800) + 80;
