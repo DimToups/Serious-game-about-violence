@@ -2,14 +2,15 @@ package fr.tyr.components.character.personality;
 
 import fr.tyr.components.character.identity.enums.Gender;
 import fr.tyr.components.character.identity.enums.Origin;
-import fr.tyr.components.character.personality.enums.*;
-import fr.tyr.components.character.personality.thoughts.enums.GenderThoughts;
-import fr.tyr.components.character.personality.thoughts.enums.OriginThoughts;
-import fr.tyr.components.character.personality.thoughts.enums.SexualOrientationThoughts;
+import fr.tyr.components.character.personality.enums.MentalStrength;
+import fr.tyr.components.character.personality.enums.SexualOrientation;
 import fr.tyr.components.character.personality.pastFacts.enums.CommonPastFacts;
 import fr.tyr.components.character.personality.pastFacts.enums.GenderPastFacts;
 import fr.tyr.components.character.personality.pastFacts.enums.OriginPastFacts;
 import fr.tyr.components.character.personality.pastFacts.enums.SexualOrientationPastFacts;
+import fr.tyr.components.character.personality.thoughts.enums.GenderThoughts;
+import fr.tyr.components.character.personality.thoughts.enums.OriginThoughts;
+import fr.tyr.components.character.personality.thoughts.enums.SexualOrientationThoughts;
 
 import java.util.ArrayList;
 import java.util.Arrays;
