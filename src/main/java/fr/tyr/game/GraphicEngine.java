@@ -246,7 +246,7 @@ public class GraphicEngine extends JPanel {
      */
     @Override
     protected void paintComponent(Graphics g) {
-        long start = System.nanoTime();
+        long timerId = STimer.startNano();
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
@@ -255,9 +255,8 @@ public class GraphicEngine extends JPanel {
         g.setFont(font);
         if(gameEngine.isDevMode()){
             g.drawString("TPS : %d    %d ms".formatted(tpsRunner.getCurrentAps(), lastTickTime / 1000000L), 10, 50);
-            long end = System.nanoTime();
             g.drawString("FPS : %d    %d ms"
-                    .formatted(fpsRunner.getCurrentAps(), (end - start) / 1000000L), 10, 25);
+                    .formatted(fpsRunner.getCurrentAps(), STimer.stopNano(timerId) / 1000000L), 10, 25);
         }
     }
 
