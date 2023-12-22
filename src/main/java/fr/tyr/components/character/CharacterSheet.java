@@ -19,8 +19,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class CharacterSheet extends ComposedComponent {
 
     // Fonts
-    public static final Font personalityFont = new Font("Monospaced", Font.BOLD, 25);
-    public static final Font contentFont = new Font("Monospaced", Font.BOLD, 18);
+    public static final Font personalityFont = new Font("Roboto", Font.PLAIN, 25);
+    public static final Font contentFont = new Font("Roboto", Font.PLAIN, 18);
 
     private static ImageComponent sheetBackground = new ImageComponent(Images.CHARACTER_SHEET_BACKGROUND, new Vector2D(0, 0));
     // Personality infos
@@ -65,60 +65,64 @@ public class CharacterSheet extends ComposedComponent {
             hide(false);
         character.setFramed(true);
         this.character = character;
-        Main.getGameEngine().setFramedCharacter(this.character);
         baseCharacterPosition = new Vector2D(character.getPosition());
         baseCharacterSize = new Vector2D(character.getSize());
         Main.getGameEngine().safeListOperation(components -> components.remove(character));
-
-        // Create sheet with every information
-        updateFrame();
-
+        // Create sheet with all information
+        updateCharacter();
+        updateComponent();
         // Appearance animation
         move(new Vector2D(sheetPosition.x, 720));
         isMoving = true;
         moveTo(sheetPosition, 0.5F);
         new Timer().schedule(
-            new java.util.TimerTask() {
-                @Override
-                public void run() {
-                    isMoving = false;
-                }
-            },
-            600
+                new java.util.TimerTask() {
+                    @Override
+                    public void run() {
+                        isMoving = false;
+                    }
+                },
+                600
         );
         this.setVisible(true);
         Main.getLogger().info("Showing character sheet for %s %s".formatted(character.getIdentity().getFirstName(), character.getIdentity().getLastName()));
     }
 
-    public void updateFrame(){
-        updateCharacter();
-        updateTexts();
-        List<GameComponent<?>> components = new ArrayList<>(List.of(sheetBackground, character, firstName, lastName, age));
-        if(character.getPersonality().getPastFact().isCommonPastFactDiscovered())
-            components.add(commonPastFacts);
-        if(character.getPersonality().getPastFact().isGenderPastFactDiscovered())
-            components.add(genderPastFacts);
-        if(character.getPersonality().getPastFact().isOriginPastFactDiscovered())
-            components.add(originPastFacts);
-        if(character.getPersonality().getPastFact().isSexualOrientationPastFactDiscovered())
-            components.add(sexualOrientationPastFacts);
-        if(character.getPersonality().getThoughts().isGenderThoughtsDiscovered())
-            components.add(genderThoughts);
-        if(character.getPersonality().getThoughts().isOriginThoughtsDiscovered())
-            components.add(originThoughts);
-        if(character.getPersonality().getThoughts().isSexualOrientationThoughtsDiscovered())
-            components.add(sexualOrientationThoughts);
-        setFrame(components);
-        refreshSize();
-    }
-
     private void updateCharacter(){
-        character.resize(Vector2D.multiply(baseCharacterSize, 0.6));
+        character.resize(0.6);
         character.move(getPosition().getAdded(new Vector2D(12, 105)));
         character.refreshSize();
     }
 
-    private void updateTexts(){
+    private List<TextComponent> getTextsToDisplay(){
+        List<TextComponent> textComponents = new ArrayList<>();
+        if(character.getPersonality().getPastFact().isCommonPastFactDiscovered())
+            textComponents.add(commonPastFacts);
+        if(character.getPersonality().getPastFact().isGenderPastFactDiscovered())
+            textComponents.add(genderPastFacts);
+        if(character.getPersonality().getPastFact().isOriginPastFactDiscovered())
+            textComponents.add(originPastFacts);
+        if(character.getPersonality().getPastFact().isSexualOrientationPastFactDiscovered())
+            textComponents.add(sexualOrientationPastFacts);
+        if(character.getPersonality().getThoughts().isGenderThoughtsDiscovered())
+            textComponents.add(genderThoughts);
+        if(character.getPersonality().getThoughts().isOriginThoughtsDiscovered())
+            textComponents.add(originThoughts);
+        if(character.getPersonality().getThoughts().isSexualOrientationThoughtsDiscovered())
+            textComponents.add(sexualOrientationThoughts);
+        return textComponents;
+    }
+
+    public void updateComponent(){
+        setTexts();
+        List<GameComponent<?>> componentsToDisplay = new ArrayList<>(List.of(sheetBackground, character, firstName, lastName, age));
+        List<TextComponent> textsToDisplay = getTextsToDisplay();
+        componentsToDisplay.addAll(textsToDisplay);
+        setFrame(componentsToDisplay);
+        refreshSize();
+    }
+
+    private void setTexts(){
         firstName.move(getPosition().getAdded(new Vector2D(110, 112)));
         lastName.move(getPosition().getAdded(new Vector2D(110, 155)));
         age.move(getPosition().getAdded(new Vector2D(110, 196)));
@@ -148,27 +152,22 @@ public class CharacterSheet extends ComposedComponent {
             return;
         if(Objects.isNull(character))
             throw new UnsupportedOperationException("Cannot hide a character sheet if it is not shown");
-        Main.getGameEngine().setFramedCharacter(null);
-
-        if(Main.getGameEngine().isInViolenceMode())
-            Main.getGameEngine().hideViolenceDeck();
-        else
-            Main.getGameEngine().hideMemoDeck();
-
+        Main.getGameEngine().hideMemoDeck();
+        Main.getGameEngine().hideViolenceDeck();
         if(animate){
             // Disappear animation
             isMoving = true;
             moveTo(new Vector2D(sheetPosition.x, 720), 0.5F);
             // Replace character on the screen after the animation
             new Timer().schedule(
-                new java.util.TimerTask() {
-                    @Override
-                    public void run() {
-                        resetSheet();
-                        isMoving = false;
-                    }
-                },
-                600
+                    new java.util.TimerTask() {
+                        @Override
+                        public void run() {
+                            resetSheet();
+                            isMoving = false;
+                        }
+                    },
+                    600
             );
             return;
         }
@@ -193,5 +192,9 @@ public class CharacterSheet extends ComposedComponent {
     @Override
     public void onClick(MouseButtons button) {
         hide(true);
+    }
+
+    public Character getCharacter() {
+        return character;
     }
 }

@@ -15,11 +15,12 @@ import fr.tyr.components.memo.MemoDirector;
 import fr.tyr.components.others.BackgroundComponent;
 import fr.tyr.components.others.SwitchButtonCard;
 import fr.tyr.components.others.SwitchButtonMemo;
-import fr.tyr.components.violence.enums.Types;
-import fr.tyr.resources.images.Images;
 import fr.tyr.components.violence.ViolenceCard;
 import fr.tyr.components.violence.ViolenceCardBuilder;
 import fr.tyr.components.violence.ViolenceCardDirector;
+import fr.tyr.components.violence.enums.Acts;
+import fr.tyr.components.violence.enums.Types;
+import fr.tyr.resources.images.Images;
 import fr.tyr.tools.Vector2D;
 
 import java.awt.*;
@@ -45,7 +46,6 @@ public class GameEngine {
 
     private final List<Character> members = new ArrayList<>();
     private List<ViolenceCard> inTheHand = new ArrayList<>();
-    private Character framedCharacter;
 
     /**
      * Create a new game engine
@@ -84,36 +84,6 @@ public class GameEngine {
         Main.getLogger().info("Scene initialized.");
     }
 
-    public void displayViolenceDeck(){
-        this.isInViolenceMode = true;
-
-        hideMemoDeck();
-
-        // Set up of the deck and the reverseButton
-        SwitchButtonMemo switchButtonMemo = new SwitchButtonMemo(new Vector2D(25, 575));
-        generateViolenceCard(4);
-
-        // Add of the switchButtonMemo
-        safeListOperation(component -> component.add(switchButtonMemo));
-    }
-    public void hideViolenceDeck(){
-        components.removeIf(component -> component.getClass() == ViolenceCard.class || component.getClass() == SwitchButtonMemo.class);
-    }
-    public void displayMemoDeck(){
-        this.isInViolenceMode = false;
-
-        hideViolenceDeck();
-
-        // Set up of the deck and the reverseButton
-        SwitchButtonCard switchButtonCard = new SwitchButtonCard(new Vector2D(50, 525));
-        generateMemos(4);
-
-        // Add of the switchButtonMemo
-        safeListOperation(component -> component.add(switchButtonCard));
-    }
-    public void hideMemoDeck(){
-        components.removeIf(component -> component.getClass() == Memo.class || component.getClass() == SwitchButtonCard.class);
-    }
     private final TextComponent winStateText = new TextComponent("", Color.BLACK, new Font("Roboto", Font.PLAIN, 80), new Vector2D(500, 100));
     private final TextComponent winStateMessageText = new TextComponent("", Color.BLACK, new Font("Roboto", Font.PLAIN, 25), new Vector2D(325, 175));
 
@@ -139,6 +109,33 @@ public class GameEngine {
             componentList.add(new RestartButton(new Vector2D(1000, 600)));
         });
         Main.getLogger().info("End screen displayed.");
+    }
+
+    public void displayViolenceDeck(){
+        this.isInViolenceMode = true;
+        hideMemoDeck();
+        // Set up of the deck and the reverseButton
+        SwitchButtonMemo switchButtonMemo = new SwitchButtonMemo(new Vector2D(25, 575));
+        Main.getLogger().severe("Violence card generating");
+        generateViolenceCard(4);
+        Main.getLogger().severe("Violence card generated");
+        // Add of the switchButtonMemo
+        safeListOperation(component -> component.add(switchButtonMemo));
+    }
+    public void hideViolenceDeck(){
+        safeListOperation(components -> components.removeIf(component -> component instanceof ViolenceCard || component instanceof SwitchButtonMemo));
+    }
+    public void displayMemoDeck(){
+        this.isInViolenceMode = false;
+        hideViolenceDeck();
+        // Set up of the deck and the reverseButton
+        SwitchButtonCard switchButtonCard = new SwitchButtonCard(new Vector2D(50, 525));
+        generateMemos(4);
+        // Add of the switchButtonMemo
+        safeListOperation(component -> component.add(switchButtonCard));
+    }
+    public void hideMemoDeck(){
+        safeListOperation(components -> components.removeIf(component -> component instanceof Memo || component instanceof SwitchButtonCard));
     }
 
     /**
@@ -197,28 +194,27 @@ public class GameEngine {
     }
 
     private void generateViolenceCard(int count){
-        for(int i = 0; i < count; i++){
+        int maxCards = Acts.values().length;
+        int i = 0;
+        while(i < count && inTheHand.size() < maxCards){
             ViolenceCardBuilder violenceCardBuilder = new ViolenceCardBuilder();
             ViolenceCardDirector violenceCardDirector = new ViolenceCardDirector(violenceCardBuilder);
             violenceCardDirector.generateViolenceCard();
             ViolenceCard violenceCard = violenceCardBuilder.getViolenceCard();
             violenceCard.resize(violenceCard.getSize().getMultiplied(0.75));
-            violenceCard.move(new Vector2D(violenceCard.getSize().x + 50 + (violenceCard.getSize().x + 10) * i,720 - (violenceCard.getSize().y/3 * 2)));
+            violenceCard.move(new Vector2D(violenceCard.getSize().x + 50 + (violenceCard.getSize().x + 10) * i,720 - (violenceCard.getSize().y / 3 * 2)));
             violenceCard.resize(violenceCard.getSize().getMultiplied(0.95));
-            violenceCard.move(new Vector2D(violenceCard.getSize().x + 50 + (violenceCard.getSize().x + 10) * i,720 - (violenceCard.getSize().y/3 * 2)));
-            for (int x = 0; x < inTheHand.size(); x++) {
-                if (violenceCard.getActs() == inTheHand.get(x).getActs()) {
-                    generateViolenceCard(i);
-                }
-            }
+            violenceCard.move(new Vector2D(violenceCard.getSize().x + 50 + (violenceCard.getSize().x + 10) * i,720 - (violenceCard.getSize().y / 3 * 2)));
+            if(inTheHand.stream().anyMatch(card -> card.getActs() == violenceCard.getActs()))
+                continue;
             inTheHand.add((violenceCard));
             safeListOperation(componentList -> componentList.add(violenceCard));
+            i++;
         }
     }
     private void removeViolenceCard(ViolenceCard violenceCard){
         safeListOperation(componentList -> {
             componentList.remove(violenceCard);
-            members.remove(violenceCard);
         });
     }
     private void clearViolenceCard(){
@@ -226,6 +222,7 @@ public class GameEngine {
     }
     public void applyViolence(ViolenceCard violenceCard){
         Types type = violenceCard.getType();
+        Character framedCharacter = characterSheet.getCharacter();
         double multiplier = framedCharacter.getPersonality().Sensitivity(type);
         int dissatisfaction = framedCharacter.getDissatisfaction();
         int damage = violenceCard.getDamage();
@@ -239,7 +236,6 @@ public class GameEngine {
             getCharacterSheet().hide(true);
             removeMember(framedCharacter);
         }
-
         try {
             components.remove(violenceCard);
         }
@@ -249,18 +245,17 @@ public class GameEngine {
     }
 
     public void applyMemo(Memo memo){
+        Character framedCharacter = characterSheet.getCharacter();
         switch(memo.getQuestion().getTarget()){
-            case COMMON_PAST_FACTS : this.framedCharacter.getPersonality().getPastFact().setCommonPastFactDiscovered(true); break;
-            case GENDER_PAST_FACTS : this.framedCharacter.getPersonality().getPastFact().setGenderPastFactDiscovered(true); break;
-            case ORIGIN_PAST_FACTS : this.framedCharacter.getPersonality().getPastFact().setOriginPastFactDiscovered(true); break;
-            case SEXUAL_ORIENTATION_PAST_FACTS : this.framedCharacter.getPersonality().getPastFact().setSexualOrientationPastFactDiscovered(true); break;
-            case GENDER_THOUGHTS : this.framedCharacter.getPersonality().getThoughts().setGenderThoughtsDiscovered(true); break;
-            case ORIGIN_THOUGHTS: this.framedCharacter.getPersonality().getThoughts().setOriginThoughtsDiscovered(true); break;
-            case SEXUAL_ORIENTATION_THOUGHTS : this.framedCharacter.getPersonality().getThoughts().setSexualOrientationThoughtsDiscovered(true); break;
+            case COMMON_PAST_FACTS -> framedCharacter.getPersonality().getPastFact().setCommonPastFactDiscovered(true);
+            case GENDER_PAST_FACTS -> framedCharacter.getPersonality().getPastFact().setGenderPastFactDiscovered(true);
+            case ORIGIN_PAST_FACTS -> framedCharacter.getPersonality().getPastFact().setOriginPastFactDiscovered(true);
+            case SEXUAL_ORIENTATION_PAST_FACTS -> framedCharacter.getPersonality().getPastFact().setSexualOrientationPastFactDiscovered(true);
+            case GENDER_THOUGHTS -> framedCharacter.getPersonality().getThoughts().setGenderThoughtsDiscovered(true);
+            case ORIGIN_THOUGHTS -> framedCharacter.getPersonality().getThoughts().setOriginThoughtsDiscovered(true);
+            case SEXUAL_ORIENTATION_THOUGHTS -> framedCharacter.getPersonality().getThoughts().setSexualOrientationThoughtsDiscovered(true);
         }
-
-        this.getCharacterSheet().updateFrame();
-
+        this.getCharacterSheet().updateComponent();
         try {
             components.remove(memo);
         }
@@ -328,8 +323,5 @@ public class GameEngine {
         int x = random.nextInt(800) + 80;
         int y = random.nextInt(150) + 275;
         return new Vector2D(x, y);
-    }
-    public void setFramedCharacter(Character character){
-        this.framedCharacter = character;
     }
 }
