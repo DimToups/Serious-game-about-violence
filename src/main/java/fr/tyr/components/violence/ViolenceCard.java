@@ -129,7 +129,7 @@ public class ViolenceCard extends ComposedComponent{
         this.icon.move(Vector2D.add(background.getPosition(),
                 new Vector2D(this.background.getSize().x /25,this.background.getSize().x /25 )));
 
-        description = finalizeText(description.getFirst().getFrame().getParts().getFirst().getText());
+        description = TextComponent.adjustText(description.getFirst(), this.background.getSize().x, cardFont);
         for(int i = 0; i < description.size(); i++) {
             description.get(i).move(Vector2D.add(background.getPosition(),
                     new Vector2D(icon.getPosition().x, (this.background.getSize().y - (this.icon.getPosition().y + this.icon.getSize().y + description.get(i).getSize().y)) / 10 + (this.icon.getPosition().y + this.icon.getSize().y + (description.get(i).getSize().y + cardFont.getSize() * 1.2) * i))));
