@@ -5,13 +5,10 @@ import fr.tyr.components.character.personality.enums.SexualOrientation;
 import fr.tyr.components.character.personality.thoughts.enums.SexualOrientationThoughts;
 import fr.tyr.components.violence.enums.Types;
 
-import java.lang.reflect.Type;
-import java.net.Proxy;
-
 
 public enum SexualOrientationPastFacts {
-    NONE("Aucun fait", "Rien n'a particulièrement marqué la personne sur son orientation sexuelle.", null, MentalStrength.NORMAL, null, Types.PSYCHOLOGICAL),
-    HOMOPHOBIC_FAMILY("Famille homophobique", "La personne a grandi dans une famille peu ouverte d'esprit. Elle ne s'est posée aucune question sur sa sexualité de peur du jugement de sa famille.", null, MentalStrength.NORMAL, SexualOrientation.STRAIGHT, Types.PSYCHOLOGICAL),
+    NONE("Aucun fait", "Rien n'a particulièrement marqué la personne sur son orientation sexuelle", null, MentalStrength.NORMAL, null, Types.PSYCHOLOGICAL),
+    HOMOPHOBIC_FAMILY("Famille homophobique", "La personne a grandi dans une famille peu ouverte d'esprit", null, MentalStrength.NORMAL, SexualOrientation.STRAIGHT, Types.PSYCHOLOGICAL),
     ;
     private final String title;
     private final String description;

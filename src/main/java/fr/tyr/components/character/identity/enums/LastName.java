@@ -11,6 +11,16 @@ public enum LastName {
     MARTIN(Origin.FRENCH),
     PETIT(Origin.FRENCH),
     GIRAUD(Origin.FRENCH),
+    CHEVALIER(Origin.FRENCH),
+    HUBERT(Origin.FRENCH),
+    POTIER(Origin.FRENCH),
+    FAIVRE(Origin.FRENCH),
+    COSTE(Origin.FRENCH),
+    BERTHELOT(Origin.FRENCH),
+    NORMAND(Origin.FRENCH),
+    RIOU(Origin.FRENCH),
+    COULON(Origin.FRENCH),
+    LEONARD(Origin.FRENCH),
 
     //
     //GERMAN
@@ -51,6 +61,8 @@ public enum LastName {
     ZHANG(Origin.ASIAN),
     WU(Origin.ASIAN),
     CHEN(Origin.ASIAN),
+    SHARMA(Origin.ASIAN),
+
 
     //
     //AMERICAN
