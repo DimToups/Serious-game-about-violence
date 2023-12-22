@@ -166,13 +166,13 @@ public class CharacterSheet extends ComposedComponent {
         firstName.setText(character.getIdentity().getFirstName().getFirstName());
         lastName.setText(character.getIdentity().getLastName().cleanName());
         age.setText("%d ans".formatted(character.getIdentity().getAge()));
-        commonPastFacts.setText(character.getPersonality().getPastFact().getCommonPastFact().getTitle());
-        genderPastFacts.setText(character.getPersonality().getPastFact().getGenderPastFact().getTitle());
-        originPastFacts.setText(character.getPersonality().getPastFact().getOriginPastFact().getTitle());
-        sexualOrientationPastFacts.setText(character.getPersonality().getPastFact().getSexualOrientationPastFact().getTitle());
-        genderThoughts.setText(character.getPersonality().getThoughts().getGenderThoughts().getTitle());
-        originThoughts.setText(character.getPersonality().getThoughts().getOriginThoughts().getTitle());
-        sexualOrientationThoughts.setText(character.getPersonality().getThoughts().getSexualOrientationThoughts().getTitle());
+        commonPastFacts.setText(character.getPersonality().getPastFact().getCommonPastFact().getDescription());
+        genderPastFacts.setText(character.getPersonality().getPastFact().getGenderPastFact().getDescription());
+        originPastFacts.setText(character.getPersonality().getPastFact().getOriginPastFact().getDescription());
+        sexualOrientationPastFacts.setText(character.getPersonality().getPastFact().getSexualOrientationPastFact().getDescription());
+        genderThoughts.setText(character.getPersonality().getThoughts().getGenderThoughts().getDescription());
+        originThoughts.setText(character.getPersonality().getThoughts().getOriginThoughts().getDescription());
+        sexualOrientationThoughts.setText(character.getPersonality().getThoughts().getSexualOrientationThoughts().getDescription());
     }
 
     public void hide(boolean animate){

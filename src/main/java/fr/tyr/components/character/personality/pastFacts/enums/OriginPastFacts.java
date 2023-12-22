@@ -12,8 +12,8 @@ import java.util.List;
 public enum OriginPastFacts {
     NONE("Aucun fait", "Rien n'a particulièrement marqué la personne sur son origine.", MentalStrength.NORMAL, Types.ECONOMICAL, null),
     ORIGIN_BULLYING("Harcèlement sur l'origine", "La personne a subi du harcèlement à cause de son origine.", MentalStrength.WEAK, Types.ECONOMICAL,  null, Origin.ASIAN, Origin.AFRICAN, Origin.ARABIC),
-    ORIGIN_SUPERIORITY("Supériorité d'origine", "La personne a grandi dans un espace où son origine était prédominante, elle a une bonne estime de son origine.", MentalStrength.NORMAL, Types.ECONOMICAL, null, Origin.FRENCH, Origin.ARABIC, Origin.SPANISH, Origin.AFRICAN),
-    ORIGIN_RISING("Fier de sont origine", "La personne a grandi lors d'une époque tumultueuse pour les gens de son origine. Au fil du temps, il a apprit à être fier de qui il est.", MentalStrength.BOLD, Types.ECONOMICAL, null, Origin.AFRICAN, Origin.ARABIC, Origin.ASIAN),
+    ORIGIN_SUPERIORITY("Supériorité d'origine", "Elle a une bonne estime de son origine.", MentalStrength.NORMAL, Types.ECONOMICAL, null, Origin.FRENCH, Origin.ARABIC, Origin.SPANISH, Origin.AFRICAN),
+    ORIGIN_RISING("Fier de sont origine", "La personne a apprit à être fier de son origine.", MentalStrength.BOLD, Types.ECONOMICAL, null, Origin.AFRICAN, Origin.ARABIC, Origin.ASIAN),
     ;
     private final String title;
     private final String description;
