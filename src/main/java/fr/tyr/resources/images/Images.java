@@ -53,7 +53,6 @@ public enum Images {
     EYES_COMMON_FEMALE_DOUBLE_BRUSH_GREEN("assets/character/eyes/female/common_double_brush_green.png", true),
     EYES_COMMON_FEMALE_DOUBLE_BRUSH_YELLOW("assets/character/eyes/female/common_double_brush_yellow.png", true),
     // Hairs
-    HAIR_MALE_DISHEVELLED("assets/character/hairs/male/dishevelled.png", true),
     HAIR_BOWL_BLACK("assets/character/hairs/male/bowl_black.png", true),
     HAIR_BOWL_DARK_BROWN("assets/character/hairs/male/bowl_dark_brown.png", true),
     HAIR_BOWL_BROWN("assets/character/hairs/male/bowl_brown.png", true),

@@ -24,15 +24,15 @@ public enum HairEnum {
     MID_LENGHT_BLUE("female blue mid-lenght", HairColor.BLUE, Images.HAIR_MID_LENGTH_BLUE, Gender.FEMALE),
     MID_LENGHT_PINK("female pink mid-lenght", HairColor.PINK, Images.HAIR_MID_LENGTH_PINK, Gender.FEMALE),
     //male
-    BLACK_DISHEVELLED("male black dishevelled", HairColor.BLACK, Images.HAIR_MALE_DISHEVELLED, Gender.MALE),
-    BOWL_BLACK("male white dishevelled", HairColor.BLACK, Images.HAIR_BOWL_BLACK, Gender.MALE),
-    BOWL_DARK_BROWN("male white dishevelled", HairColor.DARK_BROWN, Images.HAIR_BOWL_DARK_BROWN, Gender.MALE),
-    BOWL_BROWN("male white dishevelled", HairColor.BROWN, Images.HAIR_BOWL_BROWN, Gender.MALE),
-    BOWL_BLOND("male white dishevelled", HairColor.BLOND, Images.HAIR_BOWL_BLOND, Gender.MALE),
-    BOWL_WHITE("male white dishevelled", HairColor.WHITE, Images.HAIR_BOWL_WHITE, Gender.MALE),
-    BOWL_GINGER("male white dishevelled", HairColor.GINGER, Images.HAIR_BOWL_GINGER, Gender.MALE),
-    BOWL_BLUE("male white dishevelled", HairColor.BLUE, Images.HAIR_BOWL_BLUE, Gender.MALE),
-    BOWL_PINK("male white dishevelled", HairColor.PINK, Images.HAIR_BOWL_PINK, Gender.MALE);
+    BOWL_BLACK("male black bowl", HairColor.BLACK, Images.HAIR_BOWL_BLACK, Gender.MALE),
+    BOWL_DARK_BROWN("male dark brown bowl", HairColor.DARK_BROWN, Images.HAIR_BOWL_DARK_BROWN, Gender.MALE),
+    BOWL_BROWN("male black bowl", HairColor.BROWN, Images.HAIR_BOWL_BROWN, Gender.MALE),
+    BOWL_BLOND("male blond bowl", HairColor.BLOND, Images.HAIR_BOWL_BLOND, Gender.MALE),
+    BOWL_WHITE("male white bowl", HairColor.WHITE, Images.HAIR_BOWL_WHITE, Gender.MALE),
+    BOWL_GINGER("male ginger bowl", HairColor.GINGER, Images.HAIR_BOWL_GINGER, Gender.MALE),
+    BOWL_BLUE("male blue bowl", HairColor.BLUE, Images.HAIR_BOWL_BLUE, Gender.MALE),
+    BOWL_PINK("male pink bowl", HairColor.PINK, Images.HAIR_BOWL_PINK, Gender.MALE),
+    ;
     private final String name;
     private final HairColor color;
     private final Images image;
