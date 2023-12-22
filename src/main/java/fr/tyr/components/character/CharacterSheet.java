@@ -1,6 +1,7 @@
 package fr.tyr.components.character;
 
 import fr.tyr.Main;
+import fr.tyr.components.classic.GameComponent;
 import fr.tyr.components.classic.ImageComponent;
 import fr.tyr.components.classic.TextComponent;
 import fr.tyr.components.mixed.ComposedComponent;
@@ -68,11 +69,10 @@ public class CharacterSheet extends ComposedComponent {
         baseCharacterPosition = new Vector2D(character.getPosition());
         baseCharacterSize = new Vector2D(character.getSize());
         Main.getGameEngine().safeListOperation(components -> components.remove(character));
-        // Create sheet with all information
-        updateCharacter();
-        updateTexts();
-        setFrame(new ArrayList<>(List.of(sheetBackground, character, firstName, lastName, age, commonPastFacts, genderPastFacts, originPastFacts, sexualOrientationPastFacts, genderThoughts, originThoughts, sexualOrientationThoughts)));
-        refreshSize();
+
+        // Create sheet with every information
+        updateFrame();
+
         // Appearance animation
         move(new Vector2D(sheetPosition.x, 720));
         isMoving = true;
@@ -90,8 +90,30 @@ public class CharacterSheet extends ComposedComponent {
         Main.getLogger().info("Showing character sheet for %s %s".formatted(character.getIdentity().getFirstName(), character.getIdentity().getLastName()));
     }
 
+    public void updateFrame(){
+        updateCharacter();
+        updateTexts();
+        List<GameComponent<?>> components = new ArrayList<>(List.of(sheetBackground, character, firstName, lastName, age));
+        if(character.getPersonality().getPastFact().isCommonPastFactDiscovered())
+            components.add(commonPastFacts);
+        if(character.getPersonality().getPastFact().isGenderPastFactDiscovered())
+            components.add(genderPastFacts);
+        if(character.getPersonality().getPastFact().isOriginPastFactDiscovered())
+            components.add(originPastFacts);
+        if(character.getPersonality().getPastFact().isSexualOrientationPastFactDiscovered())
+            components.add(sexualOrientationPastFacts);
+        if(character.getPersonality().getThoughts().isGenderThoughtsDiscovered())
+            components.add(genderThoughts);
+        if(character.getPersonality().getThoughts().isOriginThoughtsDiscovered())
+            components.add(originThoughts);
+        if(character.getPersonality().getThoughts().isSexualOrientationThoughtsDiscovered())
+            components.add(sexualOrientationThoughts);
+        setFrame(components);
+        refreshSize();
+    }
+
     private void updateCharacter(){
-        character.resize(0.6);
+        character.resize(Vector2D.multiply(baseCharacterSize, 0.6));
         character.move(getPosition().getAdded(new Vector2D(12, 105)));
         character.refreshSize();
     }

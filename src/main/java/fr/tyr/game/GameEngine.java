@@ -239,6 +239,34 @@ public class GameEngine {
             getCharacterSheet().hide(true);
             removeMember(framedCharacter);
         }
+
+        try {
+            components.remove(violenceCard);
+        }
+        catch (Exception e){
+            Main.getLogger().warning("The applied violence is not in the deck");
+        }
+    }
+
+    public void applyMemo(Memo memo){
+        switch(memo.getQuestion().getTarget()){
+            case COMMON_PAST_FACTS : this.framedCharacter.getPersonality().getPastFact().setCommonPastFactDiscovered(true); break;
+            case GENDER_PAST_FACTS : this.framedCharacter.getPersonality().getPastFact().setGenderPastFactDiscovered(true); break;
+            case ORIGIN_PAST_FACTS : this.framedCharacter.getPersonality().getPastFact().setOriginPastFactDiscovered(true); break;
+            case SEXUAL_ORIENTATION_PAST_FACTS : this.framedCharacter.getPersonality().getPastFact().setSexualOrientationPastFactDiscovered(true); break;
+            case GENDER_THOUGHTS : this.framedCharacter.getPersonality().getThoughts().setGenderThoughtsDiscovered(true); break;
+            case ORIGIN_THOUGHTS: this.framedCharacter.getPersonality().getThoughts().setOriginThoughtsDiscovered(true); break;
+            case SEXUAL_ORIENTATION_THOUGHTS : this.framedCharacter.getPersonality().getThoughts().setSexualOrientationThoughtsDiscovered(true); break;
+        }
+
+        this.getCharacterSheet().updateFrame();
+
+        try {
+            components.remove(memo);
+        }
+        catch (Exception e){
+            Main.getLogger().warning("The applied violence is not in the deck");
+        }
     }
 
     public void generateMemos(int count){

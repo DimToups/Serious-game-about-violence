@@ -1,9 +1,12 @@
 package fr.tyr.components.memo;
 
+import fr.tyr.Main;
 import fr.tyr.components.classic.GameComponent;
 import fr.tyr.components.classic.ImageComponent;
 import fr.tyr.components.classic.TextComponent;
+import fr.tyr.components.memo.enums.Questions;
 import fr.tyr.components.mixed.ComposedComponent;
+import fr.tyr.game.enums.MouseButtons;
 import fr.tyr.tools.Vector2D;
 
 import java.util.ArrayList;
@@ -14,6 +17,7 @@ public class Memo extends ComposedComponent {
     public static Font memoFont = new Font("Roboto", Font.PLAIN, 12);
     private ImageComponent background;
     private List<TextComponent> text = new ArrayList<>();
+    private Questions question;
     public Memo(){
         super(new Vector2D());
     }
@@ -37,6 +41,14 @@ public class Memo extends ComposedComponent {
         this.text = texts;
     }
 
+    public Questions getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(Questions question) {
+        this.question = question;
+    }
+
     public void assemble(){
         this.background.resize(new Vector2D(150, 20));
         this.text = TextComponent.adjustText(this.text.getFirst(), this.background.getSize().x * 0.9, memoFont);
@@ -48,5 +60,15 @@ public class Memo extends ComposedComponent {
         List<GameComponent<?>> components = new ArrayList<>(List.of(this.background));
         components.addAll(this.text);
         setFrame(components);
+    }
+
+    @Override
+    public void onClick(MouseButtons button) {
+        if(button != MouseButtons.LEFT)
+            return;
+        if(isHovered())
+            onHoverLost();
+        Main.getLogger().info("Applying a memo...");
+        Main.getGameEngine().applyMemo(this);
     }
 }
