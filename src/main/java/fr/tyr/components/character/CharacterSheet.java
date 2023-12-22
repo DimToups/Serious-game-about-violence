@@ -117,11 +117,43 @@ public class CharacterSheet extends ComposedComponent {
         character.move(getPosition().getAdded(new Vector2D(12, 105)));
         character.refreshSize();
     }
-
-    private void updateTexts(){
+    public void updateVisibleTexts(){
+        if(!character.getPersonality().getPastFact().isCommonPastFactDiscovered())
+            this.commonPastFacts.setVisible(false);
+        else
+            this.commonPastFacts.setVisible(true);
+        if(!character.getPersonality().getPastFact().isGenderPastFactDiscovered())
+            this.genderPastFacts.setVisible(false);
+        else
+            this.genderPastFacts.setVisible(true);
+        if(!character.getPersonality().getPastFact().isOriginPastFactDiscovered())
+            this.originPastFacts.setVisible(false);
+        else
+            this.originPastFacts.setVisible(true);
+        if(!character.getPersonality().getPastFact().isSexualOrientationPastFactDiscovered())
+            this.sexualOrientationPastFacts.setVisible(false);
+        else
+            this.sexualOrientationPastFacts.setVisible(true);
+        if(!character.getPersonality().getThoughts().isGenderThoughtsDiscovered())
+            this.genderThoughts.setVisible(false);
+        else
+            this.genderThoughts.setVisible(true);
+        if(!character.getPersonality().getThoughts().isOriginThoughtsDiscovered())
+            this.originThoughts.setVisible(false);
+        else
+            this.originThoughts.setVisible(true);
+        if(!character.getPersonality().getThoughts().isSexualOrientationThoughtsDiscovered())
+            this.sexualOrientationThoughts.setVisible(false);
+        else
+            this.sexualOrientationThoughts.setVisible(true);
+    }
+    public void updateTexts(){
         firstName.move(getPosition().getAdded(new Vector2D(110, 112)));
         lastName.move(getPosition().getAdded(new Vector2D(110, 155)));
         age.move(getPosition().getAdded(new Vector2D(110, 196)));
+
+        factsAndThoughts.forEach(list -> list.setVisible(true));
+        updateVisibleTexts();
 
         // Move facts and thoughts
         AtomicInteger y = new AtomicInteger(238);
