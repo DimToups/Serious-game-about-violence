@@ -67,7 +67,7 @@ public class TextComponent extends GameComponent<Text>{
     }
 
     /**
-     * Adjusts a text to put it into several lines represented by the List<TextComponent>
+     * Adjusts a text to put it into several lines represented by the returned List
      * @param baseText The TextComponent to adjust
      * @param lineSize The size of the line
      * @param font The used font

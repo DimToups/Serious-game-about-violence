@@ -13,6 +13,11 @@ public class SwitchButtonCard extends ImageComponent {
     public SwitchButtonCard() {
         super(Images.SWITCH_MODE_VIOLENCE);
     }
+
+    /**
+     *
+     * @param position
+     */
     public SwitchButtonCard(Vector2D position) {
         super(Images.SWITCH_MODE_VIOLENCE, position);
         this.resize(this.getSize().getMultiplied(0.5));

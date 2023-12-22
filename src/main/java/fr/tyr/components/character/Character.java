@@ -27,6 +27,8 @@ public class Character extends ComposedComponent{
     private CharacterStyle characterStyle;
     private HairColor hairColor;
     private Images special;
+
+    //
     private int dissatisfaction = 100;
 
     // Sheet
@@ -55,7 +57,7 @@ public class Character extends ComposedComponent{
     public void setIdentity(Identity identity) {
         this.identity = identity;
     }
-    public int getdissatisfaction(){
+    public int getDissatisfaction(){
         return this.dissatisfaction;
     }
     public void setDissatisfaction(int dissatisfaction){

@@ -23,7 +23,6 @@ import fr.tyr.components.violence.ViolenceCardDirector;
 import fr.tyr.tools.Vector2D;
 
 import java.awt.*;
-import java.net.Proxy;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -78,8 +77,6 @@ public class GameEngine {
         });
         generateRandomCharacters(10);
         displayRandomCharacters(5);
-        generateMemos(4);
-        generateViolenceCard(4);
 
         timeGauge.setCurrentProgress(10);
         reputationGauge.setCurrentProgress(85);
@@ -230,12 +227,18 @@ public class GameEngine {
     public void applyViolence(ViolenceCard violenceCard){
         Types type = violenceCard.getType();
         double multiplier = framedCharacter.getPersonality().Sensitivity(type);
-        int dissatisfaction = framedCharacter.getdissatisfaction();
+        int dissatisfaction = framedCharacter.getDissatisfaction();
         int damage = violenceCard.getDamage();
         damage *= multiplier;
         dissatisfaction -= damage;
         framedCharacter.setDissatisfaction(dissatisfaction);
 
+        Random rand = new Random();
+        int rnd = rand.nextInt(0,100);
+        if(rnd >= framedCharacter.getDissatisfaction()){
+            getCharacterSheet().hide(true);
+            removeMember(framedCharacter);
+        }
     }
 
     public void generateMemos(int count){
@@ -300,12 +303,5 @@ public class GameEngine {
     }
     public void setFramedCharacter(Character character){
         this.framedCharacter = character;
-    }
-    public void leaveCharacter (Character character){
-        Random rand = new Random();
-        int leave = rand.nextInt(0,100);
-        if(leave < character.getdissatisfaction()){
-            removeMember(character);
-        }
     }
 }
