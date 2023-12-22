@@ -15,13 +15,15 @@ import fr.tyr.components.memo.MemoDirector;
 import fr.tyr.components.others.BackgroundComponent;
 import fr.tyr.components.others.SwitchButtonCard;
 import fr.tyr.components.others.SwitchButtonMemo;
+import fr.tyr.components.violence.enums.Types;
+import fr.tyr.resources.images.Images;
 import fr.tyr.components.violence.ViolenceCard;
 import fr.tyr.components.violence.ViolenceCardBuilder;
 import fr.tyr.components.violence.ViolenceCardDirector;
-import fr.tyr.resources.images.Images;
 import fr.tyr.tools.Vector2D;
 
 import java.awt.*;
+import java.net.Proxy;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -43,6 +45,8 @@ public class GameEngine {
     private final CharacterSheet characterSheet = new CharacterSheet(new Vector2D(850, 175));
 
     private final List<Character> members = new ArrayList<>();
+    private List<ViolenceCard> inTheHand = new ArrayList<>();
+    private Character framedCharacter;
 
     /**
      * Create a new game engine
@@ -203,11 +207,35 @@ public class GameEngine {
             ViolenceCard violenceCard = violenceCardBuilder.getViolenceCard();
             violenceCard.resize(violenceCard.getSize().getMultiplied(0.75));
             violenceCard.move(new Vector2D(violenceCard.getSize().x + 50 + (violenceCard.getSize().x + 10) * i,720 - (violenceCard.getSize().y/3 * 2)));
+            violenceCard.resize(violenceCard.getSize().getMultiplied(0.95));
+            violenceCard.move(new Vector2D(violenceCard.getSize().x + 50 + (violenceCard.getSize().x + 10) * i,720 - (violenceCard.getSize().y/3 * 2)));
+            for (int x = 0; x < inTheHand.size(); x++) {
+                if (violenceCard.getActs() == inTheHand.get(x).getActs()) {
+                    generateViolenceCard(i);
+                }
+            }
+            inTheHand.add((violenceCard));
             safeListOperation(componentList -> componentList.add(violenceCard));
         }
     }
+    private void removeViolenceCard(ViolenceCard violenceCard){
+        safeListOperation(componentList -> {
+            componentList.remove(violenceCard);
+            members.remove(violenceCard);
+        });
+    }
     private void clearViolenceCard(){
         safeListOperation(componentList -> componentList.removeIf(component -> component instanceof ViolenceCard));
+    }
+    public void applyViolence(ViolenceCard violenceCard){
+        Types type = violenceCard.getType();
+        double multiplier = framedCharacter.getPersonality().Sensitivity(type);
+        int dissatisfaction = framedCharacter.getdissatisfaction();
+        int damage = violenceCard.getDamage();
+        damage *= multiplier;
+        dissatisfaction -= damage;
+        framedCharacter.setDissatisfaction(dissatisfaction);
+
     }
 
     public void generateMemos(int count){
@@ -269,5 +297,15 @@ public class GameEngine {
         int x = random.nextInt(800) + 80;
         int y = random.nextInt(150) + 275;
         return new Vector2D(x, y);
+    }
+    public void setFramedCharacter(Character character){
+        this.framedCharacter = character;
+    }
+    public void leaveCharacter (Character character){
+        Random rand = new Random();
+        int leave = rand.nextInt(0,100);
+        if(leave < character.getdissatisfaction()){
+            removeMember(character);
+        }
     }
 }

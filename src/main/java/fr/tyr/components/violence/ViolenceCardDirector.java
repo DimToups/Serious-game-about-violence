@@ -5,10 +5,15 @@ import fr.tyr.tools.Vector2D;
 
 public class ViolenceCardDirector {
     private ViolenceCardBuilder violenceCardBuilder;
-
+    /**
+     * Create a ViolenceCardDirector
+     */
     public ViolenceCardDirector(ViolenceCardBuilder violenceCardBuilder) {
         this.violenceCardBuilder = violenceCardBuilder;
     }
+    /**
+     * Generate the violenceCard
+     */
     public void generateViolenceCard(){
         // At the moment, no sexual violences are allowed
         Types type = Types.SEXUAL;
@@ -21,6 +26,10 @@ public class ViolenceCardDirector {
         this.violenceCardBuilder.generateActs(type);
         this.violenceCardBuilder.getViolenceCard().finalize(new Vector2D());
     }
+    /**
+     * Send the ViolenceCardBuilder
+     * @return the ViolenceCardBuilder
+     */
     public ViolenceCardBuilder getViolenceCardBuilder(){
         return this.violenceCardBuilder;
     }

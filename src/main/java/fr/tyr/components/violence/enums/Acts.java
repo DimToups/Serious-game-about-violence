@@ -30,13 +30,29 @@ public enum Acts {
     private final Types type;
     private final String description;
 
+    /**
+     * Create an instance of Acts
+     * @param type The Types of the violence of the Acts
+     * @param description The description of the Acts
+     */
     Acts(Types type, String description){
         this.type = type;
         this.description = description;
     }
+
+    /**
+     * Send all the corresponding Acts from the enum depending on the Types param
+     * @param type The Types of the violence of the Acts
+     * @return The corresponding Acts
+     */
     public static List<Acts> getAllActs(Types type){
         return Arrays.stream(values()).filter(acts -> acts.type == type).toList();
     }
+
+    /**
+     * Return the corresponding description depending on the Acts
+     * @return The description corresponding of the Acts
+     */
     public String getDescription(){
         return this.description;
     }

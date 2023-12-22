@@ -5,8 +5,8 @@ import java.util.List;
 
 public enum Types {
     PHYSICAL,
-    SEXUAL,
     ECONOMICAL,
     VERBAL,
-    PSYCHOLOGICAL;
+    PSYCHOLOGICAL,
+    SEXUAL    ;
 }
