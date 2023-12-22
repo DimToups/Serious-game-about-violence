@@ -110,6 +110,10 @@ public enum Images {
     MEMO_GREEN("assets/memo/green_memo.png", true),
     MEMO_YELLOW("assets/memo/yellow_memo.png", true),
     MEMO_PINK("assets/memo/pink_memo.png", true),
+
+    // Switch button
+    SWITCH_MODE_VIOLENCE("assets/game_scene/card_switch.png", true),
+    SWITCH_MODE_MEMO("assets/game_scene/memo_switch.png", true),
     ;
 
     private final String path;
