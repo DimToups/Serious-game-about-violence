@@ -21,11 +21,14 @@ import fr.tyr.tools.Vector2D;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.Consumer;
 
 public class GameEngine {
+
+    private static final int MAX_MEMBERS = 10;
 
     private final boolean devMode;
 
@@ -39,6 +42,7 @@ public class GameEngine {
     private final CharacterSheet characterSheet = new CharacterSheet(new Vector2D(850, 175));
 
     private final List<Character> members = new ArrayList<>();
+
 
     /**
      * Create a new game engine
@@ -68,7 +72,7 @@ public class GameEngine {
             componentList.add(moneyGauge);
             componentList.add(characterSheet);
         });
-        generateRandomCharacters(10);
+        generateRandomCharacters();
         displayRandomCharacters(5);
 
         timeGauge.setCurrentProgress(10);
@@ -86,6 +90,7 @@ public class GameEngine {
      */
     public void displayEndScene(boolean isWin){
         Main.getLogger().info("Displaying end screen...");
+        characterSheet.hide(false);
         safeListOperation(componentList -> {
             componentList.clear();
             String winOrLose = isWin ? "Gagné" : "Perdu";
@@ -95,7 +100,7 @@ public class GameEngine {
             componentList.add(new BackgroundComponent(Images.END_BACKGROUND));
             componentList.add(winStateText);
             componentList.add(winStateMessageText);
-            componentList.add(new MembersSummary(new Vector2D(525, 250), members.size(), -1));
+            componentList.add(new MembersSummary(new Vector2D(525, 250), members.size(), MAX_MEMBERS));
             componentList.add(new ReputationSummary(new Vector2D(525, 340), reputationGauge.getCurrentProgress()));
             componentList.add(new MoneySummary(new Vector2D(525, 425), moneyGauge.getMoneyCount()));
             componentList.add(new TimeSummary(new Vector2D(525, 475), timeGauge.getDayCount()));
@@ -113,8 +118,7 @@ public class GameEngine {
         safeListOperation(component -> component.add(switchButtonMemo));
     }
     public void hideViolenceDeck(){
-        characterSheet.getCharacter().hideViolenceCards();
-        safeListOperation(components -> components.removeIf(component -> component instanceof SwitchButtonMemo));
+        safeListOperation(components -> components.removeIf(component -> component instanceof ViolenceCard || component instanceof SwitchButtonMemo));
     }
     public void displayMemoDeck(){
         hideViolenceDeck();
@@ -125,8 +129,7 @@ public class GameEngine {
         safeListOperation(component -> component.add(switchButtonCard));
     }
     public void hideMemoDeck(){
-        characterSheet.getCharacter().hideMemos();
-        safeListOperation(components -> components.removeIf(component -> component instanceof SwitchButtonCard));
+        safeListOperation(components -> components.removeIf(component -> component instanceof Memo || component instanceof SwitchButtonCard));
     }
 
     /**
@@ -151,11 +154,10 @@ public class GameEngine {
 
     /**
      * Generate random characters to members list
-     * @param count The number of characters to generate
      */
-    private void generateRandomCharacters(int count){
+    private void generateRandomCharacters(){
         Random random = new Random();
-        for(int i = 0; i < count; i++){
+        for(int i = 0; i < MAX_MEMBERS; i++){
             boolean isMale = random.nextBoolean();
             CharacterBuilder characterBuilder = isMale ? new MaleBuilder() : new FemaleBuilder();
             CharacterDirector characterDirector = new CharacterDirector(characterBuilder);
@@ -195,6 +197,8 @@ public class GameEngine {
     public void applyViolence(ViolenceCard violenceCard){
         Types type = violenceCard.getType();
         Character character = characterSheet.getCharacter();
+        if(Objects.isNull(character))
+            hideViolenceDeck();
         double multiplier = character.getPersonality().Sensitivity(type);
         int dissatisfaction = character.getDissatisfaction();
         int damage = violenceCard.getDamage();
@@ -213,6 +217,7 @@ public class GameEngine {
         if(rnd >= character.getDissatisfaction()){
             getCharacterSheet().hide(false);
             removeMember(character);
+            impactGauges(0, 0, -1000);
         }
         character.applyViolenceCard(violenceCard);
     }
@@ -235,12 +240,16 @@ public class GameEngine {
 
     public void impactGauges(int reputationImpact, int timeImpact, int moneyImpact){
         reputationGauge.addProgress(reputationImpact);
-        if(reputationGauge.getCurrentProgress() == 0)
+        if(reputationGauge.getCurrentProgress() == 0 || reputationGauge.getCurrentProgress() == 100)
             displayEndScene(false);
         moneyGauge.addMoney(moneyImpact);
+        if(moneyGauge.getMoneyCount() <= 0)
+            displayEndScene(false);
         if(timeGauge.addTime(timeImpact)){
             nextDay();
         }
+        if(timeGauge.getDayCount() == 5)
+            displayEndScene(true);
     }
 
     public void nextDay(){
@@ -252,6 +261,7 @@ public class GameEngine {
             character.generateMemos(4);
         });
         displayRandomCharacters(5);
+        impactGauges(0, 0, members.size() * 100);
     }
 
     /**

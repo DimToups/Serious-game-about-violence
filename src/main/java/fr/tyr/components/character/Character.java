@@ -82,11 +82,6 @@ public class Character extends ComposedComponent{
             Main.getGameEngine().safeListOperation(componentList -> componentList.add(violenceCard));
     }
 
-    public void hideViolenceCards(){
-        for(ViolenceCard violenceCard : violenceCards)
-            Main.getGameEngine().safeListOperation(componentList -> componentList.remove(violenceCard));
-    }
-
     public void applyViolenceCard(ViolenceCard violenceCard){
         violenceCards.remove(violenceCard);
         Main.getGameEngine().safeListOperation(componentList -> componentList.remove(violenceCard));
@@ -106,11 +101,6 @@ public class Character extends ComposedComponent{
     public void displayMemos(){
         for(Memo memo : memos)
             Main.getGameEngine().safeListOperation(componentList -> componentList.add(memo));
-    }
-
-    public void hideMemos(){
-        for(Memo memo : memos)
-            Main.getGameEngine().safeListOperation(componentList -> componentList.remove(memo));
     }
 
     public void applyMemo(Memo memo){
@@ -233,7 +223,7 @@ public class Character extends ComposedComponent{
                 onHoverLost();
             Vector2D nextPosition = Main.getGameEngine().getRandomCharacterPosition();
             double distance = nextPosition.distance(getPosition());
-            float duration = (float) (distance / 100);
+            float duration = (float) (distance / 50);
             moveTo(nextPosition, duration);
         }
     }

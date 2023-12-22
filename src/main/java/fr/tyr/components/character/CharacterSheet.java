@@ -69,7 +69,7 @@ public class CharacterSheet extends ComposedComponent {
         baseCharacterSize = new Vector2D(character.getSize());
         Main.getGameEngine().safeListOperation(components -> components.remove(character));
         // Create sheet with all information
-        updateCharacter();
+        setupCharacter();
         updateComponent();
         // Appearance animation
         move(new Vector2D(sheetPosition.x, 720));
@@ -88,7 +88,7 @@ public class CharacterSheet extends ComposedComponent {
         Main.getLogger().info("Showing character sheet for %s %s".formatted(character.getIdentity().getFirstName(), character.getIdentity().getLastName()));
     }
 
-    private void updateCharacter(){
+    private void setupCharacter(){
         character.resize(0.6);
         character.move(getPosition().getAdded(new Vector2D(12, 105)));
         character.refreshSize();
@@ -151,7 +151,7 @@ public class CharacterSheet extends ComposedComponent {
         if(isMoving)
             return;
         if(Objects.isNull(character))
-            throw new UnsupportedOperationException("Cannot hide a character sheet if it is not shown");
+            return;
         Main.getGameEngine().hideMemoDeck();
         Main.getGameEngine().hideViolenceDeck();
         if(animate){
@@ -175,6 +175,14 @@ public class CharacterSheet extends ComposedComponent {
     }
 
     private void resetSheet(){
+        resetCharacter();
+        Main.getLogger().info("Hiding character sheet for %s %s".formatted(character.getIdentity().getFirstName(), character.getIdentity().getLastName()));
+        character = null;
+        setFrame(new ArrayList<>(List.of(sheetBackground)));
+        setVisible(false);
+    }
+
+    private void resetCharacter(){
         character.resize(baseCharacterSize);
         character.move(baseCharacterPosition);
         character.setFramed(false);
@@ -183,10 +191,6 @@ public class CharacterSheet extends ComposedComponent {
             components.remove(this);
             components.add(this);
         });
-        Main.getLogger().info("Hiding character sheet for %s %s".formatted(character.getIdentity().getFirstName(), character.getIdentity().getLastName()));
-        character = null;
-        setFrame(new ArrayList<>(List.of(sheetBackground)));
-        setVisible(false);
     }
 
     @Override
