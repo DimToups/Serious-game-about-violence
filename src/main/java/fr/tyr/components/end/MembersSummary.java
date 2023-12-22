@@ -20,7 +20,7 @@ public class MembersSummary extends ComposedComponent {
     public MembersSummary(Vector2D position, int currentMemberCount, int maxMemberCount) {
         super(position);
         membersIcon.resize(0.15);
-        membersText.setText("%d / %d".formatted(currentMemberCount, maxMemberCount));
+        membersText.setText("%d / %d membres restants".formatted(currentMemberCount, maxMemberCount));
         setFrame(new ArrayList<>(List.of(membersIcon, membersText)));
     }
 }

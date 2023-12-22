@@ -53,7 +53,7 @@ public class GameEngine {
         this.devMode = devMode;
         components = new ArrayList<>();
         displayGameScene();
-//        displayEndScene(true);
+        displayEndScene(true);
         Main.getLogger().info("Game engine initialized.");
     }
 
@@ -84,6 +84,7 @@ public class GameEngine {
 
     private final TextComponent winStateText = new TextComponent("", Color.BLACK, new Font("Roboto", Font.PLAIN, 80), new Vector2D(500, 100));
     private final TextComponent winStateMessageText = new TextComponent("", Color.BLACK, new Font("Roboto", Font.PLAIN, 25), new Vector2D(325, 175));
+    private final TextComponent scoreText = new TextComponent("", Color.BLACK, new Font("Roboto", Font.PLAIN, 25), new Vector2D(550, 600));
 
     /**
      * Display the end screen
@@ -106,6 +107,9 @@ public class GameEngine {
             componentList.add(new MoneySummary(new Vector2D(525, 425), moneyGauge.getMoneyCount()));
             componentList.add(new TimeSummary(new Vector2D(525, 475), timeGauge.getDayCount()));
             componentList.add(new RestartButton(new Vector2D(1000, 600)));
+            int score = timeGauge.getDayCount() * 200 + moneyGauge.getMoneyCount() + reputationGauge.getCurrentProgress() * 10 - members.size() * 1000;
+            scoreText.setText("Score : %d".formatted(score));
+            componentList.add(scoreText);
         });
         Main.getLogger().info("End screen displayed.");
     }
@@ -165,6 +169,7 @@ public class GameEngine {
             characterDirector.generateCharacter();
             Character character = characterBuilder.getCharacter();
             character.resize(character.getSize().getMultiplied(0.3));
+            character.move(getRandomCharacterPosition());
             members.add(character);
         }
     }
@@ -251,6 +256,8 @@ public class GameEngine {
         else if(timeGauge.addTime(timeImpact))
             nextDay();
         else if(timeGauge.getDayCount() == 5)
+            displayEndScene(true);
+        else if(members.isEmpty())
             displayEndScene(true);
     }
 

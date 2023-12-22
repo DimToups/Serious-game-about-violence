@@ -20,7 +20,7 @@ public class ReputationSummary extends ComposedComponent {
     public ReputationSummary(Vector2D position, int currentReputation) {
         super(position);
         reputationIcon.resize(0.15);
-        reputationText.setText("%d / %d".formatted(currentReputation, 100));
+        reputationText.setText("%d / %d réputation".formatted(currentReputation, 100));
         setFrame(new ArrayList<>(List.of(reputationIcon, reputationText)));
     }
 }
