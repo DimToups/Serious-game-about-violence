@@ -1,13 +1,7 @@
 package fr.tyr.components.memo;
 
 import fr.tyr.components.character.personality.Personality;
-import fr.tyr.components.character.personality.pastFacts.enums.CommonPastFacts;
-import fr.tyr.components.character.personality.pastFacts.enums.GenderPastFacts;
-import fr.tyr.components.character.personality.pastFacts.enums.OriginPastFacts;
-import fr.tyr.components.character.personality.pastFacts.enums.SexualOrientationPastFacts;
-import fr.tyr.components.character.personality.thoughts.enums.GenderThoughts;
-import fr.tyr.components.character.personality.thoughts.enums.OriginThoughts;
-import fr.tyr.components.character.personality.thoughts.enums.SexualOrientationThoughts;
+import fr.tyr.components.character.personality.PersonalityTraits;
 import fr.tyr.components.classic.ImageComponent;
 import fr.tyr.components.classic.TextComponent;
 import fr.tyr.components.memo.enums.Memos;
@@ -38,24 +32,27 @@ public class MemoBuilder {
 
         // Past facts
         if(!personality.getPastFact().isCommonPastFactDiscovered())
-            validQuestions.addAll(Questions.getAllClassQuestions(CommonPastFacts.class));
+            validQuestions.addAll(Questions.getAllClassQuestions(PersonalityTraits.COMMON_PAST_FACTS));
         if(!personality.getPastFact().isGenderPastFactDiscovered())
-            validQuestions.addAll(Questions.getAllClassQuestions(GenderPastFacts.class));
+            validQuestions.addAll(Questions.getAllClassQuestions(PersonalityTraits.GENDER_PAST_FACTS));
         if(!personality.getPastFact().isOriginPastFactDiscovered())
-            validQuestions.addAll(Questions.getAllClassQuestions(OriginPastFacts.class));
+            validQuestions.addAll(Questions.getAllClassQuestions(PersonalityTraits.ORIGIN_PAST_FACTS));
         if(!personality.getPastFact().isSexualOrientationPastFactDiscovered())
-            validQuestions.addAll(Questions.getAllClassQuestions(SexualOrientationPastFacts.class));
+            validQuestions.addAll(Questions.getAllClassQuestions(PersonalityTraits.SEXUAL_ORIENTATION_PAST_FACTS));
 
         // Thoughts
         if(!personality.getThoughts().isGenderThoughtsDiscovered())
-            validQuestions.addAll(Questions.getAllClassQuestions(GenderThoughts.class));
+            validQuestions.addAll(Questions.getAllClassQuestions(PersonalityTraits.GENDER_THOUGHTS));
         if(!personality.getThoughts().isOriginThoughtsDiscovered())
-            validQuestions.addAll(Questions.getAllClassQuestions(OriginThoughts.class));
+            validQuestions.addAll(Questions.getAllClassQuestions(PersonalityTraits.ORIGIN_THOUGHTS));
         if(!personality.getThoughts().isSexualOrientationThoughtsDiscovered())
-            validQuestions.addAll(Questions.getAllClassQuestions(SexualOrientationThoughts.class));
+            validQuestions.addAll(Questions.getAllClassQuestions(PersonalityTraits.SEXUAL_ORIENTATION_THOUGHTS));
 
-        if(!validQuestions.isEmpty())
-            this.memo.setText(new ArrayList<>(List.of(new TextComponent(Questions.valueOf(validQuestions.get(rand.nextInt(0, validQuestions.size())).name()).getDescription(), Color.BLACK, Memo.memoFont))));
+        if(!validQuestions.isEmpty()) {
+            Questions question = validQuestions.get(rand.nextInt(0, validQuestions.size()));
+            this.memo.setQuestion(question);
+            this.memo.setText(new ArrayList<>(List.of(new TextComponent(Questions.valueOf(question.name()).getDescription(), Color.BLACK, Memo.memoFont))));
+        }
         else
             this.memo.getText().getFirst().setText("Et si je passais à l'action ?");
     }

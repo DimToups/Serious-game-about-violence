@@ -23,7 +23,6 @@ import fr.tyr.components.violence.ViolenceCardDirector;
 import fr.tyr.tools.Vector2D;
 
 import java.awt.*;
-import java.net.Proxy;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -78,8 +77,6 @@ public class GameEngine {
         });
         generateRandomCharacters(10);
         displayRandomCharacters(5);
-        generateMemos(4);
-        generateViolenceCard(4);
 
         timeGauge.setCurrentProgress(10);
         reputationGauge.setCurrentProgress(85);
@@ -230,12 +227,46 @@ public class GameEngine {
     public void applyViolence(ViolenceCard violenceCard){
         Types type = violenceCard.getType();
         double multiplier = framedCharacter.getPersonality().Sensitivity(type);
-        int dissatisfaction = framedCharacter.getdissatisfaction();
+        int dissatisfaction = framedCharacter.getDissatisfaction();
         int damage = violenceCard.getDamage();
         damage *= multiplier;
         dissatisfaction -= damage;
         framedCharacter.setDissatisfaction(dissatisfaction);
 
+        Random rand = new Random();
+        int rnd = rand.nextInt(0,100);
+        if(rnd >= framedCharacter.getDissatisfaction()){
+            getCharacterSheet().hide(true);
+            removeMember(framedCharacter);
+        }
+
+        try {
+            components.remove(violenceCard);
+        }
+        catch (Exception e){
+            Main.getLogger().warning("The applied violence is not in the deck");
+        }
+    }
+
+    public void applyMemo(Memo memo){
+        switch(memo.getQuestion().getTarget()){
+            case COMMON_PAST_FACTS : this.framedCharacter.getPersonality().getPastFact().setCommonPastFactDiscovered(true); break;
+            case GENDER_PAST_FACTS : this.framedCharacter.getPersonality().getPastFact().setGenderPastFactDiscovered(true); break;
+            case ORIGIN_PAST_FACTS : this.framedCharacter.getPersonality().getPastFact().setOriginPastFactDiscovered(true); break;
+            case SEXUAL_ORIENTATION_PAST_FACTS : this.framedCharacter.getPersonality().getPastFact().setSexualOrientationPastFactDiscovered(true); break;
+            case GENDER_THOUGHTS : this.framedCharacter.getPersonality().getThoughts().setGenderThoughtsDiscovered(true); break;
+            case ORIGIN_THOUGHTS: this.framedCharacter.getPersonality().getThoughts().setOriginThoughtsDiscovered(true); break;
+            case SEXUAL_ORIENTATION_THOUGHTS : this.framedCharacter.getPersonality().getThoughts().setSexualOrientationThoughtsDiscovered(true); break;
+        }
+
+        this.getCharacterSheet().updateFrame();
+
+        try {
+            components.remove(memo);
+        }
+        catch (Exception e){
+            Main.getLogger().warning("The applied violence is not in the deck");
+        }
     }
 
     public void generateMemos(int count){
@@ -300,12 +331,5 @@ public class GameEngine {
     }
     public void setFramedCharacter(Character character){
         this.framedCharacter = character;
-    }
-    public void leaveCharacter (Character character){
-        Random rand = new Random();
-        int leave = rand.nextInt(0,100);
-        if(leave < character.getdissatisfaction()){
-            removeMember(character);
-        }
     }
 }

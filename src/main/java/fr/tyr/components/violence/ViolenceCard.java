@@ -10,13 +10,10 @@ import fr.tyr.components.classic.TextComponent;
 import fr.tyr.game.enums.MouseButtons;
 import fr.tyr.tools.Vector2D;
 
-import javax.swing.text.JTextComponent;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
-import static java.time.chrono.JapaneseEra.values;
 
 public class ViolenceCard extends ComposedComponent{
     private Types type;
@@ -182,7 +179,7 @@ public class ViolenceCard extends ComposedComponent{
             return;
         if(isHovered())
             onHoverLost();
-        Main.getLogger().info("Showing character sheet...");
+        Main.getLogger().info("Applying a violence...");
         Main.getGameEngine().applyViolence(this);
     }
 }
