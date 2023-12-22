@@ -10,31 +10,29 @@ import fr.tyr.components.gauges.MoneyGauge;
 import fr.tyr.components.gauges.ReputationGauge;
 import fr.tyr.components.gauges.TimeGauge;
 import fr.tyr.components.memo.Memo;
-import fr.tyr.components.memo.MemoBuilder;
-import fr.tyr.components.memo.MemoDirector;
 import fr.tyr.components.others.BackgroundComponent;
 import fr.tyr.components.others.SwitchButtonCard;
 import fr.tyr.components.others.SwitchButtonMemo;
+import fr.tyr.components.violence.ViolenceCard;
 import fr.tyr.components.violence.enums.Types;
 import fr.tyr.resources.images.Images;
-import fr.tyr.components.violence.ViolenceCard;
-import fr.tyr.components.violence.ViolenceCardBuilder;
-import fr.tyr.components.violence.ViolenceCardDirector;
 import fr.tyr.tools.Vector2D;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.Consumer;
 
 public class GameEngine {
 
+    private static final int MAX_MEMBERS = 10;
+
     private final boolean devMode;
 
     private boolean isEnded = false;
-    private boolean isInViolenceMode = true;
 
     private final ReentrantLock componentsLock = new ReentrantLock();
     private final List<GameComponent<?>> components;
@@ -44,8 +42,7 @@ public class GameEngine {
     private final CharacterSheet characterSheet = new CharacterSheet(new Vector2D(850, 175));
 
     private final List<Character> members = new ArrayList<>();
-    private List<ViolenceCard> inTheHand = new ArrayList<>();
-    private Character framedCharacter;
+
 
     /**
      * Create a new game engine
@@ -75,7 +72,7 @@ public class GameEngine {
             componentList.add(moneyGauge);
             componentList.add(characterSheet);
         });
-        generateRandomCharacters(10);
+        generateRandomCharacters();
         displayRandomCharacters(5);
 
         timeGauge.setCurrentProgress(10);
@@ -84,36 +81,6 @@ public class GameEngine {
         Main.getLogger().info("Scene initialized.");
     }
 
-    public void displayViolenceDeck(){
-        this.isInViolenceMode = true;
-
-        hideMemoDeck();
-
-        // Set up of the deck and the reverseButton
-        SwitchButtonMemo switchButtonMemo = new SwitchButtonMemo(new Vector2D(25, 575));
-        generateViolenceCard(4);
-
-        // Add of the switchButtonMemo
-        safeListOperation(component -> component.add(switchButtonMemo));
-    }
-    public void hideViolenceDeck(){
-        components.removeIf(component -> component.getClass() == ViolenceCard.class || component.getClass() == SwitchButtonMemo.class);
-    }
-    public void displayMemoDeck(){
-        this.isInViolenceMode = false;
-
-        hideViolenceDeck();
-
-        // Set up of the deck and the reverseButton
-        SwitchButtonCard switchButtonCard = new SwitchButtonCard(new Vector2D(50, 525));
-        generateMemos(4);
-
-        // Add of the switchButtonMemo
-        safeListOperation(component -> component.add(switchButtonCard));
-    }
-    public void hideMemoDeck(){
-        components.removeIf(component -> component.getClass() == Memo.class || component.getClass() == SwitchButtonCard.class);
-    }
     private final TextComponent winStateText = new TextComponent("", Color.BLACK, new Font("Roboto", Font.PLAIN, 80), new Vector2D(500, 100));
     private final TextComponent winStateMessageText = new TextComponent("", Color.BLACK, new Font("Roboto", Font.PLAIN, 25), new Vector2D(325, 175));
 
@@ -123,6 +90,7 @@ public class GameEngine {
      */
     public void displayEndScene(boolean isWin){
         Main.getLogger().info("Displaying end screen...");
+        characterSheet.hide(false);
         safeListOperation(componentList -> {
             componentList.clear();
             String winOrLose = isWin ? "Gagné" : "Perdu";
@@ -132,13 +100,36 @@ public class GameEngine {
             componentList.add(new BackgroundComponent(Images.END_BACKGROUND));
             componentList.add(winStateText);
             componentList.add(winStateMessageText);
-            componentList.add(new MembersSummary(new Vector2D(525, 250), members.size(), -1));
+            componentList.add(new MembersSummary(new Vector2D(525, 250), members.size(), MAX_MEMBERS));
             componentList.add(new ReputationSummary(new Vector2D(525, 340), reputationGauge.getCurrentProgress()));
             componentList.add(new MoneySummary(new Vector2D(525, 425), moneyGauge.getMoneyCount()));
             componentList.add(new TimeSummary(new Vector2D(525, 475), timeGauge.getDayCount()));
             componentList.add(new RestartButton(new Vector2D(1000, 600)));
         });
         Main.getLogger().info("End screen displayed.");
+    }
+
+    public void displayViolenceDeck(){
+        hideMemoDeck();
+        // Set up of the deck and the reverseButton
+        SwitchButtonMemo switchButtonMemo = new SwitchButtonMemo(new Vector2D(25, 575));
+        characterSheet.getCharacter().displayViolenceCards();
+        // Add of the switchButtonMemo
+        safeListOperation(component -> component.add(switchButtonMemo));
+    }
+    public void hideViolenceDeck(){
+        safeListOperation(components -> components.removeIf(component -> component instanceof ViolenceCard || component instanceof SwitchButtonMemo));
+    }
+    public void displayMemoDeck(){
+        hideViolenceDeck();
+        // Set up of the deck and the reverseButton
+        SwitchButtonCard switchButtonCard = new SwitchButtonCard(new Vector2D(50, 525));
+        characterSheet.getCharacter().displayMemos();
+        // Add of the switchButtonMemo
+        safeListOperation(component -> component.add(switchButtonCard));
+    }
+    public void hideMemoDeck(){
+        safeListOperation(components -> components.removeIf(component -> component instanceof Memo || component instanceof SwitchButtonCard));
     }
 
     /**
@@ -163,11 +154,10 @@ public class GameEngine {
 
     /**
      * Generate random characters to members list
-     * @param count The number of characters to generate
      */
-    private void generateRandomCharacters(int count){
+    private void generateRandomCharacters(){
         Random random = new Random();
-        for(int i = 0; i < count; i++){
+        for(int i = 0; i < MAX_MEMBERS; i++){
             boolean isMale = random.nextBoolean();
             CharacterBuilder characterBuilder = isMale ? new MaleBuilder() : new FemaleBuilder();
             CharacterDirector characterDirector = new CharacterDirector(characterBuilder);
@@ -196,29 +186,9 @@ public class GameEngine {
         safeListOperation(componentList -> componentList.removeIf(component -> component instanceof Character));
     }
 
-    private void generateViolenceCard(int count){
-        for(int i = 0; i < count; i++){
-            ViolenceCardBuilder violenceCardBuilder = new ViolenceCardBuilder();
-            ViolenceCardDirector violenceCardDirector = new ViolenceCardDirector(violenceCardBuilder);
-            violenceCardDirector.generateViolenceCard();
-            ViolenceCard violenceCard = violenceCardBuilder.getViolenceCard();
-            violenceCard.resize(violenceCard.getSize().getMultiplied(0.75));
-            violenceCard.move(new Vector2D(violenceCard.getSize().x + 50 + (violenceCard.getSize().x + 10) * i,720 - (violenceCard.getSize().y/3 * 2)));
-            violenceCard.resize(violenceCard.getSize().getMultiplied(0.95));
-            violenceCard.move(new Vector2D(violenceCard.getSize().x + 50 + (violenceCard.getSize().x + 10) * i,720 - (violenceCard.getSize().y/3 * 2)));
-            for (int x = 0; x < inTheHand.size(); x++) {
-                if (violenceCard.getActs() == inTheHand.get(x).getActs()) {
-                    generateViolenceCard(i);
-                }
-            }
-            inTheHand.add((violenceCard));
-            safeListOperation(componentList -> componentList.add(violenceCard));
-        }
-    }
     private void removeViolenceCard(ViolenceCard violenceCard){
         safeListOperation(componentList -> {
             componentList.remove(violenceCard);
-            members.remove(violenceCard);
         });
     }
     private void clearViolenceCard(){
@@ -226,63 +196,72 @@ public class GameEngine {
     }
     public void applyViolence(ViolenceCard violenceCard){
         Types type = violenceCard.getType();
-        double multiplier = framedCharacter.getPersonality().Sensitivity(type);
-        int dissatisfaction = framedCharacter.getDissatisfaction();
+        Character character = characterSheet.getCharacter();
+        if(Objects.isNull(character))
+            hideViolenceDeck();
+        double multiplier = character.getPersonality().Sensitivity(type);
+        int dissatisfaction = character.getDissatisfaction();
         int damage = violenceCard.getDamage();
         damage *= multiplier;
         dissatisfaction -= damage;
-        framedCharacter.setDissatisfaction(dissatisfaction);
+        character.setDissatisfaction(dissatisfaction);
 
         // Gauges repercussions
-        if(violenceCard.getType().equals(Types.ECONOMICAL)){
-            this.moneyGauge.addMoney(this.members.size() * 100);
-        }
-        timeGauge.addTime(20);
+        int moneyImpact = 0;
+        if(violenceCard.getType().equals(Types.ECONOMICAL))
+            moneyImpact = this.members.size() * 100;
+        impactGauges(-10, 20, moneyImpact);
 
         Random rand = new Random();
         int rnd = rand.nextInt(0,100);
-        if(rnd >= framedCharacter.getDissatisfaction()){
-            getCharacterSheet().hide(true);
-            removeMember(framedCharacter);
+        if(rnd >= character.getDissatisfaction()){
+            getCharacterSheet().hide(false);
+            removeMember(character);
+            impactGauges(0, 0, -1000);
         }
-
-        try {
-            components.remove(violenceCard);
-        }
-        catch (Exception e){
-            Main.getLogger().warning("The applied violence is not in the deck");
-        }
+        character.applyViolenceCard(violenceCard);
     }
 
     public void applyMemo(Memo memo){
+        Character character = characterSheet.getCharacter();
         switch(memo.getQuestion().getTarget()){
-            case COMMON_PAST_FACTS : this.framedCharacter.getPersonality().getPastFact().setCommonPastFactDiscovered(true); break;
-            case GENDER_PAST_FACTS : this.framedCharacter.getPersonality().getPastFact().setGenderPastFactDiscovered(true); break;
-            case ORIGIN_PAST_FACTS : this.framedCharacter.getPersonality().getPastFact().setOriginPastFactDiscovered(true); break;
-            case SEXUAL_ORIENTATION_PAST_FACTS : this.framedCharacter.getPersonality().getPastFact().setSexualOrientationPastFactDiscovered(true); break;
-            case GENDER_THOUGHTS : this.framedCharacter.getPersonality().getThoughts().setGenderThoughtsDiscovered(true); break;
-            case ORIGIN_THOUGHTS: this.framedCharacter.getPersonality().getThoughts().setOriginThoughtsDiscovered(true); break;
-            case SEXUAL_ORIENTATION_THOUGHTS : this.framedCharacter.getPersonality().getThoughts().setSexualOrientationThoughtsDiscovered(true); break;
+            case COMMON_PAST_FACTS -> character.getPersonality().getPastFact().setCommonPastFactDiscovered(true);
+            case GENDER_PAST_FACTS -> character.getPersonality().getPastFact().setGenderPastFactDiscovered(true);
+            case ORIGIN_PAST_FACTS -> character.getPersonality().getPastFact().setOriginPastFactDiscovered(true);
+            case SEXUAL_ORIENTATION_PAST_FACTS -> character.getPersonality().getPastFact().setSexualOrientationPastFactDiscovered(true);
+            case GENDER_THOUGHTS -> character.getPersonality().getThoughts().setGenderThoughtsDiscovered(true);
+            case ORIGIN_THOUGHTS -> character.getPersonality().getThoughts().setOriginThoughtsDiscovered(true);
+            case SEXUAL_ORIENTATION_THOUGHTS -> character.getPersonality().getThoughts().setSexualOrientationThoughtsDiscovered(true);
         }
-
-        this.getCharacterSheet().updateVisibleTexts();
-
-        try {
-            components.remove(memo);
-        }
-        catch (Exception e){
-            Main.getLogger().warning("The applied violence is not in the deck");
-        }
+        this.getCharacterSheet().updateComponent();
+        character.applyMemo(memo);
+        impactGauges(5, 20, 0);
     }
 
-    public void generateMemos(int count){
-        MemoDirector md = new MemoDirector(new MemoBuilder());
-        for(int i = 0; i < count; i++){
-            md.generateMemo();
-            Memo memo = md.getBuilder().getMemo();
-            memo.move(new Vector2D(memo.getSize().x + 50 + (memo.getSize().x + 10) * i, 575));
-            safeListOperation(componentList -> componentList.add(memo));
+    public void impactGauges(int reputationImpact, int timeImpact, int moneyImpact){
+        reputationGauge.addProgress(reputationImpact);
+        if(reputationGauge.getCurrentProgress() == 0 || reputationGauge.getCurrentProgress() == 100)
+            displayEndScene(false);
+        moneyGauge.addMoney(moneyImpact);
+        if(moneyGauge.getMoneyCount() <= 0)
+            displayEndScene(false);
+        if(timeGauge.addTime(timeImpact)){
+            nextDay();
         }
+        if(timeGauge.getDayCount() == 5)
+            displayEndScene(true);
+    }
+
+    public void nextDay(){
+        hideViolenceDeck();
+        hideMemoDeck();
+        characterSheet.hide(false);
+        members.forEach(character -> {
+            character.generateViolenceCards(4);
+            character.generateMemos(4);
+        });
+        displayRandomCharacters(5);
+        impactGauges(0, 0, members.size() * 100);
     }
 
     /**
@@ -299,10 +278,6 @@ public class GameEngine {
         }finally {
             componentsLock.unlock();
         }
-    }
-
-    public boolean isInViolenceMode() {
-        return isInViolenceMode;
     }
 
     public boolean isDevMode() {
@@ -334,8 +309,5 @@ public class GameEngine {
         int x = random.nextInt(800) + 80;
         int y = random.nextInt(150) + 275;
         return new Vector2D(x, y);
-    }
-    public void setFramedCharacter(Character character){
-        this.framedCharacter = character;
     }
 }

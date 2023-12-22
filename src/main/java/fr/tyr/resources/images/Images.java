@@ -18,6 +18,7 @@ import java.util.logging.Level;
 
 public enum Images {
     NONE("assets/none.png", false),
+    LOGO("assets/logo.png", true),
     // Game scene
     BACKGROUND("assets/game_scene/background.png", true),
     // End scene

@@ -9,8 +9,10 @@ import fr.tyr.components.memo.enums.Questions;
 import fr.tyr.tools.Vector2D;
 
 import java.awt.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 public class MemoBuilder {
     private final static Random rand = new Random();
@@ -22,7 +24,7 @@ public class MemoBuilder {
         return this.memo;
     }
     public void generateBackground(){
-        this.memo.setBackground(new ImageComponent(Memos.valueOf(Arrays.stream(Memos.values()).toList().get(rand.nextInt(Memos.values().length)).name()).getImage(), new Vector2D()));
+        this.memo.setBackground(new ImageComponent(Memos.valueOf(Arrays.stream(Memos.values()).toList().get(rand.nextInt(Memos.values().length)).name()).getImage(), new Vector2D(0,0)));
     }
     public void generateText(Personality personality){
         //

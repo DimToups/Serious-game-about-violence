@@ -6,7 +6,14 @@ import fr.tyr.components.character.personality.Personality;
 import fr.tyr.components.character.style.CharacterStyle;
 import fr.tyr.components.character.style.enums.HairColor;
 import fr.tyr.components.classic.GameComponent;
+import fr.tyr.components.memo.Memo;
+import fr.tyr.components.memo.MemoBuilder;
+import fr.tyr.components.memo.MemoDirector;
 import fr.tyr.components.mixed.ComposedComponent;
+import fr.tyr.components.violence.ViolenceCard;
+import fr.tyr.components.violence.ViolenceCardBuilder;
+import fr.tyr.components.violence.ViolenceCardDirector;
+import fr.tyr.components.violence.enums.Acts;
 import fr.tyr.game.enums.MouseButtons;
 import fr.tyr.resources.images.Images;
 import fr.tyr.tools.Vector2D;
@@ -34,12 +41,69 @@ public class Character extends ComposedComponent{
     // Sheet
     private boolean isFramed = false;
 
+    // Violences and memo cards
+    private final List<ViolenceCard> violenceCards = new ArrayList<>();
+    private final List<ViolenceCard> generatedViolenceCards = new ArrayList<>();
+    private final List<Memo> memos = new ArrayList<>();
+
     /**
      * Create a Character
      * @param position The position of the component
      */
     public Character(Vector2D position) {
         super(position);
+        generateViolenceCards(4);
+        generateMemos(4);
+    }
+
+    public void generateViolenceCards(int count){
+        violenceCards.clear();
+        int maxCards = Acts.values().length;
+        int i = 0;
+        while(i < count && generatedViolenceCards.size() < maxCards){
+            ViolenceCardBuilder violenceCardBuilder = new ViolenceCardBuilder();
+            ViolenceCardDirector violenceCardDirector = new ViolenceCardDirector(violenceCardBuilder);
+            violenceCardDirector.generateViolenceCard();
+            ViolenceCard violenceCard = violenceCardBuilder.getViolenceCard();
+            violenceCard.resize(violenceCard.getSize().getMultiplied(0.75));
+            violenceCard.move(new Vector2D(violenceCard.getSize().x + 50 + (violenceCard.getSize().x + 10) * i,700 - (violenceCard.getSize().y / 3 * 2)));
+            if(generatedViolenceCards.stream().anyMatch(card -> card.getActs() == violenceCard.getActs()))
+                continue;
+            generatedViolenceCards.add((violenceCard));
+            violenceCards.add(violenceCard);
+            i++;
+        }
+    }
+
+    public void displayViolenceCards(){
+        for(ViolenceCard violenceCard : violenceCards)
+            Main.getGameEngine().safeListOperation(componentList -> componentList.add(violenceCard));
+    }
+
+    public void applyViolenceCard(ViolenceCard violenceCard){
+        violenceCards.remove(violenceCard);
+        Main.getGameEngine().safeListOperation(componentList -> componentList.remove(violenceCard));
+    }
+
+    public void generateMemos(int count){
+        memos.clear();
+        MemoDirector md = new MemoDirector(new MemoBuilder());
+        for(int i = 0; i < count; i++){
+            md.generateMemo();
+            Memo memo = md.getBuilder().getMemo();
+            memos.add(memo);
+            memo.move(new Vector2D(memo.getSize().x + 50 + (memo.getSize().x + 10) * i, 575));
+        }
+    }
+
+    public void displayMemos(){
+        for(Memo memo : memos)
+            Main.getGameEngine().safeListOperation(componentList -> componentList.add(memo));
+    }
+
+    public void applyMemo(Memo memo){
+        memos.remove(memo);
+        Main.getGameEngine().safeListOperation(componentList -> componentList.remove(memo));
     }
 
     public Personality getPersonality() {
@@ -157,7 +221,7 @@ public class Character extends ComposedComponent{
                 onHoverLost();
             Vector2D nextPosition = Main.getGameEngine().getRandomCharacterPosition();
             double distance = nextPosition.distance(getPosition());
-            float duration = (float) (distance / 100);
+            float duration = (float) (distance / 50);
             moveTo(nextPosition, duration);
         }
     }

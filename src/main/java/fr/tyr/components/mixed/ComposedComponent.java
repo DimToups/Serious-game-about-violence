@@ -67,10 +67,10 @@ public abstract class ComposedComponent extends GameComponent<List<GameComponent
         for(GameComponent<?> component: getFrame()){
             Vector2D relativePosition = component.getPosition().getRemoved(getPosition());
             component.move(getPosition().getAdded(relativePosition.getMultiplied(ratio)));
-            if(component instanceof ImageComponent imageComponent){
-                imageComponent.resize(component.getSize().getMultiplied(ratio));
-            }else if(component instanceof ComposedComponent composedComponent){
-                composedComponent.resize(component.getSize().getMultiplied(ratio));
+            switch (component){
+                case ImageComponent imageComponent -> imageComponent.resize(component.getSize().getMultiplied(ratio));
+                case ComposedComponent composedComponent -> composedComponent.resize(component.getSize().getMultiplied(ratio));
+                default -> {}
             }
         }
         setSize(size);

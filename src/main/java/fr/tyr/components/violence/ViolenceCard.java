@@ -4,9 +4,12 @@ package fr.tyr.components.violence;
 import fr.tyr.Main;
 import fr.tyr.components.classic.GameComponent;
 import fr.tyr.components.classic.ImageComponent;
-import fr.tyr.components.mixed.ComposedComponent;
-import fr.tyr.components.violence.enums.*;
 import fr.tyr.components.classic.TextComponent;
+import fr.tyr.components.mixed.ComposedComponent;
+import fr.tyr.components.violence.enums.Acts;
+import fr.tyr.components.violence.enums.Background;
+import fr.tyr.components.violence.enums.Icon;
+import fr.tyr.components.violence.enums.Types;
 import fr.tyr.game.enums.MouseButtons;
 import fr.tyr.tools.Vector2D;
 
@@ -20,7 +23,8 @@ public class ViolenceCard extends ComposedComponent{
     private ImageComponent background;
     private ImageComponent icon;
     private Acts acts;
-    public static final Font cardFont = new Font("Roboto", Font.PLAIN,18);
+    public static final Font cardFont = new Font("Roboto", Font.PLAIN, 12);
+//    public static final Font cardFont = new Font("Roboto", Font.PLAIN,18);
     private List<TextComponent> description = new ArrayList<>();
     private int damage = 20;
 
@@ -126,7 +130,7 @@ public class ViolenceCard extends ComposedComponent{
         this.icon.move(Vector2D.add(background.getPosition(),
                 new Vector2D(this.background.getSize().x /25,this.background.getSize().x /25 )));
 
-        description = TextComponent.adjustText(description.getFirst(), this.background.getSize().x, cardFont);
+        description = TextComponent.adjustText(description.getFirst(), this.background.getSize().x - 50, cardFont);
         for(int i = 0; i < description.size(); i++) {
             description.get(i).move(Vector2D.add(background.getPosition(),
                     new Vector2D(icon.getPosition().x, (this.background.getSize().y - (this.icon.getPosition().y + this.icon.getSize().y + description.get(i).getSize().y)) / 10 + (this.icon.getPosition().y + this.icon.getSize().y + (description.get(i).getSize().y + cardFont.getSize() * 1.2) * i))));
