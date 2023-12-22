@@ -105,6 +105,7 @@ public class Character extends ComposedComponent{
             onHoverLost();
         Main.getLogger().info("Showing character sheet...");
         Main.getGameEngine().getCharacterSheet().show(this);
+        Main.getGameEngine().displayViolenceDeck();
     }
 
     public void setFramed(boolean framed) {

@@ -13,6 +13,8 @@ import fr.tyr.components.memo.Memo;
 import fr.tyr.components.memo.MemoBuilder;
 import fr.tyr.components.memo.MemoDirector;
 import fr.tyr.components.others.BackgroundComponent;
+import fr.tyr.components.others.SwitchButtonCard;
+import fr.tyr.components.others.SwitchButtonMemo;
 import fr.tyr.components.violence.ViolenceCard;
 import fr.tyr.components.violence.ViolenceCardBuilder;
 import fr.tyr.components.violence.ViolenceCardDirector;
@@ -31,6 +33,7 @@ public class GameEngine {
     private final boolean devMode;
 
     private boolean isEnded = false;
+    private boolean isInViolenceMode = true;
 
     private final ReentrantLock componentsLock = new ReentrantLock();
     private final List<GameComponent<?>> components;
@@ -80,6 +83,36 @@ public class GameEngine {
         Main.getLogger().info("Scene initialized.");
     }
 
+    public void displayViolenceDeck(){
+        this.isInViolenceMode = true;
+
+        hideMemoDeck();
+
+        // Set up of the deck and the reverseButton
+        SwitchButtonMemo switchButtonMemo = new SwitchButtonMemo(new Vector2D(25, 575));
+        generateViolenceCard(4);
+
+        // Add of the switchButtonMemo
+        safeListOperation(component -> component.add(switchButtonMemo));
+    }
+    public void hideViolenceDeck(){
+        components.removeIf(component -> component.getClass() == ViolenceCard.class || component.getClass() == SwitchButtonMemo.class);
+    }
+    public void displayMemoDeck(){
+        this.isInViolenceMode = false;
+
+        hideViolenceDeck();
+
+        // Set up of the deck and the reverseButton
+        SwitchButtonCard switchButtonCard = new SwitchButtonCard(new Vector2D(50, 525));
+        generateMemos(4);
+
+        // Add of the switchButtonMemo
+        safeListOperation(component -> component.add(switchButtonCard));
+    }
+    public void hideMemoDeck(){
+        components.removeIf(component -> component.getClass() == Memo.class || component.getClass() == SwitchButtonCard.class);
+    }
     private final TextComponent winStateText = new TextComponent("", Color.BLACK, new Font("Roboto", Font.PLAIN, 80), new Vector2D(500, 100));
     private final TextComponent winStateMessageText = new TextComponent("", Color.BLACK, new Font("Roboto", Font.PLAIN, 25), new Vector2D(325, 175));
 
@@ -201,6 +234,10 @@ public class GameEngine {
         }finally {
             componentsLock.unlock();
         }
+    }
+
+    public boolean isInViolenceMode() {
+        return isInViolenceMode;
     }
 
     public boolean isDevMode() {

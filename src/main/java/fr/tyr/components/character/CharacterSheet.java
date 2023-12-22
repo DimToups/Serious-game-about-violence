@@ -125,6 +125,12 @@ public class CharacterSheet extends ComposedComponent {
             return;
         if(Objects.isNull(character))
             throw new UnsupportedOperationException("Cannot hide a character sheet if it is not shown");
+
+        if(Main.getGameEngine().isInViolenceMode())
+            Main.getGameEngine().hideViolenceDeck();
+        else
+            Main.getGameEngine().hideMemoDeck();
+
         if(animate){
             // Disappear animation
             isMoving = true;
