@@ -9,6 +9,7 @@ import fr.tyr.components.classic.GameComponent;
 import fr.tyr.components.memo.Memo;
 import fr.tyr.components.memo.MemoBuilder;
 import fr.tyr.components.memo.MemoDirector;
+import fr.tyr.components.memo.enums.Questions;
 import fr.tyr.components.mixed.ComposedComponent;
 import fr.tyr.components.violence.ViolenceCard;
 import fr.tyr.components.violence.ViolenceCardBuilder;
@@ -45,6 +46,7 @@ public class Character extends ComposedComponent{
     private final List<ViolenceCard> violenceCards = new ArrayList<>();
     private final List<ViolenceCard> generatedViolenceCards = new ArrayList<>();
     private final List<Memo> memos = new ArrayList<>();
+    private final List<Memo> generatedMemos = new ArrayList<>();
 
     /**
      * Create a Character
@@ -57,6 +59,7 @@ public class Character extends ComposedComponent{
     }
 
     public void generateViolenceCards(int count){
+        generatedViolenceCards.removeAll(violenceCards);
         violenceCards.clear();
         int maxCards = Acts.values().length;
         int i = 0;
@@ -86,13 +89,20 @@ public class Character extends ComposedComponent{
     }
 
     public void generateMemos(int count){
+        generatedMemos.removeAll(memos);
         memos.clear();
         MemoDirector md = new MemoDirector(new MemoBuilder());
-        for(int i = 0; i < count; i++){
+        int maxCards = Questions.values().length;
+        int i = 0;
+        while(i < count && generatedMemos.size() < maxCards){
             md.generateMemo();
             Memo memo = md.getBuilder().getMemo();
-            memos.add(memo);
             memo.move(new Vector2D(memo.getSize().x + 50 + (memo.getSize().x + 10) * i, 575));
+            if(generatedMemos.stream().anyMatch(card -> card.getText() == memo.getText()))
+                continue;
+            generatedMemos.add(memo);
+            memos.add(memo);
+            i++;
         }
     }
 
