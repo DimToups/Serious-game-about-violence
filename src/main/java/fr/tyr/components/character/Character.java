@@ -66,9 +66,7 @@ public class Character extends ComposedComponent{
             violenceCardDirector.generateViolenceCard();
             ViolenceCard violenceCard = violenceCardBuilder.getViolenceCard();
             violenceCard.resize(violenceCard.getSize().getMultiplied(0.75));
-            violenceCard.move(new Vector2D(violenceCard.getSize().x + 50 + (violenceCard.getSize().x + 10) * i,720 - (violenceCard.getSize().y / 3 * 2)));
-            violenceCard.resize(violenceCard.getSize().getMultiplied(0.95));
-            violenceCard.move(new Vector2D(violenceCard.getSize().x + 50 + (violenceCard.getSize().x + 10) * i,720 - (violenceCard.getSize().y / 3 * 2)));
+            violenceCard.move(new Vector2D(violenceCard.getSize().x + 50 + (violenceCard.getSize().x + 10) * i,700 - (violenceCard.getSize().y / 3 * 2)));
             if(generatedViolenceCards.stream().anyMatch(card -> card.getActs() == violenceCard.getActs()))
                 continue;
             generatedViolenceCards.add((violenceCard));

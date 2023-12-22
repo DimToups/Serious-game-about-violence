@@ -81,27 +81,27 @@ public class TextComponent extends GameComponent<Text>{
         List<TextComponent> finalText = new ArrayList<>();
         finalText.add(new TextComponent("", color, font));
         int i = 0;
-        String ligne = "";
+        StringBuilder ligne = new StringBuilder();
         while (i < text.length()) {
-            String tmp = "";
+            StringBuilder tmp = new StringBuilder();
             while (i < text.length() && text.charAt(i) != ' ') {
-                tmp += text.charAt(i);
+                tmp.append(text.charAt(i));
                 size += font.getSize();
                 i++;
             }
             if(size > lineSize * 1.7){
-                finalText.get(textc).setText(ligne);
+                finalText.get(textc).setText(ligne.toString());
                 finalText.add(new TextComponent("", color, font));
                 size -= lineSize;
                 textc ++;
-                ligne = "";
-                ligne += tmp+" ";
+                ligne = new StringBuilder();
+                ligne.append(tmp).append(" ");
             }
             else
-                ligne += tmp+" ";
+                ligne.append(tmp).append(" ");
             i++;
         }
-        finalText.get(textc).setText(ligne);
+        finalText.get(textc).setText(ligne.toString());
         return finalText;
     }
 
