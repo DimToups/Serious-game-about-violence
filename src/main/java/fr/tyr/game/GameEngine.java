@@ -233,6 +233,12 @@ public class GameEngine {
         dissatisfaction -= damage;
         framedCharacter.setDissatisfaction(dissatisfaction);
 
+        // Gauges repercussions
+        if(violenceCard.getType().equals(Types.ECONOMICAL)){
+            this.moneyGauge.addMoney(this.members.size() * 100);
+        }
+        timeGauge.addTime(20);
+
         Random rand = new Random();
         int rnd = rand.nextInt(0,100);
         if(rnd >= framedCharacter.getDissatisfaction()){
@@ -259,7 +265,7 @@ public class GameEngine {
             case SEXUAL_ORIENTATION_THOUGHTS : this.framedCharacter.getPersonality().getThoughts().setSexualOrientationThoughtsDiscovered(true); break;
         }
 
-        this.getCharacterSheet().updateFrame();
+        this.getCharacterSheet().updateVisibleTexts();
 
         try {
             components.remove(memo);

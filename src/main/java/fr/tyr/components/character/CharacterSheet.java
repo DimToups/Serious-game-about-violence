@@ -117,11 +117,43 @@ public class CharacterSheet extends ComposedComponent {
         character.move(getPosition().getAdded(new Vector2D(12, 105)));
         character.refreshSize();
     }
-
-    private void updateTexts(){
+    public void updateVisibleTexts(){
+        if(!character.getPersonality().getPastFact().isCommonPastFactDiscovered())
+            this.commonPastFacts.setVisible(false);
+        else
+            this.commonPastFacts.setVisible(true);
+        if(!character.getPersonality().getPastFact().isGenderPastFactDiscovered())
+            this.genderPastFacts.setVisible(false);
+        else
+            this.genderPastFacts.setVisible(true);
+        if(!character.getPersonality().getPastFact().isOriginPastFactDiscovered())
+            this.originPastFacts.setVisible(false);
+        else
+            this.originPastFacts.setVisible(true);
+        if(!character.getPersonality().getPastFact().isSexualOrientationPastFactDiscovered())
+            this.sexualOrientationPastFacts.setVisible(false);
+        else
+            this.sexualOrientationPastFacts.setVisible(true);
+        if(!character.getPersonality().getThoughts().isGenderThoughtsDiscovered())
+            this.genderThoughts.setVisible(false);
+        else
+            this.genderThoughts.setVisible(true);
+        if(!character.getPersonality().getThoughts().isOriginThoughtsDiscovered())
+            this.originThoughts.setVisible(false);
+        else
+            this.originThoughts.setVisible(true);
+        if(!character.getPersonality().getThoughts().isSexualOrientationThoughtsDiscovered())
+            this.sexualOrientationThoughts.setVisible(false);
+        else
+            this.sexualOrientationThoughts.setVisible(true);
+    }
+    public void updateTexts(){
         firstName.move(getPosition().getAdded(new Vector2D(110, 112)));
         lastName.move(getPosition().getAdded(new Vector2D(110, 155)));
         age.move(getPosition().getAdded(new Vector2D(110, 196)));
+
+        factsAndThoughts.forEach(list -> list.setVisible(true));
+        updateVisibleTexts();
 
         // Move facts and thoughts
         AtomicInteger y = new AtomicInteger(238);
@@ -134,13 +166,13 @@ public class CharacterSheet extends ComposedComponent {
         firstName.setText(character.getIdentity().getFirstName().getFirstName());
         lastName.setText(character.getIdentity().getLastName().cleanName());
         age.setText("%d ans".formatted(character.getIdentity().getAge()));
-        commonPastFacts.setText(character.getPersonality().getPastFact().getCommonPastFact().getTitle());
-        genderPastFacts.setText(character.getPersonality().getPastFact().getGenderPastFact().getTitle());
-        originPastFacts.setText(character.getPersonality().getPastFact().getOriginPastFact().getTitle());
-        sexualOrientationPastFacts.setText(character.getPersonality().getPastFact().getSexualOrientationPastFact().getTitle());
-        genderThoughts.setText(character.getPersonality().getThoughts().getGenderThoughts().getTitle());
-        originThoughts.setText(character.getPersonality().getThoughts().getOriginThoughts().getTitle());
-        sexualOrientationThoughts.setText(character.getPersonality().getThoughts().getSexualOrientationThoughts().getTitle());
+        commonPastFacts.setText(character.getPersonality().getPastFact().getCommonPastFact().getDescription());
+        genderPastFacts.setText(character.getPersonality().getPastFact().getGenderPastFact().getDescription());
+        originPastFacts.setText(character.getPersonality().getPastFact().getOriginPastFact().getDescription());
+        sexualOrientationPastFacts.setText(character.getPersonality().getPastFact().getSexualOrientationPastFact().getDescription());
+        genderThoughts.setText(character.getPersonality().getThoughts().getGenderThoughts().getDescription());
+        originThoughts.setText(character.getPersonality().getThoughts().getOriginThoughts().getDescription());
+        sexualOrientationThoughts.setText(character.getPersonality().getThoughts().getSexualOrientationThoughts().getDescription());
     }
 
     public void hide(boolean animate){

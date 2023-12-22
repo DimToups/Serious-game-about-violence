@@ -2,10 +2,10 @@ package fr.tyr.components.character.personality.thoughts.enums;
 
 
 public enum SexualOrientationThoughts {
-    DISLIKES_ALL_COMMENTS("Aime aucun commentaire", "La personne n'aime pas qu'on se moque des orientations sexuelles des personnes."),
-    NEUTRAL("Aucun avis", "La personne n'a aucun avis sur les orientations sexuelles des personnes."),
-    HOMOPHOBIC("Homophobe", "La personne n'aime pas l'idée que des gens de même sexe puissent s'aimer."),
-    LIKES_ALL_COMMENTS("Aime tous les commentaires", "La personne aime particulièrement qu'on se moque des orientations sexuelles des personnes.")
+    DISLIKES_ALL_COMMENTS("Aime aucun commentaire", "La personne n'aime pas juger les orientations sexuelles"),
+    NEUTRAL("Aucun avis", "La personne n'a pas avis sur les orientations sexuelles"),
+    HOMOPHOBIC("Homophobe", "La personne est homophobe"),
+    LIKES_ALL_COMMENTS("Aime tous les commentaires", "La personne aime les blagues homophobiques")
     ;
     private final String title;
     private final String description;
