@@ -1,11 +1,13 @@
 package fr.tyr.components.violence;
 
 
+import fr.tyr.Main;
 import fr.tyr.components.classic.GameComponent;
 import fr.tyr.components.classic.ImageComponent;
 import fr.tyr.components.mixed.ComposedComponent;
 import fr.tyr.components.violence.enums.*;
 import fr.tyr.components.classic.TextComponent;
+import fr.tyr.game.enums.MouseButtons;
 import fr.tyr.tools.Vector2D;
 
 import javax.swing.text.JTextComponent;
@@ -23,6 +25,7 @@ public class ViolenceCard extends ComposedComponent{
     private Acts acts;
     public static final Font cardFont = new Font("Roboto", Font.PLAIN,18);
     private List<TextComponent> description = new ArrayList<>();
+    private int damage = 20;
 
     /**
      * Create a ViolenceCard
@@ -94,6 +97,11 @@ public class ViolenceCard extends ComposedComponent{
     public void setDescription(Acts act) {
         this.description.getFirst().setText(act.getDescription());
     }
+    /**
+     * Send the damage
+     * @return The damage
+     */
+    public int getDamage(){return this.damage;}
 
     /**
      * Resize component with the wanted Vector2D
@@ -167,5 +175,14 @@ public class ViolenceCard extends ComposedComponent{
         }
         finale.get(textc).setText(ligne);
         return finale;
+    }
+    @Override
+    public void onClick(MouseButtons button) {
+        if(button != MouseButtons.LEFT)
+            return;
+        if(isHovered())
+            onHoverLost();
+        Main.getLogger().info("Showing character sheet...");
+        Main.getGameEngine().applyViolence(this);
     }
 }

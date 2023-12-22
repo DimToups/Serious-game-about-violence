@@ -27,6 +27,7 @@ public class Character extends ComposedComponent{
     private CharacterStyle characterStyle;
     private HairColor hairColor;
     private Images special;
+    private int dissatisfaction = 100;
 
     // Sheet
     private boolean isFramed = false;
@@ -53,6 +54,12 @@ public class Character extends ComposedComponent{
 
     public void setIdentity(Identity identity) {
         this.identity = identity;
+    }
+    public int getdissatisfaction(){
+        return this.dissatisfaction;
+    }
+    public void setDissatisfaction(int dissatisfaction){
+        this.dissatisfaction = dissatisfaction;
     }
 
 

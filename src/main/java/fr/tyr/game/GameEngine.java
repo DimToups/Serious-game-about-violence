@@ -10,6 +10,7 @@ import fr.tyr.components.gauges.MoneyGauge;
 import fr.tyr.components.gauges.ReputationGauge;
 import fr.tyr.components.gauges.TimeGauge;
 import fr.tyr.components.others.BackgroundComponent;
+import fr.tyr.components.violence.enums.Types;
 import fr.tyr.resources.images.Images;
 import fr.tyr.components.violence.ViolenceCard;
 import fr.tyr.components.violence.ViolenceCardBuilder;
@@ -17,6 +18,7 @@ import fr.tyr.components.violence.ViolenceCardDirector;
 import fr.tyr.tools.Vector2D;
 
 import java.awt.*;
+import java.net.Proxy;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -38,6 +40,7 @@ public class GameEngine {
 
     private final List<Character> members = new ArrayList<>();
     private List<ViolenceCard> inTheHand = new ArrayList<>();
+    private Character framedCharacter;
 
     /**
      * Create a new game engine
@@ -188,6 +191,16 @@ public class GameEngine {
     private void clearViolenceCard(){
         safeListOperation(componentList -> componentList.removeIf(component -> component instanceof ViolenceCard));
     }
+    public void applyViolence(ViolenceCard violenceCard){
+        Types type = violenceCard.getType();
+        double multiplier = framedCharacter.getPersonality().Sensitivity(type);
+        int dissatisfaction = framedCharacter.getdissatisfaction();
+        int damage = violenceCard.getDamage();
+        damage *= multiplier;
+        dissatisfaction -= damage;
+        framedCharacter.setDissatisfaction(dissatisfaction);
+
+    }
 
     /**
      * Add a component to the game engine
@@ -234,5 +247,15 @@ public class GameEngine {
         int x = random.nextInt(800) + 80;
         int y = random.nextInt(175) + 325;
         return new Vector2D(x, y);
+    }
+    public void setFramedCharacter(Character character){
+        this.framedCharacter = character;
+    }
+    public void leaveCharacter (Character character){
+        Random rand = new Random();
+        int leave = rand.nextInt(0,100);
+        if(leave < character.getdissatisfaction()){
+            removeMember(character);
+        }
     }
 }

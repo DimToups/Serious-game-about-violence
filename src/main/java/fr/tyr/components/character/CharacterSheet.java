@@ -60,6 +60,7 @@ public class CharacterSheet extends ComposedComponent {
         if(Objects.nonNull(this.character))
             hide(false);
         character.setFramed(true);
+        Main.getGameEngine().setFramedCharacter(character);
         this.character = character;
         baseCharacterPosition = new Vector2D(character.getPosition());
         baseCharacterSize = new Vector2D(character.getSize());
@@ -120,6 +121,8 @@ public class CharacterSheet extends ComposedComponent {
             return;
         if(Objects.isNull(character))
             throw new UnsupportedOperationException("Cannot hide a character sheet if it is not shown");
+        Main.getGameEngine().setFramedCharacter(null);
+
         if(animate){
             // Disappear animation
             isMoving = true;
