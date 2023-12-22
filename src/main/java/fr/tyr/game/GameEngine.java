@@ -76,6 +76,7 @@ public class GameEngine {
         displayRandomCharacters(5);
 
         timeGauge.setCurrentProgress(10);
+        timeGauge.setDayCount(0);
         reputationGauge.setCurrentProgress(85);
         moneyGauge.setMoney(100);
         Main.getLogger().info("Scene initialized.");
@@ -240,15 +241,16 @@ public class GameEngine {
 
     public void impactGauges(int reputationImpact, int timeImpact, int moneyImpact){
         reputationGauge.addProgress(reputationImpact);
-        if(reputationGauge.getCurrentProgress() == 0 || reputationGauge.getCurrentProgress() == 100)
+        if(reputationGauge.getCurrentProgress() == 0 || reputationGauge.getCurrentProgress() == 100){
             displayEndScene(false);
+            return;
+        }
         moneyGauge.addMoney(moneyImpact);
         if(moneyGauge.getMoneyCount() <= 0)
             displayEndScene(false);
-        if(timeGauge.addTime(timeImpact)){
+        else if(timeGauge.addTime(timeImpact))
             nextDay();
-        }
-        if(timeGauge.getDayCount() == 5)
+        else if(timeGauge.getDayCount() == 5)
             displayEndScene(true);
     }
 
