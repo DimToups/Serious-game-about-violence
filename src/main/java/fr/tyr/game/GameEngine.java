@@ -202,6 +202,12 @@ public class GameEngine {
         dissatisfaction -= damage;
         character.setDissatisfaction(dissatisfaction);
 
+        // Gauges repercussions
+        if(violenceCard.getType().equals(Types.ECONOMICAL)){
+            this.moneyGauge.addMoney(this.members.size() * 100);
+        }
+        timeGauge.addTime(20);
+
         Random rand = new Random();
         int rnd = rand.nextInt(0,100);
         if(rnd >= character.getDissatisfaction()){

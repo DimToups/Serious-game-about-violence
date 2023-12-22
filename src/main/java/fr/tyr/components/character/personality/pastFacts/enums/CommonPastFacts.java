@@ -5,13 +5,13 @@ import fr.tyr.components.violence.enums.Types;
 
 public enum CommonPastFacts {
     NONE("Aucun fait", "Rien n'a particulièrement marqué la personne.", MentalStrength.NORMAL, Types.PHYSICAL),
-    LOST_FATHER("Père perdu", "La personne a perdu son père assez jeune. L'absence de figure paternelle l'a marquée à vie.", MentalStrength.WEAK, Types.PHYSICAL),
-    LOST_MOTHER("Mère perdu", "La personne a perdu sa mère assez jeune. L'absence de figure maternelle l'a marquée à vie.", MentalStrength.WEAK, Types.PHYSICAL),
-    HARASSMENT("Harcèlement", "La personne a subi du harcèlement pour une raison qui l'échappe. Elle peut avoir tendance à se replier sur elle-même.", MentalStrength.WEAK, Types.PHYSICAL),
-    YOUNG_LONELY_ADULT("Jeune adulte seul", "La personne est partie très tôt de chez ses parents. Cela l'a obligée à se débrouiller seul.", MentalStrength.BOLD,Types.PHYSICAL),
-    KIND_FAMILY("Famille bienveillante", "La personne a grandie dans une famille bienveillante. Elle a pu se développer dans de bonnes conditions.", MentalStrength.NORMAL, Types.PHYSICAL),
-    ROUGH_SCHOOL_YEARS("Années scolaires difficiles", "La personne a vécu des année scolaires difficiles, la forçant à s'affirmer et faire savoir ce qu'il ne va pas.", MentalStrength.BOLD, Types.PHYSICAL),
-    LOST_MONEY_AT_CASINO("A perdu son argent au casino", "La personne a perdu une grande partie de sa fortune à cause de jeux d'argent. Elle est toujours dépendente des jeux d'argent.",MentalStrength.WEAK, Types.PHYSICAL),
+    LOST_FATHER("Père perdu", "La personne a perdu son père assez jeune.", MentalStrength.WEAK, Types.PHYSICAL),
+    LOST_MOTHER("Mère perdu", "La personne a perdu sa mère assez jeune.", MentalStrength.WEAK, Types.PHYSICAL),
+    HARASSMENT("Harcèlement", "La personne a subi du harcèlement.", MentalStrength.WEAK, Types.PHYSICAL),
+    YOUNG_LONELY_ADULT("Jeune adulte seul", "La personne est partie très tôt de chez ses parents.", MentalStrength.BOLD,Types.PHYSICAL),
+    KIND_FAMILY("Famille bienveillante", "La personne a grandie dans une famille bienveillante.", MentalStrength.NORMAL, Types.PHYSICAL),
+    ROUGH_SCHOOL_YEARS("Années scolaires difficiles", "La personne a vécu des année scolaires difficiles.", MentalStrength.BOLD, Types.PHYSICAL),
+    LOST_MONEY_AT_CASINO("A perdu son argent au casino", "La personne est pauvre à cause des jeux d'argent",MentalStrength.WEAK, Types.PHYSICAL),
     DEBTS("A des dettes","La personne doit beaucoup d'argent a son oncle.",MentalStrength.NORMAL, Types.PHYSICAL);
     private final String title;
     private final String description;
