@@ -18,7 +18,13 @@ public class IdentityManager {
      * @return A male firstname
      */
     public static FirstName generateMaleFirstName(Origin origin){
-        return FirstName.valueOf(FirstName.getAllMaleFirstNames(FirstName.getAllOriginFirstNames(origin)).get(rand.nextInt(0, FirstName.getAllMaleFirstNames(FirstName.getAllOriginFirstNames(origin)).size())).name());
+        int r = rand.nextInt(0, 10);
+        if(r < 6)
+            return FirstName.valueOf(FirstName.getAllMaleFirstNames(FirstName.getAllOriginFirstNames(origin)).get(rand.nextInt(0, FirstName.getAllMaleFirstNames(FirstName.getAllOriginFirstNames(origin)).size())).name());
+        else if (r < 8)
+            return FirstName.valueOf(FirstName.getAllMaleFirstNames(FirstName.getAllOriginFirstNames(Origin.FRENCH)).get(rand.nextInt(0, FirstName.getAllMaleFirstNames(FirstName.getAllOriginFirstNames(Origin.FRENCH)).size())).name());
+        else
+            return FirstName.valueOf(FirstName.getAllMaleFirstNames(FirstName.getAllOriginFirstNames(Origin.GERMAN)).get(rand.nextInt(0, FirstName.getAllMaleFirstNames(FirstName.getAllOriginFirstNames(Origin.GERMAN)).size())).name());
     }
 
     /**
@@ -26,7 +32,13 @@ public class IdentityManager {
      * @return A female firstname
      */
     public static FirstName generateFemaleFirstName(Origin origin){
-        return FirstName.valueOf(FirstName.getAllFemaleFirstNames(FirstName.getAllOriginFirstNames(origin)).get(rand.nextInt(0, FirstName.getAllFemaleFirstNames(FirstName.getAllOriginFirstNames(origin)).size())).name());
+        int r = rand.nextInt(0, 10);
+        if(r < 6)
+            return FirstName.valueOf(FirstName.getAllFemaleFirstNames(FirstName.getAllOriginFirstNames(origin)).get(rand.nextInt(0, FirstName.getAllFemaleFirstNames(FirstName.getAllOriginFirstNames(origin)).size())).name());
+        else if(r < 8)
+            return FirstName.valueOf(FirstName.getAllFemaleFirstNames(FirstName.getAllOriginFirstNames(Origin.FRENCH)).get(rand.nextInt(0, FirstName.getAllFemaleFirstNames(FirstName.getAllOriginFirstNames(Origin.FRENCH)).size())).name());
+        else
+            return FirstName.valueOf(FirstName.getAllFemaleFirstNames(FirstName.getAllOriginFirstNames(Origin.GERMAN)).get(rand.nextInt(0, FirstName.getAllFemaleFirstNames(FirstName.getAllOriginFirstNames(Origin.GERMAN)).size())).name());
     }
 
     /**
@@ -34,7 +46,13 @@ public class IdentityManager {
      * @return A lastname
      */
     public static LastName generateLastName(Origin origin){
-        return LastName.valueOf(LastName.getAllOriginLastNames(origin).get(rand.nextInt(0, LastName.getAllOriginLastNames(origin).size())).name());
+        int r = rand.nextInt(0, 10);
+        if(r < 7)
+            return LastName.valueOf(LastName.getAllOriginLastNames(origin).get(rand.nextInt(0, LastName.getAllOriginLastNames(origin).size())).name());
+        else if (r < 8)
+            return LastName.valueOf(LastName.getAllOriginLastNames(Origin.FRENCH).get(rand.nextInt(0, LastName.getAllOriginLastNames(Origin.FRENCH).size())).name());
+        else
+            return LastName.valueOf(LastName.getAllOriginLastNames(Origin.GERMAN).get(rand.nextInt(0, LastName.getAllOriginLastNames(Origin.GERMAN).size())).name());
     }
 
     /**
