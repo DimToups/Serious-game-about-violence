@@ -27,7 +27,7 @@ Ce projet est un serious game traitant le sujet de la violence au sens large. Il
 3. Lancez le Main du projet.
 
 ## Installation
-Pour installer le jeu, il vous suffit de télécharger l'installateur fourni dans la section [Releases](https://gitlab.unistra.fr/MAJ23-T3-B/-/releases).
+Pour installer le jeu, il vous suffit de télécharger l'installateur fourni dans la section [Releases](https://git.unistra.fr/czekaj/t3-maj23-t3-b/-/releases).
 
 ## Licence
 Ce projet est sous licence CC-BY-NC-SA. Voir le fichier `LICENSE` pour plus de détails.
