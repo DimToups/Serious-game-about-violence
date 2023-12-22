@@ -7,6 +7,8 @@ import fr.tyr.game.enums.MouseButtons;
 import fr.tyr.tools.Vector2D;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class TextComponent extends GameComponent<Text>{
@@ -62,6 +64,45 @@ public class TextComponent extends GameComponent<Text>{
         Color color = getFrame().getParts().getFirst().getColor();
         Font font = getFrame().getParts().getFirst().getFont();
         setFrame(new Text(text, color, font));
+    }
+
+    /**
+     * Adjusts a text to put it into several lines represented by the returned List
+     * @param baseText The TextComponent to adjust
+     * @param lineSize The size of the line
+     * @param font The used font
+     * @return A list of TextComponents representing the lines
+     */
+    public static List<TextComponent> adjustText(TextComponent baseText, double lineSize, Font font){
+        double size = 0;
+        int textc = 0;
+        String text = baseText.getFrame().getParts().getFirst().getText();
+        Color color = baseText.getFrame().getParts().getFirst().getColor();
+        List<TextComponent> finalText = new ArrayList<>();
+        finalText.add(new TextComponent("", color, font));
+        int i = 0;
+        String ligne = "";
+        while (i < text.length()) {
+            String tmp = "";
+            while (i < text.length() && text.charAt(i) != ' ') {
+                tmp += text.charAt(i);
+                size += font.getSize();
+                i++;
+            }
+            if(size > lineSize * 1.7){
+                finalText.get(textc).setText(ligne);
+                finalText.add(new TextComponent("", color, font));
+                size -= lineSize;
+                textc ++;
+                ligne = "";
+                ligne += tmp+" ";
+            }
+            else
+                ligne += tmp+" ";
+            i++;
+        }
+        finalText.get(textc).setText(ligne);
+        return finalText;
     }
 
     @Override

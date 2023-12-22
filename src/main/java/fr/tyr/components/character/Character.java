@@ -28,6 +28,9 @@ public class Character extends ComposedComponent{
     private HairColor hairColor;
     private Images special;
 
+    //
+    private int dissatisfaction = 100;
+
     // Sheet
     private boolean isFramed = false;
 
@@ -53,6 +56,12 @@ public class Character extends ComposedComponent{
 
     public void setIdentity(Identity identity) {
         this.identity = identity;
+    }
+    public int getDissatisfaction(){
+        return this.dissatisfaction;
+    }
+    public void setDissatisfaction(int dissatisfaction){
+        this.dissatisfaction = dissatisfaction;
     }
 
 
@@ -105,6 +114,7 @@ public class Character extends ComposedComponent{
             onHoverLost();
         Main.getLogger().info("Showing character sheet...");
         Main.getGameEngine().getCharacterSheet().show(this);
+        Main.getGameEngine().displayViolenceDeck();
     }
 
     public void setFramed(boolean framed) {

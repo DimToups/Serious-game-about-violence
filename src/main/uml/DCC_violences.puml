@@ -4,6 +4,7 @@ skinparam classAttributeIconSize 0
 package violence{
     class ViolenceCard{
         ..Methods..
+        <<create>>ViolenceCard()
         + getIcon(): Icon
         + setIcon(Icon)
         + getBackground(): Backgrounds
@@ -12,6 +13,10 @@ package violence{
         + setActs(Acts)
         + getTypes(): Types
         + setTypes(Types)
+        + setDescription(acts: Acts)
+        + resize(size: Vector2D)
+        + finalize(position: Vector2D)
+        + finalizeText(text: String): TextComponent[]
     }
     class ViolenceCardBuilder{
         ..Fields..
@@ -39,7 +44,7 @@ package violence{
         enum Backgrounds{
             ..Fields..
             - type: Types
-            - image: Images
+            - background: Images
             ..Methods..
             <<create>> Backgrounds(type: Types, background: Images)
             + getImage(): Images
@@ -47,7 +52,7 @@ package violence{
         enum Icon{
             ..Fields..
             - type: Types
-            - image: Images
+            - icon: Images
             ..Methods..
             <<create>> Icon(type: Types, icon: Images)
             + getImage(): Images
