@@ -98,7 +98,7 @@ public class Character extends ComposedComponent{
             md.generateMemo();
             Memo memo = md.getBuilder().getMemo();
             memo.move(new Vector2D(memo.getSize().x + 50 + (memo.getSize().x + 10) * i, 575));
-            if(generatedMemos.stream().anyMatch(card -> card.getText() == memo.getText()))
+            if(generatedMemos.stream().anyMatch(card -> card.getQuestion() == memo.getQuestion()))
                 continue;
             generatedMemos.add(memo);
             memos.add(memo);
