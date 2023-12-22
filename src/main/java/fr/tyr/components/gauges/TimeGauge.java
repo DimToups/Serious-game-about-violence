@@ -27,10 +27,13 @@ public class TimeGauge extends Gauge{
             icon.setImage(Images.TIME_GAUGE_ICON_EVENING);
     }
 
-    public void addTime(int time){
-        if(this.getCurrentProgress() + time >= 100)
+    public boolean addTime(int time){
+        if(this.getCurrentProgress() + time >= 100){
             this.nextDay();
+            return true;
+        }
         this.setCurrentProgress((this.getCurrentProgress() + time) % 100);
+        return false;
     }
     public int getDayCount() {
         return dayCount;
@@ -41,6 +44,7 @@ public class TimeGauge extends Gauge{
     }
 
     public void nextDay(){
+        this.setCurrentProgress(0);
         dayCount++;
     }
 }

@@ -203,10 +203,10 @@ public class GameEngine {
         character.setDissatisfaction(dissatisfaction);
 
         // Gauges repercussions
-        if(violenceCard.getType().equals(Types.ECONOMICAL)){
-            this.moneyGauge.addMoney(this.members.size() * 100);
-        }
-        timeGauge.addTime(20);
+        int moneyImpact = 0;
+        if(violenceCard.getType().equals(Types.ECONOMICAL))
+            moneyImpact = this.members.size() * 100;
+        impactGauges(-10, 20, moneyImpact);
 
         Random rand = new Random();
         int rnd = rand.nextInt(0,100);
@@ -230,14 +230,28 @@ public class GameEngine {
         }
         this.getCharacterSheet().updateComponent();
         character.applyMemo(memo);
+        impactGauges(5, 20, 0);
+    }
+
+    public void impactGauges(int reputationImpact, int timeImpact, int moneyImpact){
+        reputationGauge.addProgress(reputationImpact);
+        if(reputationGauge.getCurrentProgress() == 0)
+            displayEndScene(false);
+        moneyGauge.addMoney(moneyImpact);
+        if(timeGauge.addTime(timeImpact)){
+            nextDay();
+        }
     }
 
     public void nextDay(){
+        hideViolenceDeck();
+        hideMemoDeck();
+        characterSheet.hide(false);
         members.forEach(character -> {
             character.generateViolenceCards(4);
             character.generateMemos(4);
         });
-
+        displayRandomCharacters(5);
     }
 
     /**

@@ -13,4 +13,13 @@ public class ReputationGauge extends Gauge{
         ImageComponent icon = new ImageComponent(Images.REPUTATION_GAUGE_ICON, new Vector2D(-25, 350).getAdded(position));
         setFrame(List.of(background, icon, getProgressBar()));
     }
+
+    public void addProgress(int reputationImpact) {
+        int newProgress = getCurrentProgress() + reputationImpact;
+        if (newProgress > 100)
+            newProgress = 100;
+        else if(newProgress < 0)
+            newProgress = 0;
+        setCurrentProgress(newProgress);
+    }
 }

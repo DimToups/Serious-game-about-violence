@@ -57,6 +57,7 @@ public class Character extends ComposedComponent{
     }
 
     public void generateViolenceCards(int count){
+        violenceCards.clear();
         int maxCards = Acts.values().length;
         int i = 0;
         while(i < count && generatedViolenceCards.size() < maxCards){
@@ -92,6 +93,7 @@ public class Character extends ComposedComponent{
     }
 
     public void generateMemos(int count){
+        memos.clear();
         MemoDirector md = new MemoDirector(new MemoBuilder());
         for(int i = 0; i < count; i++){
             md.generateMemo();
